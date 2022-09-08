@@ -1,0 +1,13 @@
+{
+    "authenticate": {
+        "signIn": "Đăng nhập",
+        "signUp": "Đăng ký",
+        "forgotPassword": "Quên mật khẩu",
+        "alreadyHaveAccount": "Đã có tài khoản?",
+        "welcome": "Chào mừng",
+        "signInToContinue": "Đăng nhập để tiếp tục",
+        "signUpToContinue": "Đăng ký để tiếp tục",
+        "termAgree": "By signing up you are agreed with our friendly",
+        "termsCondition": "Terms and Condition"
+    }
+}

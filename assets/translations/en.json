@@ -1,13 +1,19 @@
 {
-    "authenticate": {
-        "signIn": "SignIn",
-        "signUp": "SignUp",
-        "forgotPassword": "Forgot Password",
-        "alreadyHaveAccount": "Already have an account?",
-        "welcome": "Welcome",
-        "signInToContinue": "Sign in to continue",
-        "signUpToContinue": "Sign up to continue",
-        "termAgree": "By signing up you are agreed with our friendly",
-        "termsCondition": "Terms and Condition"
-    }
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "forgotPassword": "Forgot Password ?",
+  "orContinueWith": "or Continue With",
+  "alreadyHaveAccount": "Already have an account?",
+  "dontHaveAccount": "Don't have an account?",
+  "welcome": "Welcome",
+  "loginToYourAccount": "Login to Your Account",
+  "createNewAccount": "Create new Account",
+  "termAgree": "By signing up you are agreed with our friendly",
+  "termsCondition": "Terms and Condition",
+  "email": "Email",
+  "password": "Password",
+  "wrongEmail": "Wrong Email",
+  "wrongPassword": "Wrong Password",
+  "connectivityException": "Cannot get information from your actions, checkout your connectivity",
+  "serverNotRespond": "Server is not responding"
 }

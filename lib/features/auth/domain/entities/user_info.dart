@@ -5,18 +5,21 @@ import 'package:equatable/equatable.dart';
 
 class UserInfo extends Equatable {
   final String id;
-  final String name;
+  String name;
   final String email;
-  final String avatar;
-  final DateTime birthday;
-  final String phoneNumber;
-  const UserInfo({
+  String? avatar;
+  DateTime birthday;
+  String? phoneNumber;
+  final String role;
+
+  UserInfo({
     required this.id,
     required this.name,
     required this.email,
-    required this.avatar,
+    this.avatar,
     required this.birthday,
-    required this.phoneNumber,
+    this.phoneNumber,
+    required this.role,
   });
 
   UserInfo copyWith({
@@ -26,6 +29,7 @@ class UserInfo extends Equatable {
     String? avatar,
     DateTime? birthday,
     String? phoneNumber,
+    String? role,
   }) {
     return UserInfo(
       id: id ?? this.id,
@@ -34,6 +38,7 @@ class UserInfo extends Equatable {
       avatar: avatar ?? this.avatar,
       birthday: birthday ?? this.birthday,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      role: role ?? this.role,
     );
   }
 
@@ -45,6 +50,7 @@ class UserInfo extends Equatable {
       'avatar': avatar,
       'birthday': birthday.millisecondsSinceEpoch,
       'phoneNumber': phoneNumber,
+      'role': role,
     };
   }
 
@@ -53,10 +59,12 @@ class UserInfo extends Equatable {
       id: (map['id'] ?? '') as String,
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
-      avatar: (map['avatar'] ?? '') as String,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
       birthday:
           DateTime.fromMillisecondsSinceEpoch((map['birthday'] ?? 0) as int),
-      phoneNumber: (map['phoneNumber'] ?? '') as String,
+      phoneNumber:
+          map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
+      role: (map['role'] ?? '') as String,
     );
   }
 
@@ -74,9 +82,10 @@ class UserInfo extends Equatable {
       id,
       name,
       email,
-      avatar,
+      avatar ?? "",
       birthday,
-      phoneNumber,
+      phoneNumber ?? "",
+      role,
     ];
   }
 }

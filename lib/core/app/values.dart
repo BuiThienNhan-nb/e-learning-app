@@ -1,20 +1,22 @@
-import 'package:flutter/services.dart';
+import 'package:e_learning_app/configs/env.dart';
+import 'package:e_learning_app/features/auth/domain/entities/user_info.dart';
+import 'package:flutter/material.dart';
 
 class AppValues {
   AppValues._internal();
 
-  static AppValues instance = AppValues._internal();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  factory AppValues() {
-    return instance;
-  }
+  static UserInfo? currentUser;
 
-  /// Default API key to access open source weather API
-  final String apiKey = "ca3ee9cafb369c683397c5bfc15edada";
+  static Env env = Env.dev();
 
-  /// Platform Channel
-  final jsonMethodChannel = const MethodChannel(
-    "com.example.flutter_weather_app/method-channel/json",
-    JSONMethodCodec(),
-  );
+  static String mockEmail = "nhan@gmail.com";
+
+  static String mockPassword = "Nhan2509@";
+
+  static List<String> roles = [
+    "Student",
+    "Teacher",
+  ];
 }

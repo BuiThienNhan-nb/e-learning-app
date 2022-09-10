@@ -4,11 +4,11 @@ class AppLanguages {
   AppLanguages._internal();
 
   static const List<Locale> supportedLocales = [
-    Locale('vi'),
     Locale('en'),
+    Locale('vi'),
   ];
 
   static Locale fallbackLocale = supportedLocales.first;
 
-  static String? defaultLocaleString = supportedLocales.first.countryCode;
+  static String defaultLocaleString = supportedLocales.first.languageCode;
 }

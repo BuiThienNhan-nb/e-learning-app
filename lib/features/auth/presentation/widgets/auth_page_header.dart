@@ -51,7 +51,7 @@ class AuthPageHeader extends StatelessWidget {
                         : null,
                     alignment: Alignment.center,
                     child: Text(
-                      LocaleKeys.authenticate_signIn.tr(),
+                      LocaleKeys.signIn.tr(),
                       style: context.textTheme.titleMedium?.copyWith(
                         color: isLogin ? null : AppColors.neutral.shade400,
                         fontWeight: AppStyles.bold,
@@ -79,7 +79,7 @@ class AuthPageHeader extends StatelessWidget {
                           )
                         : null,
                     child: Text(
-                      LocaleKeys.authenticate_signUp.tr(),
+                      LocaleKeys.signUp.tr(),
                       style: context.textTheme.titleMedium?.copyWith(
                         color: isLogin ? AppColors.neutral.shade400 : null,
                         fontWeight: AppStyles.bold,

@@ -1,13 +1,19 @@
 {
-    "authenticate": {
-        "signIn": "Đăng nhập",
-        "signUp": "Đăng ký",
-        "forgotPassword": "Quên mật khẩu",
-        "alreadyHaveAccount": "Đã có tài khoản?",
-        "welcome": "Chào mừng",
-        "signInToContinue": "Đăng nhập để tiếp tục",
-        "signUpToContinue": "Đăng ký để tiếp tục",
-        "termAgree": "By signing up you are agreed with our friendly",
-        "termsCondition": "Terms and Condition"
-    }
+  "signIn": "Đăng nhập",
+  "signUp": "Đăng ký",
+  "forgotPassword": "Quên mật khẩu ?",
+  "orContinueWith": "hoặc Đăng Nhập với",
+  "alreadyHaveAccount": "Đã có tài khoản?",
+  "dontHaveAccount": "Chưa có tài khoản?",
+  "welcome": "Chào mừng",
+  "loginToYourAccount": "Đăng nhập vào Tài khoản",
+  "createNewAccount": "Tạo Tài khoản mới",
+  "termAgree": "Khi đăng ký, bạn đã chấp thuận các",
+  "termsCondition": "Điều khoản và chính sách",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "wrongEmail": "Sai Email",
+  "wrongPassword": "Sai Mật khẩu",
+  "connectivityException": "Không thể thực hiện hành động, xin hãy kiểm tra lại kết nối của thiết bị",
+  "serverNotRespond": "Không có phản hồi từ server"
 }

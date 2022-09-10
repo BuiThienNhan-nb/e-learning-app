@@ -24,11 +24,11 @@ class AppDimens {
   /// 16.w
   static final double largeWidthDimens = 16.w;
 
-  /// 32.w
-  static final double extraLargeWidthDimens = 32.w;
+  /// 24.w
+  static final double extraLargeWidthDimens = 24.w;
 
-  /// 32.h
-  static final double extraLargeHeightDimens = 32.h;
+  /// 24.h
+  static final double extraLargeHeightDimens = 24.h;
 
   /// 96.sp
   static final double headline1Text = 96.sp;
@@ -56,6 +56,9 @@ class AppDimens {
 
   /// 16.r
   static final double itemRadius = 16.r;
+
+  /// 24.r
+  static final double extraItemRadius = 32.r;
 
   /// 4.r
   static final double smallRadius = 4.r;

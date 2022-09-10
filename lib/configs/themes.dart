@@ -21,7 +21,7 @@ class AppThemes {
   );
 
   static final ColorScheme appColorSchema = ThemeData().colorScheme.copyWith(
-        primary: AppColors.blackColor,
+        primary: AppColors.primaryColor,
         secondary: AppColors.secondaryColor,
       );
 }

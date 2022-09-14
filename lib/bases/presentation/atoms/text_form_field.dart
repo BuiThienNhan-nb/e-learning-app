@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../configs/dimens.dart';
 
-class MyTextFormField extends StatefulWidget {
+class DefaultTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   Function()? onTap;
@@ -16,7 +16,7 @@ class MyTextFormField extends StatefulWidget {
   void Function(bool)? onFocus;
   void Function()? onSuffixIconTap;
 
-  MyTextFormField({
+  DefaultTextFormField({
     Key? key,
     required this.labelText,
     required this.controller,
@@ -31,10 +31,10 @@ class MyTextFormField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MyTextFormField> createState() => _MyTextFormFieldState();
+  State<DefaultTextFormField> createState() => _DefaultTextFormFieldState();
 }
 
-class _MyTextFormFieldState extends State<MyTextFormField> {
+class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
   FocusNode textFieldFocus = FocusNode();
   Color fillColor = AppColors.neutral.shade200;
   Color iconColor = AppColors.neutral.shade400;

@@ -3,17 +3,26 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._internal();
 
+  /// Grey
   static const Color ghostWhiteColor = Color(0xFFF2F2F7);
 
+  /// Black
   static const Color blackColor = Color(0xFF000000);
 
+  /// White
   static const Color whiteColor = Color(0xffFFFFFF);
 
+  /// Blue
   static const Color resolutionBlueColor = Color(0xFF1B3688);
 
+  /// Red
   static const Color fireEngineRedColor = Color(0xFFCF1322);
 
+  /// Black
   static const Color eclipseColor = Color(0xFF404040);
+
+  /// Green
+  static const Color pigmentGreenColor = Color(0xFF03AB53);
 
   // Theme Color
   static const Color primaryColor = Color(0xFF584CF4);

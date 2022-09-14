@@ -76,7 +76,14 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
         ),
       );
     } on Exception catch (e) {
-      throw ServerException(e.toString());
+      return Left(
+        ServerFailure(
+          e is ServerException ? e.message : e.toString(),
+        ),
+      );
+      // throw ServerException(
+      //   e is ServerException ? e.message : e.toString(),
+      // );
     }
   }
 

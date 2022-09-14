@@ -20,7 +20,7 @@ class LoginForm extends StatelessWidget {
     return Form(
       child: Column(
         children: [
-          MyTextFormField(
+          DefaultTextFormField(
             labelText: LocaleKeys.email.tr(),
             controller: provider.emailController,
             prefixIcon: "assets/icons/mail_icon.png",

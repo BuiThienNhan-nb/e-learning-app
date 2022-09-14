@@ -5,11 +5,22 @@ import 'package:flutter/material.dart';
 class AppLoading {
   AppLoading._internal();
 
-  static showLoadingDialog() => showDialog(
+  static bool isLoading = false;
+
+  static showLoadingDialog() {
+    if (!isLoading) {
+      showDialog(
         context: AppValues.navigatorKey.currentContext!,
         builder: (_) => const LoadingDialog(),
       );
+      isLoading = true;
+    }
+  }
 
-  static dismissLoadingDialog() =>
+  static dismissLoadingDialog() {
+    if (isLoading) {
       Navigator.of(AppValues.navigatorKey.currentContext!).pop();
+      isLoading = false;
+    }
+  }
 }

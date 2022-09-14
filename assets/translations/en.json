@@ -15,5 +15,9 @@
   "wrongEmail": "Wrong Email",
   "wrongPassword": "Wrong Password",
   "connectivityException": "Cannot get information from your actions, checkout your connectivity",
-  "serverNotRespond": "Server is not responding"
+  "serverNotRespond": "Server is not responding",
+  "serverUnexpectedError": "Something got wrong with the Server! We are working to fix the problems! Please wait for the System Event Notification Service! Sorry for the inconvenience!",
+  "success": "Success!",
+  "tryAgain": "Try Again",
+  "continues": "Continue"
 }

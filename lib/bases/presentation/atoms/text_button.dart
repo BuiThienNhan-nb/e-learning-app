@@ -5,14 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
 
-class MyDefaultTextButton extends StatelessWidget {
+class DefaultTextButton extends StatelessWidget {
   double? height;
   double? width;
   String title = "Submit";
   final Function() submit;
   Color backgroundColor = AppColors.primaryColor;
 
-  MyDefaultTextButton({
+  DefaultTextButton({
     Key? key,
     required this.submit,
     this.title = "Submit",

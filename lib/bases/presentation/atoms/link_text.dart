@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../configs/colors.dart';
 
-class MyRichText extends StatelessWidget {
-  const MyRichText({
+class LinkText extends StatelessWidget {
+  const LinkText({
     Key? key,
     required contentText1,
     required contentText2,

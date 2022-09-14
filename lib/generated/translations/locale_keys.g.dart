@@ -18,5 +18,9 @@ abstract class  LocaleKeys {
   static const wrongPassword = 'wrongPassword';
   static const connectivityException = 'connectivityException';
   static const serverNotRespond = 'serverNotRespond';
+  static const serverUnexpectedError = 'serverUnexpectedError';
+  static const success = 'success';
+  static const tryAgain = 'tryAgain';
+  static const continues = 'continues';
 
 }

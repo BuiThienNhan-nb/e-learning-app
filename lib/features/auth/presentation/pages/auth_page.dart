@@ -10,6 +10,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../bases/presentation/atoms/link_text.dart';
@@ -58,14 +59,14 @@ class _AuthPageState extends State<AuthPage> {
             // Trigger UI
             if (authStore!.state == BaseSate.loading) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppLoading.showLoadingDialog();
+                AppLoading.showLoadingDialog(context);
               });
             }
             if (authStore!.state == BaseSate.error ||
                 authStore!.errorMessage != null) {
               logger.log(authStore!.errorMessage ?? "Error");
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppLoading.dismissLoadingDialog();
+                AppLoading.dismissLoadingDialog(context);
                 showDialog(
                   context: context,
                   builder: (_) => DefaultResultDialog(
@@ -76,10 +77,12 @@ class _AuthPageState extends State<AuthPage> {
                 );
               });
             } else if (authStore!.state == BaseSate.loaded) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppLoading.dismissLoadingDialog();
-                Navigator.of(context).popAndPushNamed(AppRoutes.home);
-              });
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) {
+                  AppLoading.dismissLoadingDialog(context);
+                  GoRouter.of(context).go(AppRoutes.instance.home);
+                },
+              );
             }
 
             // Build content

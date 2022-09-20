@@ -1,5 +1,4 @@
 import 'package:e_learning_app/bases/presentation/atoms/loading_dialog.dart';
-import 'package:e_learning_app/core/app/values.dart';
 import 'package:flutter/material.dart';
 
 class AppLoading {
@@ -7,19 +6,19 @@ class AppLoading {
 
   static bool isLoading = false;
 
-  static showLoadingDialog() {
+  static showLoadingDialog(BuildContext context) {
     if (!isLoading) {
       showDialog(
-        context: AppValues.navigatorKey.currentContext!,
+        context: context,
         builder: (_) => const LoadingDialog(),
       );
       isLoading = true;
     }
   }
 
-  static dismissLoadingDialog() {
+  static dismissLoadingDialog(BuildContext context) {
     if (isLoading) {
-      Navigator.of(AppValues.navigatorKey.currentContext!).pop();
+      Navigator.of(context).pop();
       isLoading = false;
     }
   }

@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/bases/mobx/base_state.dart';
-import 'package:e_learning_app/configs/routes.dart';
-import 'package:e_learning_app/core/app/values.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../core/error/failures.dart';
@@ -70,12 +67,5 @@ abstract class _AuthStore with Store {
       },
       (r) => userInfo = r,
     );
-  }
-
-  @action
-  navigateToHome() {
-    context.endBatch();
-    return Navigator.of(AppValues.navigatorKey.currentContext!)
-        .pushNamed(AppRoutes.home);
   }
 }

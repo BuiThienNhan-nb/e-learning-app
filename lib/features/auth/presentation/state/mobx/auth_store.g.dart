@@ -72,20 +72,6 @@ mixin _$AuthStore on _AuthStore, Store {
     return _$signInAsyncAction.run(() => super.signIn(email, password));
   }
 
-  late final _$_AuthStoreActionController =
-      ActionController(name: '_AuthStore', context: context);
-
-  @override
-  dynamic navigateToHome() {
-    final _$actionInfo = _$_AuthStoreActionController.startAction(
-        name: '_AuthStore.navigateToHome');
-    try {
-      return super.navigateToHome();
-    } finally {
-      _$_AuthStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''

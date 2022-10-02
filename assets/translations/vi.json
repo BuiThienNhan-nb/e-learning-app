@@ -19,5 +19,19 @@
   "serverUnexpectedError": "Đã có vấn đề xảy ra với Server! Chúng tôi đang cố gắng để xử lý vấn đề! Xin vui lòng đợi cho đến khi có thông báo mới từ Hệ thống! Xin lỗi vì sự bất tiện này!",
   "success": "Thành công!",
   "tryAgain": "Thử lại",
-  "continues": "Tiếp tục"
+  "continues": "Tiếp tục",
+  "name": "Họ và Tên",
+  "birthday": "Ngày sinh",
+  "gender": "Giới tính",
+  "ma": "Nam",
+  "fe": "Nữ",
+  "ot": "Giới tính khác",
+  "invalidEmail": "Vui lòng nhập Email!",
+  "emailRequired": "Email không hợp lệ!",
+  "emailWhiteSpace": "Email không được chứa các khoảng trắng!",
+  "nameRequired": "Vui lòng nhập Họ và Tên!",
+  "passwordRequired": "Vui lòng nhập Mật Khẩu!",
+  "passwordMin": "Mật Khẩu phải chứa ít nhất 6 ký tự!",
+  "passwordWhiteSpace": "Mật Khẩu không được chứa ký tự trắng!",
+  "passwordSpecialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt!"
 }

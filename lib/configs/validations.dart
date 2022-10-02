@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+
+import '../generated/translations/locale_keys.g.dart';
 
 class AppValidations {
   AppValidations._internal();
@@ -11,20 +14,25 @@ class AppValidations {
 
   final emailValidator = MultiValidator(
     [
-      EmailValidator(errorText: 'Please enter a valid email!'),
-      RequiredValidator(errorText: 'Email is required!'),
-      WhiteSpaceValidator(errorText: 'Email must not contain whitespace!'),
+      EmailValidator(errorText: LocaleKeys.invalidEmail.tr()),
+      RequiredValidator(errorText: LocaleKeys.emailRequired.tr()),
+      WhiteSpaceValidator(errorText: LocaleKeys.emailWhiteSpace.tr()),
     ],
   );
 
+  final nameValidator =
+      RequiredValidator(errorText: LocaleKeys.nameRequired.tr());
+
   final passwordValidator = MultiValidator(
     [
-      RequiredValidator(errorText: 'Password is required!'),
-      MinLengthValidator(6,
-          errorText: 'Password must be at least 6 digits long!'),
+      RequiredValidator(errorText: LocaleKeys.passwordRequired.tr()),
+      MinLengthValidator(
+        6,
+        errorText: LocaleKeys.passwordMin.tr(),
+      ),
       PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-          errorText: 'Passwords must have at least one special character!'),
-      WhiteSpaceValidator(errorText: 'Password must not contain whitespace!'),
+          errorText: LocaleKeys.passwordSpecialCharacter.tr()),
+      WhiteSpaceValidator(errorText: LocaleKeys.passwordWhiteSpace.tr()),
     ],
   );
 }

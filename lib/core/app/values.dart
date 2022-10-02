@@ -1,5 +1,5 @@
-import 'package:e_learning_app/configs/env.dart';
-import 'package:e_learning_app/features/auth/domain/entities/user_info.dart';
+import '../../configs/env.dart';
+import '../../features/auth/sign_in/domain/entities/user_info.dart';
 
 class AppValues {
   AppValues._internal();

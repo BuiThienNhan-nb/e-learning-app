@@ -70,7 +70,7 @@
 //   }
 // }
 
-import 'package:e_learning_app/features/auth/presentation/pages/auth_page.dart';
+import 'package:e_learning_app/features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
 import 'package:e_learning_app/features/home_landing/presentation/pages/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,8 +78,10 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../features/auth/presentation/state/mobx/auth_store.dart';
-import '../features/auth/presentation/state/provider/auth_page_provider.dart';
+import '../features/auth/sign_in/presentation/pages/sign_in_page.dart';
+import '../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart';
+import '../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart';
+import '../features/auth/sign_up/presentation/pages/sign_up_page.dart';
 
 class AppRoutes {
   AppRoutes._internal();
@@ -90,10 +92,9 @@ class AppRoutes {
     return instance;
   }
 
-  String get initial => auth;
+  String get initial => signIn;
 
   final String home = '/home';
-  final String auth = '/auth';
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
 
@@ -112,19 +113,35 @@ class AppRoutes {
         builder: (context, state) => const HomePage(),
       ),
       GoRoute(
-        path: auth,
+        path: signIn,
         builder: (context, state) => MultiProvider(
           providers: [
             ChangeNotifierProvider<AuthPageProvider>(
               create: (BuildContext context) => GetIt.I(),
               lazy: true,
             ),
-            Provider<AuthStore>(
+            Provider<SignInStore>(
               create: (_) => GetIt.I(),
               lazy: true,
             ),
           ],
-          child: const AuthPage(),
+          child: const SignInPage(),
+        ),
+      ),
+      GoRoute(
+        path: signUp,
+        builder: (context, state) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<AuthPageProvider>(
+              create: (BuildContext context) => GetIt.I(),
+              lazy: true,
+            ),
+            Provider<SignUpStore>(
+              create: (_) => GetIt.I(),
+              lazy: true,
+            ),
+          ],
+          child: const SignUpPage(),
         ),
       ),
     ],

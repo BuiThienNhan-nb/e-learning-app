@@ -22,5 +22,19 @@ abstract class  LocaleKeys {
   static const success = 'success';
   static const tryAgain = 'tryAgain';
   static const continues = 'continues';
+  static const name = 'name';
+  static const birthday = 'birthday';
+  static const gender = 'gender';
+  static const ma = 'ma';
+  static const fe = 'fe';
+  static const ot = 'ot';
+  static const invalidEmail = 'invalidEmail';
+  static const emailRequired = 'emailRequired';
+  static const emailWhiteSpace = 'emailWhiteSpace';
+  static const nameRequired = 'nameRequired';
+  static const passwordRequired = 'passwordRequired';
+  static const passwordMin = 'passwordMin';
+  static const passwordWhiteSpace = 'passwordWhiteSpace';
+  static const passwordSpecialCharacter = 'passwordSpecialCharacter';
 
 }

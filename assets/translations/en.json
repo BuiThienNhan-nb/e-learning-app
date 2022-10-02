@@ -19,5 +19,19 @@
   "serverUnexpectedError": "Something got wrong with the Server! We are working to fix the problems! Please wait for the System Event Notification Service! Sorry for the inconvenience!",
   "success": "Success!",
   "tryAgain": "Try Again",
-  "continues": "Continue"
+  "continues": "Continue",
+  "name": "Full Name",
+  "birthday": "Birthday",
+  "gender": "Gender",
+  "ma": "Male",
+  "fe": "Female",
+  "ot": "Other",
+  "invalidEmail": "Please enter a valid email!",
+  "emailRequired": "Email is required!",
+  "emailWhiteSpace": "Email must not contain whitespace!",
+  "nameRequired": "Name is required!",
+  "passwordRequired": "Password is required!",
+  "passwordMin": "Password must be at least 6 digits long!",
+  "passwordWhiteSpace": "Password must not contain whitespace!",
+  "passwordSpecialCharacter": "Passwords must have at least one special character!"
 }

@@ -1,3 +1,4 @@
+import 'package:e_learning_app/configs/validations.dart';
 import 'package:e_learning_app/features/auth/presentation/state/provider/auth_page_provider.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -25,10 +26,13 @@ class LoginForm extends StatelessWidget {
             controller: provider.emailController,
             prefixIcon: "assets/icons/mail_icon.png",
             hintText: LocaleKeys.email.tr(),
+            textInputType: TextInputType.emailAddress,
+            validator: AppValidations.instance.emailValidator,
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           PasswordTextFormField(
             controller: provider.passwordController,
+            validator: AppValidations.instance.passwordValidator,
           ),
         ],
       ),

@@ -15,6 +15,8 @@ class DefaultTextFormField extends StatefulWidget {
   String? hintText;
   void Function(bool)? onFocus;
   void Function()? onSuffixIconTap;
+  TextInputType? textInputType;
+  String? Function(String?)? validator;
 
   DefaultTextFormField({
     Key? key,
@@ -28,6 +30,8 @@ class DefaultTextFormField extends StatefulWidget {
     this.hintText,
     this.onFocus,
     this.onSuffixIconTap,
+    this.textInputType,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -69,6 +73,8 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       onTap: widget.onTap,
       readOnly: widget.readOnly,
       obscureText: widget.obscureText,
+      keyboardType: widget.textInputType,
+      validator: widget.validator,
       style: AppStyles.subtitle1TextStyle.copyWith(
         color: AppColors.blackColor,
         fontWeight: FontWeight.w900,

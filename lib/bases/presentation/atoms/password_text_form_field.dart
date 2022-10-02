@@ -7,11 +7,13 @@ import 'package:easy_localization/easy_localization.dart';
 class PasswordTextFormField extends StatefulWidget {
   final TextEditingController controller;
   String? labelText;
+  String? Function(String?)? validator;
 
   PasswordTextFormField({
     Key? key,
     required this.controller,
     this.labelText,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
           : "assets/icons/password_show_icon.png",
       obscureText: togglePassword,
       onSuffixIconTap: () => setState(() => togglePassword = !togglePassword),
+      validator: widget.validator,
     );
   }
 }

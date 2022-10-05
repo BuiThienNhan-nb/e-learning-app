@@ -35,6 +35,12 @@ class AppValidations {
       WhiteSpaceValidator(errorText: LocaleKeys.passwordWhiteSpace.tr()),
     ],
   );
+
+  String? confirmPasswordValidator(String value1, String value2) {
+    return MatchValidator(
+      errorText: LocaleKeys.confirmPasswordNotMatch.tr(),
+    ).validateMatch(value1, value2);
+  }
 }
 
 class WhiteSpaceValidator extends TextFieldValidator {

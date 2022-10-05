@@ -33,5 +33,7 @@
   "passwordRequired": "Password is required!",
   "passwordMin": "Password must be at least 6 digits long!",
   "passwordWhiteSpace": "Password must not contain whitespace!",
-  "passwordSpecialCharacter": "Passwords must have at least one special character!"
+  "passwordSpecialCharacter": "Passwords must have at least one special character!",
+  "confirmPassword": "Re-Enter your Password",
+  "confirmPasswordNotMatch": "The Password you entered do not match. Please re-enter your Password!"
 }

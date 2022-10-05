@@ -6,7 +6,7 @@ import '../../../../../../generated/translations/locale_keys.g.dart';
 class AuthPageProvider extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController reEnterPasswordController =
+  final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController datePickerController = TextEditingController();
@@ -26,7 +26,7 @@ class AuthPageProvider extends ChangeNotifier {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    reEnterPasswordController.dispose();
+    confirmPasswordController.dispose();
     nameController.dispose();
     super.dispose();
   }

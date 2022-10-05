@@ -121,8 +121,7 @@ class BuildSignUpPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: AppDimens.largeHeightDimens * 4),
-              SizedBox(height: AppDimens.extraLargeHeightDimens),
+              SizedBox(height: AppDimens.extraLargeHeightDimens * 2),
               Text(
                 LocaleKeys.createNewAccount.tr(),
                 textAlign: TextAlign.center,
@@ -130,17 +129,12 @@ class BuildSignUpPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: AppDimens.extraLargeHeightDimens * 2),
+              SizedBox(height: AppDimens.extraLargeHeightDimens),
               SignUpForm(provider: provider),
               SizedBox(height: AppDimens.largeHeightDimens),
               DefaultTextButton(
                 submit: () {
-                  final email = provider.emailController.text.trim();
-                  final password = provider.passwordController.text.trim();
-
-                  logger.log("$email $password");
-
-                  authStore.signIn(email, password);
+                  logger.log("sign up clicked!");
                 },
                 title: LocaleKeys.signUp.tr(),
               ),
@@ -150,9 +144,7 @@ class BuildSignUpPage extends StatelessWidget {
                   contentText1: LocaleKeys.alreadyHaveAccount.tr(),
                   contentText2: "  ${LocaleKeys.signIn.tr()}",
                   onTap1: () {},
-                  onTap2: () => GoRouter.of(context)
-                    ..pop()
-                    ..pushNamed(AppRoutes.instance.signIn),
+                  onTap2: () => GoRouter.of(context).pop(),
                 ),
               ),
               SizedBox(height: AppDimens.mediumHeightDimens),

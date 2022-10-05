@@ -36,5 +36,7 @@ abstract class  LocaleKeys {
   static const passwordMin = 'passwordMin';
   static const passwordWhiteSpace = 'passwordWhiteSpace';
   static const passwordSpecialCharacter = 'passwordSpecialCharacter';
+  static const confirmPassword = 'confirmPassword';
+  static const confirmPasswordNotMatch = 'confirmPasswordNotMatch';
 
 }

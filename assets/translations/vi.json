@@ -26,12 +26,14 @@
   "ma": "Nam",
   "fe": "Nữ",
   "ot": "Giới tính khác",
-  "invalidEmail": "Vui lòng nhập Email!",
-  "emailRequired": "Email không hợp lệ!",
+  "invalidEmail": "Email không hợp lệ!",
+  "emailRequired": "Vui lòng nhập Email!",
   "emailWhiteSpace": "Email không được chứa các khoảng trắng!",
   "nameRequired": "Vui lòng nhập Họ và Tên!",
   "passwordRequired": "Vui lòng nhập Mật Khẩu!",
   "passwordMin": "Mật Khẩu phải chứa ít nhất 6 ký tự!",
   "passwordWhiteSpace": "Mật Khẩu không được chứa ký tự trắng!",
-  "passwordSpecialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt!"
+  "passwordSpecialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt!",
+  "confirmPassword": "Nhập lại Mật Khẩu",
+  "confirmPasswordNotMatch": "Mật Khẩu bạn vừa nhập không trùng khớp với Mật Khẩu bạn đã đăng ký. Vui lòng nhập lại!"
 }

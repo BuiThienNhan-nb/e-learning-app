@@ -132,7 +132,7 @@ class BuildSignInPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: AppDimens.largeHeightDimens * 4),
+              SizedBox(height: AppDimens.largeHeightDimens * 2),
               Center(
                 child: SvgPicture.asset("assets/images/app_logo.svg"),
               ),
@@ -163,12 +163,15 @@ class BuildSignInPage extends StatelessWidget {
               SizedBox(height: AppDimens.extraLargeWidthDimens * 2),
               DefaultTextButton(
                 submit: () {
-                  final email = provider.emailController.text.trim();
-                  final password = provider.passwordController.text.trim();
+                  // Check form is valid
+                  if (provider.signInKey.currentState!.validate()) {
+                    final email = provider.emailController.text.trim();
+                    final password = provider.passwordController.text.trim();
 
-                  logger.log("$email $password");
+                    logger.log("submitAccount: $email / $password");
 
-                  authStore.signIn(email, password);
+                    authStore.signIn(email, password);
+                  }
                 },
                 title: LocaleKeys.signIn.tr(),
               ),
@@ -206,7 +209,6 @@ class BuildSignInPage extends StatelessWidget {
               ),
               SizedBox(height: AppDimens.largeHeightDimens),
               SocialAuthentication(provider: provider),
-              SizedBox(height: AppDimens.largeHeightDimens),
               Center(
                 child: LinkText(
                   contentText1: LocaleKeys.dontHaveAccount.tr(),

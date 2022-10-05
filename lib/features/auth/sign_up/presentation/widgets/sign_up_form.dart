@@ -1,6 +1,5 @@
 import 'package:e_learning_app/bases/presentation/atoms/date_picker.dart';
 import 'package:e_learning_app/bases/presentation/atoms/dropdown_button.dart';
-import 'package:e_learning_app/core/app/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class SignUpForm extends StatelessWidget {
             prefixIcon: "assets/icons/user_icon.png",
             hintText: LocaleKeys.name.tr(),
             textInputType: TextInputType.name,
-            validator: AppValidations.instance.nameValidator,
+            validator: (value) => AppValidations.instance.nameValidator(value!),
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           DefaultTextFormField(
@@ -40,12 +39,14 @@ class SignUpForm extends StatelessWidget {
             prefixIcon: "assets/icons/mail_icon.png",
             hintText: LocaleKeys.email.tr(),
             textInputType: TextInputType.emailAddress,
-            validator: AppValidations.instance.emailValidator,
+            validator: (value) =>
+                AppValidations.instance.emailValidator(value!),
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           PasswordTextFormField(
             controller: provider.passwordController,
-            validator: AppValidations.instance.passwordValidator,
+            validator: (value) =>
+                AppValidations.instance.passwordValidator(value!),
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           PasswordTextFormField(
@@ -63,7 +64,11 @@ class SignUpForm extends StatelessWidget {
           DefaultDropdownButton(
             labelText: LocaleKeys.gender.tr(),
             prefixIcon: "assets/icons/gender_icon.png",
-            items: AppValues.appSupportedGender,
+            items: [
+              LocaleKeys.ma.tr(),
+              LocaleKeys.fe.tr(),
+              LocaleKeys.ot.tr(),
+            ],
             provider: provider,
           ),
         ],

@@ -1,7 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../generated/translations/locale_keys.g.dart';
 
 class AuthPageProvider extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -10,12 +7,12 @@ class AuthPageProvider extends ChangeNotifier {
       TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController datePickerController = TextEditingController();
-  String _gender = LocaleKeys.ma.tr();
+  int _genderIndex = 0;
 
-  String get gender => _gender;
+  int get genderIndex => _genderIndex;
 
-  set gender(String value) {
-    _gender = value;
+  set genderIndex(int value) {
+    _genderIndex = value;
     notifyListeners();
   }
 

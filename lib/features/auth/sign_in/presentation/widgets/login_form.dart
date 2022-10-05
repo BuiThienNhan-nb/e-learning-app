@@ -28,12 +28,14 @@ class LoginForm extends StatelessWidget {
             prefixIcon: "assets/icons/mail_icon.png",
             hintText: LocaleKeys.email.tr(),
             textInputType: TextInputType.emailAddress,
-            validator: AppValidations.instance.emailValidator,
+            validator: (value) =>
+                AppValidations.instance.emailValidator(value!),
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           PasswordTextFormField(
             controller: provider.passwordController,
-            validator: AppValidations.instance.passwordValidator,
+            validator: (value) =>
+                AppValidations.instance.passwordValidator(value!),
           ),
         ],
       ),

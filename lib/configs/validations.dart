@@ -12,29 +12,29 @@ class AppValidations {
     return instance;
   }
 
-  final emailValidator = MultiValidator(
-    [
-      EmailValidator(errorText: LocaleKeys.invalidEmail.tr()),
-      RequiredValidator(errorText: LocaleKeys.emailRequired.tr()),
-      WhiteSpaceValidator(errorText: LocaleKeys.emailWhiteSpace.tr()),
-    ],
-  );
+  String? emailValidator(String value) => MultiValidator(
+        [
+          EmailValidator(errorText: LocaleKeys.invalidEmail.tr()),
+          RequiredValidator(errorText: LocaleKeys.emailRequired.tr()),
+          WhiteSpaceValidator(errorText: LocaleKeys.emailWhiteSpace.tr()),
+        ],
+      ).call(value);
 
-  final nameValidator =
-      RequiredValidator(errorText: LocaleKeys.nameRequired.tr());
+  String? nameValidator(String value) =>
+      RequiredValidator(errorText: LocaleKeys.nameRequired.tr()).call(value);
 
-  final passwordValidator = MultiValidator(
-    [
-      RequiredValidator(errorText: LocaleKeys.passwordRequired.tr()),
-      MinLengthValidator(
-        6,
-        errorText: LocaleKeys.passwordMin.tr(),
-      ),
-      PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-          errorText: LocaleKeys.passwordSpecialCharacter.tr()),
-      WhiteSpaceValidator(errorText: LocaleKeys.passwordWhiteSpace.tr()),
-    ],
-  );
+  String? passwordValidator(String value) => MultiValidator(
+        [
+          RequiredValidator(errorText: LocaleKeys.passwordRequired.tr()),
+          MinLengthValidator(
+            6,
+            errorText: LocaleKeys.passwordMin.tr(),
+          ),
+          PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+              errorText: LocaleKeys.passwordSpecialCharacter.tr()),
+          WhiteSpaceValidator(errorText: LocaleKeys.passwordWhiteSpace.tr()),
+        ],
+      ).call(value);
 
   String? confirmPasswordValidator(String value1, String value2) {
     return MatchValidator(

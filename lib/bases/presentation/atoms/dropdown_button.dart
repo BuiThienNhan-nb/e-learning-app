@@ -34,8 +34,7 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
   FocusNode textFieldFocus = FocusNode();
   Color fillColor = AppColors.neutral.shade200;
   Color iconColor = AppColors.neutral.shade400;
-  late String selectedValue;
-  List<DropdownMenuItem<String>> items = [];
+  late List<DropdownMenuItem<String>> items;
 
   @override
   void initState() {
@@ -56,8 +55,12 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
       }
     });
 
+    super.initState();
+  }
+
+  buildDropdownMenuItem() {
     // Init required values for dropDownButton
-    selectedValue = widget.items.first;
+    items = [];
     for (var element in widget.items) {
       items.add(
         DropdownMenuItem(
@@ -71,20 +74,22 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
         ),
       );
     }
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    buildDropdownMenuItem();
+
     return DropdownButtonFormField<String>(
       items: items,
       onChanged: (value) {
         setState(() {
-          widget.provider.gender = value!;
-          selectedValue = value;
+          widget.provider.genderIndex = widget.items.indexWhere(
+            (element) => element.compareTo(value!) == 0,
+          );
         });
       },
-      value: selectedValue,
+      value: widget.items[widget.provider.genderIndex],
       focusNode: textFieldFocus,
       onTap: widget.onTap,
       style: AppStyles.subtitle1TextStyle.copyWith(

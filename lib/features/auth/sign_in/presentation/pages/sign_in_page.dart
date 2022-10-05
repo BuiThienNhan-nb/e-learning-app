@@ -44,7 +44,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
-    // logger.log("dispose");
+    logger.log("dispose sign in");
     super.dispose();
   }
 

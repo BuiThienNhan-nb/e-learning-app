@@ -1,5 +1,6 @@
 import 'package:e_learning_app/bases/presentation/atoms/date_picker.dart';
 import 'package:e_learning_app/bases/presentation/atoms/dropdown_button.dart';
+import 'package:e_learning_app/core/app/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -47,16 +48,22 @@ class SignUpForm extends StatelessWidget {
             validator: AppValidations.instance.passwordValidator,
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
+          PasswordTextFormField(
+            labelText: LocaleKeys.confirmPassword.tr(),
+            controller: provider.confirmPasswordController,
+            validator: (confirmPassword) =>
+                AppValidations.instance.confirmPasswordValidator(
+              confirmPassword!,
+              provider.passwordController.text.trim(),
+            ),
+          ),
+          SizedBox(height: AppDimens.extraLargeHeightDimens),
           DatePicker(controller: provider.datePickerController),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           DefaultDropdownButton(
             labelText: LocaleKeys.gender.tr(),
             prefixIcon: "assets/icons/gender_icon.png",
-            items: [
-              LocaleKeys.ma.tr(),
-              LocaleKeys.fe.tr(),
-              LocaleKeys.ot.tr(),
-            ],
+            items: AppValues.appSupportedGender,
             provider: provider,
           ),
         ],

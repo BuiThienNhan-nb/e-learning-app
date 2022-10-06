@@ -23,6 +23,10 @@ class AppValidations {
   String? nameValidator(String value) =>
       RequiredValidator(errorText: LocaleKeys.nameRequired.tr()).call(value);
 
+  String? birthdayValidator(String value) =>
+      RequiredValidator(errorText: LocaleKeys.birthdayRequired.tr())
+          .call(value);
+
   String? passwordValidator(String value) => MultiValidator(
         [
           RequiredValidator(errorText: LocaleKeys.passwordRequired.tr()),
@@ -41,6 +45,9 @@ class AppValidations {
       errorText: LocaleKeys.confirmPasswordNotMatch.tr(),
     ).validateMatch(value1, value2);
   }
+
+  String? phoneNumberValidator(String value) =>
+      PhoneValidator(errorText: LocaleKeys.phoneValid.tr()).call(value);
 }
 
 class WhiteSpaceValidator extends TextFieldValidator {
@@ -57,4 +64,17 @@ class WhiteSpaceValidator extends TextFieldValidator {
     // return true if the value is valid according the your condition
     return !value!.contains(' ');
   }
+}
+
+class PhoneValidator extends TextFieldValidator {
+  PhoneValidator({required String errorText}) : super(errorText);
+
+  @override
+  bool get ignoreEmptyValues => true;
+
+  final phonePattern = RegExp(r"^[0-9]{10,11}$");
+
+  @override
+  bool isValid(String? value) =>
+      (value!.startsWith('0') && phonePattern.hasMatch(value));
 }

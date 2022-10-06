@@ -7,6 +7,7 @@ class AuthPageProvider extends ChangeNotifier {
       TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController datePickerController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
   int _genderIndex = 0;
 
   int get genderIndex => _genderIndex;
@@ -25,6 +26,9 @@ class AuthPageProvider extends ChangeNotifier {
     passwordController.dispose();
     confirmPasswordController.dispose();
     nameController.dispose();
+    datePickerController.dispose();
+    phoneNumberController.dispose();
+
     super.dispose();
   }
 }

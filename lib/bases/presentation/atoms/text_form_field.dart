@@ -80,6 +80,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
         fontWeight: FontWeight.w900,
       ),
       decoration: InputDecoration(
+        errorMaxLines: 2,
         hintText: widget.hintText,
         hintStyle: AppStyles.subtitle1TextStyle.copyWith(
           fontWeight: FontWeight.w500,

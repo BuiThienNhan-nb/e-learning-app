@@ -24,6 +24,7 @@ abstract class  LocaleKeys {
   static const continues = 'continues';
   static const name = 'name';
   static const birthday = 'birthday';
+  static const birthdayRequired = 'birthdayRequired';
   static const gender = 'gender';
   static const ma = 'ma';
   static const fe = 'fe';
@@ -38,5 +39,7 @@ abstract class  LocaleKeys {
   static const passwordSpecialCharacter = 'passwordSpecialCharacter';
   static const confirmPassword = 'confirmPassword';
   static const confirmPasswordNotMatch = 'confirmPasswordNotMatch';
+  static const phoneNumber = 'phoneNumber';
+  static const phoneValid = 'phoneValid';
 
 }

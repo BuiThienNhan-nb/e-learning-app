@@ -59,7 +59,21 @@ class SignUpForm extends StatelessWidget {
             ),
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
-          DatePicker(controller: provider.datePickerController),
+          DefaultTextFormField(
+            labelText: LocaleKeys.phoneNumber.tr(),
+            controller: provider.phoneNumberController,
+            prefixIcon: "assets/icons/phone_icon.png",
+            hintText: LocaleKeys.phoneNumber.tr(),
+            textInputType: TextInputType.phone,
+            validator: (value) =>
+                AppValidations.instance.phoneNumberValidator(value!),
+          ),
+          SizedBox(height: AppDimens.extraLargeHeightDimens),
+          DatePicker(
+            controller: provider.datePickerController,
+            validator: (value) =>
+                AppValidations.instance.birthdayValidator(value!),
+          ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           DefaultDropdownButton(
             labelText: LocaleKeys.gender.tr(),

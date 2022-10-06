@@ -22,6 +22,7 @@
   "continues": "Tiếp tục",
   "name": "Họ và Tên",
   "birthday": "Ngày sinh",
+  "birthdayRequired": "Vui lòng chọn Ngày sinh!",
   "gender": "Giới tính",
   "ma": "Nam",
   "fe": "Nữ",
@@ -35,5 +36,7 @@
   "passwordWhiteSpace": "Mật Khẩu không được chứa ký tự trắng!",
   "passwordSpecialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt!",
   "confirmPassword": "Nhập lại Mật Khẩu",
-  "confirmPasswordNotMatch": "Mật Khẩu bạn vừa nhập không trùng khớp với Mật Khẩu bạn đã đăng ký. Vui lòng nhập lại!"
+  "confirmPasswordNotMatch": "Mật Khẩu bạn vừa nhập không trùng khớp với Mật Khẩu bạn đã đăng ký. Vui lòng nhập lại!",
+  "phoneNumber": "Số điện thoại",
+  "phoneValid": "Vui lòng nhập Số điện thoại hợp lệ, bắt đầu bằng số 0 và chỉ bao gồm 10 hoặc 11 ký tự số!"
 }

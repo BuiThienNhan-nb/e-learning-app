@@ -22,6 +22,7 @@
   "continues": "Continue",
   "name": "Full Name",
   "birthday": "Birthday",
+  "birthdayRequired": "Birthday is required!",
   "gender": "Gender",
   "ma": "Male",
   "fe": "Female",
@@ -35,5 +36,7 @@
   "passwordWhiteSpace": "Password must not contain whitespace!",
   "passwordSpecialCharacter": "Passwords must have at least one special character!",
   "confirmPassword": "Re-Enter your Password",
-  "confirmPasswordNotMatch": "The Password you entered do not match. Please re-enter your Password!"
+  "confirmPasswordNotMatch": "The Password you entered do not match. Please re-enter your Password!",
+  "phoneNumber": "Phone Number",
+  "phoneValid": "Please input valid Phone Number, which start with 0 and contains 10 or 11 digits only!"
 }

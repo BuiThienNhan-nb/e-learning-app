@@ -5,12 +5,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatelessWidget {
-  const DatePicker({
+  DatePicker({
     Key? key,
     required this.controller,
+    this.validator,
   }) : super(key: key);
 
   final TextEditingController controller;
+  String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +26,7 @@ class DatePicker extends StatelessWidget {
         initialDate: initDate,
         firstDate: DateTime(1900),
         lastDate: DateTime.now(),
-        builder: (context, child) {
-          // return Theme(
-          //   data: Theme.of(context).copyWith(
-          //     colorScheme: ColorScheme.light(
-          //       primary: AppColors.blackColor, // header background color
-          //       onPrimary: AppColors.whiteColor, // header text color
-          //       onSurface: AppColors.blackColor, // body text color
-          //     ),
-          //     textButtonTheme: TextButtonThemeData(
-          //       style: TextButton.styleFrom(
-          //         primary: AppColors.blackColor, // button text color
-          //       ),
-          //     ),
-          //   ),
-          //   child: child!,
-          // );
-          return child!;
-        },
+        builder: (context, child) => child!,
       );
       if (pickDate == null) return;
       controller.text = AppFormats.instance.formatDay.format(pickDate);
@@ -53,6 +38,7 @@ class DatePicker extends StatelessWidget {
       prefixIcon: "assets/icons/calendar_icon.png",
       readOnly: true,
       onTap: pickDate,
+      validator: validator,
     );
   }
 }

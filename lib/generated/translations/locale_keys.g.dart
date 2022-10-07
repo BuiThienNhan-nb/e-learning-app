@@ -16,6 +16,7 @@ abstract class  LocaleKeys {
   static const password = 'password';
   static const wrongEmail = 'wrongEmail';
   static const wrongPassword = 'wrongPassword';
+  static const emailExist = 'emailExist';
   static const connectivityException = 'connectivityException';
   static const serverNotRespond = 'serverNotRespond';
   static const serverUnexpectedError = 'serverUnexpectedError';
@@ -41,5 +42,8 @@ abstract class  LocaleKeys {
   static const confirmPasswordNotMatch = 'confirmPasswordNotMatch';
   static const phoneNumber = 'phoneNumber';
   static const phoneValid = 'phoneValid';
+  static const teacher = 'teacher';
+  static const student = 'student';
+  static const title = 'title';
 
 }

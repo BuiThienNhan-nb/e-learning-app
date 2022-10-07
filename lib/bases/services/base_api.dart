@@ -7,7 +7,7 @@ abstract class BaseApi {
   Dio _initDio() {
     final Dio dio = Dio();
 
-    final env = AppValues.env;
+    final env = AppValues.instance.env;
 
     dio
       ..options.baseUrl = env.baseUrl

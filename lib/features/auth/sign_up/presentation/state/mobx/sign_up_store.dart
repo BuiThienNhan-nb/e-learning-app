@@ -7,7 +7,7 @@ import '../../../../../../core/error/failures.dart';
 import '../../../../../../generated/translations/locale_keys.g.dart';
 import '../../../../sign_in/domain/entities/user_info.dart';
 import '../../../../sign_in/domain/usecases/auth_use_case.dart';
-import '../../../../sign_in/domain/usecases/auth_use_case/sign_in_use_case.dart';
+import '../../../../sign_in/domain/usecases/auth_use_case/sign_up_use_case.dart';
 
 part 'sign_up_store.g.dart';
 
@@ -43,12 +43,29 @@ abstract class _SignUpStore with Store {
   }
 
   @action
-  Future<void> signIn(String email, String password) async {
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+    required String? phoneNumber,
+    required DateTime birthday,
+    required String gender,
+    required String role,
+  }) async {
     errorMessage = null;
 
     _userFuture = ObservableFuture(
-      _authUseCase.signInUseCase(
-        SignInParams(email, password),
+      _authUseCase.signUpUseCase(
+        SignUpParams(
+          name,
+          email,
+          password,
+          phoneNumber,
+          null,
+          birthday,
+          gender,
+          role,
+        ),
       ),
     );
 

@@ -9,11 +9,18 @@ class AuthPageProvider extends ChangeNotifier {
   final TextEditingController datePickerController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   int _genderIndex = 0;
+  int _titleIndex = 0;
 
   int get genderIndex => _genderIndex;
+  int get titleIndex => _titleIndex;
 
   set genderIndex(int value) {
     _genderIndex = value;
+    notifyListeners();
+  }
+
+  set titleIndex(int value) {
+    _titleIndex = value;
     notifyListeners();
   }
 

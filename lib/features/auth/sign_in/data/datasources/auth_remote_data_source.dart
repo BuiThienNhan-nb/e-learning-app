@@ -8,6 +8,7 @@ import '../../../../../core/app/values.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
+import '../../../../../utils/extensions/list_extension.dart';
 import '../../domain/entities/user_info.dart';
 
 abstract class AuthRemoteDataSource {
@@ -20,10 +21,11 @@ abstract class AuthRemoteDataSource {
     required String name,
     required String email,
     required String password,
-    String? phoneNumber,
+    required String? phoneNumber,
     String? avatar,
     required DateTime birthday,
     required String gender,
+    required String role,
   });
 
   Future<Either<Failure, void>> signOut();
@@ -48,10 +50,10 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
         const Duration(milliseconds: 1500),
       ).then(
         (_) {
-          if (email.compareTo(AppValues.mockEmail) != 0) {
+          if (email.compareTo(AppValues.instance.mockEmail) != 0) {
             failureMessage = LocaleKeys.wrongEmail.tr();
           }
-          if (password.compareTo(AppValues.mockPassword) != 0) {
+          if (password.compareTo(AppValues.instance.mockPassword) != 0) {
             failureMessage = LocaleKeys.wrongPassword.tr();
           }
         },
@@ -69,11 +71,11 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
       // Return success data
       return Right(
         UserInfo(
-          id: "id",
+          id: "id_login",
           name: "Bùi Thiện Nhân",
-          email: AppValues.mockEmail,
+          email: AppValues.instance.mockEmail,
           birthday: DateTime(2001, 9, 25),
-          role: AppValues.roles.last,
+          role: AppValues.instance.title.last,
           gender: LocaleKeys.ma.tr(),
         ),
       );
@@ -83,9 +85,6 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
           e is ServerException ? e.message : e.toString(),
         ),
       );
-      // throw ServerException(
-      //   e is ServerException ? e.message : e.toString(),
-      // );
     }
   }
 
@@ -100,12 +99,60 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
     required String name,
     required String email,
     required String password,
-    String? phoneNumber,
+    required String? phoneNumber,
     String? avatar,
     required DateTime birthday,
     required String gender,
-  }) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+    required String role,
+  }) async {
+    // Building example of implements of DataSource
+
+    // Pretending exceptions
+    final bool isException = Random().nextBool();
+    final String exceptionMessage = LocaleKeys.serverNotRespond.tr();
+
+    // Pretending error from request
+    String failureMessage = "";
+
+    try {
+      // Fake api calling
+      await Future.delayed(
+        const Duration(milliseconds: 1500),
+      ).then(
+        (_) {
+          if (email.compareTo(AppValues.instance.mockEmail) == 0) {
+            failureMessage = LocaleKeys.emailExist.tr();
+          }
+        },
+      );
+      if (isException) {
+        throw ServerException(exceptionMessage);
+      }
+
+      if (failureMessage.isNotEmpty) {
+        // Return not success
+        return Left(
+          UserFailure(failureMessage),
+        );
+      }
+      // Return success data
+      return Right(
+        UserInfo(
+          id: "id_register",
+          name: name,
+          email: email,
+          birthday: birthday,
+          role: AppValues.instance.title.toCurrentLocale().first,
+          gender: LocaleKeys.ma.tr(),
+          phoneNumber: phoneNumber,
+        ),
+      );
+    } on Exception catch (e) {
+      return Left(
+        ServerFailure(
+          e is ServerException ? e.message : e.toString(),
+        ),
+      );
+    }
   }
 }

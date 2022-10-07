@@ -14,6 +14,7 @@
   "password": "Mật khẩu",
   "wrongEmail": "Sai Email",
   "wrongPassword": "Sai Mật khẩu",
+  "emailExist": "Email này đã tồn tại! Vui lòng nhập email khác!",
   "connectivityException": "Không thể thực hiện hành động, xin hãy kiểm tra lại kết nối của thiết bị",
   "serverNotRespond": "Không có phản hồi từ server",
   "serverUnexpectedError": "Đã có vấn đề xảy ra với Server! Chúng tôi đang cố gắng để xử lý vấn đề! Xin vui lòng đợi cho đến khi có thông báo mới từ Hệ thống! Xin lỗi vì sự bất tiện này!",
@@ -38,5 +39,8 @@
   "confirmPassword": "Nhập lại Mật Khẩu",
   "confirmPasswordNotMatch": "Mật Khẩu bạn vừa nhập không trùng khớp với Mật Khẩu bạn đã đăng ký. Vui lòng nhập lại!",
   "phoneNumber": "Số điện thoại",
-  "phoneValid": "Vui lòng nhập Số điện thoại hợp lệ, bắt đầu bằng số 0 và chỉ bao gồm 10 hoặc 11 ký tự số!"
+  "phoneValid": "Vui lòng nhập Số điện thoại hợp lệ, bắt đầu bằng số 0 và chỉ bao gồm 10 hoặc 11 ký tự số!",
+  "teacher": "Giảng Viên",
+  "student": "Học Viên",
+  "title": "Vai Trò"
 }

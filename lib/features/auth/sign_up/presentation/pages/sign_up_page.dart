@@ -1,5 +1,7 @@
 import 'dart:developer' as logger;
 
+import 'package:e_learning_app/configs/formats.dart';
+import 'package:e_learning_app/core/app/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -35,6 +37,12 @@ class _SignUpPageState extends State<SignUpPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     signUpStore ??= GetIt.I<SignUpStore>();
+  }
+
+  @override
+  void dispose() {
+    logger.log("dispose sign up");
+    super.dispose();
   }
 
   @override
@@ -134,7 +142,19 @@ class BuildSignUpPage extends StatelessWidget {
               SizedBox(height: AppDimens.largeHeightDimens),
               DefaultTextButton(
                 submit: () {
-                  logger.log("sign up clicked!");
+                  if (provider.signUpKey.currentState!.validate()) {
+                    authStore.signUp(
+                      name: provider.nameController.text.trim(),
+                      email: provider.emailController.text.trim(),
+                      password: provider.passwordController.text.trim(),
+                      phoneNumber: provider.phoneNumberController.text.trim(),
+                      birthday: AppFormats.instance.formatDay
+                          .parse(provider.datePickerController.text),
+                      gender: AppValues
+                          .instance.appSupportedGender[provider.genderIndex],
+                      role: AppValues.instance.title[provider.titleIndex],
+                    );
+                  }
                 },
                 title: LocaleKeys.signUp.tr(),
               ),

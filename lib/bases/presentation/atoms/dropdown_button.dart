@@ -1,4 +1,3 @@
-import 'package:e_learning_app/features/auth/sign_in/presentation/state/provider/auth_page_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,7 +13,7 @@ class DefaultDropdownButton extends StatefulWidget {
     this.onTap,
     this.hintText,
     this.onFocus,
-    required this.provider,
+    required this.selectedIndex,
     required this.items,
   }) : super(key: key);
 
@@ -24,7 +23,7 @@ class DefaultDropdownButton extends StatefulWidget {
   String? hintText;
   void Function(bool)? onFocus;
   List<String> items;
-  AuthPageProvider provider;
+  int selectedIndex;
 
   @override
   State<DefaultDropdownButton> createState() => _DefaultDropdownButtonState();
@@ -84,12 +83,12 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
       items: items,
       onChanged: (value) {
         setState(() {
-          widget.provider.genderIndex = widget.items.indexWhere(
+          widget.selectedIndex = widget.items.indexWhere(
             (element) => element.compareTo(value!) == 0,
           );
         });
       },
-      value: widget.items[widget.provider.genderIndex],
+      value: widget.items[widget.selectedIndex],
       focusNode: textFieldFocus,
       onTap: widget.onTap,
       style: AppStyles.subtitle1TextStyle.copyWith(

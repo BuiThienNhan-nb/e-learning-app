@@ -21,6 +21,7 @@ class SignUpUseCase implements UseCase<void, SignUpParams> {
         avatar: p.avatar,
         phoneNumber: p.phoneNumber,
         gender: p.gender,
+        role: p.role,
       );
 }
 
@@ -32,6 +33,7 @@ class SignUpParams extends Equatable {
   final String? avatar;
   final DateTime birthday;
   final String gender;
+  final String role;
 
   const SignUpParams(
     this.name,
@@ -41,6 +43,7 @@ class SignUpParams extends Equatable {
     this.avatar,
     this.birthday,
     this.gender,
+    this.role,
   );
 
   @override
@@ -52,5 +55,6 @@ class SignUpParams extends Equatable {
         avatar,
         birthday,
         gender,
+        role,
       ];
 }

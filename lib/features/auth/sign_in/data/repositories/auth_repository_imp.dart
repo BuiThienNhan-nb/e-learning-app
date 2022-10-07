@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/error/failures.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../core/platform/network_status.dart';
+import '../../../../../generated/translations/locale_keys.g.dart';
 import '../../domain/entities/user_info.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
@@ -19,13 +21,13 @@ class AuthRepositoryImp implements AuthRepository {
   @override
   Future<Either<Failure, UserInfo>> signIn(
       String email, String password) async {
-    // if (!await networkStatus.isConnected) {
-    //   return Left(
-    //     UserFailure(
-    //       LocaleKeys.connectivityException.tr(),
-    //     ),
-    //   );
-    // }
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
 
     return dataSource.signIn(email, password);
   }
@@ -41,12 +43,29 @@ class AuthRepositoryImp implements AuthRepository {
     required String name,
     required String email,
     required String password,
-    String? phoneNumber,
+    required String? phoneNumber,
     String? avatar,
     required DateTime birthday,
     required String gender,
-  }) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+    required String role,
+  }) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.signUp(
+      name: name,
+      email: email,
+      password: password,
+      birthday: birthday,
+      gender: gender,
+      phoneNumber: phoneNumber,
+      role: role,
+      avatar: avatar,
+    );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
-
 import '../../configs/env.dart';
 import '../../features/auth/sign_in/domain/entities/user_info.dart';
 import '../../generated/translations/locale_keys.g.dart';
@@ -7,22 +5,28 @@ import '../../generated/translations/locale_keys.g.dart';
 class AppValues {
   AppValues._internal();
 
-  static UserInfo? currentUser;
+  static AppValues instance = AppValues._internal();
 
-  static Env env = Env.dev();
+  factory AppValues() {
+    return instance;
+  }
 
-  static String mockEmail = "nhan@gmail.com";
+  UserInfo? currentUser;
 
-  static String mockPassword = "Nhan2509@";
+  final Env env = Env.dev();
 
-  static List<String> appSupportedGender = [
-    LocaleKeys.ma.tr(),
-    LocaleKeys.fe.tr(),
-    LocaleKeys.ot.tr(),
+  final String mockEmail = "nhan@gmail.com";
+
+  final String mockPassword = "Nhan2509@";
+
+  final List<String> appSupportedGender = [
+    LocaleKeys.ma,
+    LocaleKeys.fe,
+    LocaleKeys.ot,
   ];
 
-  static List<String> roles = [
-    "Student",
-    "Teacher",
+  final List<String> title = [
+    LocaleKeys.teacher,
+    LocaleKeys.student,
   ];
 }

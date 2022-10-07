@@ -1,13 +1,15 @@
-import 'package:e_learning_app/bases/presentation/atoms/date_picker.dart';
-import 'package:e_learning_app/bases/presentation/atoms/dropdown_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../bases/presentation/atoms/date_picker.dart';
+import '../../../../../bases/presentation/atoms/dropdown_button.dart';
 import '../../../../../bases/presentation/atoms/password_text_form_field.dart';
 import '../../../../../bases/presentation/atoms/text_form_field.dart';
 import '../../../../../configs/dimens.dart';
 import '../../../../../configs/validations.dart';
+import '../../../../../core/app/values.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
+import '../../../../../utils/extensions/list_extension.dart';
 import '../../../sign_in/presentation/state/provider/auth_page_provider.dart';
 
 class SignUpForm extends StatelessWidget {
@@ -78,12 +80,15 @@ class SignUpForm extends StatelessWidget {
           DefaultDropdownButton(
             labelText: LocaleKeys.gender.tr(),
             prefixIcon: "assets/icons/gender_icon.png",
-            items: [
-              LocaleKeys.ma.tr(),
-              LocaleKeys.fe.tr(),
-              LocaleKeys.ot.tr(),
-            ],
-            provider: provider,
+            items: AppValues.instance.appSupportedGender.toCurrentLocale(),
+            selectedIndex: provider.genderIndex,
+          ),
+          SizedBox(height: AppDimens.extraLargeHeightDimens),
+          DefaultDropdownButton(
+            labelText: LocaleKeys.title.tr(),
+            prefixIcon: "assets/icons/briefcase_icon.png",
+            items: AppValues.instance.title.toCurrentLocale(),
+            selectedIndex: provider.titleIndex,
           ),
         ],
       ),

@@ -1,5 +1,7 @@
-import 'package:e_learning_app/core/app/values.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/app/values.dart';
+import '../../../utils/extensions/list_extension.dart';
 
 class VisibilityWidget extends StatelessWidget {
   const VisibilityWidget({
@@ -12,8 +14,10 @@ class VisibilityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible:
-          AppValues.currentUser!.role == AppValues.roles.last ? true : false,
+      visible: AppValues.instance.currentUser!.role ==
+              AppValues.instance.title.toCurrentLocale().last
+          ? true
+          : false,
       child: child,
     );
   }

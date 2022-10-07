@@ -64,12 +64,26 @@ mixin _$SignUpStore on _SignUpStore, Store {
     });
   }
 
-  late final _$signInAsyncAction =
-      AsyncAction('_SignUpStore.signIn', context: context);
+  late final _$signUpAsyncAction =
+      AsyncAction('_SignUpStore.signUp', context: context);
 
   @override
-  Future<void> signIn(String email, String password) {
-    return _$signInAsyncAction.run(() => super.signIn(email, password));
+  Future<void> signUp(
+      {required String name,
+      required String email,
+      required String password,
+      required String? phoneNumber,
+      required DateTime birthday,
+      required String gender,
+      required String role}) {
+    return _$signUpAsyncAction.run(() => super.signUp(
+        name: name,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+        birthday: birthday,
+        gender: gender,
+        role: role));
   }
 
   @override

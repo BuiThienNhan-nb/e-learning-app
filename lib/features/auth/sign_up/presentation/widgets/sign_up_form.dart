@@ -82,6 +82,7 @@ class SignUpForm extends StatelessWidget {
             prefixIcon: "assets/icons/gender_icon.png",
             items: AppValues.instance.appSupportedGender.toCurrentLocale(),
             selectedIndex: provider.genderIndex,
+            onChanged: (index) => provider.genderIndex = index,
           ),
           SizedBox(height: AppDimens.extraLargeHeightDimens),
           DefaultDropdownButton(
@@ -89,6 +90,7 @@ class SignUpForm extends StatelessWidget {
             prefixIcon: "assets/icons/briefcase_icon.png",
             items: AppValues.instance.title.toCurrentLocale(),
             selectedIndex: provider.titleIndex,
+            onChanged: (index) => provider.titleIndex = index,
           ),
         ],
       ),

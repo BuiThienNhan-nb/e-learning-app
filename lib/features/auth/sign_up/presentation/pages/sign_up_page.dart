@@ -1,7 +1,5 @@
 import 'dart:developer' as logger;
 
-import 'package:e_learning_app/configs/formats.dart';
-import 'package:e_learning_app/core/app/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,10 +11,13 @@ import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../../bases/presentation/atoms/link_text.dart';
 import '../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../configs/dimens.dart';
+import '../../../../../configs/formats.dart';
 import '../../../../../configs/languages.dart';
 import '../../../../../configs/routes.dart';
 import '../../../../../configs/styles.dart';
 import '../../../../../core/app/loading.dart';
+import '../../../../../core/app/provider.dart';
+import '../../../../../core/app/values.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
 import '../../../sign_in/presentation/state/provider/auth_page_provider.dart';
 import '../../../sign_in/presentation/widgets/lang_switcher.dart';
@@ -76,6 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
             } else if (signUpStore!.state == BaseSate.loaded) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {
+                  GetIt.I<AppProvider>().user = signUpStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
                   GoRouter.of(context).go(AppRoutes.instance.home);
                 },

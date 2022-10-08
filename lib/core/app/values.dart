@@ -13,7 +13,7 @@ class AppValues {
 
   UserInfo? currentUser;
 
-  final Env env = Env.dev();
+  final Env env = Env.instance;
 
   final String mockEmail = "nhan@gmail.com";
 

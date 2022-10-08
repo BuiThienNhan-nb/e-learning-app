@@ -1,29 +1,15 @@
-enum EnvType { dev, prod }
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Env {
-  final EnvType envType;
-  final String baseUrl;
-  final int connectionTimeOut;
-  final int receiveTimeOut;
+  Env._internal();
 
-  Env._internal({
-    required this.envType,
-    required this.baseUrl,
-    this.connectionTimeOut = 30000,
-    this.receiveTimeOut = 30000,
-  });
+  static Env instance = Env._internal();
 
-  factory Env.dev() {
-    return Env._internal(
-      envType: EnvType.dev,
-      baseUrl: 'http://localhost:8080/api',
-    );
-  }
+  factory Env() => instance;
 
-  factory Env.prod() {
-    return Env._internal(
-      envType: EnvType.prod,
-      baseUrl: '',
-    );
-  }
+  final String test = dotenv.get('TEST');
+
+  final String baseUrl = dotenv.get('BASE_URL');
+  final int connectionTimeOut = int.parse(dotenv.get('CONNECTION_TIMEOUT'));
+  final int receiveTimeOut = int.parse(dotenv.get('RECEIVE_TIMEOUT'));
 }

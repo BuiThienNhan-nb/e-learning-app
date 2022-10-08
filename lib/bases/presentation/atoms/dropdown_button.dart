@@ -15,6 +15,7 @@ class DefaultDropdownButton extends StatefulWidget {
     this.onFocus,
     required this.selectedIndex,
     required this.items,
+    required this.onChanged,
   }) : super(key: key);
 
   final String labelText;
@@ -22,6 +23,7 @@ class DefaultDropdownButton extends StatefulWidget {
   final String prefixIcon;
   String? hintText;
   void Function(bool)? onFocus;
+  void Function(int) onChanged;
   List<String> items;
   int selectedIndex;
 
@@ -86,6 +88,7 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
           widget.selectedIndex = widget.items.indexWhere(
             (element) => element.compareTo(value!) == 0,
           );
+          widget.onChanged(widget.selectedIndex);
         });
       },
       value: widget.items[widget.selectedIndex],

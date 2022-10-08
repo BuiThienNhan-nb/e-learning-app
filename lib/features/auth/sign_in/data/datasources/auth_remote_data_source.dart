@@ -8,7 +8,6 @@ import '../../../../../core/app/values.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../../../../utils/extensions/list_extension.dart';
 import '../../domain/entities/user_info.dart';
 
 abstract class AuthRemoteDataSource {
@@ -76,7 +75,7 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
           email: AppValues.instance.mockEmail,
           birthday: DateTime(2001, 9, 25),
           role: AppValues.instance.title.last,
-          gender: LocaleKeys.ma.tr(),
+          gender: LocaleKeys.ma,
         ),
       );
     } on Exception catch (e) {
@@ -142,8 +141,8 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
           name: name,
           email: email,
           birthday: birthday,
-          role: AppValues.instance.title.toCurrentLocale().first,
-          gender: LocaleKeys.ma.tr(),
+          role: role,
+          gender: gender,
           phoneNumber: phoneNumber,
         ),
       );

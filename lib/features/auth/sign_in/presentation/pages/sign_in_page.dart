@@ -18,6 +18,7 @@ import '../../../../../configs/languages.dart';
 import '../../../../../configs/routes.dart';
 import '../../../../../configs/styles.dart';
 import '../../../../../core/app/loading.dart';
+import '../../../../../core/app/provider.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
 import '../../../../../utils/extensions/context_extension.dart';
 import '../state/mobx/sign_in_store.dart';
@@ -79,6 +80,7 @@ class _SignInPageState extends State<SignInPage> {
             } else if (signInStore!.state == BaseSate.loaded) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {
+                  GetIt.I<AppProvider>().user = signInStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
                   GoRouter.of(context).go(AppRoutes.instance.home);
                 },

@@ -45,5 +45,8 @@ abstract class  LocaleKeys {
   static const teacher = 'teacher';
   static const student = 'student';
   static const title = 'title';
+  static const goodMorning = 'goodMorning';
+  static const goodAfternoon = 'goodAfternoon';
+  static const goodNight = 'goodNight';
 
 }

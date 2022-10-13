@@ -71,7 +71,7 @@
 // }
 
 import 'package:e_learning_app/features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
-import 'package:e_learning_app/features/home_landing/presentation/pages/home_page.dart';
+import 'package:e_learning_app/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

@@ -6,12 +6,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../configs/colors.dart';
 
 class LinkText extends StatelessWidget {
-  const LinkText({
+  LinkText({
     Key? key,
     required contentText1,
     required contentText2,
     required onTap1,
     required onTap2,
+    this.text1Style,
+    this.text2Style,
+    this.topPadding,
   })  : _contentText1 = contentText1,
         _contentText2 = contentText2,
         _onTap1 = onTap1,
@@ -21,11 +24,14 @@ class LinkText extends StatelessWidget {
   final String _contentText2;
   final Function() _onTap1;
   final Function() _onTap2;
+  TextStyle? text1Style;
+  TextStyle? text2Style;
+  double? topPadding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10.h),
+      padding: EdgeInsets.only(top: topPadding ?? 10.h),
       child: RichText(
         text: TextSpan(
           style: const TextStyle(
@@ -34,14 +40,16 @@ class LinkText extends StatelessWidget {
           children: <TextSpan>[
             TextSpan(
               text: _contentText1,
+              style: text1Style,
               recognizer: TapGestureRecognizer()..onTap = _onTap1,
             ),
             TextSpan(
               text: _contentText2,
-              style: context.textTheme.subtitle1?.copyWith(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: text2Style ??
+                  context.textTheme.subtitle1?.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
               recognizer: TapGestureRecognizer()..onTap = _onTap2,
             ),
           ],

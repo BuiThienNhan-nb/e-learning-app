@@ -42,5 +42,8 @@
   "phoneValid": "Please input valid Phone Number, which start with 0 and contains 10 or 11 digits only!",
   "teacher": "Teacher",
   "student": "Student",
-  "title": "Title"
+  "title": "Title",
+  "goodMorning": "Good morning! 👋",
+  "goodAfternoon": "Good afternoon! ☀️",
+  "goodNight": "Good night! 🌙"
 }

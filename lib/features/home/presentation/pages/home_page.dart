@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/app/provider.dart';
+import '../widgets/app_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,8 +14,9 @@ class HomePage extends StatelessWidget {
     final appProvider = GetIt.I<AppProvider>();
 
     log("Current user: ${appProvider.user}");
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: HomeAppBar(),
+      body: const Center(
         child: Text("Home Page"),
       ),
     );

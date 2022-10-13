@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 class AppProvider extends ChangeNotifier {
   bool _isLogin = false;
   UserInfo? _user;
+  bool _hasNotification = true;
 
   bool get isLogin => _isLogin;
   UserInfo get user => _user!;
+  bool get hasNotification => _hasNotification;
 
   set isLogin(bool value) {
     _isLogin = value;
@@ -15,6 +17,11 @@ class AppProvider extends ChangeNotifier {
 
   set user(UserInfo value) {
     _user = value;
+    notifyListeners();
+  }
+
+  set hasNotification(bool value) {
+    _hasNotification = value;
     notifyListeners();
   }
 }

@@ -42,5 +42,8 @@
   "phoneValid": "Vui lòng nhập Số điện thoại hợp lệ, bắt đầu bằng số 0 và chỉ bao gồm 10 hoặc 11 ký tự số!",
   "teacher": "Giảng Viên",
   "student": "Học Viên",
-  "title": "Vai Trò"
+  "title": "Vai Trò",
+  "goodMorning": "Chào buổi sáng! 👋",
+  "goodAfternoon": "Good Afternoon! ☀️",
+  "goodNight": "Good Night! 🌙"
 }

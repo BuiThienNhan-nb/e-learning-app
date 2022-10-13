@@ -164,7 +164,7 @@ class BuildSignInPage extends StatelessWidget {
               ),
               SizedBox(height: AppDimens.extraLargeWidthDimens * 2),
               DefaultTextButton(
-                submit: () {
+                submit: () async {
                   // Check form is valid
                   if (provider.signInKey.currentState!.validate()) {
                     final email = provider.emailController.text.trim();

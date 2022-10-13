@@ -45,5 +45,10 @@
   "title": "Title",
   "goodMorning": "Good morning! 👋",
   "goodAfternoon": "Good afternoon! ☀️",
-  "goodNight": "Good night! 🌙"
+  "goodNight": "Good night! 🌙",
+  "connectTimeOUt": "Your wifi maybe too slow to handle this request! Fix or Connect another wifi and try again!",
+  "m400": "The server cannot or will not process the request due to something that is perceived to be a client error",
+  "m401": "Maybe you submit the wrong Email or Password! Check it and try Login again!",
+  "m403": "Forbidden! The client does not have access rights to the content!",
+  "m404": "Not found! This page doesn't exists!"
 }

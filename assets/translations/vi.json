@@ -45,5 +45,10 @@
   "title": "Vai Trò",
   "goodMorning": "Chào buổi sáng! 👋",
   "goodAfternoon": "Good Afternoon! ☀️",
-  "goodNight": "Good Night! 🌙"
+  "goodNight": "Good Night! 🌙",
+  "connectTimeOUt": "Wifi của bạn hiện đang khá chậm để xử lý! Vui lòng thử sửa lỗi hoặc kết nối với Wifi khác và thử lại!",
+  "m400": " Máy chủ không thể hiểu yêu cầu do cú pháp không hợp lệ",
+  "m401": "Tài khoản bạn vừa đăng nhập có thể đã sai Tài khoản hoặc Mật Khẩu! Vui lòng kiểm tra và đăng nhập lại!",
+  "m403": "Client không có quyền truy cập vào phần nội dung, nghĩa là nó không được phép, vì vậy máy chủ từ chối cung cấp tài nguyên được yêu cầu!",
+  "m404": "Nội dung này hiện đang không tồn tại!"
 }

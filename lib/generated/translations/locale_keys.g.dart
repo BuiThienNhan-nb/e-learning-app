@@ -48,5 +48,10 @@ abstract class  LocaleKeys {
   static const goodMorning = 'goodMorning';
   static const goodAfternoon = 'goodAfternoon';
   static const goodNight = 'goodNight';
+  static const connectTimeOUt = 'connectTimeOUt';
+  static const m400 = 'm400';
+  static const m401 = 'm401';
+  static const m403 = 'm403';
+  static const m404 = 'm404';
 
 }

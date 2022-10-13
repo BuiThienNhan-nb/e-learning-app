@@ -1,9 +1,12 @@
+import 'dart:developer' as logger;
 import 'dart:math';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:e_learning_app/configs/env.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../../bases/services/base_api.dart';
+import '../../../../../bases/services/api_exception.dart';
 import '../../../../../core/app/values.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
@@ -30,10 +33,14 @@ abstract class AuthRemoteDataSource {
   Future<Either<Failure, void>> signOut();
 }
 
-class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
+class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
+  final String loginEndpoint = "/auth/login";
+  final Dio dio1 = Dio();
+
   @override
   Future<Either<Failure, UserInfo>> signIn(
       String email, String password) async {
+    /*
     // Building example of implements of DataSource
 
     // Pretending exceptions
@@ -84,12 +91,43 @@ class AuthRemoteDataSourceImp extends BaseApi implements AuthRemoteDataSource {
           e is ServerException ? e.message : e.toString(),
         ),
       );
+    } 
+    */
+
+    logger.log("current url: ${Env.instance.baseUrl}$loginEndpoint");
+
+    final Map<String, String> requestData = {
+      "username": email,
+      "password": password,
+    };
+
+    logger.log(requestData.toString());
+
+    try {
+      final data = await post(
+        Env.instance.baseUrl + loginEndpoint,
+        data: requestData,
+      );
+
+      logger.log(data);
+
+      return Right(
+        UserInfo(
+          id: "id_login",
+          name: "Bùi Thiện Nhân",
+          email: AppValues.instance.mockEmail,
+          birthday: DateTime(2001, 9, 25),
+          role: AppValues.instance.title.last,
+          gender: LocaleKeys.ma,
+        ),
+      );
+    } catch (e) {
+      return Left(exceptionToFailure(e));
     }
   }
 
   @override
   Future<Either<Failure, void>> signOut() {
-    // TODO: implement signOut
     throw UnimplementedError();
   }
 

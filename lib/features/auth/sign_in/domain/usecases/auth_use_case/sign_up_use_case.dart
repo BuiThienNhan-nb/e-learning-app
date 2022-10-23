@@ -31,7 +31,7 @@ class SignUpParams extends Equatable {
   final String password;
   final String? phoneNumber;
   final String? avatar;
-  final DateTime birthday;
+  final String birthday;
   final String gender;
   final String role;
 

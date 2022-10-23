@@ -26,7 +26,7 @@ class AppValues {
   ];
 
   final List<String> title = [
-    LocaleKeys.teacher,
-    LocaleKeys.student,
+    LocaleKeys.Teacher,
+    LocaleKeys.Student,
   ];
 }

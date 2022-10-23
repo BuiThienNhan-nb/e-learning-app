@@ -42,8 +42,8 @@ abstract class  LocaleKeys {
   static const confirmPasswordNotMatch = 'confirmPasswordNotMatch';
   static const phoneNumber = 'phoneNumber';
   static const phoneValid = 'phoneValid';
-  static const teacher = 'teacher';
-  static const student = 'student';
+  static const Teacher = 'Teacher';
+  static const Student = 'Student';
   static const title = 'title';
   static const goodMorning = 'goodMorning';
   static const goodAfternoon = 'goodAfternoon';

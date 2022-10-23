@@ -73,7 +73,7 @@ mixin _$SignUpStore on _SignUpStore, Store {
       required String email,
       required String password,
       required String? phoneNumber,
-      required DateTime birthday,
+      required String birthday,
       required String gender,
       required String role}) {
     return _$signUpAsyncAction.run(() => super.signUp(

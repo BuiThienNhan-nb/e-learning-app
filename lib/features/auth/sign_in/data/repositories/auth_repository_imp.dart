@@ -47,7 +47,7 @@ class AuthRepositoryImp implements AuthRepository {
     required String password,
     required String? phoneNumber,
     String? avatar,
-    required DateTime birthday,
+    required String birthday,
     required String gender,
     required String role,
   }) async {

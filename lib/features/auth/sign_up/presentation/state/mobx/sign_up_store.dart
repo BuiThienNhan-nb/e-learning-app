@@ -50,7 +50,7 @@ abstract class _SignUpStore with Store {
     required String email,
     required String password,
     required String? phoneNumber,
-    required DateTime birthday,
+    required String birthday,
     required String gender,
     required String role,
   }) async {

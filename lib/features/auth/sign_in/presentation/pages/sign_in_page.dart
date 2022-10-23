@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../bases/mobx/base_state.dart';
+import '../../../../../bases/presentation/atoms/bottom_nav_bar.dart';
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../../bases/presentation/atoms/link_text.dart';
 import '../../../../../bases/presentation/atoms/text_button.dart';
@@ -82,7 +83,8 @@ class _SignInPageState extends State<SignInPage> {
                 (_) {
                   GetIt.I<AppProvider>().user = signInStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
-                  GoRouter.of(context).go(AppRoutes.instance.home);
+                  GoRouter.of(context)
+                      .go(GetIt.I<BottomNavigationBarConfig>().mainPage[0]);
                 },
               );
             }

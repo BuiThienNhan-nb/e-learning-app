@@ -53,5 +53,9 @@ abstract class  LocaleKeys {
   static const m401 = 'm401';
   static const m403 = 'm403';
   static const m404 = 'm404';
+  static const home = 'home';
+  static const explore = 'explore';
+  static const bookmark = 'bookmark';
+  static const menu = 'menu';
 
 }

@@ -1,87 +1,27 @@
-// import 'dart:developer';
-
-// import 'package:e_learning_app/features/auth/presentation/pages/auth_page.dart';
-// import 'package:e_learning_app/features/auth/presentation/state/mobx/auth_store.dart';
-// import 'package:e_learning_app/features/auth/presentation/state/provider/auth_page_provider.dart';
-// import 'package:e_learning_app/features/home_landing/presentation/pages/home_page.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get_it/get_it.dart';
-// import 'package:provider/provider.dart';
-
-// class AppRoutes {
-//   AppRoutes._internal();
-
-//   static final AppRoutes _singleton = AppRoutes._internal();
-
-//   factory AppRoutes() {
-//     return _singleton;
-//   }
-
-//   // Route name
-//   static const String home = "/home";
-//   static const String auth = "/auth";
-
-//   // initial Route
-//   static String get init => auth;
-
-//   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-//     switch (settings.name) {
-//       case AppRoutes.home:
-//         return CupertinoPageRoute(
-//           builder: (context) => const HomePage(),
-//         );
-//       case AppRoutes.auth:
-//         return CupertinoPageRoute(
-//           builder: (context) =>
-// MultiProvider(
-//             providers: [
-//               ChangeNotifierProvider<AuthPageProvider>(
-//                 create: (BuildContext context) => GetIt.I(),
-//                 lazy: true,
-//               ),
-//               Provider<AuthStore>(
-//                 create: (_) => GetIt.I(),
-//                 lazy: true,
-//                 dispose: (context, value) {
-//                   log("dispose");
-//                 },
-//               ),
-//             ],
-//             child: const AuthPage(),
-//           ),
-//         );
-//       default:
-//         return _errorRoute();
-//     }
-//   }
-
-//   Route _errorRoute() {
-//     return CupertinoPageRoute(
-//       builder: (context) => const Scaffold(
-//         body: Center(
-//           child: Text('Error'),
-//         ),
-//       ),
-//       settings: const RouteSettings(
-//         name: '/error',
-//       ),
-//     );
-//   }
-// }
-
-import 'package:e_learning_app/features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
 import 'package:e_learning_app/features/home/presentation/pages/home_page.dart';
-import 'package:flutter/foundation.dart';
+import 'package:e_learning_app/utils/nav_bar/tab_bar_shell_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../bases/presentation/atoms/bottom_nav_bar.dart';
 import '../features/auth/sign_in/presentation/pages/sign_in_page.dart';
 import '../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart';
 import '../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart';
 import '../features/auth/sign_up/presentation/pages/sign_up_page.dart';
+import '../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
+
+// final GlobalKey<NavigatorState> _section1NavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'section1Nav');
+// final GlobalKey<NavigatorState> _section2NavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'section2Nav');
+// final GlobalKey<NavigatorState> _section3NavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'section3Nav');
+// final GlobalKey<NavigatorState> _section4NavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'section4Nav');
+// final GlobalKey<NavigatorState> _section5NavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'section5Nav');
 
 class AppRoutes {
   AppRoutes._internal();
@@ -92,26 +32,66 @@ class AppRoutes {
     return instance;
   }
 
-  String get initial => signIn;
+  final GlobalKey<NavigatorState> _rootNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'root');
 
-  final String home = '/home';
+  final _bottomBarLocator = GetIt.I<BottomNavigationBarConfig>();
+
+  // final String home = '/home';
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
+  /*
+  final List<String> mainPage = [
+    '/home',
+    '/explore',
+    '/my-course',
+    '/profile',
+    '/settings',
+  ];
+
+  late final List<ScaffoldWithNavBarTabItem> _tabs = [
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: mainPage[0],
+      navigatorKey: _section1NavigatorKey,
+      icon: const Icon(Icons.home),
+      label: 'Home',
+      backgroundColor: Colors.black,
+    ),
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: mainPage[1],
+      navigatorKey: _section2NavigatorKey,
+      icon: const Icon(Icons.explore),
+      label: 'Explore',
+      backgroundColor: Colors.black,
+    ),
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: mainPage[2],
+      navigatorKey: _section3NavigatorKey,
+      icon: const Icon(Icons.note),
+      label: 'My Course',
+      backgroundColor: Colors.black,
+    ),
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: mainPage[3],
+      navigatorKey: _section4NavigatorKey,
+      icon: const Icon(Icons.person),
+      label: 'Profile',
+      backgroundColor: Colors.black,
+    ),
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: mainPage[4],
+      navigatorKey: _section5NavigatorKey,
+      icon: const Icon(Icons.settings),
+      label: 'Settings',
+      backgroundColor: Colors.red,
+    ),
+  ];*/
+  String get initial => _bottomBarLocator.mainPage.first;
 
   late final GoRouter router = GoRouter(
-    debugLogDiagnostics: kDebugMode,
-    urlPathStrategy: UrlPathStrategy.path,
+    navigatorKey: _rootNavigatorKey,
     initialLocation: initial,
-    errorBuilder: (context, state) => const Scaffold(
-      body: Center(
-        child: Text('Error'),
-      ),
-    ),
-    routes: <GoRoute>[
-      GoRoute(
-        path: home,
-        builder: (context, state) => const HomePage(),
-      ),
+    routes: <RouteBase>[
       GoRoute(
         path: signIn,
         builder: (context, state) => MultiProvider(
@@ -144,6 +124,31 @@ class AppRoutes {
           child: const SignUpPage(),
         ),
       ),
+      BottomTabBarShellRoute(
+        tabs: _bottomBarLocator.tabs,
+        routes: [
+          GoRoute(
+            path: _bottomBarLocator.mainPage[0],
+            builder: (context, state) =>
+                HomePage(currentUrl: _bottomBarLocator.mainPage[0]),
+          ),
+          GoRoute(
+            path: _bottomBarLocator.mainPage[1],
+            builder: (context, state) =>
+                HomePage(currentUrl: _bottomBarLocator.mainPage[1]),
+          ),
+          GoRoute(
+            path: _bottomBarLocator.mainPage[2],
+            builder: (context, state) =>
+                HomePage(currentUrl: _bottomBarLocator.mainPage[2]),
+          ),
+          GoRoute(
+            path: _bottomBarLocator.mainPage[3],
+            builder: (context, state) =>
+                HomePage(currentUrl: _bottomBarLocator.mainPage[3]),
+          ),
+        ],
+      )
     ],
   );
 }

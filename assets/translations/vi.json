@@ -50,5 +50,9 @@
   "m400": " Máy chủ không thể hiểu yêu cầu do cú pháp không hợp lệ",
   "m401": "Tài khoản bạn vừa đăng nhập có thể đã sai Tài khoản hoặc Mật Khẩu! Vui lòng kiểm tra và đăng nhập lại!",
   "m403": "Client không có quyền truy cập vào phần nội dung, nghĩa là nó không được phép, vì vậy máy chủ từ chối cung cấp tài nguyên được yêu cầu!",
-  "m404": "Nội dung này hiện đang không tồn tại!"
+  "m404": "Nội dung này hiện đang không tồn tại!",
+  "home": "Trang chủ",
+  "explore": "Khám phá",
+  "bookmark": "Khóa học của tôi",
+  "menu": "Menu"
 }

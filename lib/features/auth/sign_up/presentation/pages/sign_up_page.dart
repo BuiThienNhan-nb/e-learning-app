@@ -7,13 +7,13 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../bases/mobx/base_state.dart';
+import '../../../../../bases/presentation/atoms/bottom_nav_bar.dart';
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../../bases/presentation/atoms/link_text.dart';
 import '../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../configs/dimens.dart';
 import '../../../../../configs/formats.dart';
 import '../../../../../configs/languages.dart';
-import '../../../../../configs/routes.dart';
 import '../../../../../configs/styles.dart';
 import '../../../../../core/app/loading.dart';
 import '../../../../../core/app/provider.dart';
@@ -79,7 +79,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 (_) {
                   GetIt.I<AppProvider>().user = signUpStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
-                  GoRouter.of(context).go(AppRoutes.instance.home);
+                  GoRouter.of(context)
+                      .go(GetIt.I<BottomNavigationBarConfig>().mainPage[0]);
                 },
               );
             }

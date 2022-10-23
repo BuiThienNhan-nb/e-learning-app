@@ -40,68 +40,10 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
   @override
   Future<Either<Failure, UserInfo>> signIn(
       String email, String password) async {
-    /*
-    // Building example of implements of DataSource
-
-    // Pretending exceptions
-    final bool isException = Random().nextBool();
-    final String exceptionMessage = LocaleKeys.serverNotRespond.tr();
-
-    // Pretending error from request
-    String failureMessage = "";
-
-    try {
-      // Fake api calling
-      await Future.delayed(
-        const Duration(milliseconds: 1500),
-      ).then(
-        (_) {
-          if (email.compareTo(AppValues.instance.mockEmail) != 0) {
-            failureMessage = LocaleKeys.wrongEmail.tr();
-          }
-          if (password.compareTo(AppValues.instance.mockPassword) != 0) {
-            failureMessage = LocaleKeys.wrongPassword.tr();
-          }
-        },
-      );
-      if (isException) {
-        throw ServerException(exceptionMessage);
-      }
-
-      if (failureMessage.isNotEmpty) {
-        // Return not success
-        return Left(
-          UserFailure(failureMessage),
-        );
-      }
-      // Return success data
-      return Right(
-        UserInfo(
-          id: "id_login",
-          name: "Bùi Thiện Nhân",
-          email: AppValues.instance.mockEmail,
-          birthday: DateTime(2001, 9, 25),
-          role: AppValues.instance.title.last,
-          gender: LocaleKeys.ma,
-        ),
-      );
-    } on Exception catch (e) {
-      return Left(
-        ServerFailure(
-          e is ServerException ? e.message : e.toString(),
-        ),
-      );
-    } 
-    */
-
-    logger.log("current url: ${Env.instance.baseUrl}$loginEndpoint");
-
     final Map<String, String> requestData = {
       "username": email,
       "password": password,
     };
-
-    logger.log(requestData.toString());
 
     try {
       final data = await post(

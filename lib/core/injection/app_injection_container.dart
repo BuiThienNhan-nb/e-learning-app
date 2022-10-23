@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:e_learning_app/core/app/provider.dart';
+import 'package:e_learning_app/features/main/presentation/mobx/main_page_store.dart';
 
 import '../platform/network_status.dart';
 import 'injection_container.dart';
@@ -24,6 +25,10 @@ class AppInjectionContainer extends InjectionContainer {
 
     getIt.registerLazySingleton<NetworkStatus>(
       () => NetworkStatusImp(getIt()),
+    );
+
+    getIt.registerLazySingleton<MainPageStore>(
+      () => MainPageStore(),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:e_learning_app/features/main/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -91,7 +90,7 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: store!.pageIndex == 0 ? MainAppBar() : null,
+      // appBar: store!.pageIndex == 0 ? MainAppBar() : null,
       body: _buildBody(context),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

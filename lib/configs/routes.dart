@@ -86,7 +86,7 @@ class AppRoutes {
       backgroundColor: Colors.red,
     ),
   ];*/
-  String get initial => signIn; //_bottomBarLocator.mainPage.first;
+  String get initial => _bottomBarLocator.mainPage.first;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -129,23 +129,19 @@ class AppRoutes {
         routes: [
           GoRoute(
             path: _bottomBarLocator.mainPage[0],
-            builder: (context, state) =>
-                HomePage(currentUrl: _bottomBarLocator.mainPage[0]),
+            builder: (context, state) => const HomePage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[1],
-            builder: (context, state) =>
-                HomePage(currentUrl: _bottomBarLocator.mainPage[1]),
+            builder: (context, state) => const HomePage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[2],
-            builder: (context, state) =>
-                HomePage(currentUrl: _bottomBarLocator.mainPage[2]),
+            builder: (context, state) => const HomePage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
-            builder: (context, state) =>
-                HomePage(currentUrl: _bottomBarLocator.mainPage[3]),
+            builder: (context, state) => const HomePage(),
           ),
         ],
       )

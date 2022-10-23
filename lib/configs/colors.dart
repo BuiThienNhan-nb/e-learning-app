@@ -24,6 +24,9 @@ class AppColors {
   /// Green
   static const Color pigmentGreenColor = Color(0xFF03AB53);
 
+  // Light blue grey
+  static const Color lavenderColor = Color(0xFFe8e9f2);
+
   // Theme Color
   static const Color primaryColor = Color(0xFF584CF4);
 

@@ -36,14 +36,15 @@ abstract class AuthRemoteDataSource {
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
-  final String loginEndpoint = "/auth/login";
+  final String loginEndpoint = "/auth/email/login";
+  final String registerEndpoint = "/auth/email/register";
   final Dio dio1 = Dio();
 
   @override
   Future<Either<Failure, UserInfo>> signIn(
       String email, String password) async {
     final Map<String, String> requestData = {
-      "username": email,
+      "email": email,
       "password": password,
     };
 
@@ -53,12 +54,12 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
         data: requestData,
       );
 
-      logger.log(data);
+      logger.log(data["data"]["user"]["name"]);
 
       return Right(
         UserInfo(
-          id: "id_login",
-          name: "Bùi Thiện Nhân",
+          id: data["data"]["token"]["access_token"],
+          name: data["data"]["user"]["name"],
           email: AppValues.instance.mockEmail,
           birthday: DateTime(2001, 9, 25),
           role: AppValues.instance.title.last,

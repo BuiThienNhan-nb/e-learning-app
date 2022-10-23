@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:e_learning_app/configs/env.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../bases/services/api_exception.dart';
 import '../../../../../core/app/values.dart';
@@ -33,6 +34,7 @@ abstract class AuthRemoteDataSource {
   Future<Either<Failure, void>> signOut();
 }
 
+@LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
   final String loginEndpoint = "/auth/login";
   final Dio dio1 = Dio();

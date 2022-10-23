@@ -15,7 +15,7 @@
   "wrongEmail": "Sai Email",
   "wrongPassword": "Sai Mật khẩu",
   "emailExist": "Email này đã tồn tại! Vui lòng nhập email khác!",
-  "connectivityException": "Không thể thực hiện hành động, xin hãy kiểm tra lại kết nối của thiết bị",
+  "connectivityException": "Không thể thực hiện yêu cầu, xin hãy kiểm tra lại kết nối của thiết bị",
   "serverNotRespond": "Không có phản hồi từ server",
   "serverUnexpectedError": "Đã có vấn đề xảy ra với Server! Chúng tôi đang cố gắng để xử lý vấn đề! Xin vui lòng đợi cho đến khi có thông báo mới từ Hệ thống! Xin lỗi vì sự bất tiện này!",
   "success": "Thành công!",

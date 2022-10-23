@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/bases/mobx/base_state.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../../bases/mobx/base_state.dart';
 import '../../../../../../core/error/failures.dart';
 import '../../../../../../generated/translations/locale_keys.g.dart';
 import '../../../domain/entities/user_info.dart';
@@ -11,6 +12,7 @@ import '../../../domain/usecases/auth_use_case/sign_in_use_case.dart';
 
 part 'sign_in_store.g.dart';
 
+@injectable
 class SignInStore extends _SignInStore with _$SignInStore {
   SignInStore(AuthUseCase authUseCase) : super(authUseCase);
 }

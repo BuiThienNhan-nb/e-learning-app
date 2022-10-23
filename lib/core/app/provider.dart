@@ -1,7 +1,9 @@
 import 'package:e_learning_app/core/app/values.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_info.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class AppProvider extends ChangeNotifier {
   bool _isLogin = false;
   UserInfo? _user;

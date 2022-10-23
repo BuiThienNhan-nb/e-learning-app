@@ -8,7 +8,6 @@ import 'app.dart';
 import 'configs/env.dart';
 import 'configs/languages.dart';
 import 'generated/service_locator/dependency_injection.dart';
-import 'utils/dependency_init.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +21,6 @@ Future<void> main() async {
 Future<void> _initDependency() async {
   Intl.defaultLocale = AppLanguages.defaultLocaleString;
   await EasyLocalization.ensureInitialized();
-  await DependencyInitializer.init();
   configureDependencies();
 }
 

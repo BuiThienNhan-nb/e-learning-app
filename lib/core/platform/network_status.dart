@@ -1,13 +1,13 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class NetworkStatus {
   Future<bool> get isConnected;
 }
 
+@Injectable(as: NetworkStatus)
 class NetworkStatusImp implements NetworkStatus {
-  Connectivity connectivity;
-
-  NetworkStatusImp(this.connectivity);
+  final Connectivity connectivity = Connectivity();
 
   @override
   Future<bool> get isConnected async {

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../../bases/mobx/base_state.dart';
@@ -11,6 +12,7 @@ import '../../../../sign_in/domain/usecases/auth_use_case/sign_up_use_case.dart'
 
 part 'sign_up_store.g.dart';
 
+@injectable
 class SignUpStore extends _SignUpStore with _$SignUpStore {
   SignUpStore(super.authUseCase);
 }

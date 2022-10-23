@@ -86,7 +86,7 @@ class AppRoutes {
       backgroundColor: Colors.red,
     ),
   ];*/
-  String get initial => _bottomBarLocator.mainPage.first;
+  String get initial => signIn; //_bottomBarLocator.mainPage.first;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,

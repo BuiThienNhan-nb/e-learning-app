@@ -29,11 +29,11 @@ mixin _$MainPageStore on _MainPageStore, Store {
       ActionController(name: '_MainPageStore', context: context);
 
   @override
-  void onPageChanged(int value, BuildContext context) {
+  void onPageChanged(int value, BuildContext context, String url) {
     final _$actionInfo = _$_MainPageStoreActionController.startAction(
         name: '_MainPageStore.onPageChanged');
     try {
-      return super.onPageChanged(value, context);
+      return super.onPageChanged(value, context, url);
     } finally {
       _$_MainPageStoreActionController.endAction(_$actionInfo);
     }

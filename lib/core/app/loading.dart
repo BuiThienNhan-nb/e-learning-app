@@ -11,6 +11,7 @@ class AppLoading {
       showDialog(
         context: context,
         builder: (_) => const LoadingDialog(),
+        barrierDismissible: false,
       );
       isLoading = true;
     }

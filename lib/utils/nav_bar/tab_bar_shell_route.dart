@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../bases/presentation/atoms/scaffold_with_nav_bar.dart';
+import '../../features/main/presentation/pages/main_page.dart';
 import 'nav_bar_item.dart';
 
 /// ShellRoute that uses a bottom tab navigation (ScaffoldWithNavBar) with

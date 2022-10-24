@@ -10,10 +10,12 @@ import 'network_image.dart';
 class ContinueLessonCard extends StatelessWidget {
   const ContinueLessonCard({
     Key? key,
+    required this.height,
     this.leftPadding,
   }) : super(key: key);
 
   final double? leftPadding;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class ContinueLessonCard extends StatelessWidget {
           SizedBox(
             width: AppDimens.mediumWidthDimens * 22,
             child: SizedBox(
-              height: AppDimens.extraLargeHeightDimens * 8,
+              height: height,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -48,7 +50,10 @@ class ContinueLessonCard extends StatelessWidget {
                     "UI/UX Prototyping!! Sales till end of 2022! Join now!",
                     style: AppStyles.subtitle1TextStyle
                         .copyWith(fontWeight: FontWeight.w600),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
+                  SizedBox(height: AppDimens.mediumHeightDimens),
                   SizedBox(
                     width: AppDimens.mediumWidthDimens * 16,
                     child: Row(
@@ -92,79 +97,13 @@ class ContinueLessonCard extends StatelessWidget {
           DefaultNetworkImage(
             url:
                 "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
-            height: AppDimens.extraLargeHeightDimens * 5,
+            height: (height / 6) * 4.4,
             width: AppDimens.mediumWidthDimens * 12,
             shape: BoxShape.rectangle,
             borderRadius: AppDimens.mediumRadius,
           ),
         ],
       ),
-
-      /*
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              DefaultNetworkImage(
-                url:
-                    "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
-                height: AppDimens.extraLargeHeightDimens * 8,
-                width: AppDimens.mediumWidthDimens * 18,
-                shape: BoxShape.rectangle,
-                borderRadius: AppDimens.mediumRadius,
-              ),
-              ClipOval(
-                child: BackdropFilter(
-                  blendMode: BlendMode.srcOver,
-                  filter: ImageFilter.blur(
-                    sigmaX: 3.0,
-                    sigmaY: 3.0,
-                  ),
-                  child: Container(
-                    height: AppDimens.extraLargeHeightDimens * 3.6,
-                    width: AppDimens.mediumWidthDimens * 9,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.play_circle_outline,
-                color: AppColors.neutral.shade300,
-                size: AppDimens.extraLargeHeightDimens * 4,
-              ),
-            ],
-          ),
-          LinearProgressIndicator(
-            value: Random().nextDouble(),
-            backgroundColor: AppColors.neutral.shade400,
-            color: AppColors.primaryColor,
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(width: AppDimens.mediumWidthDimens),
-                const Icon(
-                  Icons.info_outline_rounded,
-                  color: AppColors.whiteColor,
-                ),
-                const Spacer(),
-                const Icon(
-                  Icons.more_vert,
-                  color: AppColors.whiteColor,
-                ),
-                SizedBox(width: AppDimens.mediumWidthDimens),
-              ],
-            ),
-          ),
-        ],
-      ),*/
     );
   }
 }

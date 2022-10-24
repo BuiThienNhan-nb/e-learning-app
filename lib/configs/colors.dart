@@ -15,6 +15,9 @@ class AppColors {
   /// Blue
   static const Color resolutionBlueColor = Color(0xFF1B3688);
 
+  /// Light blue
+  static const Color cornflowerBlueColor = Color(0xFF6989FB);
+
   /// Red
   static const Color fireEngineRedColor = Color(0xFFCF1322);
 

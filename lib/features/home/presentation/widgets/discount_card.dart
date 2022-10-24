@@ -11,48 +11,59 @@ class DiscountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(AppDimens.largeHeightDimens),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        // color: AppColors.cornflowerBlueColor,
         borderRadius: BorderRadius.circular(AppDimens.extraItemRadius),
+        gradient: const LinearGradient(
+          colors: [
+            AppColors.primaryColor,
+            AppColors.cornflowerBlueColor,
+          ],
+          stops: [
+            0,
+            0.6,
+          ],
+          begin: Alignment.topLeft,
+        ),
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(
-            left: AppDimens.largeWidthDimens,
-            child: SizedBox(
-              width: AppDimens.appDesignSize.width -
-                  (AppDimens.extraLargeWidthDimens * 2),
-              child: RichText(
-                text: TextSpan(
-                  style: AppStyles.headline6TextStyle.copyWith(
-                    color: AppColors.whiteColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: "20% OFF\n",
-                      style: AppStyles.headline6TextStyle.copyWith(
-                        color: AppColors.whiteColor,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: "TODAY SPECIAL\n\n",
-                    ),
-                    const TextSpan(
-                      text:
-                          "Get a discount for every course order! Only valid today!",
-                    ),
-                  ],
+          SizedBox(
+            width: AppDimens.appDesignSize.width -
+                (AppDimens.extraLargeWidthDimens * 2),
+            child: RichText(
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              text: TextSpan(
+                style: AppStyles.headline6TextStyle.copyWith(
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
                 ),
+                children: [
+                  TextSpan(
+                    text: "20% OFF\n",
+                    style: AppStyles.headline6TextStyle.copyWith(
+                      color: AppColors.whiteColor,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  const TextSpan(
+                    text: "TODAY SPECIAL\n\n",
+                  ),
+                  const TextSpan(
+                    text:
+                        "Get a discount for every course order! Only valid today!a a a a a aaaaaaaaaaaaaaaaaaaaaa",
+                  ),
+                ],
               ),
             ),
           ),
           Positioned(
-            right: AppDimens.extraLargeHeightDimens,
-            top: AppDimens.largeHeightDimens,
+            right: 0,
+            top: -AppDimens.mediumHeightDimens,
             child: Text(
               "40%",
               style: AppStyles.headline3TextStyle.copyWith(

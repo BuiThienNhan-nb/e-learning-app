@@ -27,13 +27,23 @@ class AppColors {
   /// Green
   static const Color pigmentGreenColor = Color(0xFF03AB53);
 
-  // Light blue grey
+  /// Light blue grey
   static const Color lavenderColor = Color(0xFFe8e9f2);
 
-  // Theme Color
-  static const Color primaryColor = Color(0xFF584CF4);
+  /// Theme Color 1st
+  static const Color primaryColor = Color(0xFF163172); //Color(0xFF584CF4);
 
-  static const Color secondaryColor = Color(0xFFF2F1FF);
+  /// Theme Color 2nd
+  static const Color secondaryColor = Color(0xFF1E56A0); //Color(0xFFF2F1FF);
+
+  /// Theme Color 3
+  static const Color lighSecondaryColor = Color(0xFFD6E4F0);
+
+  /// Theme Color 4
+  static const Color subThemeColor = Color(0xFFEAF1F7);
+
+  /// Theme Color light White
+  static const Color lightWhiteColor = Color(0xFFF6F6F6);
 
   static const Color gainsboroColor = Color(0xFFE2E2E2);
 

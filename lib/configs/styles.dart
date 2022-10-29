@@ -7,42 +7,42 @@ class AppStyles {
   AppStyles._internal();
 
   /// Text styles
-  static final TextStyle headline1TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline1TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline1Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle headline2TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline2TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline2Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle headline3TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline3TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline3Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle headline4TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline4TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline4Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle headline5TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline5TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline5Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle headline6TextStyle = GoogleFonts.notoSans(
+  static final TextStyle headline6TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.headline6Text,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle subtitle1TextStyle = GoogleFonts.notoSans(
+  static final TextStyle subtitle1TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.subtitle1Text,
     fontWeight: FontWeight.w300,
   );
 
-  static final TextStyle subtitle2TextStyle = GoogleFonts.notoSans(
+  static final TextStyle subtitle2TextStyle = GoogleFonts.nunitoSans(
     fontSize: AppDimens.subtitle2Text,
     fontWeight: FontWeight.w300,
   );

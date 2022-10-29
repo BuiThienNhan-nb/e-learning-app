@@ -1,32 +1,30 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_info.dart';
 
-import 'package:e_learning_app/features/home/domain/entities/image_model.dart';
+import '../../../../home/domain/entities/image_model.dart';
 
-class UserInfo extends Equatable {
-  final String id;
-  String name;
-  final String email;
-  ImageModel? avatar;
-  DateTime birthday;
-  String? phoneNumber;
-  final String role;
-  String gender;
+class TeacherModel extends UserInfo {
+  final double rates;
+  final int votes;
 
-  UserInfo({
-    required this.id,
-    required this.name,
-    required this.email,
-    this.avatar,
-    required this.birthday,
-    this.phoneNumber,
-    required this.role,
-    required this.gender,
+  TeacherModel({
+    required super.id,
+    required super.name,
+    required super.email,
+    required super.birthday,
+    required super.role,
+    required super.gender,
+    required super.avatar,
+    required super.phoneNumber,
+    required this.rates,
+    required this.votes,
   });
 
-  UserInfo copyWith({
+  @override
+  TeacherModel copyWith({
     String? id,
     String? name,
     String? email,
@@ -35,8 +33,10 @@ class UserInfo extends Equatable {
     String? phoneNumber,
     String? role,
     String? gender,
+    double? rates,
+    int? votes,
   }) {
-    return UserInfo(
+    return TeacherModel(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -45,24 +45,29 @@ class UserInfo extends Equatable {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       role: role ?? this.role,
       gender: gender ?? this.gender,
+      rates: rates ?? this.rates,
+      votes: votes ?? this.votes,
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
       'email': email,
-      'avatar': avatar?.toMap(),
+      'avatar': avatar,
       'birthday': birthday.millisecondsSinceEpoch,
       'phoneNumber': phoneNumber,
       'role': role,
       'gender': gender,
+      'rates': rates,
+      'votes': votes,
     };
   }
 
-  factory UserInfo.fromMap(Map<String, dynamic> map) {
-    return UserInfo(
+  factory TeacherModel.fromMap(Map<String, dynamic> map) {
+    return TeacherModel(
       id: (map['id'] ?? '') as String,
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
@@ -75,13 +80,16 @@ class UserInfo extends Equatable {
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       role: (map['role'] ?? '') as String,
       gender: (map['gender'] ?? '') as String,
+      rates: (map['rates'] ?? 0.0) as double,
+      votes: (map['votes'] ?? 0) as int,
     );
   }
 
+  @override
   String toJson() => json.encode(toMap());
 
-  factory UserInfo.fromJson(String source) =>
-      UserInfo.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TeacherModel.fromJson(String source) =>
+      TeacherModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
@@ -101,6 +109,8 @@ class UserInfo extends Equatable {
       phoneNumber ?? "",
       role,
       gender,
+      rates,
+      votes,
     ];
   }
 }

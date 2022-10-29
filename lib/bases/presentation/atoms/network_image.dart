@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -39,8 +41,10 @@ class DefaultNetworkImage extends StatelessWidget {
             duration: const Duration(seconds: 12),
           ),
         ),
-        errorWidget: (context, url, error) =>
-            const Center(child: Icon(Icons.error)),
+        errorWidget: (context, url, error) {
+          log(error.toString());
+          return const Center(child: Icon(Icons.error));
+        },
         imageBuilder: (context, imageProvider) => Container(
           height: height,
           width: width,
@@ -51,7 +55,7 @@ class DefaultNetworkImage extends StatelessWidget {
                 : null,
             image: DecorationImage(
               image: imageProvider,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
         ),

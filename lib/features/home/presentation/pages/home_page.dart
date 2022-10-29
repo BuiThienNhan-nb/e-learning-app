@@ -1,5 +1,4 @@
 import 'package:e_learning_app/bases/presentation/atoms/card_page_view.dart';
-import 'package:e_learning_app/bases/presentation/atoms/recommendation_lesson_card.dart';
 import 'package:e_learning_app/configs/dimens.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/home/presentation/widgets/continue_lesson_list_view.dart';
@@ -68,28 +67,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: AppDimens.mediumHeightDimens),
-                    const RecommendationLessonPageView(
-                      pages: [
-                        RecommendationLessonCard(
-                          isDiscount: true,
-                        ),
-                        RecommendationLessonCard(
-                          isDiscount: false,
-                        ),
-                        RecommendationLessonCard(
-                          isDiscount: true,
-                        ),
-                        RecommendationLessonCard(
-                          isDiscount: false,
-                        ),
-                        RecommendationLessonCard(
-                          isDiscount: true,
-                        ),
-                        RecommendationLessonCard(
-                          isDiscount: false,
-                        ),
-                      ],
-                    ),
+                    const RecommendationLessonPageView(),
                     SizedBox(height: AppDimens.mediumHeightDimens),
                   ],
                 ),

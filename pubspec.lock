@@ -763,6 +763,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  random_date:
+    dependency: "direct main"
+    description:
+      name: random_date
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   rxdart:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:e_learning_app/bases/presentation/atoms/bookmark_icon.dart';
 import 'package:e_learning_app/bases/presentation/atoms/network_image.dart';
 import 'package:e_learning_app/configs/styles.dart';
+import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../configs/colors.dart';
@@ -11,12 +12,12 @@ import '../../../configs/dimens.dart';
 class RecommendationLessonCard extends StatelessWidget {
   const RecommendationLessonCard({
     super.key,
-    required this.isDiscount,
+    required this.lesson,
     this.height,
   });
 
-  final bool isDiscount;
   final double? height;
+  final LessonModel lesson;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +53,8 @@ class RecommendationLessonCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             DefaultNetworkImage(
-              imageUrl:
-                  "https://images.unsplash.com/photo-1666688090267-4858c2075629?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-              blurHash: "LUE{|Z~qNeIV0LE2WAozIpR+t6oI",
+              imageUrl: lesson.image.url,
+              blurHash: lesson.image.blurHash,
               height: height ?? (AppDimens.extraLargeHeightDimens * 7),
               width: AppDimens.mediumWidthDimens * 20,
               shape: BoxShape.rectangle,
@@ -81,7 +81,7 @@ class RecommendationLessonCard extends StatelessWidget {
                             BorderRadius.circular(AppDimens.mediumRadius),
                       ),
                       child: Text(
-                        "3D Design",
+                        lesson.category,
                         style: AppStyles.subtitle2TextStyle.copyWith(
                           color: AppColors.secondaryColor,
                           fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class RecommendationLessonCard extends StatelessWidget {
                       width: AppDimens.appDesignSize.width -
                           AppDimens.mediumWidthDimens * 22,
                       child: Text(
-                        "3D Design Illustrations class (2022 updated)",
+                        lesson.title,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.headline6TextStyle.copyWith(
@@ -106,7 +106,7 @@ class RecommendationLessonCard extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.mediumWidthDimens * 18,
                       height: AppDimens.extraLargeHeightDimens,
-                      child: isDiscount
+                      child: (lesson.sale != null && lesson.sale != 0)
                           ? RichText(
                               text: TextSpan(
                                 style: AppStyles.headline6TextStyle.copyWith(
@@ -114,11 +114,13 @@ class RecommendationLessonCard extends StatelessWidget {
                                   fontWeight: FontWeight.w900,
                                 ),
                                 children: [
-                                  const TextSpan(
-                                    text: "40\$\t\t",
+                                  TextSpan(
+                                    text:
+                                        "${(lesson.price * (1 - lesson.sale!)).toStringAsFixed(2)}\$\t\t",
                                   ),
                                   TextSpan(
-                                    text: "80\$",
+                                    text:
+                                        "${lesson.price.toStringAsFixed(2)}\$",
                                     style:
                                         AppStyles.subtitle1TextStyle.copyWith(
                                       color: AppColors.neutral.shade500,
@@ -132,7 +134,7 @@ class RecommendationLessonCard extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              "80\$",
+                              "${lesson.price.toStringAsFixed(2)}\$",
                               style: AppStyles.headline6TextStyle.copyWith(
                                 color: AppColors.primaryColor,
                                 fontWeight: FontWeight.w900,
@@ -143,7 +145,7 @@ class RecommendationLessonCard extends StatelessWidget {
                 ),
                 Positioned(
                   right: AppDimens.smallWidthDimens,
-                  bottom: AppDimens.largeHeightDimens,
+                  bottom: AppDimens.mediumHeightDimens,
                   child: SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +156,7 @@ class RecommendationLessonCard extends StatelessWidget {
                           color: Colors.yellow,
                         ),
                         Text(
-                          "\t4.2",
+                          "\t${lesson.rates.toStringAsFixed(2)}",
                           style: AppStyles.subtitle2TextStyle,
                           textAlign: TextAlign.center,
                         ),

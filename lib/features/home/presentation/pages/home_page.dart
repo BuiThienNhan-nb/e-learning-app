@@ -1,13 +1,14 @@
 import 'package:e_learning_app/bases/presentation/atoms/card_page_view.dart';
-import 'package:e_learning_app/configs/colors.dart';
+import 'package:e_learning_app/bases/presentation/atoms/recommendation_lesson_card.dart';
 import 'package:e_learning_app/configs/dimens.dart';
 import 'package:e_learning_app/configs/styles.dart';
+import 'package:e_learning_app/features/home/presentation/widgets/continue_lesson_list_view.dart';
 import 'package:e_learning_app/features/home/presentation/widgets/discount_card.dart';
 import 'package:e_learning_app/features/home/presentation/widgets/home_header.dart';
+import 'package:e_learning_app/features/home/presentation/widgets/recomendation_lesson_page_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../bases/presentation/atoms/hor_lesson_card.dart';
+import '../widgets/teacher_list_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -28,11 +29,8 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: AppDimens.extraLargeHeightDimens),
                     CardPageView(
                       height: AppDimens.extraLargeHeightDimens * 7,
-                      // width: AppDimens.appDesignSize.width -
-                      //     (AppDimens.extraLargeWidthDimens * 2),
                       pages: const [
                         DiscountCard(),
                         DiscountCard(),
@@ -42,125 +40,57 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: AppDimens.largeHeightDimens),
-
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: AppDimens.largeWidthDimens),
-                      child: Text(
-                        "Continue to learn",
-                        style: AppStyles.headline6TextStyle
-                            .copyWith(fontWeight: FontWeight.bold),
+                    Text(
+                      "\t\t\tTop Mentors",
+                      style: AppStyles.headline6TextStyle.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TeacherListView(
+                      height: AppDimens.extraLargeHeightDimens * 5,
+                    ),
+                    SizedBox(height: AppDimens.largeHeightDimens),
+                    Text(
+                      "\t\t\tContinue to learn",
+                      style: AppStyles.headline6TextStyle.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: AppDimens.mediumHeightDimens),
-                    SizedBox(
+                    ContinueLessonListView(
                       height: AppDimens.extraLargeHeightDimens * 6,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          left: AppDimens.largeWidthDimens,
-                          right: AppDimens.largeWidthDimens,
-                        ),
-                        itemBuilder: (_, index) => ContinueLessonCard(
-                          leftPadding:
-                              index != 0 ? AppDimens.mediumWidthDimens : null,
-                          height: AppDimens.extraLargeHeightDimens * 6,
-                        ),
-                      ),
                     ),
-
-                    // Pretend this gonna be another section of home page
-                    SizedBox(height: AppDimens.extraLargeHeightDimens),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: AppDimens.largeWidthDimens),
-                      child: Text(
-                        "Continue to learn",
-                        style: AppStyles.headline6TextStyle
-                            .copyWith(fontWeight: FontWeight.bold),
+                    SizedBox(height: AppDimens.largeHeightDimens),
+                    Text(
+                      "\t\t\tRecommendation",
+                      style: AppStyles.headline6TextStyle.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: AppDimens.mediumHeightDimens),
-                    SizedBox(
-                      height: AppDimens.extraLargeHeightDimens * 7,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          left: AppDimens.largeWidthDimens,
-                          right: AppDimens.largeWidthDimens,
+                    const RecommendationLessonPageView(
+                      pages: [
+                        RecommendationLessonCard(
+                          isDiscount: true,
                         ),
-                        itemBuilder: (_, index) => ContinueLessonCard(
-                          leftPadding:
-                              index != 0 ? AppDimens.mediumWidthDimens : null,
-                          height: AppDimens.extraLargeHeightDimens * 7,
+                        RecommendationLessonCard(
+                          isDiscount: false,
                         ),
-                      ),
-                    ),
-                    SizedBox(height: AppDimens.extraLargeHeightDimens),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: AppDimens.largeWidthDimens),
-                      child: Text(
-                        "Continue to learn",
-                        style: AppStyles.headline6TextStyle
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
+                        RecommendationLessonCard(
+                          isDiscount: true,
+                        ),
+                        RecommendationLessonCard(
+                          isDiscount: false,
+                        ),
+                        RecommendationLessonCard(
+                          isDiscount: true,
+                        ),
+                        RecommendationLessonCard(
+                          isDiscount: false,
+                        ),
+                      ],
                     ),
                     SizedBox(height: AppDimens.mediumHeightDimens),
-                    SizedBox(
-                      height: AppDimens.extraLargeHeightDimens * 6,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          left: AppDimens.largeWidthDimens,
-                          right: AppDimens.largeWidthDimens,
-                        ),
-                        itemBuilder: (_, index) => ContinueLessonCard(
-                          leftPadding:
-                              index != 0 ? AppDimens.mediumWidthDimens : null,
-                          height: AppDimens.extraLargeHeightDimens * 6,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: AppDimens.extraLargeHeightDimens),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: AppDimens.largeWidthDimens),
-                      child: Text(
-                        "Continue to learn",
-                        style: AppStyles.headline6TextStyle
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(height: AppDimens.mediumHeightDimens),
-                    SizedBox(
-                      height: AppDimens.extraLargeHeightDimens * 6,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          left: AppDimens.largeWidthDimens,
-                          right: AppDimens.largeWidthDimens,
-                        ),
-                        itemBuilder: (_, index) => ContinueLessonCard(
-                          leftPadding:
-                              index != 0 ? AppDimens.mediumWidthDimens : null,
-                          height: AppDimens.extraLargeHeightDimens * 6,
-                        ),
-                      ),
-                    ),
-                    // Ending
                   ],
                 ),
               ],

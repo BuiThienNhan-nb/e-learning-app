@@ -138,7 +138,10 @@ class BuildSignInPage extends StatelessWidget {
               ),
               SizedBox(height: AppDimens.largeHeightDimens * 2),
               Center(
-                child: SvgPicture.asset("assets/images/app_logo.svg"),
+                child: SvgPicture.asset(
+                  "assets/images/app_logo.svg",
+                  color: AppColors.primaryColor,
+                ),
               ),
               SizedBox(height: AppDimens.extraLargeHeightDimens),
               Text(

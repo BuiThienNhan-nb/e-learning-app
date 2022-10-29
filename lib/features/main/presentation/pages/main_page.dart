@@ -110,11 +110,14 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return IndexedStack(
-      index: store!.pageIndex,
-      children: _tabs
-          .map((NavBarTabNavigator tab) => tab.buildNavigator(context))
-          .toList(),
+    return Container(
+      color: AppColors.whiteColor,
+      child: IndexedStack(
+        index: store!.pageIndex,
+        children: _tabs
+            .map((NavBarTabNavigator tab) => tab.buildNavigator(context))
+            .toList(),
+      ),
     );
   }
 

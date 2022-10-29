@@ -28,7 +28,7 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
 
     return Consumer<AppProvider>(
       builder: (_, provider, __) => Container(
-        color: AppColors.lavenderColor,
+        color: AppColors.whiteColor,
         height: double.infinity,
         child: Stack(
           alignment: Alignment.centerLeft,
@@ -36,16 +36,26 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
             Positioned(
               left: AppDimens.mediumWidthDimens,
               top: AppDimens.extraLargeHeightDimens * 0.5,
-              child: DefaultNetworkImage(
-                url:
-                    "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
-                height: AppDimens.extraLargeHeightDimens * 2,
-                width: AppDimens.extraLargeWidthDimens * 2,
+              child: Container(
+                // height: AppDimens.extraLargeHeightDimens * 2.4,
+                // width: AppDimens.extraLargeWidthDimens * 2.4,
+                padding: EdgeInsets.all(AppDimens.extraLargeWidthDimens * 0.1),
+                decoration: const BoxDecoration(
+                  color: AppColors.secondaryColor,
+                  shape: BoxShape.circle,
+                ),
+                child: DefaultNetworkImage(
+                  imageUrl:
+                      "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
+                  blurHash: "LUE{|Z~qNeIV0LE2WAozIpR+t6oI",
+                  height: AppDimens.extraLargeHeightDimens * 2,
+                  width: AppDimens.extraLargeWidthDimens * 2,
+                ),
               ),
             ),
             Positioned(
               left: AppDimens.mediumWidthDimens * 2 +
-                  AppDimens.extraLargeWidthDimens * 2 * percent,
+                  AppDimens.extraLargeWidthDimens * 2 * percent * 1.05,
               bottom: percent + AppDimens.extraLargeHeightDimens * 0.5,
               child: LinkText(
                 contentText1: DateTime.now().toGreetingString().tr(),
@@ -90,7 +100,7 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => AppDimens.extraLargeHeightDimens * 6.8;
+  double get maxExtent => AppDimens.extraLargeHeightDimens * 7;
 
   @override
   double get minExtent => AppDimens.extraLargeHeightDimens * 3;

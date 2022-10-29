@@ -13,19 +13,19 @@ class DiscountCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppDimens.largeHeightDimens),
       decoration: BoxDecoration(
-        // color: AppColors.cornflowerBlueColor,
+        color: AppColors.secondaryColor,
         borderRadius: BorderRadius.circular(AppDimens.extraItemRadius),
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryColor,
-            AppColors.cornflowerBlueColor,
-          ],
-          stops: [
-            0,
-            0.6,
-          ],
-          begin: Alignment.topLeft,
-        ),
+        // gradient: const LinearGradient(
+        //   colors: [
+        //     AppColors.cornflowerBlueColor,
+        //     AppColors.primaryColor,
+        //   ],
+        //   stops: [
+        //     0,
+        //     0.8,
+        //   ],
+        //   begin: Alignment.topLeft,
+        // ),
       ),
       child: Stack(
         alignment: Alignment.center,
@@ -68,6 +68,12 @@ class DiscountCard extends StatelessWidget {
               "40%",
               style: AppStyles.headline3TextStyle.copyWith(
                 color: AppColors.whiteColor,
+                shadows: [
+                  Shadow(
+                    color: AppColors.neutral.shade200.withOpacity(0.8),
+                    blurRadius: 20,
+                  ),
+                ],
               ),
             ),
           ),

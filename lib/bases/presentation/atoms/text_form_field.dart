@@ -51,7 +51,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       }
       if (textFieldFocus.hasFocus) {
         setState(() {
-          fillColor = AppColors.secondaryColor;
+          fillColor = AppColors.subThemeColor;
           iconColor = AppColors.primaryColor;
         });
       } else {

@@ -12,7 +12,7 @@ class LoadingDialog extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Center(
-        child: LoadingAnimationWidget.hexagonDots(
+        child: LoadingAnimationWidget.threeRotatingDots(
           color: AppColors.primaryColor,
           size: AppDimens.extraLargeHeightDimens * 2,
         ),

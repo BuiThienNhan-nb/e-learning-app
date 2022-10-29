@@ -76,10 +76,14 @@ class ContinueLessonCard extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: AppDimens.mediumWidthDimens * 10,
-                          child: LinearProgressIndicator(
-                            value: progress,
-                            backgroundColor: AppColors.neutral.shade400,
-                            color: AppColors.primaryColor,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                AppDimens.extraItemRadius),
+                            child: LinearProgressIndicator(
+                              value: progress,
+                              backgroundColor: AppColors.neutral.shade400,
+                              color: AppColors.primaryColor,
+                            ),
                           ),
                         ),
                         Text(
@@ -95,8 +99,9 @@ class ContinueLessonCard extends StatelessWidget {
           ),
           const Spacer(),
           DefaultNetworkImage(
-            url:
-                "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
+            imageUrl:
+                "https://images.unsplash.com/photo-1666688090267-4858c2075629?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            blurHash: "LUE{|Z~qNeIV0LE2WAozIpR+t6oI",
             height: (height / 6) * 4.4,
             width: AppDimens.mediumWidthDimens * 12,
             shape: BoxShape.rectangle,

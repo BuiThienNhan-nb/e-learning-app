@@ -29,7 +29,7 @@ class DefaultTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: submit,
         style: TextButton.styleFrom(
-          primary: AppColors.whiteColor,
+          foregroundColor: AppColors.whiteColor,
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDimens.extraItemRadius),

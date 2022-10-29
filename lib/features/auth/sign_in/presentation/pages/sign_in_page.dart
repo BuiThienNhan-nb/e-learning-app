@@ -83,6 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                 (_) {
                   GetIt.I<AppProvider>().user = signInStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
+                  provider.dispose();
                   GoRouter.of(context)
                       .go(GetIt.I<BottomNavigationBarConfig>().mainPage[0]);
                 },

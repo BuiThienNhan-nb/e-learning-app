@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,6 +39,8 @@ class AuthPageProvider extends ChangeNotifier {
     nameController.dispose();
     datePickerController.dispose();
     phoneNumberController.dispose();
+
+    log("dispose auth_page_provider");
 
     super.dispose();
   }

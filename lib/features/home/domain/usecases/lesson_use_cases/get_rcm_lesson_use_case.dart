@@ -1,13 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/features/home/domain/repositories/lesson_repository.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
 import '../../entities/lesson_model.dart';
+import '../../repositories/get_rcm_lessons_repository.dart';
 
+@lazySingleton
 class GetRecommendedLessonsUseCase
     implements UseCase<List<LessonModel>, NoParams> {
-  final LessonRepository _repository;
+  final GetRecommendedLessonsRepository _repository;
 
   GetRecommendedLessonsUseCase(this._repository);
 

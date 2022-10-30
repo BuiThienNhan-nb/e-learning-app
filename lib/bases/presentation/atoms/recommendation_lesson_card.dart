@@ -35,7 +35,7 @@ class RecommendationLessonCard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
-          border: Border.all(color: AppColors.neutral.shade200),
+          border: Border.all(color: AppColors.neutral.shade300),
           borderRadius: BorderRadius.circular(AppDimens.largeRadius),
           boxShadow: [
             BoxShadow(

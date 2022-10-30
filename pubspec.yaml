@@ -44,6 +44,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   flutter_blurhash: ^0.7.0
   random_date: ^0.0.7
+  coupon_uikit: ^0.0.1+2
 
 dev_dependencies:
   flutter_test:

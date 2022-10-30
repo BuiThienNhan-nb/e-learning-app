@@ -1,4 +1,5 @@
 import 'package:e_learning_app/bases/presentation/atoms/card_page_view.dart';
+import 'package:e_learning_app/configs/colors.dart';
 import 'package:e_learning_app/configs/dimens.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/home/presentation/widgets/continue_lesson_list_view.dart';
@@ -29,7 +30,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CardPageView(
-                      height: AppDimens.extraLargeHeightDimens * 7,
+                      height: AppDimens.extraLargeHeightDimens * 6.4,
                       pages: const [
                         DiscountCard(),
                         DiscountCard(),
@@ -60,11 +61,26 @@ class HomePage extends StatelessWidget {
                       height: AppDimens.extraLargeHeightDimens * 6,
                     ),
                     SizedBox(height: AppDimens.largeHeightDimens),
-                    Text(
-                      "\t\t\tRecommendation",
-                      style: AppStyles.headline6TextStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "\t\t\tRecommendation",
+                          style: AppStyles.headline6TextStyle.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "See all lessons",
+                            style: AppStyles.subtitle1TextStyle.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: AppDimens.mediumHeightDimens),
                     const RecommendationLessonPageView(),

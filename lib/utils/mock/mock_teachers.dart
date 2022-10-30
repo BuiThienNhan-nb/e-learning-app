@@ -5,7 +5,7 @@ import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_mod
 import 'package:injectable/injectable.dart';
 import 'package:random_date/random_date.dart';
 
-import '../../features/home/domain/entities/image_model.dart';
+import '../../features/auth/sign_in/domain/entities/image_model.dart';
 
 @lazySingleton
 class MockTeachers {

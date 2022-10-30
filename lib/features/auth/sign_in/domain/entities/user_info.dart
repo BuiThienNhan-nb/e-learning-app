@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:e_learning_app/features/home/domain/entities/image_model.dart';
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/image_model.dart';
 
 class UserInfo extends Equatable {
   final String id;

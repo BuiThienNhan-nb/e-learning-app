@@ -1,6 +1,7 @@
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
 import '../../../configs/styles.dart';
 import 'network_image.dart';
@@ -23,11 +24,27 @@ class RoundTeacherItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DefaultNetworkImage(
-            imageUrl: teacher.avatar!.url,
-            blurHash: teacher.avatar!.blurHash,
-            height: AppDimens.extraLargeHeightDimens * 3.2,
-            width: AppDimens.extraLargeWidthDimens * 3.2,
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.neutral.shade200),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.neutral.shade400,
+                  blurRadius: AppDimens.mediumHeightDimens,
+                  // offset: const Offset(1, 1),
+                  blurStyle: BlurStyle.normal,
+                  spreadRadius: 0.2,
+                ),
+              ],
+            ),
+            child: DefaultNetworkImage(
+              imageUrl: teacher.avatar!.url,
+              blurHash: teacher.avatar!.blurHash,
+              height: AppDimens.extraLargeHeightDimens * 3.2,
+              width: AppDimens.extraLargeWidthDimens * 3.2,
+            ),
           ),
           SizedBox(height: AppDimens.smallHeightDimens),
           SizedBox(

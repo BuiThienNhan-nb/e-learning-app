@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'image_model.dart';
+import '../../../auth/sign_in/domain/entities/image_model.dart';
 
 class LessonModel extends Equatable {
   String id;

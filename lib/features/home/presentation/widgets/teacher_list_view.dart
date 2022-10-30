@@ -24,7 +24,9 @@ class TeacherListView extends StatelessWidget {
         shrinkWrap: true,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.only(
-            left: index == 0 ? AppDimens.mediumWidthDimens : 0,
+            left: index == 0
+                ? AppDimens.mediumWidthDimens
+                : AppDimens.mediumWidthDimens,
           ),
           child: RoundTeacherItem(
             teacher: teachers[index],

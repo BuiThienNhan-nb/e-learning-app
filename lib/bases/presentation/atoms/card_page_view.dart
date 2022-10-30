@@ -37,16 +37,18 @@ class CardPageView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (_, index) {
               return Padding(
-                padding: EdgeInsets.only(
-                  left: AppDimens.largeWidthDimens,
-                  right: AppDimens.largeWidthDimens,
+                padding: EdgeInsets.fromLTRB(
+                  AppDimens.extraLargeWidthDimens,
+                  AppDimens.mediumHeightDimens,
+                  AppDimens.extraLargeWidthDimens,
+                  AppDimens.largeHeightDimens,
                 ),
                 child: pages[index % pages.length],
               );
             },
           ),
           Positioned(
-            bottom: AppDimens.mediumHeightDimens,
+            // bottom: AppDimens.mediumHeightDimens,
             child: CustomPageIndicator(
                 controller: controller, count: pages.length),
           ),
@@ -77,7 +79,7 @@ class CustomPageIndicator extends StatelessWidget {
         activeDotDecoration: DotDecoration(
           width: 16.w,
           height: 4.h,
-          color: AppColors.whiteColor,
+          color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(AppDimens.mediumRadius),
         ),
         dotDecoration: DotDecoration(

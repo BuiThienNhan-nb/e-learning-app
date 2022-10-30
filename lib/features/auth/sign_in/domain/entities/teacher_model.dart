@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_info.dart';
 
-import '../../../../home/domain/entities/image_model.dart';
+import 'image_model.dart';
 
 class TeacherModel extends UserInfo {
   final double rates;

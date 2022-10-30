@@ -27,8 +27,17 @@ class ContinueLessonCard extends StatelessWidget {
       width: AppDimens.mediumWidthDimens * 38,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
-        border: Border.all(color: AppColors.neutral.shade400),
+        border: Border.all(color: AppColors.neutral.shade300),
         borderRadius: BorderRadius.circular(AppDimens.largeRadius),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.neutral.shade200,
+            blurRadius: AppDimens.mediumHeightDimens,
+            // offset: const Offset(1, 1),
+            blurStyle: BlurStyle.normal,
+            spreadRadius: 0.4,
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

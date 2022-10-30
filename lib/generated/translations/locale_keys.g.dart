@@ -4,7 +4,12 @@ abstract class  LocaleKeys {
   static const signIn = 'signIn';
   static const signUp = 'signUp';
   static const forgotPassword = 'forgotPassword';
+  static const resetPassword = 'resetPassword';
   static const orContinueWith = 'orContinueWith';
+  static const identityCode = 'identityCode';
+  static const identityCodeRequired = 'identityCodeRequired';
+  static const sendEmailMessage = 'sendEmailMessage';
+  static const resendEmail = 'resendEmail';
   static const alreadyHaveAccount = 'alreadyHaveAccount';
   static const dontHaveAccount = 'dontHaveAccount';
   static const welcome = 'welcome';

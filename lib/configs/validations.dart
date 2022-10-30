@@ -12,6 +12,10 @@ class AppValidations {
     return instance;
   }
 
+  String? indentityCode(String value) =>
+      RequiredValidator(errorText: LocaleKeys.identityCodeRequired.tr())
+          .call(value);
+
   String? emailValidator(String value) => MultiValidator(
         [
           EmailValidator(errorText: LocaleKeys.invalidEmail.tr()),

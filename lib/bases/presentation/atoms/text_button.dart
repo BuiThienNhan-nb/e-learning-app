@@ -11,11 +11,13 @@ class DefaultTextButton extends StatelessWidget {
   String title = "Submit";
   final Function() submit;
   Color backgroundColor = AppColors.primaryColor;
+  TextStyle? titleStyle;
 
   DefaultTextButton({
     Key? key,
     required this.submit,
     this.title = "Submit",
+    this.titleStyle,
     this.height,
     this.width,
     this.backgroundColor = AppColors.primaryColor,
@@ -39,7 +41,7 @@ class DefaultTextButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: AppStyles.headline6TextStyle,
+          style: titleStyle ?? AppStyles.headline6TextStyle,
         ),
       ),
     );

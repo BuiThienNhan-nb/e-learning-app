@@ -158,9 +158,10 @@ class BuildSignInPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => logger.log("message"),
+                  onTap: () => GoRouter.of(context)
+                      .push(GetIt.I<AppRoutes>().forgotPassword),
                   child: Text(
-                    LocaleKeys.forgotPassword.tr(),
+                    "${LocaleKeys.forgotPassword.tr()} ?",
                     style: AppStyles.subtitle2TextStyle.copyWith(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w900,
@@ -223,7 +224,7 @@ class BuildSignInPage extends StatelessWidget {
                   contentText2: "  ${LocaleKeys.signUp.tr()}",
                   onTap1: () {},
                   onTap2: () =>
-                      GoRouter.of(context).push(AppRoutes.instance.signUp),
+                      GoRouter.of(context).push(GetIt.I<AppRoutes>().signUp),
                 ),
               ),
               SizedBox(height: AppDimens.mediumHeightDimens),

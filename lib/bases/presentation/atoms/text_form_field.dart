@@ -68,7 +68,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: textFieldFocus,
-      autovalidateMode: AutovalidateMode.always,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       onTap: widget.onTap,
       readOnly: widget.readOnly,

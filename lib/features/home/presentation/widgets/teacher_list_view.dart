@@ -4,9 +4,11 @@ import 'package:e_learning_app/configs/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/round_teacher_item.dart';
+import '../../../../configs/routes.dart';
 import '../states/teacher/get_top_teachers_store.dart';
 
 class TeacherListView extends StatelessWidget {
@@ -43,18 +45,43 @@ class TeacherListView extends StatelessWidget {
             itemCount: store.topTeachers!.length,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(
-                left: index == 0
-                    ? AppDimens.mediumWidthDimens
-                    : AppDimens.mediumWidthDimens,
-              ),
-              child: RoundTeacherItem(
-                teacher: store.topTeachers![index],
-              ),
+            itemBuilder: (context, index) => TeacherListItem(
+              store: store,
+              index: index,
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class TeacherListItem extends StatelessWidget {
+  const TeacherListItem({
+    Key? key,
+    required this.store,
+    required this.index,
+  }) : super(key: key);
+
+  final GetTopTeachersStore store;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).go(GetIt.I<AppRoutes>().teacherDetail),
+      child: Hero(
+        tag: store.topTeachers![index].id,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: index == 0
+                ? AppDimens.mediumWidthDimens
+                : AppDimens.mediumWidthDimens,
+          ),
+          child: RoundTeacherItem(
+            teacher: store.topTeachers![index],
+          ),
+        ),
       ),
     );
   }

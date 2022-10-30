@@ -1,7 +1,12 @@
 {
   "signIn": "Đăng nhập",
   "signUp": "Đăng ký",
-  "forgotPassword": "Quên mật khẩu ?",
+  "forgotPassword": "Quên Mật khẩu",
+  "resetPassword": "Đặt lại Mật khẩu",
+  "identityCode": "Mã định danh",
+  "identityCodeRequired": "Vui lòng nhập Mã định danh!",
+  "sendEmailMessage": "Yêu cầu đã được gửi đến email của bạn! Vui lòng kiểm tra Email để nhận Mã định danh!",
+  "resendEmail": "Gửi lại Email",
   "orContinueWith": "hoặc Đăng Nhập với",
   "alreadyHaveAccount": "Đã có tài khoản?",
   "dontHaveAccount": "Chưa có tài khoản?",

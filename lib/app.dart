@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final router = GetIt.I<AppRoutes>().router;
     return ChangeNotifierProvider(
       create: (context) => GetIt.I<AppProvider>(),
       builder: (context, child) => EasyLocalization(
@@ -35,11 +36,9 @@ class MyApp extends StatelessWidget {
                   textTheme: AppThemes.appTextTheme,
                   colorScheme: AppThemes.appColorSchema,
                 ),
-                routerDelegate: AppRoutes.instance.router.routerDelegate,
-                routeInformationParser:
-                    AppRoutes.instance.router.routeInformationParser,
-                routeInformationProvider:
-                    AppRoutes.instance.router.routeInformationProvider,
+                routerDelegate: router.routerDelegate,
+                routeInformationParser: router.routeInformationParser,
+                routeInformationProvider: router.routeInformationProvider,
               );
             },
           ),

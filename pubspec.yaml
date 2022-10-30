@@ -45,6 +45,7 @@ dependencies:
   flutter_blurhash: ^0.7.0
   random_date: ^0.0.7
   coupon_uikit: ^0.0.1+2
+  flutter_native_splash: ^2.2.12
 
 dev_dependencies:
   flutter_test:

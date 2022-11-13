@@ -56,7 +56,7 @@ import '../../features/home/presentation/states/lesson/get_rcm_lessons_store.dar
 import '../../features/home/presentation/states/teacher/get_top_teachers_store.dart'
     as _i31;
 import '../../features/main/presentation/mobx/main_page_store.dart' as _i12;
-import '../../utils/mock/mock_lessons.dart' as _i13;
+import '../../utils/mock/mock_courses.dart' as _i13;
 import '../../utils/mock/mock_teachers.dart'
     as _i14; // ignore_for_file: unnecessary_lambdas
 
@@ -88,7 +88,7 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i11.GetTopTeachersDataSource>(
       () => _i11.GetTopTeachersDataSourceImp());
   gh.factory<_i12.MainPageStore>(() => _i12.MainPageStore());
-  gh.lazySingleton<_i13.MockLessons>(() => _i13.MockLessons());
+  gh.lazySingleton<_i13.MockCourses>(() => _i13.MockCourses());
   gh.lazySingleton<_i14.MockTeachers>(() => _i14.MockTeachers());
   gh.factory<_i15.NetworkStatus>(() => _i15.NetworkStatusImp());
   gh.lazySingleton<_i16.AuthRepository>(() => _i17.AuthRepositoryImp(

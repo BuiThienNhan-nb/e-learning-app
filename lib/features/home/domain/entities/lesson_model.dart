@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../auth/sign_in/domain/entities/image_model.dart';
 
-class LessonModel extends Equatable {
+class CourseModel extends Equatable {
   String id;
   String title;
   String description;
@@ -17,7 +17,7 @@ class LessonModel extends Equatable {
   double price;
   double? sale;
 
-  LessonModel({
+  CourseModel({
     required this.id,
     required this.title,
     required this.description,
@@ -29,7 +29,7 @@ class LessonModel extends Equatable {
     this.sale,
   });
 
-  LessonModel copyWith({
+  CourseModel copyWith({
     String? id,
     String? title,
     String? description,
@@ -40,7 +40,7 @@ class LessonModel extends Equatable {
     double? price,
     double? sale,
   }) {
-    return LessonModel(
+    return CourseModel(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
@@ -67,8 +67,8 @@ class LessonModel extends Equatable {
     };
   }
 
-  factory LessonModel.fromMap(Map<String, dynamic> map) {
-    return LessonModel(
+  factory CourseModel.fromMap(Map<String, dynamic> map) {
+    return CourseModel(
       id: (map['id'] ?? '') as String,
       title: (map['title'] ?? '') as String,
       description: (map['description'] ?? '') as String,
@@ -83,8 +83,8 @@ class LessonModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory LessonModel.fromJson(String source) =>
-      LessonModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CourseModel.fromJson(String source) =>
+      CourseModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

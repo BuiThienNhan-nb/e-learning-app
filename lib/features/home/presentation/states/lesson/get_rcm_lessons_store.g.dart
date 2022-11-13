@@ -21,13 +21,13 @@ mixin _$GetRecommendedLessonsStore on _GetRecommendedLessonsStore, Store {
       name: '_GetRecommendedLessonsStore.recommendedLessons', context: context);
 
   @override
-  List<LessonModel>? get recommendedLessons {
+  List<CourseModel>? get recommendedLessons {
     _$recommendedLessonsAtom.reportRead();
     return super.recommendedLessons;
   }
 
   @override
-  set recommendedLessons(List<LessonModel>? value) {
+  set recommendedLessons(List<CourseModel>? value) {
     _$recommendedLessonsAtom.reportWrite(value, super.recommendedLessons, () {
       super.recommendedLessons = value;
     });
@@ -54,7 +54,7 @@ mixin _$GetRecommendedLessonsStore on _GetRecommendedLessonsStore, Store {
       context: context);
 
   @override
-  ObservableFuture<Either<Failure, List<LessonModel>>>?
+  ObservableFuture<Either<Failure, List<CourseModel>>>?
       get _recommendedLessonsFuture {
     _$_recommendedLessonsFutureAtom.reportRead();
     return super._recommendedLessonsFuture;
@@ -62,7 +62,7 @@ mixin _$GetRecommendedLessonsStore on _GetRecommendedLessonsStore, Store {
 
   @override
   set _recommendedLessonsFuture(
-      ObservableFuture<Either<Failure, List<LessonModel>>>? value) {
+      ObservableFuture<Either<Failure, List<CourseModel>>>? value) {
     _$_recommendedLessonsFutureAtom
         .reportWrite(value, super._recommendedLessonsFuture, () {
       super._recommendedLessonsFuture = value;

@@ -17,7 +17,7 @@ class RecommendationLessonCard extends StatelessWidget {
   });
 
   final double? height;
-  final LessonModel lesson;
+  final CourseModel lesson;
 
   @override
   Widget build(BuildContext context) {

@@ -4,5 +4,5 @@ import '../../../../core/error/failures.dart';
 import '../entities/lesson_model.dart';
 
 abstract class GetRecommendedLessonsRepository {
-  Future<Either<Failure, List<LessonModel>>> getRecommendedLessons();
+  Future<Either<Failure, List<CourseModel>>> getRecommendedLessons();
 }

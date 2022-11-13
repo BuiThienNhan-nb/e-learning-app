@@ -24,13 +24,13 @@ abstract class _GetRecommendedLessonsStore with Store {
   _GetRecommendedLessonsStore(this._useCase);
 
   @observable
-  List<LessonModel>? recommendedLessons;
+  List<CourseModel>? recommendedLessons;
 
   @observable
   String? errorMessage;
 
   @observable
-  ObservableFuture<Either<Failure, List<LessonModel>>>?
+  ObservableFuture<Either<Failure, List<CourseModel>>>?
       _recommendedLessonsFuture;
 
   @computed
@@ -54,7 +54,7 @@ abstract class _GetRecommendedLessonsStore with Store {
       _useCase(NoParams()),
     );
 
-    Either<Failure, List<LessonModel>>? result =
+    Either<Failure, List<CourseModel>>? result =
         await _recommendedLessonsFuture;
 
     if (result == null) {

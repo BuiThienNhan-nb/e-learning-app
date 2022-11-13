@@ -33,6 +33,7 @@ class LinkText extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: topPadding ?? 10.h),
       child: RichText(
+        textAlign: TextAlign.center,
         text: TextSpan(
           style: const TextStyle(
             color: AppColors.blackColor,

@@ -6,7 +6,7 @@ import '../../features/auth/sign_in/domain/entities/image_model.dart';
 import '../../features/home/domain/entities/lesson_model.dart';
 
 @lazySingleton
-class MockLessons {
+class MockCourses {
   final _random = Random();
 
   // Mock Lesson Model
@@ -149,9 +149,9 @@ class MockLessons {
   ];
   */
 
-  late final List<LessonModel> recommendedLessons = _titles
+  late final List<CourseModel> recommendedLessons = _titles
       .map(
-        (title) => LessonModel(
+        (title) => CourseModel(
           id: "$_lessonIndex",
           title: title,
           description: "description",

@@ -8,13 +8,13 @@ import '../../repositories/get_rcm_lessons_repository.dart';
 
 @lazySingleton
 class GetRecommendedLessonsUseCase
-    implements UseCase<List<LessonModel>, NoParams> {
+    implements UseCase<List<CourseModel>, NoParams> {
   final GetRecommendedLessonsRepository _repository;
 
   GetRecommendedLessonsUseCase(this._repository);
 
   @override
-  Future<Either<Failure, List<LessonModel>>> call(NoParams params) async {
+  Future<Either<Failure, List<CourseModel>>> call(NoParams params) async {
     return _repository.getRecommendedLessons();
   }
 }

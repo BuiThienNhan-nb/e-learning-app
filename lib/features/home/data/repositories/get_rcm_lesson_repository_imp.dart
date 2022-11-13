@@ -18,7 +18,7 @@ class GetRecommendedLessonsRepositoryImp
   GetRecommendedLessonsRepositoryImp(this.dataSource, this.networkStatus);
 
   @override
-  Future<Either<Failure, List<LessonModel>>> getRecommendedLessons() async {
+  Future<Either<Failure, List<CourseModel>>> getRecommendedLessons() async {
     if (!await networkStatus.isConnected) {
       return Left(
         UserFailure(

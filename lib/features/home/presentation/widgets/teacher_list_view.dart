@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/round_teacher_item.dart';
-import '../../../../configs/routes.dart';
 import '../states/teacher/get_top_teachers_store.dart';
 
 class TeacherListView extends StatelessWidget {
@@ -69,18 +68,21 @@ class TeacherListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).go(GetIt.I<AppRoutes>().teacherDetail),
-      child: Hero(
-        tag: store.topTeachers![index].id,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: index == 0
-                ? AppDimens.mediumWidthDimens
-                : AppDimens.mediumWidthDimens,
-          ),
-          child: RoundTeacherItem(
-            teacher: store.topTeachers![index],
-          ),
+      onTap: () => GoRouter.of(context).pushNamed(
+        "teacher",
+        params: {
+          'teacherId': store.topTeachers![index].id,
+        },
+        extra: store.topTeachers![index],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: index == 0
+              ? AppDimens.mediumWidthDimens
+              : AppDimens.mediumWidthDimens,
+        ),
+        child: RoundTeacherItem(
+          teacher: store.topTeachers![index],
         ),
       ),
     );

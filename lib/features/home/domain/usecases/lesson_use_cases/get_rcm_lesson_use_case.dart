@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
-import '../../entities/lesson_model.dart';
+import '../../entities/course_model.dart';
 import '../../repositories/get_rcm_lessons_repository.dart';
 
 @lazySingleton

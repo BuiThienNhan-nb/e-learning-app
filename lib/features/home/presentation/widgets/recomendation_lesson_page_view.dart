@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_learning_app/bases/presentation/atoms/recommendation_lesson_card.dart';
+import 'package:e_learning_app/bases/presentation/atoms/recommendation_course_card.dart';
 import 'package:e_learning_app/configs/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,8 +10,8 @@ import 'package:get_it/get_it.dart';
 import '../../../../bases/mobx/base_state.dart';
 import '../states/lesson/get_rcm_lessons_store.dart';
 
-class RecommendationLessonPageView extends StatelessWidget {
-  const RecommendationLessonPageView({
+class RecommendationCoursePageView extends StatelessWidget {
+  const RecommendationCoursePageView({
     super.key,
   });
 
@@ -51,8 +51,8 @@ class RecommendationLessonPageView extends StatelessWidget {
               // height: height,
             ),
             itemBuilder: (context, index, realIndex) {
-              return RecommendationLessonCard(
-                  lesson: store.recommendedLessons![index]);
+              return RecommendationCourseCard(
+                  course: store.recommendedLessons![index]);
             },
           );
         },

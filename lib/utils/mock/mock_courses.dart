@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/sign_in/domain/entities/image_model.dart';
-import '../../features/home/domain/entities/lesson_model.dart';
+import '../../features/home/domain/entities/course_model.dart';
 
 @lazySingleton
 class MockCourses {

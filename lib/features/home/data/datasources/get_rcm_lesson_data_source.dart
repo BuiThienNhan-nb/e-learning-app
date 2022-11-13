@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../bases/services/api_exception.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../utils/mock/mock_courses.dart';
-import '../../domain/entities/lesson_model.dart';
+import '../../domain/entities/course_model.dart';
 
 abstract class GetRecommendedLessonsDataSource {
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons();

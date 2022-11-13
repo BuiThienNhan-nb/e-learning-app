@@ -3,21 +3,21 @@ import 'dart:math';
 import 'package:e_learning_app/bases/presentation/atoms/bookmark_icon.dart';
 import 'package:e_learning_app/bases/presentation/atoms/network_image.dart';
 import 'package:e_learning_app/configs/styles.dart';
-import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
+import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
 
-class RecommendationLessonCard extends StatelessWidget {
-  const RecommendationLessonCard({
+class RecommendationCourseCard extends StatelessWidget {
+  const RecommendationCourseCard({
     super.key,
-    required this.lesson,
+    required this.course,
     this.height,
   });
 
   final double? height;
-  final CourseModel lesson;
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,8 @@ class RecommendationLessonCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             DefaultNetworkImage(
-              imageUrl: lesson.image.url,
-              blurHash: lesson.image.blurHash,
+              imageUrl: course.image.url,
+              blurHash: course.image.blurHash,
               height: height ?? (AppDimens.extraLargeHeightDimens * 7),
               width: AppDimens.mediumWidthDimens * 20,
               shape: BoxShape.rectangle,
@@ -81,7 +81,7 @@ class RecommendationLessonCard extends StatelessWidget {
                             BorderRadius.circular(AppDimens.mediumRadius),
                       ),
                       child: Text(
-                        lesson.category,
+                        course.category,
                         style: AppStyles.subtitle2TextStyle.copyWith(
                           color: AppColors.secondaryColor,
                           fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class RecommendationLessonCard extends StatelessWidget {
                       width: AppDimens.appDesignSize.width -
                           AppDimens.mediumWidthDimens * 22,
                       child: Text(
-                        lesson.title,
+                        course.title,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.headline6TextStyle.copyWith(
@@ -106,7 +106,7 @@ class RecommendationLessonCard extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.mediumWidthDimens * 18,
                       height: AppDimens.extraLargeHeightDimens,
-                      child: (lesson.sale != null && lesson.sale != 0)
+                      child: (course.sale != null && course.sale != 0)
                           ? RichText(
                               text: TextSpan(
                                 style: AppStyles.headline6TextStyle.copyWith(
@@ -116,11 +116,11 @@ class RecommendationLessonCard extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text:
-                                        "${(lesson.price * (1 - lesson.sale!)).toStringAsFixed(2)}\$\t\t",
+                                        "${(course.price * (1 - course.sale!)).toStringAsFixed(2)}\$\t\t",
                                   ),
                                   TextSpan(
                                     text:
-                                        "${lesson.price.toStringAsFixed(2)}\$",
+                                        "${course.price.toStringAsFixed(2)}\$",
                                     style:
                                         AppStyles.subtitle1TextStyle.copyWith(
                                       color: AppColors.neutral.shade500,
@@ -134,7 +134,7 @@ class RecommendationLessonCard extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              "${lesson.price.toStringAsFixed(2)}\$",
+                              "${course.price.toStringAsFixed(2)}\$",
                               style: AppStyles.headline6TextStyle.copyWith(
                                 color: AppColors.primaryColor,
                                 fontWeight: FontWeight.w900,
@@ -156,7 +156,7 @@ class RecommendationLessonCard extends StatelessWidget {
                           color: Colors.yellow,
                         ),
                         Text(
-                          "\t${lesson.rates.toStringAsFixed(2)}",
+                          "\t${course.rates.toStringAsFixed(2)}",
                           style: AppStyles.subtitle2TextStyle,
                           textAlign: TextAlign.center,
                         ),

@@ -1,7 +1,7 @@
-import 'package:e_learning_app/bases/presentation/atoms/recommendation_lesson_card.dart';
+import 'package:e_learning_app/bases/presentation/atoms/recommendation_course_card.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
-import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
+import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
 import 'package:e_learning_app/features/teacher_detail/presentation/widgets/teacher_interact_button.dart';
 import 'package:e_learning_app/features/teacher_detail/presentation/widgets/teacher_interaction.dart';
 import 'package:get_it/get_it.dart';
@@ -68,7 +68,7 @@ class TeacherDetailPage extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) =>
-                  RecommendationLessonCard(lesson: courses[index]),
+                  RecommendationCourseCard(course: courses[index]),
             ),
           ],
         ),

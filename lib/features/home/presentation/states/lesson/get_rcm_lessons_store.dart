@@ -8,7 +8,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../../domain/entities/lesson_model.dart';
+import '../../../domain/entities/course_model.dart';
 
 part 'get_rcm_lessons_store.g.dart';
 

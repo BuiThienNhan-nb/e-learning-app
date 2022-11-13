@@ -94,18 +94,6 @@ class AppRoutes {
           GoRoute(
             path: _bottomBarLocator.mainPage[0],
             builder: (context, state) => const HomePage(),
-            // routes: [
-            //   GoRoute(
-            //     name: "teacher",
-            //     path: "teacher/:teacherId",
-            //     builder: (context, state) {
-            //       // final teacher = state.extra as TeacherModel;
-            //       return TeacherDetailPage(
-            //         teacherId: state.params["teacherId"] ?? "N/A",
-            //       );
-            //     },
-            //   ),
-            // ],
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[1],
@@ -121,13 +109,6 @@ class AppRoutes {
           ),
         ],
       ),
-      // GoRoute(
-      //   path: teacherDetail,
-      //   builder: (context, state) {
-      //     final teacher = state.extra as TeacherModel;
-      //     return TeacherDetailPage(teacher: teacher);
-      //   },
-      // ),
     ],
   );
 }

@@ -1,17 +1,17 @@
-import 'package:e_learning_app/bases/presentation/atoms/recommendation_course_card.dart';
-import 'package:e_learning_app/configs/styles.dart';
-import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
-import 'package:e_learning_app/features/teacher_detail/presentation/widgets/teacher_interact_button.dart';
-import 'package:e_learning_app/features/teacher_detail/presentation/widgets/teacher_interaction.dart';
-import 'package:get_it/get_it.dart';
-
-import '../../../../configs/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import '../../../../bases/presentation/atoms/recommendation_course_card.dart';
+import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
+import '../../../../configs/styles.dart';
 import '../../../../utils/mock/mock_courses.dart';
 import '../../../../utils/mock/mock_teachers.dart';
+import '../../../auth/sign_in/domain/entities/teacher_model.dart';
+import '../../../home/domain/entities/course_model.dart';
+import '../widgets/teacher_interact_button.dart';
+import '../widgets/teacher_interaction.dart';
 
 class TeacherDetailPage extends StatelessWidget {
   const TeacherDetailPage({
@@ -28,28 +28,29 @@ class TeacherDetailPage extends StatelessWidget {
         );
     final List<CourseModel> courses = GetIt.I<MockCourses>().recommendedLessons;
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        backgroundColor: AppColors.whiteColor,
-        iconTheme: IconThemeData(
-          color: AppColors.blackColor,
-          size: AppDimens.extraLargeWidthDimens,
-        ),
-        actionsIconTheme: const IconThemeData(
-          color: AppColors.blackColor,
-        ),
-        title: Text(
-          teacher.name,
-          style: AppStyles.headline5TextStyle.copyWith(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          backgroundColor: AppColors.whiteColor,
+          iconTheme: IconThemeData(
             color: AppColors.blackColor,
-            fontWeight: FontWeight.w900,
+            size: AppDimens.extraLargeWidthDimens,
           ),
+          actionsIconTheme: const IconThemeData(
+            color: AppColors.blackColor,
+          ),
+          title: Text(
+            teacher.name,
+            style: AppStyles.headline5TextStyle.copyWith(
+              color: AppColors.blackColor,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: AppDimens.extraLargeHeightDimens),
@@ -61,14 +62,51 @@ class TeacherDetailPage extends StatelessWidget {
             ),
             SizedBox(height: AppDimens.largeHeightDimens),
             TeacherInteractButtonRow(teacherId: teacherId),
-            SizedBox(height: AppDimens.extraLargeHeightDimens),
-            ListView.builder(
-              itemCount: courses.length,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) =>
-                  RecommendationCourseCard(course: courses[index]),
+            SizedBox(height: AppDimens.mediumHeightDimens),
+            Divider(
+              color: AppColors.primaryColor,
+              indent: AppDimens.largeWidthDimens,
+              endIndent: AppDimens.largeWidthDimens,
+            ),
+            TabBar(
+              tabs: [
+                Tab(
+                  text: "${teacher.name} courses",
+                ),
+                const Tab(
+                  text: "Reviews",
+                ),
+              ],
+              labelColor: AppColors.primaryColor,
+              indicator: MaterialIndicator(
+                tabPosition: TabPosition.bottom,
+                color: AppColors.primaryColor,
+                strokeWidth: 1,
+                horizontalPadding: AppDimens.extraLargeWidthDimens,
+                // distanceFromCenter: 16,
+                // radius: 3,
+                paintingStyle: PaintingStyle.fill,
+              ),
+            ),
+            // Divider(
+            //   color: AppColors.primaryColor,
+            //   indent: AppDimens.largeWidthDimens,
+            //   endIndent: AppDimens.largeWidthDimens,
+            // ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  ListView.builder(
+                    itemCount: courses.length,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        RecommendationCourseCard(course: courses[index]),
+                  ),
+                  const Text("Page 2"),
+                ],
+              ),
             ),
           ],
         ),

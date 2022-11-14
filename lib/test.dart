@@ -1,260 +1,421 @@
-// import 'dart:developer' as dev;
-// import 'dart:math';
+// Copyright 2013 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_blurhash/flutter_blurhash.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:inview_notifier_list/inview_notifier_list.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-// const entries = [
-//   [
-//     r'f8C6M$9tcY,FKOR*00%2RPNaaKjZUawdv#K4$Ps:HXELTJ,@XmS2=yxuNGn%IoR*',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'LG6'
-//   ],
-//   [
-//     r'f86RZIxu4TITofx]jsaeayozofWB00RP?w%NayMxkDt8ofM_Rjt8_4tRD$IUWAxu',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'ED8'
-//   ],
-//   [
-//     r'LZG6p1{I^6rX}G=0jGR$Z|t7NLW,',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'MT2'
-//   ],
-//   [
-//     r'L371cr_3RKKFsqICIVNG00eR?d-r',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'TK1'
-//   ],
-//   [
-//     r'L371cr_3RKKFsqICIVNG00eR?d-r',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'TK2'
-//   ],
-//   [
-//     r'L371cr_3RKKFsqICIVNG00eR?d-r',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'TK3'
-//   ],
-//   [
-//     r'L371cr_3RKKFsqICIVNG00eR?d-r',
-//     'https://www.auto-moto.com/wp-content/uploads/sites/9/2021/04/home-peugeot-3008-750x410.jpg',
-//     'TK4'
-//   ],
-// ];
+final GlobalKey<NavigatorState> _sectionANavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
+final GlobalKey<NavigatorState> _sectionBNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'sectionBNav');
 
-// const duration = Duration(milliseconds: 500);
+// This example demonstrates how to setup nested navigation using a
+// BottomNavigationBar, where each tab uses its own persistent navigator, i.e.
+// navigation state is maintained separately for each tab. This setup also
+// enables deep linking into nested pages.
+//
+// This example demonstrates how to display routes within a ShellRoute using a
+// `nestedNavigationBuilder`. Navigators for the tabs ('Section A' and
+// 'Section B') are created via nested ShellRoutes. Note that no navigator will
+// be created by the "top" ShellRoute. This example is similar to the ShellRoute
+// example, but differs in that it is able to maintain the navigation state of
+// each tab.
 
-// const radius = Radius.circular(16);
+void main() {
+  runApp(NestedTabNavigationExampleApp());
+}
 
-// const topMark = .7;
+/// An example demonstrating how to use nested navigators
+class NestedTabNavigationExampleApp extends StatelessWidget {
+  /// Creates a NestedTabNavigationExampleApp
+  NestedTabNavigationExampleApp({Key? key}) : super(key: key);
 
-// void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: BlurHashApp()));
+  static final List<ScaffoldWithNavBarTabItem> _tabs =
+      <ScaffoldWithNavBarTabItem>[
+    ScaffoldWithNavBarTabItem(
+        rootRoutePath: '/a',
+        navigatorKey: _sectionANavigatorKey,
+        icon: const Icon(Icons.home),
+        label: 'Section A'),
+    ScaffoldWithNavBarTabItem(
+      rootRoutePath: '/b',
+      navigatorKey: _sectionBNavigatorKey,
+      icon: const Icon(Icons.settings),
+      label: 'Section B',
+    ),
+  ];
 
-// class BlurHashApp extends StatefulWidget {
-//   const BlurHashApp({Key? key}) : super(key: key);
+  final GoRouter _router = GoRouter(
+    initialLocation: '/a',
+    routes: <RouteBase>[
+      /// Custom top shell route - wraps the below routes in a scaffold with
+      /// a bottom tab navigator (ScaffoldWithNavBar). Note that no Navigator
+      /// will be created by this top ShellRoute.
+      BottomTabBarShellRoute(
+        tabs: _tabs,
+        routes: <RouteBase>[
+          /// The screen to display as the root in the first tab of the bottom
+          /// navigation bar.
+          GoRoute(
+            path: '/a',
+            builder: (BuildContext context, GoRouterState state) =>
+                const RootScreen(label: 'A', detailsPath: '/a/details'),
+            routes: <RouteBase>[
+              /// The details screen to display stacked on navigator of the
+              /// first tab. This will cover screen A but not the application
+              /// shell (bottom navigation bar).
+              GoRoute(
+                path: 'details',
+                builder: (BuildContext context, GoRouterState state) =>
+                    const DetailsScreen(label: 'A'),
+              ),
+            ],
+          ),
 
-//   @override
-//   _BlurHashAppState createState() => _BlurHashAppState();
-// }
+          /// The screen to display as the root in the second tab of the bottom
+          /// navigation bar.
+          GoRoute(
+            path: '/b',
+            builder: (BuildContext context, GoRouterState state) =>
+                const RootScreen(
+                    label: 'B',
+                    detailsPath: '/b/details/1',
+                    detailsPath2: '/b/details/2'),
+            routes: <RouteBase>[
+              /// The details screen to display stacked on navigator of the
+              /// second tab. This will cover screen B but not the application
+              /// shell (bottom navigation bar).
+              GoRoute(
+                path: 'details/:param',
+                builder: (BuildContext context, GoRouterState state) =>
+                    DetailsScreen(label: 'B', param: state.params['param']),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
 
-// class _BlurHashAppState extends State<BlurHashApp> {
-//   double progression = 0;
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      routeInformationProvider: _router.routeInformationProvider,
+    );
+  }
+}
 
-//   void onStarted() {
-//     debugPrint("Ready");
-//   }
+/// ShellRoute that uses a bottom tab navigation (ScaffoldWithNavBar) with
+/// separate navigators for each tab.
+///
+/// NOTE: This is not an optimal implementation and should ideally be
+/// implemented in go_router, although in a way that doesn't use a navigator.
+/// Here is a proposed implementation:
+/// https://github.com/tolo/flutter_packages/tree/nested-persistent-navigation/packages/go_router
+class BottomTabBarShellRoute extends ShellRoute {
+  final List<ScaffoldWithNavBarTabItem> tabs;
+  BottomTabBarShellRoute({
+    required this.tabs,
+    GlobalKey<NavigatorState>? navigatorKey,
+    List<RouteBase> routes = const <RouteBase>[],
+    Key? scaffoldKey = const ValueKey('ScaffoldWithNavBar'),
+  }) : super(
+            navigatorKey: navigatorKey,
+            routes: routes,
+            builder: (context, state, Widget fauxNav) {
+              return Stack(children: [
+                // Needed to keep the (faux) shell navigator alive
+                Offstage(child: fauxNav),
+                ScaffoldWithNavBar(
+                    tabs: tabs,
+                    key: scaffoldKey,
+                    currentNavigator: fauxNav as Navigator,
+                    currentRouterState: state,
+                    routes: routes),
+              ]);
+            });
+}
 
-//   double norm(double value, double min, double max) => (value - min) / (max - min);
+/// Representation of a tab item in a [ScaffoldWithNavBar]
+class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
+  /// Constructs an [ScaffoldWithNavBarTabItem].
+  const ScaffoldWithNavBarTabItem(
+      {required this.rootRoutePath,
+      required this.navigatorKey,
+      required Widget icon,
+      String? label})
+      : super(icon: icon, label: label);
 
-//   @override
-//   Widget build(BuildContext context) => NotificationListener<ScrollNotification>(
-//       onNotification: (ScrollNotification notif) {
-//         // NO need to setState
-//         setState(() {
-//           progression = norm(notif.metrics.pixels, 0, 1);
-//           // print("Progression $progression / px ${notif.metrics.pixels}");
-//         });
-//         return true;
-//       },
-//       child: Stack(children: [
-//         FractionallySizedBox(
-//           heightFactor: topMark,
-//           child: Container(
-//             decoration: const BoxDecoration(
-//               gradient: LinearGradient(
-//                 colors: [Color(0xEEFFFFFF), Color(0xCCFFFFFF)],
-//                 begin: Alignment.bottomCenter,
-//                 end: Alignment.topCenter,
-//               ),
-//             ),
-//           ),
-//         ),
-//         Align(
-//           alignment: const Alignment(-.8, -.5),
-//           child: Container(
-//             margin: const EdgeInsets.only(top: 100),
-//             child: Header(progression: progression),
-//           ),
-//         ),
-//         //BackdropFilter(child: , filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15)),
-//         buildInViewNotifierList()
-//       ]));
+  /// The initial location/path
+  final String rootRoutePath;
 
-//   Widget buildList() => ListView.builder(itemCount: entries.length, itemBuilder: (ctx, idx) => buildEntry(true, idx));
+  /// Optional navigatorKey
+  final GlobalKey<NavigatorState> navigatorKey;
+}
 
-//   Widget buildInViewNotifierList() => InViewNotifierList(
-//       itemCount: entries.length + 2,
-//       builder: (ctx, idx) => InViewNotifierWidget(
-//           id: '$idx',
-//           builder: (BuildContext context, bool isInView, Widget? child) {
-//             if (idx == 0) return const SizedBox(height: 500);
-//             if (idx == entries.length + 1) return const SizedBox(height: 800);
+/// Builds the "shell" for the app by building a Scaffold with a
+/// BottomNavigationBar, where [child] is placed in the body of the Scaffold.
+class ScaffoldWithNavBar extends StatefulWidget {
+  /// Constructs an [ScaffoldWithNavBar].
+  const ScaffoldWithNavBar({
+    required this.currentNavigator,
+    required this.currentRouterState,
+    required this.tabs,
+    required this.routes,
+    Key? key,
+  }) : super(key: key ?? const ValueKey<String>('ScaffoldWithNavBar'));
 
-//             return buildEntry(isInView, idx - 1);
-//           }),
-//       isInViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) =>
-//           deltaTop < (topMark * viewPortDimension)
-//       //&& deltaBottom > (0.3 * viewPortDimension)
-//       );
+  /// The navigator for the currently active tab
+  final Navigator currentNavigator;
 
-//   Container buildEntry(bool isInView, int idx) => Container(
-//       padding: const EdgeInsets.only(left: 0, right: 200),
-//       height: 510,
-//       margin: const EdgeInsets.only(bottom: 24),
-//       child: isInView || idx == 0
-//           ? SynchronizedDisplay(hash: entries[idx][0], uri: entries[idx][1], title: entries[idx][2])
-//           : BlurHash(hash: entries[idx][0]));
-// }
+  /// The pages for the current route
+  List<Page<dynamic>> get pagesForCurrentRoute => currentNavigator.pages;
 
-// class Header extends StatelessWidget {
-//   Header({
-//     Key? key,
-//     required this.progression,
-//   }) : super(key: key);
+  /// The current router state
+  final GoRouterState currentRouterState;
 
-//   final gradient = ColorTween(begin: const Color(0xFF222222), end: Colors.black87);
+  /// The tabs
+  final List<ScaffoldWithNavBarTabItem> tabs;
 
-//   final double progression;
+  // The routes
+  final List<RouteBase> routes;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final base = progression / 100;
-//     final color = gradient.lerp(base);
+  @override
+  State<StatefulWidget> createState() => ScaffoldWithNavBarState();
+}
 
-//     return Column(
-//       children: <Widget>[
-//         Text(
-//           "Discover",
-//           style: GoogleFonts.josefinSans(
-//             textStyle: TextStyle(
-//                 color: color, fontSize: 180, height: .84, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
-//           ),
-//         ),
-//         Container(
-//           margin: const EdgeInsets.only(top: 16),
-//           child: Text(
-//             "Our\nCollection",
-//             style: GoogleFonts.josefinSans(
-//               textStyle: TextStyle(
-//                   color: color,
-//                   fontSize: 130,
-//                   height: .84,
-//                   fontWeight: FontWeight.bold,
-//                   decoration: TextDecoration.none),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+/// State for ScaffoldWithNavBar
+class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final List<_NavBarTabNavigator> _tabs;
 
-// class SynchronizedDisplay extends StatefulWidget {
-//   const SynchronizedDisplay({Key? key, required this.hash, required this.uri, required this.title}) : super(key: key);
-//   final String hash;
-//   final String uri;
-//   final String title;
+  //
+  int _locationToTabIndex(String location) {
+    final int index = _tabs.indexWhere(
+        (_NavBarTabNavigator t) => location.startsWith(t.rootRoutePath));
+    return index < 0 ? 0 : index;
+  }
 
-//   @override
-//   _SynchronizedDisplayState createState() => _SynchronizedDisplayState();
-// }
+  int _currentIndex = 0;
 
-// class _SynchronizedDisplayState extends State<SynchronizedDisplay> with SingleTickerProviderStateMixin {
-//   late Animation<double> animatedWidth;
-//   late AnimationController controller;
+  @override
+  void initState() {
+    super.initState();
+    _tabs = widget.tabs
+        .map((ScaffoldWithNavBarTabItem e) => _NavBarTabNavigator(e))
+        .toList();
 
-//   double end = 100;
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 400));
+    _animationController.forward();
+  }
 
-//   @override
-//   Widget build(BuildContext context) => Stack(
-//         alignment: const Alignment(1.225, 0.0),
-//         children: [
-//           Transform.translate(
-//             // Animated width
-//             offset: Offset(animatedWidth.value, 0),
-//             child: Container(
-//               width: 200,
-//               decoration: const BoxDecoration(
-//                   gradient: LinearGradient(
-//                     colors: [Color(0xFF888888), Color(0xFFAAAAAA)],
-//                     stops: [.1, 1],
-//                     begin: Alignment.centerLeft,
-//                     end: Alignment.centerRight,
-//                   ),
-//                   borderRadius: BorderRadius.only(topRight: radius, bottomRight: radius)),
-//             ),
-//           ),
-//           BlurHash(
-//             hash: widget.hash,
-//             image: widget.uri,
-//             duration: duration,
-//             onStarted: onStarted,
-//             onDecoded: onDecoded,
-//             onDisplayed: onDisplayed,
-//           ),
-//           const Align(
-//             alignment: Alignment(1.4, 0),
-//             child: Icon(
-//               Icons.chevron_right,
-//               size: 60,
-//               color: Colors.white,
-//             ),
-//           ),
-//           Transform.rotate(
-//             angle: pi * -.5,
-//             child: Text(
-//               widget.title,
-//               style: GoogleFonts.josefinSans(
-//                   textStyle: const TextStyle(
-//                       color: Color(0xFFDDDDDD),
-//                       fontSize: 45,
-//                       fontWeight: FontWeight.bold,
-//                       decoration: TextDecoration.none)),
-//             ),
-//           )
-//         ],
-//       );
+  @override
+  void didUpdateWidget(covariant ScaffoldWithNavBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateForCurrentTab();
+  }
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     controller = AnimationController(duration: duration, vsync: this);
-//     final curved = CurvedAnimation(parent: controller, curve: Curves.easeOutCirc);
-//     animatedWidth = Tween<double>(begin: -50, end: end).animate(curved);
-//     controller.addListener(() => setState(() {}));
-//   }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateForCurrentTab();
+  }
 
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
+  void _updateForCurrentTab() {
+    final int previousIndex = _currentIndex;
+    final location = GoRouter.of(context).location;
+    _currentIndex = _locationToTabIndex(location);
 
-//   void onStarted() => controller.forward();
+    final _NavBarTabNavigator tabNav = _tabs[_currentIndex];
+    tabNav.pages = widget.pagesForCurrentRoute;
+    tabNav.lastLocation = location;
 
-//   void onDecoded() => dev.log("Hash ${widget.hash} decoded");
+    if (previousIndex != _currentIndex) {
+      _animationController.forward(from: 0.0);
+    }
+  }
 
-//   void onDisplayed() => dev.log("Hash ${widget.uri} displayed");
-// }
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildBody(context),
+      bottomNavigationBar: BottomNavigationBar(
+        items: _tabs
+            .map((_NavBarTabNavigator e) => e.bottomNavigationTab)
+            .toList(),
+        currentIndex: _currentIndex,
+        onTap: (int idx) => _onItemTapped(idx, context),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return FadeTransition(
+        opacity: _animationController,
+        child: IndexedStack(
+            index: _currentIndex,
+            children: _tabs
+                .map((_NavBarTabNavigator tab) => tab.buildNavigator(context))
+                .toList()));
+  }
+
+  void _onItemTapped(int index, BuildContext context) {
+    GoRouter.of(context).go(_tabs[index].currentLocation);
+  }
+}
+
+/// Class representing a tab along with its navigation logic
+class _NavBarTabNavigator {
+  _NavBarTabNavigator(this.bottomNavigationTab);
+
+  final ScaffoldWithNavBarTabItem bottomNavigationTab;
+
+  String? lastLocation;
+
+  String get currentLocation =>
+      lastLocation != null ? lastLocation! : rootRoutePath;
+
+  String get rootRoutePath => bottomNavigationTab.rootRoutePath;
+  Key? get navigatorKey => bottomNavigationTab.navigatorKey;
+  List<Page<dynamic>> pages = <Page<dynamic>>[];
+
+  Widget buildNavigator(BuildContext context) {
+    if (pages.isNotEmpty) {
+      return Navigator(
+        key: navigatorKey,
+        pages: pages,
+        onPopPage: (Route<dynamic> route, dynamic result) {
+          if (pages.length == 1 || !route.didPop(result)) {
+            return false;
+          }
+          GoRouter.of(context).pop();
+          return true;
+        },
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+}
+
+/// Widget for the root/initial pages in the bottom navigation bar.
+class RootScreen extends StatelessWidget {
+  /// Creates a RootScreen
+  const RootScreen(
+      {required this.label,
+      required this.detailsPath,
+      this.detailsPath2,
+      Key? key})
+      : super(key: key);
+
+  /// The label
+  final String label;
+
+  /// The path to the detail page
+  final String detailsPath;
+
+  /// The path to another detail page
+  final String? detailsPath2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tab root - $label'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text('Screen $label',
+                style: Theme.of(context).textTheme.titleLarge),
+            const Padding(padding: EdgeInsets.all(4)),
+            TextButton(
+              onPressed: () {
+                GoRouter.of(context).go(detailsPath);
+              },
+              child: const Text('View details'),
+            ),
+            const Padding(padding: EdgeInsets.all(4)),
+            if (detailsPath2 != null)
+              TextButton(
+                onPressed: () {
+                  GoRouter.of(context).go(detailsPath2!);
+                },
+                child: const Text('View more details'),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The details screen for either the A or B screen.
+class DetailsScreen extends StatefulWidget {
+  /// Constructs a [DetailsScreen].
+  const DetailsScreen({
+    required this.label,
+    this.param,
+    Key? key,
+  }) : super(key: key);
+
+  /// The label to display in the center of the screen.
+  final String label;
+
+  final String? param;
+
+  @override
+  State<StatefulWidget> createState() => DetailsScreenState();
+}
+
+/// The state for DetailsScreen
+class DetailsScreenState extends State<DetailsScreen> {
+  int _counter = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Details Screen - ${widget.label}'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (widget.param != null)
+              Text('Parameter: ${widget.param!}',
+                  style: Theme.of(context).textTheme.titleLarge),
+            const Padding(padding: EdgeInsets.all(4)),
+            Text('Details for ${widget.label} - Counter: $_counter',
+                style: Theme.of(context).textTheme.titleLarge),
+            const Padding(padding: EdgeInsets.all(4)),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _counter++;
+                });
+              },
+              child: const Text('Increment counter'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

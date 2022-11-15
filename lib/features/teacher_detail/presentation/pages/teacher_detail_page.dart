@@ -28,8 +28,20 @@ class TeacherDetailPage extends StatelessWidget {
         );
     final List<CourseModel> courses = GetIt.I<MockCourses>().recommendedLessons;
 
+    final List<Widget> tabs = [
+      Tab(
+        text: "${teacher.name} courses",
+      ),
+      const Tab(
+        text: "Reviews",
+      ),
+      const Tab(
+        text: "Related Mentors",
+      ),
+    ];
+
     return DefaultTabController(
-      length: 2,
+      length: tabs.length,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -69,14 +81,7 @@ class TeacherDetailPage extends StatelessWidget {
               endIndent: AppDimens.largeWidthDimens,
             ),
             TabBar(
-              tabs: [
-                Tab(
-                  text: "${teacher.name} courses",
-                ),
-                const Tab(
-                  text: "Reviews",
-                ),
-              ],
+              tabs: tabs,
               labelColor: AppColors.primaryColor,
               indicator: MaterialIndicator(
                 tabPosition: TabPosition.bottom,
@@ -105,6 +110,7 @@ class TeacherDetailPage extends StatelessWidget {
                         RecommendationCourseCard(course: courses[index]),
                   ),
                   const Text("Page 2"),
+                  const Text("Page 3"),
                 ],
               ),
             ),

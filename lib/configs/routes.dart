@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/my_courses/presentation/pages/my_course_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -79,7 +80,7 @@ class AppRoutes {
       ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
-        name: "teacher",
+        name: "teacher_detail",
         path: "${_bottomBarLocator.mainPage[0]}/teacher/:teacherId",
         builder: (context, state) {
           // final teacher = state.extra as TeacherModel;
@@ -97,11 +98,11 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[1],
-            builder: (context, state) => const HomePage(),
+            builder: (context, state) => const MyCoursesPage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[2],
-            builder: (context, state) => const HomePage(),
+            builder: (context, state) => const MyCoursesPage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
@@ -121,7 +122,7 @@ class Logout extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: TextButton(
-          onPressed: () => GoRouter.of(context).go('/sign-in'),
+          onPressed: () => GoRouter.of(context).replace('/sign-in'),
           child: const Text("Log out!"),
         ),
       ),

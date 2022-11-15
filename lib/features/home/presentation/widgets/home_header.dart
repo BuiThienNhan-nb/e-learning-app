@@ -70,6 +70,7 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
                   fontWeight: FontWeight.w900,
                 ),
                 topPadding: 0,
+                textAlign: TextAlign.start,
               ),
             ),
             Positioned(

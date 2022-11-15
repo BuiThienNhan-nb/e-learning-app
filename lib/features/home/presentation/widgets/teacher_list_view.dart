@@ -69,7 +69,7 @@ class TeacherListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => GoRouter.of(context).pushNamed(
-        "teacher",
+        "teacher_detail",
         params: {
           'teacherId': store.topTeachers![index].id,
         },

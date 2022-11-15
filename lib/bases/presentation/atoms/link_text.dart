@@ -15,6 +15,7 @@ class LinkText extends StatelessWidget {
     this.text1Style,
     this.text2Style,
     this.topPadding,
+    this.textAlign,
   })  : _contentText1 = contentText1,
         _contentText2 = contentText2,
         _onTap1 = onTap1,
@@ -27,13 +28,14 @@ class LinkText extends StatelessWidget {
   TextStyle? text1Style;
   TextStyle? text2Style;
   double? topPadding;
+  TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: topPadding ?? 10.h),
       child: RichText(
-        textAlign: TextAlign.center,
+        textAlign: textAlign ?? TextAlign.center,
         text: TextSpan(
           style: const TextStyle(
             color: AppColors.blackColor,

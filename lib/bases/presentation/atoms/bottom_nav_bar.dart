@@ -59,13 +59,13 @@ class BottomNavigationBarConfig {
       rootRoutePath: mainPage[2],
       navigatorKey: _section3NavigatorKey,
       icon: Image.asset(
-        "assets/icons/bookmark_inactive_icon.png",
+        "assets/icons/my_course_inactive_icon.png",
         color: AppColors.neutral.shade700,
       ),
       label: LocaleKeys.bookmark,
       backgroundColor: AppColors.whiteColor,
       activeIcon: Image.asset(
-        "assets/icons/bookmark_active_icon.png",
+        "assets/icons/my_course_active_icon.png",
         color: AppColors.primaryColor,
       ),
     ),

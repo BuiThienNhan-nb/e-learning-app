@@ -1,4 +1,3 @@
-import 'package:e_learning_app/features/my_courses/presentation/pages/my_course_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +12,9 @@ import '../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart';
 import '../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart';
 import '../features/auth/sign_up/presentation/pages/sign_up_page.dart';
 import '../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
+import '../features/course_detail/presentation/pages/course_detail_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
+import '../features/my_courses/presentation/pages/my_course_page.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
 import '../utils/nav_bar/tab_bar_shell_route.dart';
 
@@ -30,6 +31,7 @@ class AppRoutes {
   // final String teacherDetail = "/teacher-detail";
   late final String teacherDetail =
       "${_bottomBarLocator.mainPage.first}/teacher";
+  final String courseDetail = "/course/:courseId";
   // String get initial => signIn;
   String get initial => _bottomBarLocator.mainPage.first;
 
@@ -89,6 +91,16 @@ class AppRoutes {
           );
         },
       ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "course_detail",
+        path: courseDetail,
+        builder: (context, state) {
+          return CourseDetailPage(
+            courseId: state.params["courseId"] ?? "N/A",
+          );
+        },
+      ),
       BottomTabBarShellRoute(
         tabs: _bottomBarLocator.tabs,
         routes: [
@@ -122,7 +134,9 @@ class Logout extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: TextButton(
-          onPressed: () => GoRouter.of(context).replace('/sign-in'),
+          // onPressed: () => GoRouter.of(context).replace('/sign-in'),
+          onPressed: () =>
+              GoRouter.of(context).push("/test/nested-scroll-view"),
           child: const Text("Log out!"),
         ),
       ),

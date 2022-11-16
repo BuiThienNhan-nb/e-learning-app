@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../bases/presentation/atoms/hor_lesson_card.dart';
+import '../../../../bases/presentation/atoms/hor_course_card.dart';
 import '../../../../configs/dimens.dart';
 
 class ContinueLessonListView extends StatelessWidget {
@@ -24,7 +24,7 @@ class ContinueLessonListView extends StatelessWidget {
           left: AppDimens.largeWidthDimens,
           right: AppDimens.largeWidthDimens,
         ),
-        itemBuilder: (_, index) => ContinueLessonCard(
+        itemBuilder: (_, index) => ContinueCourseCard(
           leftPadding: index != 0 ? AppDimens.mediumWidthDimens : null,
           height: AppDimens.extraLargeHeightDimens * 6,
         ),

@@ -7,7 +7,7 @@ import '../../../../configs/styles.dart';
 import '../widgets/continue_lesson_list_view.dart';
 import '../widgets/discount_card.dart';
 import '../widgets/home_header.dart';
-import '../widgets/recomendation_lesson_page_view.dart';
+import '../widgets/recomendation_courses_page_view.dart';
 import '../widgets/teacher_list_view.dart';
 
 class HomePage extends StatelessWidget {

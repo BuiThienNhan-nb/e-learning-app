@@ -7,8 +7,8 @@ import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
 import 'network_image.dart';
 
-class ContinueLessonCard extends StatelessWidget {
-  const ContinueLessonCard({
+class ContinueCourseCard extends StatelessWidget {
+  const ContinueCourseCard({
     Key? key,
     required this.height,
     this.leftPadding,

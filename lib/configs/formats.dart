@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class AppFormats {
   AppFormats._internal();
@@ -18,4 +19,8 @@ class AppFormats {
   final DateFormat formatTimeAndDate = DateFormat('HH:mm MM/dd');
 
   final DateFormat formatDateMonthTime = DateFormat('dd MMM yyyy, HH:mm');
+
+  final NumberFormat oCcy = NumberFormat("#,##0", "en_US");
+
+  String timeAgo(DateTime time) => timeago.format(time);
 }

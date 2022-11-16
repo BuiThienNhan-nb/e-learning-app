@@ -37,7 +37,7 @@ class AppColors {
   static const Color secondaryColor = Color(0xFF1E56A0); //Color(0xFFF2F1FF);
 
   /// Theme Color 3
-  static const Color lighSecondaryColor = Color(0xFFD6E4F0);
+  static const Color lightSecondaryColor = Color(0xFFD6E4F0);
 
   /// Theme Color 4
   static const Color subThemeColor = Color(0xFFEAF1F7);

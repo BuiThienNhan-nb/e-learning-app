@@ -14,13 +14,14 @@ class DiscountCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppDimens.itemRadius),
+        border: Border.all(color: AppColors.neutral.shade300),
         boxShadow: [
           BoxShadow(
-            color: AppColors.neutral.shade400,
+            color: AppColors.neutral.shade200,
             blurRadius: AppDimens.mediumHeightDimens,
             // offset: const Offset(1, 1),
             blurStyle: BlurStyle.normal,
-            spreadRadius: 0.2,
+            spreadRadius: 0.4,
           ),
         ],
       ),

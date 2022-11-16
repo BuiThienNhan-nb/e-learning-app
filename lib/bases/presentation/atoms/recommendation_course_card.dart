@@ -5,6 +5,7 @@ import 'package:e_learning_app/bases/presentation/atoms/network_image.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
@@ -21,8 +22,13 @@ class RecommendationCourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: 1,
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).pushNamed(
+        "course_detail",
+        params: {
+          'courseId': course.id,
+        },
+      ),
       child: Container(
         // height: height ?? AppDimens.extraLargeHeightDimens * 8,
         width: double.infinity,

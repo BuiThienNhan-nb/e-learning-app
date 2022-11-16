@@ -37,7 +37,7 @@ class DefaultNetworkImage extends StatelessWidget {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: BlurHash(
             hash: blurHash,
-            imageFit: BoxFit.cover,
+            imageFit: BoxFit.fill,
             duration: const Duration(seconds: 12),
           ),
         ),

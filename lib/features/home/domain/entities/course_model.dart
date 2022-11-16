@@ -4,10 +4,12 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
+
 import '../../../auth/sign_in/domain/entities/image_model.dart';
 
 class CourseModel extends Equatable {
-  String id;
+  final String id;
   String title;
   String description;
   double rates;
@@ -16,6 +18,8 @@ class CourseModel extends Equatable {
   String category;
   double price;
   double? sale;
+  List<SectionModel> section;
+  bool haveCertificate;
 
   CourseModel({
     required this.id,
@@ -27,6 +31,8 @@ class CourseModel extends Equatable {
     required this.category,
     required this.price,
     this.sale,
+    required this.section,
+    required this.haveCertificate,
   });
 
   CourseModel copyWith({
@@ -39,6 +45,8 @@ class CourseModel extends Equatable {
     String? category,
     double? price,
     double? sale,
+    List<SectionModel>? section,
+    bool? haveCertificate,
   }) {
     return CourseModel(
       id: id ?? this.id,
@@ -50,6 +58,8 @@ class CourseModel extends Equatable {
       category: category ?? this.category,
       price: price ?? this.price,
       sale: sale ?? this.sale,
+      section: section ?? this.section,
+      haveCertificate: haveCertificate ?? this.haveCertificate,
     );
   }
 
@@ -64,7 +74,19 @@ class CourseModel extends Equatable {
       'category': category,
       'price': price,
       'sale': sale,
+      'section': section.map((x) => x.toMap()).toList(),
+      'haveCertificate': haveCertificate,
     };
+  }
+
+  double totalCourseHours() {
+    int total = 0;
+    for (var section in section) {
+      for (var lesson in section.lessons) {
+        total += lesson.video!.length;
+      }
+    }
+    return (total / 60);
   }
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
@@ -78,6 +100,12 @@ class CourseModel extends Equatable {
       category: (map['category'] ?? '') as String,
       price: (map['price'] ?? 0.0) as double,
       sale: map['sale'] != null ? map['sale'] as double : null,
+      section: List<SectionModel>.from(
+        (map['section'] as List<int>).map<SectionModel>(
+          (x) => SectionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      haveCertificate: (map['haveCertificate'] ?? false) as bool,
     );
   }
 
@@ -100,7 +128,9 @@ class CourseModel extends Equatable {
       image,
       category,
       price,
-      sale ?? 0.0,
+      sale ?? 0,
+      section,
+      haveCertificate,
     ];
   }
 }

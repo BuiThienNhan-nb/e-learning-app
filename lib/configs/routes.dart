@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/settings/presentation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -137,7 +138,7 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
-            builder: (context, state) => const Logout(),
+            builder: (context, state) => const SettingsPage(),
           ),
         ],
       ),

@@ -73,13 +73,13 @@ class BottomNavigationBarConfig {
       rootRoutePath: mainPage[3],
       navigatorKey: _section4NavigatorKey,
       icon: Image.asset(
-        "assets/icons/menu_inactive_icon.png",
+        "assets/icons/user_icon.png",
         color: AppColors.neutral.shade700,
       ),
-      label: LocaleKeys.menu,
+      label: LocaleKeys.profile,
       backgroundColor: AppColors.whiteColor,
       activeIcon: Image.asset(
-        "assets/icons/menu_active_icon.png",
+        "assets/icons/user_fill_icon.png",
         color: AppColors.primaryColor,
       ),
     ),

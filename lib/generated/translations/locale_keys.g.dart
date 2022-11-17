@@ -62,5 +62,6 @@ abstract class  LocaleKeys {
   static const explore = 'explore';
   static const bookmark = 'bookmark';
   static const menu = 'menu';
+  static const profile = 'profile';
 
 }

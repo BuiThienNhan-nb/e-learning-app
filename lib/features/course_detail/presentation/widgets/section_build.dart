@@ -88,6 +88,7 @@ class LessonBuildItem extends StatelessWidget {
         extra: lesson,
       ),
       child: Container(
+        margin: EdgeInsets.all(AppDimens.mediumWidthDimens),
         padding: EdgeInsets.only(
           top: AppDimens.largeHeightDimens,
           bottom: AppDimens.largeHeightDimens,
@@ -98,7 +99,7 @@ class LessonBuildItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppDimens.itemRadius),
           boxShadow: [
             BoxShadow(
-              color: AppColors.secondaryColor.withOpacity(0.2),
+              color: AppColors.secondaryColor.withOpacity(0.3),
               blurRadius: AppDimens.mediumHeightDimens,
               // offset: const Offset(1, 1),
               blurStyle: BlurStyle.normal,

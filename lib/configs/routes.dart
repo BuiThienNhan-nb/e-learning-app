@@ -13,7 +13,10 @@ import '../features/auth/sign_in/presentation/state/provider/auth_page_provider.
 import '../features/auth/sign_up/presentation/pages/sign_up_page.dart';
 import '../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
 import '../features/course_detail/presentation/pages/course_detail_page.dart';
+import '../features/home/domain/entities/lesson_model.dart';
 import '../features/home/presentation/pages/home_page.dart';
+import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
+import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
 import '../features/my_courses/presentation/pages/my_course_page.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
 import '../utils/nav_bar/tab_bar_shell_route.dart';
@@ -32,6 +35,7 @@ class AppRoutes {
   late final String teacherDetail =
       "${_bottomBarLocator.mainPage.first}/teacher";
   final String courseDetail = "/course/:courseId";
+  final String lessonDetail = "/lesson/:lessonId";
   // String get initial => signIn;
   String get initial => _bottomBarLocator.mainPage.first;
 
@@ -98,6 +102,21 @@ class AppRoutes {
         builder: (context, state) {
           return CourseDetailPage(
             courseId: state.params["courseId"] ?? "N/A",
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "lesson_detail",
+        path: lessonDetail,
+        builder: (context, state) {
+          final LessonModel lesson = state.extra as LessonModel;
+          return Provider(
+            create: (context) => GetIt.I<LessonDetailPageProvider>(),
+            child: LessonDetailPage(
+              lesson: lesson,
+              lessonId: state.params["lessonId"] ?? "N/A",
+            ),
           );
         },
       ),

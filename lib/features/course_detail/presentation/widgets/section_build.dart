@@ -4,6 +4,7 @@ import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
 import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseSectionWidget extends StatelessWidget {
   const CourseSectionWidget({
@@ -78,71 +79,90 @@ class LessonBuildItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        top: AppDimens.largeHeightDimens,
-        bottom: AppDimens.largeHeightDimens,
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).pushNamed(
+        "lesson_detail",
+        params: {
+          'lessonId': lesson.id,
+        },
+        extra: lesson,
       ),
-      decoration: BoxDecoration(
-        color: AppColors.neutral.shade100,
-        borderRadius: BorderRadius.circular(AppDimens.itemRadius),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(width: AppDimens.mediumWidthDimens),
-          Container(
-            // width: AppDimens.extraLargeWidthDimens * 3,
-            padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
-            decoration: const BoxDecoration(
-              color: AppColors.lightSecondaryColor,
-              shape: BoxShape.circle,
+      child: Container(
+        padding: EdgeInsets.only(
+          top: AppDimens.largeHeightDimens,
+          bottom: AppDimens.largeHeightDimens,
+        ),
+        decoration: BoxDecoration(
+          // color: AppColors.neutral.shade100,
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(AppDimens.itemRadius),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.secondaryColor.withOpacity(0.2),
+              blurRadius: AppDimens.mediumHeightDimens,
+              // offset: const Offset(1, 1),
+              blurStyle: BlurStyle.normal,
+              spreadRadius: 0.2,
             ),
-            child: Center(
-              child: Text(
-                "${lesson.order}",
-                style: AppStyles.subtitle1TextStyle.copyWith(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w900,
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(width: AppDimens.mediumWidthDimens),
+            Container(
+              // width: AppDimens.extraLargeWidthDimens * 3,
+              padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
+              decoration: const BoxDecoration(
+                color: AppColors.lightSecondaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  "${lesson.order}",
+                  style: AppStyles.subtitle1TextStyle.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(width: AppDimens.mediumWidthDimens),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  lesson.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.subtitle1TextStyle.copyWith(
-                    fontWeight: FontWeight.w900,
+            SizedBox(width: AppDimens.mediumWidthDimens),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    lesson.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.subtitle1TextStyle.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                ),
-                Text(
-                  lesson.video == null
-                      ? "0 mins"
-                      : "${lesson.video!.length} mins",
-                  style: AppStyles.subtitle2TextStyle.copyWith(
-                    fontWeight: FontWeight.w900,
+                  Text(
+                    lesson.video == null
+                        ? "0 mins"
+                        : "${lesson.video!.length} mins",
+                    style: AppStyles.subtitle2TextStyle.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: AppDimens.mediumWidthDimens),
-          Image.asset(
-            "assets/icons/play_button_icon.png",
-            color: AppColors.primaryColor,
-          ),
-          SizedBox(width: AppDimens.mediumWidthDimens),
-        ],
+            SizedBox(width: AppDimens.mediumWidthDimens),
+            Image.asset(
+              "assets/icons/play_button_icon.png",
+              color: AppColors.primaryColor,
+            ),
+            SizedBox(width: AppDimens.mediumWidthDimens),
+          ],
+        ),
       ),
     );
   }

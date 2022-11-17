@@ -25,7 +25,10 @@ Future<void> _initDependency() async {
 }
 
 Future<void> _initServices() async {
+  // String url = await "https://youtu.be/rjo2JUPrCvE?list=RDrjo2JUPrCvE"
+  //     .extractYoutubeUrl();
   await dotenv.load(fileName: ".env").then(
         (_) => log(Env.instance.test),
       );
+  // log(url);
 }

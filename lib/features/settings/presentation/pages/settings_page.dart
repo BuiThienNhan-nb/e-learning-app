@@ -1,11 +1,14 @@
 import 'package:e_learning_app/configs/colors.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/default_app_bar.dart';
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/dimens.dart';
+import '../../../../configs/routes.dart';
 import '../../../../core/app/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -13,25 +16,75 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int index = 0;
-    final List<String> title = [
-      "Edit Profile",
-      "Notifications",
-      "Payment",
-      "Security",
-      "Language",
-      "Privacy Policy",
-      "Help Center",
-    ];
-    final List<String> iconDataSource = [
-      "assets/icons/user_icon.png",
-      "assets/icons/notification_icon.png",
-      "assets/icons/credit_card_icon.png",
-      "assets/icons/security_icon.png",
-      "assets/icons/three_dots_icon.png",
-      "assets/icons/lock_icon.png",
-      "assets/icons/help_center_icon.png",
-    ];
+    // int index = 0;
+    // final List<String> title = [
+    //   "Edit Profile",
+    //   "Notifications",
+    //   "Payment",
+    //   "Security",
+    //   "Language",
+    //   "Privacy Policy",
+    //   "Help Center",
+    // ];
+    // final List<String> iconDataSource = [
+    //   "assets/icons/user_icon.png",
+    //   "assets/icons/notification_icon.png",
+    //   "assets/icons/credit_card_icon.png",
+    //   "assets/icons/security_icon.png",
+    //   "assets/icons/three_dots_icon.png",
+    //   "assets/icons/lock_icon.png",
+    //   "assets/icons/help_center_icon.png",
+    // ];
+    List<Widget> _buildListSettingsItems() => [
+          SettingsItem(
+            iconSource: "assets/icons/user_icon.png",
+            title: "Edit Profile",
+            onTap: () => GoRouter.of(context).pushNamed(
+              "edit_profile",
+              params: {
+                "userId": "user_id_pass_to_edit_profile",
+              },
+            ),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/notification_icon.png",
+            title: "Notifications",
+            onTap: () => GoRouter.of(context).pushNamed("notification"),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/credit_card_icon.png",
+            title: "Payment",
+            onTap: () => GoRouter.of(context).pushNamed("payment"),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/security_icon.png",
+            title: "Security",
+            onTap: () {},
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/three_dots_icon.png",
+            title: "Language",
+            onTap: () => GoRouter.of(context).pushNamed("language"),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/lock_icon.png",
+            title: "Privacy Policy",
+            onTap: () => GoRouter.of(context).pushNamed("privacy_policy"),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/help_center_icon.png",
+            title: "Help Center",
+            onTap: () => GoRouter.of(context).pushNamed("help_center"),
+          ),
+          SettingsItem(
+            iconSource: "assets/icons/logout_icon.png",
+            title: "Log out",
+            onTap: () => GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn),
+            isLogOut: true,
+          ),
+        ];
+
+    final List<String> pushNamed = [];
     return SafeArea(
       child: Scaffold(
         appBar: const DefaultAppBar(title: "Profile"),
@@ -80,25 +133,7 @@ class SettingsPage extends StatelessWidget {
                   thickness: 1.2,
                 ),
                 Column(
-                  children: List<Widget>.from(
-                    title
-                        .map(
-                          (e) => SettingsItem(
-                            iconSource: iconDataSource[index++],
-                            title: e,
-                            onTap: () {},
-                          ),
-                        )
-                        .toList()
-                      ..add(
-                        SettingsItem(
-                          iconSource: "assets/icons/logout_icon.png",
-                          title: "Log out",
-                          onTap: () {},
-                          isLogOut: true,
-                        ),
-                      ),
-                  ),
+                  children: _buildListSettingsItems(),
                 ),
               ],
             ),

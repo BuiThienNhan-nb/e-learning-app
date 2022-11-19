@@ -8,12 +8,18 @@ class PasswordTextFormField extends StatefulWidget {
   final TextEditingController controller;
   String? labelText;
   String? Function(String?)? validator;
+  final Function()? onSuffixIconTap;
+  bool readOnly = false;
+  String? suffixIconSource;
 
   PasswordTextFormField({
     Key? key,
     required this.controller,
     this.labelText,
     this.validator,
+    this.readOnly = false,
+    this.onSuffixIconTap,
+    this.suffixIconSource,
   }) : super(key: key);
 
   @override
@@ -34,12 +40,15 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
       labelText: widget.labelText ?? LocaleKeys.password.tr(),
       controller: widget.controller,
       prefixIcon: "assets/icons/lock_icon.png",
-      suffixIcon: togglePassword
-          ? "assets/icons/password_hide_icon.png"
-          : "assets/icons/password_show_icon.png",
+      suffixIcon: widget.suffixIconSource ??
+          (togglePassword
+              ? "assets/icons/password_hide_icon.png"
+              : "assets/icons/password_show_icon.png"),
       obscureText: togglePassword,
-      onSuffixIconTap: () => setState(() => togglePassword = !togglePassword),
+      onSuffixIconTap: widget.onSuffixIconTap ??
+          () => setState(() => togglePassword = !togglePassword),
       validator: widget.validator,
+      readOnly: widget.readOnly,
     );
   }
 }

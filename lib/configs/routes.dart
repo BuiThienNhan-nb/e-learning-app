@@ -1,4 +1,5 @@
-import 'package:e_learning_app/features/settings/presentation/pages/settings_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/help_center/help_center_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/language_select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,12 @@ import '../features/home/presentation/pages/home_page.dart';
 import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
 import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
 import '../features/my_courses/presentation/pages/my_course_page.dart';
+import '../features/settings/presentation/pages/edit_profile_page.dart';
+import '../features/settings/presentation/pages/notification_page.dart';
+import '../features/settings/presentation/pages/payment_page.dart';
+import '../features/settings/presentation/pages/privacy_page.dart';
+import '../features/settings/presentation/pages/settings_page.dart';
+import '../features/settings/presentation/states/provider/settings_page_provider.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
 import '../utils/nav_bar/tab_bar_shell_route.dart';
 
@@ -29,14 +36,25 @@ class AppRoutes {
 
   final _bottomBarLocator = GetIt.I<BottomNavigationBarConfig>();
 
+  // Authentication
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
   final String forgotPassword = '/forgot-password';
-  // final String teacherDetail = "/teacher-detail";
+
+  // Detail Page
   late final String teacherDetail =
       "${_bottomBarLocator.mainPage.first}/teacher";
   final String courseDetail = "/course/:courseId";
   final String lessonDetail = "/lesson/:lessonId";
+
+  // Settings Page
+  final String privacyPolicy = "/settings/privacy-policy";
+  final String editProfile = "/settings/edit-profile/:userId";
+  final String notification = "/settings/notification";
+  final String payment = "/settings/payment";
+  final String helpCenter = "/settings/help-center";
+  final String language = "/settings/language";
+
   // String get initial => signIn;
   String get initial => _bottomBarLocator.mainPage.first;
 
@@ -121,6 +139,56 @@ class AppRoutes {
           );
         },
       ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "edit_profile",
+        path: editProfile,
+        builder: (context, state) {
+          return EditProfilePage(
+            userId: state.params["userId"] ?? "N/A",
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "privacy_policy",
+        path: privacyPolicy,
+        builder: (context, state) {
+          return PrivacyPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "notification",
+        path: notification,
+        builder: (context, state) {
+          return const NotificationPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "payment",
+        path: payment,
+        builder: (context, state) {
+          return const PaymentPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "help_center",
+        path: helpCenter,
+        builder: (context, state) {
+          return const HelpCenterPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "language",
+        path: language,
+        builder: (context, state) {
+          return const LanguageSelectPage();
+        },
+      ),
       BottomTabBarShellRoute(
         tabs: _bottomBarLocator.tabs,
         routes: [
@@ -138,7 +206,15 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
-            builder: (context, state) => const SettingsPage(),
+            builder: (context, state) => MultiProvider(
+              providers: [
+                ChangeNotifierProvider<SettingsPageProvider>(
+                  create: (BuildContext context) => GetIt.I(),
+                  lazy: true,
+                ),
+              ],
+              child: const SettingsPage(),
+            ),
           ),
         ],
       ),

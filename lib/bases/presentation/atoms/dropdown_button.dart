@@ -16,6 +16,7 @@ class DefaultDropdownButton extends StatefulWidget {
     required this.selectedIndex,
     required this.items,
     required this.onChanged,
+    this.disable = false,
   }) : super(key: key);
 
   final String labelText;
@@ -26,6 +27,7 @@ class DefaultDropdownButton extends StatefulWidget {
   void Function(int) onChanged;
   List<String> items;
   int selectedIndex;
+  bool disable = false;
 
   @override
   State<DefaultDropdownButton> createState() => _DefaultDropdownButtonState();
@@ -45,7 +47,7 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
       }
       if (textFieldFocus.hasFocus) {
         setState(() {
-          fillColor = AppColors.secondaryColor;
+          fillColor = AppColors.subThemeColor;
           iconColor = AppColors.primaryColor;
         });
       } else {
@@ -83,14 +85,16 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
 
     return DropdownButtonFormField<String>(
       items: items,
-      onChanged: (value) {
-        setState(() {
-          widget.selectedIndex = widget.items.indexWhere(
-            (element) => element.compareTo(value!) == 0,
-          );
-          widget.onChanged(widget.selectedIndex);
-        });
-      },
+      onChanged: widget.disable
+          ? null
+          : (value) {
+              setState(() {
+                widget.selectedIndex = widget.items.indexWhere(
+                  (element) => element.compareTo(value!) == 0,
+                );
+                widget.onChanged(widget.selectedIndex);
+              });
+            },
       value: widget.items[widget.selectedIndex],
       focusNode: textFieldFocus,
       onTap: widget.onTap,

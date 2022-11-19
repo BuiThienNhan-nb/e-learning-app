@@ -9,7 +9,7 @@ class DefaultTextFormField extends StatefulWidget {
   final String labelText;
   Function()? onTap;
   bool readOnly = false;
-  final String prefixIcon;
+  String? prefixIcon;
   String? suffixIcon;
   bool obscureText = false;
   String? hintText;
@@ -22,7 +22,7 @@ class DefaultTextFormField extends StatefulWidget {
     Key? key,
     required this.labelText,
     required this.controller,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.readOnly = false,
     this.obscureText = false,
     this.suffixIcon,
@@ -89,10 +89,12 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
         labelStyle: AppStyles.subtitle1TextStyle.copyWith(
           fontWeight: FontWeight.w500,
         ),
-        prefixIcon: Image.asset(
-          widget.prefixIcon,
-          color: iconColor,
-        ),
+        prefixIcon: widget.prefixIcon == null
+            ? null
+            : Image.asset(
+                widget.prefixIcon!,
+                color: iconColor,
+              ),
         prefixIconColor: fillColor,
         suffixIcon: GestureDetector(
           onTap: widget.onSuffixIconTap,

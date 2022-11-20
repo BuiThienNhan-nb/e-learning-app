@@ -55,6 +55,7 @@ dependencies:
   youtube_explode_dart: ^1.12.3
   flutter_markdown: ^0.6.13
   modal_bottom_sheet: ^2.1.2
+  syncfusion_flutter_barcodes: ^20.3.57
 
 dev_dependencies:
   flutter_test:

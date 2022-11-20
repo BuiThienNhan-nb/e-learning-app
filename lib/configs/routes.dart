@@ -1,3 +1,6 @@
+import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
+import 'package:e_learning_app/features/my_transactions/presentations/pages/my_transactions_page.dart';
+import 'package:e_learning_app/features/my_transactions/presentations/pages/transaction_detail_page.dart';
 import 'package:e_learning_app/features/settings/presentation/pages/help_center/help_center_page.dart';
 import 'package:e_learning_app/features/settings/presentation/pages/language_select_page.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +49,7 @@ class AppRoutes {
       "${_bottomBarLocator.mainPage.first}/teacher";
   final String courseDetail = "/course/:courseId";
   final String lessonDetail = "/lesson/:lessonId";
+  final String transactionDetail = "/transaction/:transactionId";
 
   // Settings Page
   final String privacyPolicy = "/settings/privacy-policy";
@@ -141,6 +145,14 @@ class AppRoutes {
       ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
+        name: "transaction_detail",
+        path: transactionDetail,
+        builder: (context, state) {
+          return const TransactionDetailPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         name: "edit_profile",
         path: editProfile,
         builder: (context, state) {
@@ -198,7 +210,7 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[1],
-            builder: (context, state) => const MyCoursesPage(),
+            builder: (context, state) => const LiveStreamPage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[2],
@@ -206,6 +218,10 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
+            builder: (context, state) => const MyTransactionsPage(),
+          ),
+          GoRoute(
+            path: _bottomBarLocator.mainPage[4],
             builder: (context, state) => MultiProvider(
               providers: [
                 ChangeNotifierProvider<SettingsPageProvider>(

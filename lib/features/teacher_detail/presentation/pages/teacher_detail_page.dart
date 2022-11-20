@@ -1,12 +1,15 @@
+import 'package:e_learning_app/features/teacher_detail/presentation/pages/related_teacher_page.dart';
+import 'package:e_learning_app/features/teacher_detail/presentation/pages/teacher_courses_page.dart';
+import 'package:e_learning_app/features/teacher_detail/presentation/pages/teacher_reviews_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
-import '../../../../bases/presentation/atoms/recommendation_course_card.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/styles.dart';
 import '../../../../utils/mock/mock_courses.dart';
+import '../../../../utils/mock/mock_teacher_reviews.dart';
 import '../../../../utils/mock/mock_teachers.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 import '../../../home/domain/entities/course_model.dart';
@@ -100,17 +103,12 @@ class TeacherDetailPage extends StatelessWidget {
             // ),
             Expanded(
               child: TabBarView(
+                physics: const BouncingScrollPhysics(),
                 children: [
-                  ListView.builder(
-                    itemCount: courses.length,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) =>
-                        RecommendationCourseCard(course: courses[index]),
-                  ),
-                  const Text("Page 2"),
-                  const Text("Page 3"),
+                  TeacherCoursesPage(courses: courses),
+                  ReviewPage(reviews: GetIt.I<MockTeacherReviews>().reviews),
+                  RelatedTeacherPage(
+                      teachers: GetIt.I<MockTeachers>().topTeachers),
                 ],
               ),
             ),

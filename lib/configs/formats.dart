@@ -18,7 +18,7 @@ class AppFormats {
 
   final DateFormat formatTimeAndDate = DateFormat('HH:mm MM/dd');
 
-  final DateFormat formatDateMonthTime = DateFormat('dd MMM yyyy, HH:mm');
+  final DateFormat formatDateMonthTime = DateFormat('MMM dd yyyy | HH:mm:ss');
 
   final NumberFormat oCcy = NumberFormat("#,##0", "en_US");
 

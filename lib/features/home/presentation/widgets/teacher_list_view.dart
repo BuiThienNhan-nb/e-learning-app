@@ -41,6 +41,7 @@ class TeacherListView extends StatelessWidget {
           }
 
           return ListView.builder(
+            physics: const BouncingScrollPhysics(),
             itemCount: store.topTeachers!.length,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,

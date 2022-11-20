@@ -183,7 +183,7 @@ class SettingsItem extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: isLogOut != null && isLogOut!
                       ? AppColors.fireEngineRedColor
-                      : AppColors.blackColor,
+                      : AppColors.neutral.shade800,
                 ),
               ),
             ),

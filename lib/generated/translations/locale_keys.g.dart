@@ -6,8 +6,8 @@ abstract class  LocaleKeys {
   static const forgotPassword = 'forgotPassword';
   static const resetPassword = 'resetPassword';
   static const orContinueWith = 'orContinueWith';
-  static const identityCode = 'identityCode';
-  static const identityCodeRequired = 'identityCodeRequired';
+  static const resetPasswordToken = 'resetPasswordToken';
+  static const resetPasswordTokenRequired = 'resetPasswordTokenRequired';
   static const sendEmailMessage = 'sendEmailMessage';
   static const resendEmail = 'resendEmail';
   static const alreadyHaveAccount = 'alreadyHaveAccount';

@@ -17,7 +17,10 @@ class ForgotPasswordRepositoryImp implements ForgotPasswordRepository {
   ForgotPasswordRepositoryImp(this.dataSource, this.networkStatus);
 
   @override
-  Future<Either<Failure, void>> resetPassword(String newPassword) async {
+  Future<Either<Failure, bool>> resetPassword(
+    String newPasswordToken,
+    String newPassword,
+  ) async {
     if (!await networkStatus.isConnected) {
       return Left(
         UserFailure(
@@ -26,6 +29,9 @@ class ForgotPasswordRepositoryImp implements ForgotPasswordRepository {
       );
     }
 
-    return dataSource.resetPassword(newPassword);
+    return dataSource.resetPassword(
+      newPasswordToken,
+      newPassword,
+    );
   }
 }

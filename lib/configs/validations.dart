@@ -13,7 +13,7 @@ class AppValidations {
   }
 
   String? indentityCode(String value) =>
-      RequiredValidator(errorText: LocaleKeys.identityCodeRequired.tr())
+      RequiredValidator(errorText: LocaleKeys.resetPasswordTokenRequired.tr())
           .call(value);
 
   String? emailValidator(String value) => MultiValidator(

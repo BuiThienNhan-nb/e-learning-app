@@ -1,3 +1,6 @@
+import 'package:e_learning_app/features/auth/forgot_password/presentation/pages/get_forgot_password_page.dart';
+import 'package:e_learning_app/features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart';
+import 'package:e_learning_app/features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart';
 import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
 import 'package:e_learning_app/features/my_transactions/presentations/pages/my_transactions_page.dart';
 import 'package:e_learning_app/features/my_transactions/presentations/pages/transaction_detail_page.dart';
@@ -42,7 +45,8 @@ class AppRoutes {
   // Authentication
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
-  final String forgotPassword = '/forgot-password';
+  final String getCode = '/forgot-password/get-code';
+  final String resetPassword = '/forgot-password/reset-password';
 
   // Detail Page
   late final String teacherDetail =
@@ -59,8 +63,8 @@ class AppRoutes {
   final String helpCenter = "/settings/help-center";
   final String language = "/settings/language";
 
-  // String get initial => signIn;
-  String get initial => _bottomBarLocator.mainPage.first;
+  String get initial => signIn;
+  // String get initial => _bottomBarLocator.mainPage.first;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -83,11 +87,34 @@ class AppRoutes {
         ),
       ),
       GoRoute(
-        path: forgotPassword,
-        builder: (context, state) =>
+        path: getCode,
+        builder: (context, state) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GetForgotPasswordCodeProvider>(
+              create: (BuildContext context) => GetIt.I(),
+              lazy: true,
+            ),
+            Provider<ForgotPasswordStore>(
+              create: (_) => GetIt.I(),
+              lazy: true,
+            ),
+          ],
+          child: const GetForgotPasswordPage(),
+        ),
+      ),
+      GoRoute(
+        path: resetPassword,
+        builder: (context, state) => MultiProvider(
+          providers: [
             ChangeNotifierProvider<ForgotPasswordPageProvider>(
-          create: (context) => GetIt.I(),
-          lazy: true,
+              create: (context) => GetIt.I(),
+              lazy: true,
+            ),
+            Provider<ForgotPasswordStore>(
+              create: (_) => GetIt.I(),
+              lazy: true,
+            ),
+          ],
           child: const ForgotPasswordPage(),
         ),
       ),

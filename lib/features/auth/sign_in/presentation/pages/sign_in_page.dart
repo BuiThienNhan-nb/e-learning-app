@@ -158,8 +158,8 @@ class BuildSignInPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => GoRouter.of(context)
-                      .push(GetIt.I<AppRoutes>().forgotPassword),
+                  onTap: () =>
+                      GoRouter.of(context).push(GetIt.I<AppRoutes>().getCode),
                   child: Text(
                     "${LocaleKeys.forgotPassword.tr()} ?",
                     style: AppStyles.subtitle2TextStyle.copyWith(

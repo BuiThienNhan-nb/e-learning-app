@@ -12,15 +12,22 @@ class ForgotPasswordUseCase implements UseCase<void, ForgotPasswordParams> {
 
   ForgotPasswordUseCase(this._repository);
   @override
-  Future<Either<Failure, void>> call(ForgotPasswordParams params) async {
-    return _repository.resetPassword(params.newPassword);
+  Future<Either<Failure, bool>> call(ForgotPasswordParams params) async {
+    return _repository.resetPassword(
+      params.newPasswordToken,
+      params.newPassword,
+    );
   }
 }
 
 class ForgotPasswordParams extends Equatable {
   final String newPassword;
+  final String newPasswordToken;
 
-  const ForgotPasswordParams(this.newPassword);
+  const ForgotPasswordParams(
+    this.newPasswordToken,
+    this.newPassword,
+  );
 
   @override
   List<Object?> get props => [newPassword];

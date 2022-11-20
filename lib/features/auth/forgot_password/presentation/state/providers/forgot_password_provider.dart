@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class ForgotPasswordPageProvider extends ChangeNotifier {
-  final TextEditingController idCodeController = TextEditingController();
+  final TextEditingController tokenController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -12,7 +12,7 @@ class ForgotPasswordPageProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    idCodeController.dispose();
+    tokenController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();

@@ -12,6 +12,7 @@ import '../../../../../bases/presentation/atoms/link_text.dart';
 import '../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../configs/dimens.dart';
 import '../../../../../configs/languages.dart';
+import '../../../../../configs/routes.dart';
 import '../../../../../configs/styles.dart';
 import '../../../../../core/app/loading.dart';
 import '../../../../../core/app/provider.dart';
@@ -77,7 +78,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 (_) {
                   GetIt.I<AppProvider>().user = signUpStore!.userInfo!;
                   AppLoading.dismissLoadingDialog(context);
-                  GoRouter.of(context).pop();
+                  // GoRouter.of(context).pop();
+                  GoRouter.of(context).push(GetIt.I<AppRoutes>().verifyEmail);
                 },
               );
             }

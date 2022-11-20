@@ -1,6 +1,9 @@
 import 'package:e_learning_app/features/auth/forgot_password/presentation/pages/get_forgot_password_page.dart';
 import 'package:e_learning_app/features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart';
 import 'package:e_learning_app/features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart';
+import 'package:e_learning_app/features/auth/verify_email/presentation/pages/verify_email_page.dart';
+import 'package:e_learning_app/features/auth/verify_email/presentation/states/mobx/verify_email_store.dart';
+import 'package:e_learning_app/features/auth/verify_email/presentation/states/providers/verify_email_provider.dart';
 import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
 import 'package:e_learning_app/features/my_transactions/presentations/pages/my_transactions_page.dart';
 import 'package:e_learning_app/features/my_transactions/presentations/pages/transaction_detail_page.dart';
@@ -45,6 +48,7 @@ class AppRoutes {
   // Authentication
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
+  final String verifyEmail = '/verify-email';
   final String getCode = '/forgot-password/get-code';
   final String resetPassword = '/forgot-password/reset-password';
 
@@ -132,6 +136,22 @@ class AppRoutes {
             ),
           ],
           child: const SignUpPage(),
+        ),
+      ),
+      GoRoute(
+        path: verifyEmail,
+        builder: (context, state) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<VerifyEmailProvider>(
+              create: (BuildContext context) => GetIt.I(),
+              lazy: true,
+            ),
+            Provider<VerifyEmailStore>(
+              create: (_) => GetIt.I(),
+              lazy: true,
+            ),
+          ],
+          child: const VerifyEmailPage(),
         ),
       ),
       GoRoute(

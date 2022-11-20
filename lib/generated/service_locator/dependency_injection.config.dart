@@ -17,19 +17,19 @@ import '../../features/auth/forgot_password/data/datasources/forgot_password_dat
 import '../../features/auth/forgot_password/data/datasources/get_forgot_password_code_data_source.dart'
     as _i10;
 import '../../features/auth/forgot_password/data/repositories/forgot_password_repository_imp.dart'
-    as _i28;
+    as _i33;
 import '../../features/auth/forgot_password/data/repositories/get_forgot_password_code_repository_imp.dart'
-    as _i31;
+    as _i36;
 import '../../features/auth/forgot_password/domain/repositories/forgot_password_repository.dart'
-    as _i27;
-import '../../features/auth/forgot_password/domain/repositories/get_forgot_password_code_repository.dart'
-    as _i30;
-import '../../features/auth/forgot_password/domain/usecases/forgot_password_use_case.dart'
-    as _i29;
-import '../../features/auth/forgot_password/domain/usecases/get_forgot_password_code_use_case.dart'
     as _i32;
+import '../../features/auth/forgot_password/domain/repositories/get_forgot_password_code_repository.dart'
+    as _i35;
+import '../../features/auth/forgot_password/domain/usecases/forgot_password_use_case.dart'
+    as _i34;
+import '../../features/auth/forgot_password/domain/usecases/get_forgot_password_code_use_case.dart'
+    as _i37;
 import '../../features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart'
-    as _i41;
+    as _i47;
 import '../../features/auth/forgot_password/presentation/state/providers/forgot_password_provider.dart'
     as _i9;
 import '../../features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart'
@@ -37,36 +37,48 @@ import '../../features/auth/forgot_password/presentation/state/providers/get_for
 import '../../features/auth/sign_in/data/datasources/auth_remote_data_source.dart'
     as _i6;
 import '../../features/auth/sign_in/data/repositories/auth_repository_imp.dart'
-    as _i25;
+    as _i30;
 import '../../features/auth/sign_in/domain/repositories/auth_repository.dart'
-    as _i24;
-import '../../features/auth/sign_in/domain/usecases/auth_use_case.dart' as _i26;
+    as _i29;
+import '../../features/auth/sign_in/domain/usecases/auth_use_case.dart' as _i31;
 import '../../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart'
-    as _i39;
+    as _i44;
 import '../../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart'
     as _i5;
 import '../../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart'
-    as _i40;
+    as _i45;
+import '../../features/auth/verify_email/data/datasources/verify_email_data_source.dart'
+    as _i24;
+import '../../features/auth/verify_email/data/repositories/verify_email_repository_imp.dart'
+    as _i27;
+import '../../features/auth/verify_email/domain/repositories/verify_email_repository.dart'
+    as _i26;
+import '../../features/auth/verify_email/domain/usecases/verify_email_use_case.dart'
+    as _i28;
+import '../../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart'
+    as _i46;
+import '../../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart'
+    as _i25;
 import '../../features/home/data/datasources/get_rcm_lesson_data_source.dart'
     as _i12;
 import '../../features/home/data/datasources/get_top_teacher_data_source.dart'
     as _i13;
 import '../../features/home/data/repositories/get_rcm_lesson_repository_imp.dart'
-    as _i34;
+    as _i39;
 import '../../features/home/data/repositories/get_top_teachers_repository_imp.dart'
-    as _i37;
-import '../../features/home/domain/repositories/get_rcm_lessons_repository.dart'
-    as _i33;
-import '../../features/home/domain/repositories/get_top_teacher_repository.dart'
-    as _i36;
-import '../../features/home/domain/usecases/lesson_use_cases/get_rcm_lesson_use_case.dart'
-    as _i35;
-import '../../features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart'
-    as _i38;
-import '../../features/home/presentation/states/lesson/get_rcm_lessons_store.dart'
     as _i42;
-import '../../features/home/presentation/states/teacher/get_top_teachers_store.dart'
+import '../../features/home/domain/repositories/get_rcm_lessons_repository.dart'
+    as _i38;
+import '../../features/home/domain/repositories/get_top_teacher_repository.dart'
+    as _i41;
+import '../../features/home/domain/usecases/lesson_use_cases/get_rcm_lesson_use_case.dart'
+    as _i40;
+import '../../features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart'
     as _i43;
+import '../../features/home/presentation/states/lesson/get_rcm_lessons_store.dart'
+    as _i48;
+import '../../features/home/presentation/states/teacher/get_top_teachers_store.dart'
+    as _i49;
 import '../../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart'
     as _i14;
 import '../../features/main/presentation/mobx/main_page_store.dart' as _i15;
@@ -122,52 +134,64 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i21.MockTransactions>(() => _i21.MockTransactions());
   gh.factory<_i22.NetworkStatus>(() => _i22.NetworkStatusImp());
   gh.factory<_i23.SettingsPageProvider>(() => _i23.SettingsPageProvider());
-  gh.lazySingleton<_i24.AuthRepository>(() => _i25.AuthRepositoryImp(
+  gh.lazySingleton<_i24.VerifyEmailDataSource>(
+      () => _i24.VerifyEmailDataSourceImp());
+  gh.factory<_i25.VerifyEmailProvider>(() => _i25.VerifyEmailProvider());
+  gh.lazySingleton<_i26.VerifyEmailRepository>(
+      () => _i27.VerifyEmailRepositoryImp(
+            get<_i24.VerifyEmailDataSource>(),
+            get<_i22.NetworkStatus>(),
+          ));
+  gh.lazySingleton<_i28.VerifyEmailUseCase>(
+      () => _i28.VerifyEmailUseCase(get<_i26.VerifyEmailRepository>()));
+  gh.lazySingleton<_i29.AuthRepository>(() => _i30.AuthRepositoryImp(
         dataSource: get<_i6.AuthRemoteDataSource>(),
         networkStatus: get<_i22.NetworkStatus>(),
       ));
-  gh.lazySingleton<_i26.AuthUseCase>(
-      () => _i26.AuthUseCase(get<_i24.AuthRepository>()));
-  gh.lazySingleton<_i27.ForgotPasswordRepository>(
-      () => _i28.ForgotPasswordRepositoryImp(
+  gh.lazySingleton<_i31.AuthUseCase>(
+      () => _i31.AuthUseCase(get<_i29.AuthRepository>()));
+  gh.lazySingleton<_i32.ForgotPasswordRepository>(
+      () => _i33.ForgotPasswordRepositoryImp(
             get<_i8.ForgotPasswordDataSource>(),
             get<_i22.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i29.ForgotPasswordUseCase>(
-      () => _i29.ForgotPasswordUseCase(get<_i27.ForgotPasswordRepository>()));
-  gh.lazySingleton<_i30.GetForgotPasswordCodeRepository>(
-      () => _i31.GetForgotPasswordCodeRepositoryImp(
+  gh.lazySingleton<_i34.ForgotPasswordUseCase>(
+      () => _i34.ForgotPasswordUseCase(get<_i32.ForgotPasswordRepository>()));
+  gh.lazySingleton<_i35.GetForgotPasswordCodeRepository>(
+      () => _i36.GetForgotPasswordCodeRepositoryImp(
             get<_i10.GetForgotPasswordCodeDataSource>(),
             get<_i22.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i32.GetForgotPasswordCodeUseCase>(() =>
-      _i32.GetForgotPasswordCodeUseCase(
-          get<_i30.GetForgotPasswordCodeRepository>()));
-  gh.lazySingleton<_i33.GetRecommendedLessonsRepository>(
-      () => _i34.GetRecommendedLessonsRepositoryImp(
+  gh.lazySingleton<_i37.GetForgotPasswordCodeUseCase>(() =>
+      _i37.GetForgotPasswordCodeUseCase(
+          get<_i35.GetForgotPasswordCodeRepository>()));
+  gh.lazySingleton<_i38.GetRecommendedLessonsRepository>(
+      () => _i39.GetRecommendedLessonsRepositoryImp(
             get<_i12.GetRecommendedLessonsDataSource>(),
             get<_i22.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i35.GetRecommendedLessonsUseCase>(() =>
-      _i35.GetRecommendedLessonsUseCase(
-          get<_i33.GetRecommendedLessonsRepository>()));
-  gh.lazySingleton<_i36.GetTopTeachersRepository>(
-      () => _i37.GetTopTeachersRepositoryImp(
+  gh.lazySingleton<_i40.GetRecommendedLessonsUseCase>(() =>
+      _i40.GetRecommendedLessonsUseCase(
+          get<_i38.GetRecommendedLessonsRepository>()));
+  gh.lazySingleton<_i41.GetTopTeachersRepository>(
+      () => _i42.GetTopTeachersRepositoryImp(
             get<_i13.GetTopTeachersDataSource>(),
             get<_i22.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i38.GetTopTeachersUseCase>(
-      () => _i38.GetTopTeachersUseCase(get<_i36.GetTopTeachersRepository>()));
-  gh.factory<_i39.SignInStore>(() => _i39.SignInStore(get<_i26.AuthUseCase>()));
-  gh.factory<_i40.SignUpStore>(() => _i40.SignUpStore(get<_i26.AuthUseCase>()));
-  gh.factory<_i41.ForgotPasswordStore>(() => _i41.ForgotPasswordStore(
-        get<_i29.ForgotPasswordUseCase>(),
-        get<_i32.GetForgotPasswordCodeUseCase>(),
+  gh.lazySingleton<_i43.GetTopTeachersUseCase>(
+      () => _i43.GetTopTeachersUseCase(get<_i41.GetTopTeachersRepository>()));
+  gh.factory<_i44.SignInStore>(() => _i44.SignInStore(get<_i31.AuthUseCase>()));
+  gh.factory<_i45.SignUpStore>(() => _i45.SignUpStore(get<_i31.AuthUseCase>()));
+  gh.factory<_i46.VerifyEmailStore>(
+      () => _i46.VerifyEmailStore(get<_i28.VerifyEmailUseCase>()));
+  gh.factory<_i47.ForgotPasswordStore>(() => _i47.ForgotPasswordStore(
+        get<_i34.ForgotPasswordUseCase>(),
+        get<_i37.GetForgotPasswordCodeUseCase>(),
       ));
-  gh.factory<_i42.GetRecommendedLessonsStore>(() =>
-      _i42.GetRecommendedLessonsStore(
-          get<_i35.GetRecommendedLessonsUseCase>()));
-  gh.factory<_i43.GetTopTeachersStore>(
-      () => _i43.GetTopTeachersStore(get<_i38.GetTopTeachersUseCase>()));
+  gh.factory<_i48.GetRecommendedLessonsStore>(() =>
+      _i48.GetRecommendedLessonsStore(
+          get<_i40.GetRecommendedLessonsUseCase>()));
+  gh.factory<_i49.GetTopTeachersStore>(
+      () => _i49.GetTopTeachersStore(get<_i43.GetTopTeachersUseCase>()));
   return get;
 }

@@ -74,7 +74,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       allowFullScreen: true,
       allowedScreenSleep: true,
       // autoPlay: true,
-      looping: true,
+      // looping: true,
       allowMuting: true,
       showControlsOnInitialize: true,
       deviceOrientationsAfterFullScreen: [

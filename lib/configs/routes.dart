@@ -1,14 +1,3 @@
-import 'package:e_learning_app/features/auth/forgot_password/presentation/pages/get_forgot_password_page.dart';
-import 'package:e_learning_app/features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart';
-import 'package:e_learning_app/features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart';
-import 'package:e_learning_app/features/auth/verify_email/presentation/pages/verify_email_page.dart';
-import 'package:e_learning_app/features/auth/verify_email/presentation/states/mobx/verify_email_store.dart';
-import 'package:e_learning_app/features/auth/verify_email/presentation/states/providers/verify_email_provider.dart';
-import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
-import 'package:e_learning_app/features/my_transactions/presentations/pages/my_transactions_page.dart';
-import 'package:e_learning_app/features/my_transactions/presentations/pages/transaction_detail_page.dart';
-import 'package:e_learning_app/features/settings/presentation/pages/help_center/help_center_page.dart';
-import 'package:e_learning_app/features/settings/presentation/pages/language_select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -17,23 +6,41 @@ import 'package:provider/provider.dart';
 
 import '../bases/presentation/atoms/bottom_nav_bar.dart';
 import '../features/auth/forgot_password/presentation/pages/forgot_password_page.dart';
+import '../features/auth/forgot_password/presentation/pages/get_forgot_password_page.dart';
+import '../features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart';
 import '../features/auth/forgot_password/presentation/state/providers/forgot_password_provider.dart';
+import '../features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart';
 import '../features/auth/sign_in/presentation/pages/sign_in_page.dart';
 import '../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart';
 import '../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart';
 import '../features/auth/sign_up/presentation/pages/sign_up_page.dart';
 import '../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart';
+import '../features/auth/verify_email/presentation/pages/verify_email_page.dart';
+import '../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart';
+import '../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart';
 import '../features/course_detail/presentation/pages/course_detail_page.dart';
+import '../features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
 import '../features/home/domain/entities/lesson_model.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
 import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
+import '../features/live_stream/presentation/pages/live_stream_page.dart';
+import '../features/main/presentation/mobx/main_page_store.dart';
+import '../features/main/presentation/pages/main_page.dart';
+import '../features/my_courses/presentation/pages/add_course/create_course_page.dart';
 import '../features/my_courses/presentation/pages/my_course_page.dart';
+import '../features/my_courses/presentation/states/provider/create_course_provider.dart';
+import '../features/my_courses/presentation/states/provider/my_courses_provider.dart';
+import '../features/my_transactions/presentations/pages/my_transactions_page.dart';
+import '../features/my_transactions/presentations/pages/transaction_detail_page.dart';
 import '../features/settings/presentation/pages/edit_profile_page.dart';
+import '../features/settings/presentation/pages/help_center/help_center_page.dart';
+import '../features/settings/presentation/pages/language_select_page.dart';
 import '../features/settings/presentation/pages/notification_page.dart';
 import '../features/settings/presentation/pages/payment_page.dart';
 import '../features/settings/presentation/pages/privacy_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
+import '../features/settings/presentation/states/mobx/update_avatar_store.dart';
 import '../features/settings/presentation/states/provider/settings_page_provider.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
 import '../utils/nav_bar/tab_bar_shell_route.dart';
@@ -52,9 +59,12 @@ class AppRoutes {
   final String getCode = '/forgot-password/get-code';
   final String resetPassword = '/forgot-password/reset-password';
 
+  // Main Page
+  final String mainPage = "/main";
+
   // Detail Page
-  late final String teacherDetail =
-      "${_bottomBarLocator.mainPage.first}/teacher";
+  late final String teacherDetail = "home/teacher/:teacherId";
+  // late final String teacherChat = "$teacherDetail/chat/:id";
   final String courseDetail = "/course/:courseId";
   final String lessonDetail = "/lesson/:lessonId";
   final String transactionDetail = "/transaction/:transactionId";
@@ -66,9 +76,11 @@ class AppRoutes {
   final String payment = "/settings/payment";
   final String helpCenter = "/settings/help-center";
   final String language = "/settings/language";
+  final String myCourses = "settings/my-courses";
+  final String createCourse = "/settings/my-courses/create-course";
 
-  String get initial => signIn;
-  // String get initial => _bottomBarLocator.mainPage.first;
+  // String get initial => signIn;
+  String get initial => mainPage;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -156,15 +168,57 @@ class AppRoutes {
       ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
-        name: "teacher_detail",
-        path: "${_bottomBarLocator.mainPage[0]}/teacher/:teacherId",
-        builder: (context, state) {
-          // final teacher = state.extra as TeacherModel;
-          return TeacherDetailPage(
-            teacherId: state.params["teacherId"] ?? "N/A",
-          );
-        },
+        path: mainPage,
+        builder: (context, state) => Provider<MainPageStore>(
+          create: (context) => GetIt.I(),
+          lazy: true,
+          child: MainPage(),
+        ),
+        routes: [
+          GoRoute(
+            name: "teacher_detail",
+            path: teacherDetail,
+            builder: (context, state) {
+              return TeacherDetailPage(
+                teacherId: state.params["teacherId"] ?? "N/A",
+              );
+            },
+          ),
+          GoRoute(
+            // parentNavigatorKey: _rootNavigatorKey,
+            name: "my_courses",
+            path: myCourses,
+            builder: (context, state) {
+              return MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<MyCoursesProvider>(
+                    create: (_) => GetIt.I(),
+                    // lazy: true,
+                  ),
+                ],
+                child: const MyCoursePage(),
+              );
+            },
+          ),
+        ],
       ),
+      // GoRoute(
+      //   parentNavigatorKey: _rootNavigatorKey,
+      //   name: "teacher_detail",
+      //   path: teacherDetail,
+      //   builder: (context, state) {
+      //     // final teacher = state.extra as TeacherModel;
+      //     return TeacherDetailPage(
+      //       teacherId: state.params["teacherId"] ?? "N/A",
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   parentNavigatorKey: _rootNavigatorKey,
+      //   name: "teacher_chat",
+      //   path: teacherChat,
+      //   builder: (context, state) => const ChatPage(),
+      // ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         name: "course_detail",
@@ -205,6 +259,42 @@ class AppRoutes {
         builder: (context, state) {
           return EditProfilePage(
             userId: state.params["userId"] ?? "N/A",
+          );
+        },
+      ),
+      // GoRoute(
+      //   parentNavigatorKey: _rootNavigatorKey,
+      //   name: "my_courses",
+      //   path: myCourses,
+      //   builder: (context, state) {
+      //     return MultiProvider(
+      //       providers: [
+      //         ChangeNotifierProvider<MyCoursesProvider>(
+      //           create: (_) => GetIt.I(),
+      //           // lazy: true,
+      //         ),
+      //       ],
+      //       child: const MyCoursePage(),
+      //     );
+      //   },
+      // ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "create_course",
+        path: createCourse,
+        builder: (context, state) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<MyCoursesProvider>(
+                create: (_) => GetIt.I(),
+                // lazy: true,
+              ),
+              Provider<CreateCourseProvider>(
+                create: (_) => GetIt.I(),
+                lazy: true,
+              ),
+            ],
+            child: const CreateCoursePage(),
           );
         },
       ),
@@ -261,7 +351,7 @@ class AppRoutes {
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[2],
-            builder: (context, state) => const MyCoursesPage(),
+            builder: (context, state) => const EnrolledCoursesPage(),
           ),
           GoRoute(
             path: _bottomBarLocator.mainPage[3],
@@ -273,6 +363,10 @@ class AppRoutes {
               providers: [
                 ChangeNotifierProvider<SettingsPageProvider>(
                   create: (BuildContext context) => GetIt.I(),
+                  lazy: true,
+                ),
+                Provider<UpdateAvatarStore>(
+                  create: (_) => GetIt.I(),
                   lazy: true,
                 ),
               ],

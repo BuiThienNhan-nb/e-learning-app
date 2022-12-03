@@ -1,13 +1,10 @@
-import 'dart:math';
-
+import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/styles.dart';
-import '../../../home/domain/entities/course_model.dart';
 
 class MyCourseCard extends StatelessWidget {
   const MyCourseCard({
@@ -19,7 +16,6 @@ class MyCourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progress = Random().nextDouble();
     return Container(
       height: AppDimens.extraLargeHeightDimens * 7,
       width: double.infinity,
@@ -53,165 +49,57 @@ class MyCourseCard extends StatelessWidget {
           DefaultNetworkImage(
             imageUrl: course.image.url,
             blurHash: course.image.blurHash,
-            height: (AppDimens.extraLargeHeightDimens * 5),
+            height: (AppDimens.extraLargeHeightDimens * 6),
             width: AppDimens.mediumWidthDimens * 16,
             shape: BoxShape.rectangle,
             borderRadius: AppDimens.mediumRadius,
           ),
           SizedBox(width: AppDimens.mediumWidthDimens),
-          SizedBox(
-            width: AppDimens.extraLargeWidthDimens * 6,
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
-                  decoration: BoxDecoration(
-                    color: AppColors.subThemeColor,
-                    borderRadius: BorderRadius.circular(AppDimens.mediumRadius),
-                  ),
-                  child: Text(
-                    course.category,
-                    style: AppStyles.subtitle2TextStyle.copyWith(
-                      color: AppColors.secondaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: AppDimens.mediumHeightDimens),
+                SizedBox(height: AppDimens.extraLargeHeightDimens * 0.25),
                 Text(
                   course.title,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: AppStyles.subtitle1TextStyle.copyWith(
+                  style: AppStyles.headline6TextStyle.copyWith(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
+                SizedBox(height: AppDimens.smallHeightDimens),
+                Text(
+                  "12,432 enrolled • 11 months ago",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: AppStyles.subtitle2TextStyle,
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star,
+                      color: Colors.orangeAccent,
+                    ),
+                    Text(
+                      "4.3",
+                      style: AppStyles.subtitle2TextStyle,
+                    ),
+                    // SvgPicture.asset(
+                    //   "assets/icons/comment_icon.svg",
+                    //   color: AppColors.neutral.shade600,
+                    //   fit: BoxFit.scaleDown,
+                    // ),
+                    // const Text("45"),
+                  ],
+                ),
+                SizedBox(height: AppDimens.extraLargeHeightDimens * 0.25),
               ],
             ),
           ),
-          CircularPercentIndicator(
-            radius: AppDimens.extraLargeWidthDimens * 1.2,
-            percent: progress,
-            lineWidth: 8,
-            animation: true,
-            animationDuration: 1200,
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: progress >= 0.6
-                ? AppColors.pigmentGreenColor
-                : progress >= 0.4
-                    ? Colors.yellow
-                    : AppColors.fireEngineRedColor,
-            center: Text(
-              "${(progress * 100).toStringAsFixed(1)}%",
-              style: AppStyles.subtitle2TextStyle.copyWith(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-
-/*
-          Stack(
-            fit: StackFit.loose,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: AppDimens.mediumHeightDimens),
-                  Container(
-                    padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
-                    decoration: BoxDecoration(
-                      color: AppColors.subThemeColor,
-                      borderRadius:
-                          BorderRadius.circular(AppDimens.mediumRadius),
-                    ),
-                    child: Text(
-                      course.category,
-                      style: AppStyles.subtitle2TextStyle.copyWith(
-                        color: AppColors.secondaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: AppDimens.mediumHeightDimens),
-                  SizedBox(
-                    width: AppDimens.appDesignSize.width -
-                        AppDimens.mediumWidthDimens * 22,
-                    child: Text(
-                      course.title,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppStyles.headline6TextStyle.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                  // SizedBox(height: AppDimens.smallHeightDimens),
-                  SizedBox(
-                    width: AppDimens.mediumWidthDimens * 18,
-                    height: AppDimens.extraLargeHeightDimens,
-                    child: (course.sale != null && course.sale != 0)
-                        ? RichText(
-                            text: TextSpan(
-                              style: AppStyles.headline6TextStyle.copyWith(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w900,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text:
-                                      "${(course.price * (1 - course.sale!)).toStringAsFixed(2)}\$\t\t",
-                                ),
-                                TextSpan(
-                                  text: "${course.price.toStringAsFixed(2)}\$",
-                                  style: AppStyles.subtitle1TextStyle.copyWith(
-                                    color: AppColors.neutral.shade500,
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationColor: AppColors.neutral.shade700,
-                                    decorationThickness: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Text(
-                            "${course.price.toStringAsFixed(2)}\$",
-                            style: AppStyles.headline6TextStyle.copyWith(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: AppDimens.smallWidthDimens,
-                bottom: AppDimens.mediumHeightDimens,
-                child: SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      Text(
-                        "\t${course.rates.toStringAsFixed(2)}",
-                        style: AppStyles.subtitle2TextStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        */
+          SizedBox(width: AppDimens.mediumWidthDimens),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:e_learning_app/features/settings/presentation/domain/entities/faq_model.dart';
+import 'package:e_learning_app/features/settings/domain/entities/faq_model.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton

@@ -24,7 +24,7 @@ class LessonDetailPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            VideoPlayerWidget(videoUrl: lesson.video?.videoUrl ?? ""),
+            VideoPlayerWidget(videoUrl: lesson.videoUrl ?? ""),
             Expanded(
               child: LayoutBuilder(
                 builder: (p0, p1) => const LessonCommentWidget(),

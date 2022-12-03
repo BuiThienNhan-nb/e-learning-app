@@ -11,14 +11,16 @@ import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
 
 class RecommendationCourseCard extends StatelessWidget {
-  const RecommendationCourseCard({
+  RecommendationCourseCard({
     super.key,
     required this.course,
     this.height,
+    this.isScalePrice = false,
   });
 
   final double? height;
   final CourseModel course;
+  bool isScalePrice = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,126 +55,165 @@ class RecommendationCourseCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            DefaultNetworkImage(
-              imageUrl: course.image.url,
-              blurHash: course.image.blurHash,
-              height: height ?? (AppDimens.extraLargeHeightDimens * 7),
-              width: AppDimens.mediumWidthDimens * 20,
-              shape: BoxShape.rectangle,
-              borderRadius: AppDimens.mediumRadius,
-            ),
-            SizedBox(width: AppDimens.mediumWidthDimens),
-            Stack(
-              fit: StackFit.loose,
-              children: [
-                Positioned(
-                  right: 0,
-                  top: AppDimens.mediumHeightDimens,
-                  child: BookmarkIcon(isBookmark: Random().nextBool()),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: AppDimens.mediumHeightDimens),
-                    Container(
-                      padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
-                      decoration: BoxDecoration(
-                        color: AppColors.subThemeColor,
-                        borderRadius:
-                            BorderRadius.circular(AppDimens.mediumRadius),
-                      ),
-                      child: Text(
-                        course.category,
-                        style: AppStyles.subtitle2TextStyle.copyWith(
-                          color: AppColors.secondaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+        child: IntrinsicHeight(
+          child: Stack(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppDimens.mediumHeightDimens,
                     ),
-                    SizedBox(height: AppDimens.mediumHeightDimens),
-                    SizedBox(
-                      width: AppDimens.appDesignSize.width -
-                          AppDimens.mediumWidthDimens * 22,
-                      child: Text(
-                        course.title,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyles.headline6TextStyle.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
+                    child: DefaultNetworkImage(
+                      imageUrl: course.image.url,
+                      blurHash: course.image.blurHash,
+                      height: height ?? (AppDimens.extraLargeHeightDimens * 6),
+                      width: AppDimens.mediumWidthDimens * 20,
+                      shape: BoxShape.rectangle,
+                      borderRadius: AppDimens.mediumRadius,
                     ),
-                    // SizedBox(height: AppDimens.smallHeightDimens),
-                    SizedBox(
-                      width: AppDimens.mediumWidthDimens * 18,
-                      height: AppDimens.extraLargeHeightDimens,
-                      child: (course.sale != null && course.sale != 0)
-                          ? RichText(
-                              text: TextSpan(
-                                style: AppStyles.headline6TextStyle.copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        "${(course.price * (1 - course.sale!)).toStringAsFixed(2)}\$\t\t",
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        "${course.price.toStringAsFixed(2)}\$",
-                                    style:
-                                        AppStyles.subtitle1TextStyle.copyWith(
-                                      color: AppColors.neutral.shade500,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationColor:
-                                          AppColors.neutral.shade700,
-                                      decorationThickness: 2,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Text(
-                              "${course.price.toStringAsFixed(2)}\$",
-                              style: AppStyles.headline6TextStyle.copyWith(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  right: AppDimens.smallWidthDimens,
-                  bottom: AppDimens.mediumHeightDimens,
-                  child: SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
+                  SizedBox(width: AppDimens.mediumWidthDimens),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.yellow,
+                        SizedBox(height: AppDimens.smallHeightDimens),
+                        Container(
+                          padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
+                          decoration: BoxDecoration(
+                            color: AppColors.subThemeColor,
+                            borderRadius:
+                                BorderRadius.circular(AppDimens.mediumRadius),
+                          ),
+                          child: Text(
+                            course.category,
+                            style: AppStyles.subtitle2TextStyle.copyWith(
+                              color: AppColors.secondaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        Text(
-                          "\t${course.rates.toStringAsFixed(2)}",
-                          style: AppStyles.subtitle2TextStyle,
-                          textAlign: TextAlign.center,
+                        SizedBox(
+                          width: AppDimens.appDesignSize.width -
+                              AppDimens.mediumWidthDimens * 22,
+                          child: Text(
+                            course.title,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppStyles.headline6TextStyle.copyWith(
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        // SizedBox(height: AppDimens.smallHeightDimens),
+                        SizedBox(
+                          width: AppDimens.mediumWidthDimens * 18,
+                          height: AppDimens.extraLargeHeightDimens,
+                          child: (course.sale != null && course.sale != 0)
+                              ? RichText(
+                                  text: TextSpan(
+                                    style: isScalePrice
+                                        ? AppStyles.headline6TextStyle.copyWith(
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w900,
+                                          )
+                                        : AppStyles.subtitle1TextStyle.copyWith(
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            "${(course.price * (1 - course.sale!)).toStringAsFixed(2)}\$\t",
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            "${course.price.toStringAsFixed(2)}\$",
+                                        style: isScalePrice
+                                            ? AppStyles.subtitle1TextStyle
+                                                .copyWith(
+                                                color:
+                                                    AppColors.neutral.shade500,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationColor:
+                                                    AppColors.neutral.shade700,
+                                                decorationThickness: 2,
+                                              )
+                                            : AppStyles.subtitle2TextStyle
+                                                .copyWith(
+                                                color:
+                                                    AppColors.neutral.shade500,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationColor:
+                                                    AppColors.neutral.shade700,
+                                                decorationThickness: 2,
+                                              ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Text(
+                                  "${course.price.toStringAsFixed(1)}\$",
+                                  style: isScalePrice
+                                      ? AppStyles.headline6TextStyle.copyWith(
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.w900,
+                                        )
+                                      : AppStyles.subtitle1TextStyle.copyWith(
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                ),
+                        ),
+                        SizedBox(
+                          height: isScalePrice
+                              ? AppDimens.largeHeightDimens
+                              : AppDimens.smallHeightDimens,
                         ),
                       ],
                     ),
                   ),
+                ],
+              ),
+              Positioned(
+                right: AppDimens.mediumWidthDimens,
+                bottom: isScalePrice
+                    ? AppDimens.largeHeightDimens - AppDimens.smallHeightDimens
+                    : AppDimens.smallHeightDimens,
+                child: SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.star,
+                        color: Colors.orangeAccent,
+                      ),
+                      Text(
+                        "\t${course.rates.toStringAsFixed(2)}",
+                        style: AppStyles.subtitle2TextStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              Positioned(
+                right: AppDimens.mediumWidthDimens,
+                top: AppDimens.mediumHeightDimens,
+                child: BookmarkIcon(isBookmark: Random().nextBool()),
+              ),
+            ],
+          ),
         ),
       ),
     );

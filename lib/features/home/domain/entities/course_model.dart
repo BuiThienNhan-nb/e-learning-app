@@ -83,7 +83,7 @@ class CourseModel extends Equatable {
     int total = 0;
     for (var section in section) {
       for (var lesson in section.lessons) {
-        total += lesson.video!.length;
+        total += lesson.length ?? 0;
       }
     }
     return (total / 60);

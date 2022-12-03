@@ -19,7 +19,7 @@ class AppLoading {
 
   static dismissLoadingDialog(BuildContext context) {
     if (isLoading) {
-      Navigator.of(context).pop();
+      Navigator.of(context, rootNavigator: true).pop();
       isLoading = false;
     }
   }

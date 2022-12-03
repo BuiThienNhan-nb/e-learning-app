@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: AppDimens.mediumHeightDimens),
+                    // SizedBox(height: AppDimens.mediumHeightDimens),
                     const RecommendationCoursePageView(),
                     SizedBox(height: AppDimens.mediumHeightDimens),
                   ],

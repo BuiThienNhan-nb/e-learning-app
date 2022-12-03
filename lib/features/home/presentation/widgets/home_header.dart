@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,7 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
                 ),
                 child: DefaultNetworkImage(
                   imageUrl:
-                      "https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_900,c_fill/8df231ec8f1266779a6908117e0650ac.JPG",
+                      "https://images.unsplash.com/photo-1605462863863-10d9e47e15ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
                   blurHash: "LUE{|Z~qNeIV0LE2WAozIpR+t6oI",
                   height: AppDimens.extraLargeHeightDimens * 2,
                   width: AppDimens.extraLargeWidthDimens * 2,
@@ -76,22 +78,35 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
             Positioned(
               right: AppDimens.mediumWidthDimens,
               top: AppDimens.extraLargeHeightDimens * 0.5,
-              child: Container(
-                padding: EdgeInsets.all(AppDimens.mediumHeightDimens * 1.6),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.neutral.shade300),
-                  shape: BoxShape.circle,
-                ),
-                child: Badge(
-                  shape: BadgeShape.circle,
-                  position: BadgePosition.topEnd(end: -1.w, top: -4.h),
-                  showBadge: provider.hasNotification,
-                  child: Image.asset(
-                    "assets/icons/notification_icon.png",
-                    height: AppDimens.extraLargeHeightDimens,
-                    width: AppDimens.extraLargeWidthDimens,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(AppDimens.mediumHeightDimens * 1.6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.neutral.shade300),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Badge(
+                      shape: BadgeShape.circle,
+                      position: BadgePosition.topEnd(end: -1.w, top: -4.h),
+                      showBadge: provider.hasNotification,
+                      child: Image.asset(
+                        "assets/icons/notification_icon.png",
+                        height: AppDimens.extraLargeHeightDimens,
+                        width: AppDimens.extraLargeWidthDimens,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: AppDimens.largeWidthDimens),
+                  GestureDetector(
+                    onTap: () => log("Bookmark Icon tapped!"),
+                    child: Image.asset(
+                      "assets/icons/bookmark_inactive_icon.png",
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

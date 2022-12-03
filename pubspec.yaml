@@ -56,6 +56,17 @@ dependencies:
   flutter_markdown: ^0.6.13
   modal_bottom_sheet: ^2.1.2
   syncfusion_flutter_barcodes: ^20.3.57
+  flutter_rating_bar: ^4.0.1
+  image_picker: ^0.8.6
+  firebase_core: ^2.3.0
+  firebase_storage: ^11.0.6
+  image: ^3.2.2
+  blurhash_dart: ^1.1.0
+  fx_stepper: ^0.0.1
+  status_change: ^2.0.0
+  timeline_tile: ^2.0.0
+  timelines: ^0.1.0
+  get_it_mixin: ^3.1.4+2
 
 dev_dependencies:
   flutter_test:

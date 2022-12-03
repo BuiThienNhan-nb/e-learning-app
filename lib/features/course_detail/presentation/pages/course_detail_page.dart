@@ -10,7 +10,6 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
-import '../../../../utils/mock/mock_course_reviews.dart';
 import '../../../../utils/mock/mock_courses.dart';
 import '../../../home/domain/entities/course_model.dart';
 import '../widgets/sliver_app_bar_tab.dart';
@@ -60,6 +59,7 @@ class CourseDetailPage extends StatelessWidget {
             borderRadius: AppDimens.mediumRadius,
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
@@ -144,8 +144,7 @@ class CourseDetailPage extends StatelessWidget {
                     children: [
                       CourseAboutPage(course: course),
                       CourseLessonPage(course: course),
-                      CourseReviewsPage(
-                          reviews: GetIt.I<MockCourseReviews>().reviews),
+                      CourseReviewsPage(course: course),
                     ],
                   ),
                 ),

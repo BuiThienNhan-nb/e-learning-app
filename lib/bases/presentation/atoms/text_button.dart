@@ -36,8 +36,8 @@ class DefaultTextButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDimens.extraItemRadius),
           ),
-          shadowColor: AppColors.secondaryColor,
-          elevation: 4.w,
+          // shadowColor: AppColors.secondaryColor,
+          // elevation: 4.w,
         ),
         child: Text(
           title,

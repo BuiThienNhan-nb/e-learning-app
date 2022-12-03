@@ -134,46 +134,6 @@ class _DefaultResultDialog extends State<DefaultResultDialog>
                   ),
                 ),
               ),
-              /* 
-              Positioned.fill(
-                child: Transform.rotate(
-                  angle: -pi / 36.0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        AppDimens.itemRadius,
-                      ),
-                    ),
-                    child: CustomPaint(
-                      painter: QuaterCirclePainter(
-                        color: primaryColor,
-                      ),
-                      foregroundPainter: IconPainter(
-                        icon: Icons.done,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: AppDimens.largeHeightDimens,
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: SizedBox(
-                    child: Text(
-                      widget.isError
-                          ? LocaleKeys.tryAgain.tr().toUpperCase()
-                          : LocaleKeys.continues.tr().toUpperCase(),
-                      style: context.textTheme.subtitle1?.copyWith(
-                        color: primaryColor,
-                        letterSpacing: 2.w,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-              */
             ],
           ),
         ),

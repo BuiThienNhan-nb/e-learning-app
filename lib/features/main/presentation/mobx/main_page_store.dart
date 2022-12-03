@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,8 +12,15 @@ abstract class _MainPageStore with Store {
   int pageIndex = 0;
 
   @action
-  void onPageChanged(int value, BuildContext context, String url) {
-    pageIndex = value;
-    GoRouter.of(context).go(url);
+  void onPageChanged(int index) {
+    pageIndex = index;
   }
+}
+
+enum MainSub {
+  home,
+  streaming,
+  enrolledCourses,
+  myTransactions,
+  profile,
 }

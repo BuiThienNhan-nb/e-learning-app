@@ -12,8 +12,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../bases/presentation/atoms/date_picker.dart';
 import '../../../../bases/presentation/atoms/dropdown_button.dart';
-import '../../../../configs/colors.dart';
 import '../../../../configs/validations.dart';
+import '../../../../core/app/provider.dart';
 import '../../../../core/app/values.dart';
 import '../states/provider/settings_page_provider.dart';
 import '../widgets/setting_app_bar.dart';
@@ -56,7 +56,8 @@ class EditProfilePage extends StatelessWidget {
                 DefaultTextFormField(
                   labelText: LocaleKeys.email.tr(),
                   controller: TextEditingController(
-                      text: "buithiennhan250901@gmail.com "),
+                    text: GetIt.I<AppProvider>().user.email,
+                  ),
                   readOnly: true,
                 ),
                 SizedBox(height: AppDimens.largeHeightDimens),
@@ -80,31 +81,35 @@ class EditProfilePage extends StatelessWidget {
                   labelText: LocaleKeys.title.tr(),
                   prefixIcon: "assets/icons/briefcase_icon.png",
                   items: AppValues.instance.title.toCurrentLocale(),
-                  selectedIndex: 0,
+                  selectedIndex: 1,
                   onChanged: (index) {},
                   disable: true,
                 ),
                 SizedBox(height: AppDimens.extraLargeHeightDimens),
-                Container(
-                  padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(AppDimens.extraItemRadius),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.secondaryColor.withOpacity(0.3),
-                        blurRadius: AppDimens.mediumHeightDimens,
-                        offset: const Offset(1, 4),
-                        blurStyle: BlurStyle.normal,
-                        spreadRadius: 0.5,
-                      ),
-                    ],
-                  ),
-                  child: DefaultTextButton(
-                    submit: () {},
-                    title: "Update",
-                  ),
+                DefaultTextButton(
+                  submit: () {},
+                  title: "Update",
                 ),
+                // Container(
+                //   padding: EdgeInsets.all(AppDimens.mediumHeightDimens),
+                //   decoration: BoxDecoration(
+                //     borderRadius:
+                //         BorderRadius.circular(AppDimens.extraItemRadius),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: AppColors.secondaryColor.withOpacity(0.3),
+                //         blurRadius: AppDimens.mediumHeightDimens,
+                //         offset: const Offset(1, 4),
+                //         blurStyle: BlurStyle.normal,
+                //         spreadRadius: 0.5,
+                //       ),
+                //     ],
+                //   ),
+                //   child: DefaultTextButton(
+                //     submit: () {},
+                //     title: "Update",
+                //   ),
+                // ),
                 SizedBox(height: AppDimens.mediumHeightDimens),
               ],
             ),

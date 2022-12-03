@@ -21,7 +21,7 @@ class DefaultDropdownButton extends StatefulWidget {
 
   final String labelText;
   Function()? onTap;
-  final String prefixIcon;
+  final String? prefixIcon;
   String? hintText;
   void Function(bool)? onFocus;
   void Function(int) onChanged;
@@ -111,12 +111,14 @@ class _DefaultDropdownButtonState extends State<DefaultDropdownButton> {
         labelStyle: AppStyles.subtitle1TextStyle.copyWith(
           fontWeight: FontWeight.w500,
         ),
-        prefixIcon: Image.asset(
-          widget.prefixIcon,
-          height: 2.h,
-          width: 2.w,
-          color: iconColor,
-        ),
+        prefixIcon: widget.prefixIcon == null
+            ? null
+            : Image.asset(
+                widget.prefixIcon!,
+                height: 2.h,
+                width: 2.w,
+                color: iconColor,
+              ),
         prefixIconColor: fillColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimens.itemRadius),

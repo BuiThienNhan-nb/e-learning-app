@@ -3,32 +3,34 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'video_lesson_model.dart';
-
 class LessonModel extends Equatable {
   final String id;
   int order;
   String title;
-  VideoLessonModel? video;
+  String? videoUrl;
+  int? length;
 
   LessonModel({
     required this.id,
     required this.order,
     required this.title,
-    this.video,
+    this.videoUrl,
+    this.length,
   });
 
   LessonModel copyWith({
     String? id,
     int? order,
     String? title,
-    VideoLessonModel? video,
+    String? videoUrl,
+    int? length,
   }) {
     return LessonModel(
       id: id ?? this.id,
       order: order ?? this.order,
       title: title ?? this.title,
-      video: video ?? this.video,
+      videoUrl: videoUrl ?? this.videoUrl,
+      length: length ?? this.length,
     );
   }
 
@@ -37,7 +39,8 @@ class LessonModel extends Equatable {
       'id': id,
       'order': order,
       'title': title,
-      'video': video?.toMap(),
+      'videoUrl': videoUrl,
+      'length': length,
     };
   }
 
@@ -46,9 +49,8 @@ class LessonModel extends Equatable {
       id: (map['id'] ?? '') as String,
       order: (map['order'] ?? 0) as int,
       title: (map['title'] ?? '') as String,
-      video: map['video'] != null
-          ? VideoLessonModel.fromMap(map['video'] as Map<String, dynamic>)
-          : null,
+      videoUrl: map['videoUrl'] != null ? map['videoUrl'] as String : null,
+      length: map['length'] != null ? map['length'] as int : null,
     );
   }
 
@@ -61,15 +63,13 @@ class LessonModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        id,
-        order,
-        title,
-        video ??
-            VideoLessonModel(
-              id: "id_null",
-              videoUrl: "url_null",
-              length: 0,
-            ),
-      ];
+  List<Object> get props {
+    return [
+      id,
+      order,
+      title,
+      videoUrl ?? "",
+      length ?? 0,
+    ];
+  }
 }

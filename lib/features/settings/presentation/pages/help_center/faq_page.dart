@@ -3,7 +3,7 @@ import 'package:e_learning_app/configs/dimens.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/faq_model.dart';
+import '../../../domain/entities/faq_model.dart';
 
 class FAQPage extends StatelessWidget {
   const FAQPage({

@@ -17,6 +17,9 @@ class DefaultTextFormField extends StatefulWidget {
   void Function()? onSuffixIconTap;
   TextInputType? textInputType;
   String? Function(String?)? validator;
+  Function(String)? onFieldSubmitted;
+  int? maxLines;
+  Function(String)? onChanged;
 
   DefaultTextFormField({
     Key? key,
@@ -32,6 +35,9 @@ class DefaultTextFormField extends StatefulWidget {
     this.onSuffixIconTap,
     this.textInputType,
     this.validator,
+    this.onFieldSubmitted,
+    this.maxLines,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -75,6 +81,10 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       obscureText: widget.obscureText,
       keyboardType: widget.textInputType,
       validator: widget.validator,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      minLines: 1,
+      maxLines: widget.obscureText ? 1 : widget.maxLines,
+      onChanged: widget.onChanged,
       style: AppStyles.subtitle1TextStyle.copyWith(
         color: AppColors.blackColor,
         fontWeight: FontWeight.w900,
@@ -96,15 +106,17 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
                 color: iconColor,
               ),
         prefixIconColor: fillColor,
-        suffixIcon: GestureDetector(
-          onTap: widget.onSuffixIconTap,
-          child: widget.suffixIcon != null
-              ? Image.asset(
-                  widget.suffixIcon!,
-                  color: iconColor,
-                )
-              : const SizedBox.shrink(),
-        ),
+        suffixIcon: widget.suffixIcon == null
+            ? null
+            : GestureDetector(
+                onTap: widget.onSuffixIconTap,
+                child: widget.suffixIcon != null
+                    ? Image.asset(
+                        widget.suffixIcon!,
+                        color: iconColor,
+                      )
+                    : const SizedBox.shrink(),
+              ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimens.itemRadius),
           borderSide: BorderSide(

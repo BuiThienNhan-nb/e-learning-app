@@ -19,6 +19,7 @@ class ContinueLessonListView extends StatelessWidget {
       child: ListView.builder(
         itemCount: 6,
         scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.only(
           left: AppDimens.largeWidthDimens,

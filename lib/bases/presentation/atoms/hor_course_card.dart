@@ -69,7 +69,7 @@ class ContinueCourseCard extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.star,
-                          color: Colors.yellow,
+                          color: Colors.orangeAccent,
                         ),
                         Text(
                           "\t4.7 (2.440 ratings)",

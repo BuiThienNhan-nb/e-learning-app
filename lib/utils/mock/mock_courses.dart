@@ -6,7 +6,7 @@ import '../../features/auth/sign_in/domain/entities/image_model.dart';
 import '../../features/home/domain/entities/course_model.dart';
 import '../../features/home/domain/entities/lesson_model.dart';
 import '../../features/home/domain/entities/section_model.dart';
-import '../../features/home/domain/entities/video_lesson_model.dart';
+import '../../main.dart';
 
 @lazySingleton
 class MockCourses {
@@ -150,12 +150,7 @@ class MockCourses {
     "Your professional headshot photo",
     "Course certificate: How to get it if you need it",
   ];
-  final VideoLessonModel videoLesson = VideoLessonModel(
-    id: "id_${Random().nextDouble()}",
-    videoUrl:
-        "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-    length: Random().nextInt(15),
-  );
+
   late final List<List<LessonModel>> lessons = [
     _lesson1Title
         .map(
@@ -163,12 +158,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -178,12 +169,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -193,12 +180,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -208,12 +191,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -223,12 +202,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -238,12 +213,8 @@ class MockCourses {
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
             order: _lessonOrder++,
             title: lessonTitle,
-            video: VideoLessonModel(
-              id: "id_${Random().nextDouble()}",
-              videoUrl:
-                  "https://rr6---sn-8pxuuxa-nbozz.googlevideo.com/videoplayback?expire=1668935488&ei=4Jp5Y6nBN4O32roP-eq6kAQ&ip=171.252.208.244&id=o-AL3txzQ3zkXh80qGDRp7LXgyCU4UMC2r-9GPf94Ur6m9&itag=22&source=youtube&requiressl=yes&mh=qw&mm=31%2C29&mn=sn-8pxuuxa-nbozz%2Csn-8pxuuxa-nbo6r&ms=au%2Crdu&mv=m&mvi=6&pcm2cms=yes&pl=24&initcwndbps=1496250&vprv=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=233.430&lmt=1658232740557704&mt=1668913494&fvip=1&fexp=24001373%2C24007246&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAItA1oyCr0uQ4zHbhXW7KjFR_uNX9CqYJJn61oZBZ_ZwAiEAt8cozSXACt3JOBkEOdar5AdjDspJ9zY4WaHBO2kcB_A%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRAIgJW_t_vtLEb-hEdA7RKzvVgyfOiVEGstgrpZsXYmjbF0CIFY-Wy1I-_0ta04ikiq2Pdds6sW5r3hQT7LJ67r1BsE3",
-              length: Random().nextInt(15),
-            ),
+            videoUrl: decodeYoutubeUrl,
+            length: Random().nextInt(15),
           ),
         )
         .toList(),
@@ -263,7 +234,7 @@ class MockCourses {
       .map(
         (sectionTitle) => SectionModel(
           id: "id_${Random().nextDouble()}",
-          title: "Section ${_sectionModelIndex + 1} - $sectionTitle",
+          title: sectionTitle,
           lessons: lessons[_sectionModelIndex++],
         ),
       )

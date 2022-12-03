@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/main/presentation/pages/main_page.dart';
 import 'nav_bar_item.dart';
 
 /// ShellRoute that uses a bottom tab navigation (ScaffoldWithNavBar) with
@@ -23,13 +22,13 @@ class BottomTabBarShellRoute extends ShellRoute {
               children: [
                 // Needed to keep the (faux) shell navigator alive
                 Offstage(child: fauxNav),
-                ScaffoldWithNavBar(
-                  tabs: tabs,
-                  key: scaffoldKey,
-                  currentNavigator: fauxNav as Navigator,
-                  currentRouterState: state,
-                  routes: routes,
-                ),
+                // ScaffoldWithNavBar(
+                //   tabs: tabs,
+                //   key: scaffoldKey,
+                //   currentNavigator: fauxNav as Navigator,
+                //   currentRouterState: state,
+                //   routes: routes,
+                // ),
               ],
             );
           },

@@ -25,6 +25,12 @@ class TeacherInteractButtonRow extends StatelessWidget {
             icon: const Icon(Icons.message),
             label: "Message",
             onPressed: () {},
+            // onPressed: () => GoRouter.of(context).pushNamed(
+            //   "teacher_chat",
+            //   params: {
+            //     "id": teacherId,
+            //   },
+            // ),
             isPrimary: true,
           ),
         ),

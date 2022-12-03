@@ -1,10 +1,11 @@
 import 'dart:ui';
 
-import 'package:e_learning_app/configs/colors.dart';
-import 'package:e_learning_app/configs/dimens.dart';
-import 'package:e_learning_app/features/course_detail/domain/entities/course_detail_model.dart';
-import 'package:e_learning_app/features/course_detail/presentation/widgets/section_build.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../configs/colors.dart';
+import '../../../../configs/dimens.dart';
+import '../../domain/entities/course_detail_model.dart';
+import '../widgets/section_build.dart';
 
 class CourseLessonPage extends StatelessWidget {
   const CourseLessonPage({
@@ -16,6 +17,8 @@ class CourseLessonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
+
     return Stack(
       children: [
         SingleChildScrollView(
@@ -23,7 +26,10 @@ class CourseLessonPage extends StatelessWidget {
           child: Column(
             children: course.section
                 .map(
-                  (section) => CourseSectionWidget(section: section),
+                  (section) => CourseSectionWidget(
+                    section: section,
+                    index: index++,
+                  ),
                 )
                 .toList(),
           ),

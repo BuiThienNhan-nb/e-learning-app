@@ -21,6 +21,7 @@ class RecommendationCoursePageView extends StatelessWidget {
     // final height = AppDimens.extraLargeHeightDimens * 9;
     return SizedBox(
       height: AppDimens.extraLargeHeightDimens * 9,
+      width: double.infinity,
       child: Observer(
         builder: (context) {
           if (store.state == BaseSate.init) {
@@ -52,7 +53,10 @@ class RecommendationCoursePageView extends StatelessWidget {
             ),
             itemBuilder: (context, index, realIndex) {
               return RecommendationCourseCard(
-                  course: store.recommendedLessons![index]);
+                course: store.recommendedLessons![index],
+                height: AppDimens.extraLargeHeightDimens * 8,
+                isScalePrice: true,
+              );
             },
           );
         },

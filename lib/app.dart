@@ -27,18 +27,28 @@ class MyApp extends StatelessWidget {
           designSize: AppDimens.appDesignSize,
           builder: (_, __) => Builder(
             builder: (context) {
-              return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-                theme: ThemeData(
-                  textTheme: AppThemes.appTextTheme,
-                  colorScheme: AppThemes.appColorSchema,
+              return GestureDetector(
+                onTap: () {
+                  // Unfocus when tap out side
+                  FocusScopeNode currentNode = FocusScope.of(context);
+                  if (!currentNode.hasPrimaryFocus) {
+                    currentNode.unfocus();
+                    currentNode.requestFocus(FocusNode());
+                  }
+                },
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  theme: ThemeData(
+                    textTheme: AppThemes.appTextTheme,
+                    colorScheme: AppThemes.appColorSchema,
+                  ),
+                  routerDelegate: router.routerDelegate,
+                  routeInformationParser: router.routeInformationParser,
+                  routeInformationProvider: router.routeInformationProvider,
                 ),
-                routerDelegate: router.routerDelegate,
-                routeInformationParser: router.routeInformationParser,
-                routeInformationProvider: router.routeInformationProvider,
               );
             },
           ),

@@ -46,7 +46,7 @@ class LessonCommentTextField extends StatelessWidget {
       controller: provider.commentController,
       onSubmitted: (value) {
         provider.commentController.clear();
-        onCommentSubmit!(value);
+        onCommentSubmit!(value.trim());
       },
     );
   }

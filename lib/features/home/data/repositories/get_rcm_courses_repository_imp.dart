@@ -6,16 +6,16 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/platform/network_status.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../../domain/entities/course_model.dart';
-import '../../domain/repositories/get_rcm_lessons_repository.dart';
-import '../datasources/get_rcm_lesson_data_source.dart';
+import '../../domain/repositories/get_rcm_courses_repository.dart';
+import '../datasources/get_rcm_courses_data_source.dart';
 
-@LazySingleton(as: GetRecommendedLessonsRepository)
-class GetRecommendedLessonsRepositoryImp
-    implements GetRecommendedLessonsRepository {
-  final GetRecommendedLessonsDataSource dataSource;
+@LazySingleton(as: GetRecommendedCoursesRepository)
+class GetRecommendedCoursesRepositoryImp
+    implements GetRecommendedCoursesRepository {
+  final GetRecommendedCoursesDataSource dataSource;
   final NetworkStatus networkStatus;
 
-  GetRecommendedLessonsRepositoryImp(this.dataSource, this.networkStatus);
+  GetRecommendedCoursesRepositoryImp(this.dataSource, this.networkStatus);
 
   @override
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons() async {

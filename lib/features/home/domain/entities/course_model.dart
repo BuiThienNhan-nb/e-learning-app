@@ -6,16 +6,14 @@ import 'package:equatable/equatable.dart';
 
 import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
 
-import '../../../auth/sign_in/domain/entities/image_model.dart';
-
 class CourseModel extends Equatable {
   final String id;
   String title;
   String description;
   double rates;
   int votes;
-  ImageModel image;
-  String category;
+  String image;
+  List<String> category;
   double price;
   double? sale;
   List<SectionModel> section;
@@ -41,8 +39,8 @@ class CourseModel extends Equatable {
     String? description,
     double? rates,
     int? votes,
-    ImageModel? image,
-    String? category,
+    String? image,
+    List<String>? category,
     double? price,
     double? sale,
     List<SectionModel>? section,
@@ -70,7 +68,7 @@ class CourseModel extends Equatable {
       'description': description,
       'rates': rates,
       'votes': votes,
-      'image': image.toMap(),
+      'image': image,
       'category': category,
       'price': price,
       'sale': sale,
@@ -91,20 +89,29 @@ class CourseModel extends Equatable {
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
     return CourseModel(
-      id: (map['id'] ?? '') as String,
+      id: (map['courseId'] ?? '') as String,
       title: (map['title'] ?? '') as String,
       description: (map['description'] ?? '') as String,
-      rates: (map['rates'] ?? 0.0) as double,
-      votes: (map['votes'] ?? 0) as int,
-      image: ImageModel.fromMap(map['image'] as Map<String, dynamic>),
-      category: (map['category'] ?? '') as String,
-      price: (map['price'] ?? 0.0) as double,
-      sale: map['sale'] != null ? map['sale'] as double : null,
-      section: List<SectionModel>.from(
-        (map['section'] as List<int>).map<SectionModel>(
-          (x) => SectionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      rates: (map['ratingScore'] ?? 0.0) as double,
+      votes: (map['ratingNumber'] ?? 0) as int,
+      image: (map['image'] ?? '') as String,
+      category: List<String>.from((map['category'] ?? const <String>[]))
+          .cast<String>(),
+      price: (map['price'] ?? 0) is int
+          ? ((map['price'] ?? 0) as int).toDouble()
+          : (map['price'] ?? 0) as double,
+      sale: map['sale'] != null
+          ? map['sale'] is int
+              ? (map['sale'] as int).toDouble()
+              : map['sale'] as double
+          : null,
+      section: map['section'] == null
+          ? <SectionModel>[]
+          : List<SectionModel>.from(
+              (map['section'] as List<int>).map<SectionModel>(
+                (x) => SectionModel.fromMap(x as Map<String, dynamic>),
+              ),
+            ),
       haveCertificate: (map['haveCertificate'] ?? false) as bool,
     );
   }

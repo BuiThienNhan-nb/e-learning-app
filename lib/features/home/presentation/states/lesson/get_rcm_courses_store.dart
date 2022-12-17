@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/usecases/base_use_case.dart';
-import 'package:e_learning_app/features/home/domain/usecases/lesson_use_cases/get_rcm_lesson_use_case.dart';
+import 'package:e_learning_app/features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -10,18 +10,18 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
 import '../../../domain/entities/course_model.dart';
 
-part 'get_rcm_lessons_store.g.dart';
+part 'get_rcm_courses_store.g.dart';
 
 @injectable
-class GetRecommendedLessonsStore extends _GetRecommendedLessonsStore
-    with _$GetRecommendedLessonsStore {
-  GetRecommendedLessonsStore(super.useCase);
+class GetRecommendedCoursesStore extends _GetRecommendedCoursesStore
+    with _$GetRecommendedCoursesStore {
+  GetRecommendedCoursesStore(super.useCase);
 }
 
-abstract class _GetRecommendedLessonsStore with Store {
-  final GetRecommendedLessonsUseCase _useCase;
+abstract class _GetRecommendedCoursesStore with Store {
+  final GetRecommendedCoursesUseCase _useCase;
 
-  _GetRecommendedLessonsStore(this._useCase);
+  _GetRecommendedCoursesStore(this._useCase);
 
   @observable
   List<CourseModel>? recommendedLessons;

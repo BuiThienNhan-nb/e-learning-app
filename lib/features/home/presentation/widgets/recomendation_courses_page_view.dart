@@ -8,7 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../bases/mobx/base_state.dart';
-import '../states/lesson/get_rcm_lessons_store.dart';
+import '../states/lesson/get_rcm_courses_store.dart';
 
 class RecommendationCoursePageView extends StatelessWidget {
   const RecommendationCoursePageView({
@@ -17,7 +17,7 @@ class RecommendationCoursePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = GetIt.I<GetRecommendedLessonsStore>();
+    final store = GetIt.I<GetRecommendedCoursesStore>();
     // final height = AppDimens.extraLargeHeightDimens * 9;
     return SizedBox(
       height: AppDimens.extraLargeHeightDimens * 9,

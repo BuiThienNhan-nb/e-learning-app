@@ -3,16 +3,16 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../../core/error/failures.dart';
 import '../../../../../../core/usecases/base_use_case.dart';
-import '../../entities/user_info.dart';
+import '../../entities/user_model.dart';
 import '../../repositories/auth_repository.dart';
 
-class SignInUseCase implements UseCase<UserInfo, SignInParams> {
+class SignInUseCase implements UseCase<UserModel, SignInParams> {
   final AuthRepository _repository;
 
   SignInUseCase(this._repository);
 
   @override
-  Future<Either<Failure, UserInfo>> call(SignInParams p) async =>
+  Future<Either<Failure, UserModel>> call(SignInParams p) async =>
       _repository.signIn(p.email, p.password);
 }
 

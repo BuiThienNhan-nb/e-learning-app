@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../../core/error/failures.dart';
 import '../../../../../../core/usecases/base_use_case.dart';
-import '../../entities/user_info.dart';
+import '../../entities/user_model.dart';
 import '../../repositories/auth_repository.dart';
 
 class SignUpUseCase implements UseCase<void, SignUpParams> {
@@ -12,7 +12,7 @@ class SignUpUseCase implements UseCase<void, SignUpParams> {
   SignUpUseCase(this._repository);
 
   @override
-  Future<Either<Failure, UserInfo>> call(SignUpParams p) async =>
+  Future<Either<Failure, UserModel>> call(SignUpParams p) async =>
       await _repository.signUp(
         name: p.name,
         email: p.email,

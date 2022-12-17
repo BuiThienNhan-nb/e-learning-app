@@ -1,21 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:e_learning_app/configs/formats.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:e_learning_app/features/auth/sign_in/domain/entities/image_model.dart';
-
-class UserInfo extends Equatable {
+class UserModel extends Equatable {
   final String id;
   String name;
   final String email;
-  ImageModel? avatar;
+  String? avatar;
   DateTime birthday;
   String? phoneNumber;
   final String role;
   String gender;
 
-  UserInfo({
+  UserModel({
     required this.id,
     required this.name,
     required this.email,
@@ -26,17 +25,17 @@ class UserInfo extends Equatable {
     required this.gender,
   });
 
-  UserInfo copyWith({
+  UserModel copyWith({
     String? id,
     String? name,
     String? email,
-    ImageModel? avatar,
+    String? avatar,
     DateTime? birthday,
     String? phoneNumber,
     String? role,
     String? gender,
   }) {
-    return UserInfo(
+    return UserModel(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -53,7 +52,7 @@ class UserInfo extends Equatable {
       'id': id,
       'name': name,
       'email': email,
-      'avatar': avatar?.toMap(),
+      'avatar': avatar,
       'birthday': birthday.millisecondsSinceEpoch,
       'phoneNumber': phoneNumber,
       'role': role,
@@ -61,16 +60,15 @@ class UserInfo extends Equatable {
     };
   }
 
-  factory UserInfo.fromMap(Map<String, dynamic> map) {
-    return UserInfo(
-      id: (map['id'] ?? '') as String,
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: (map['userId'] ?? '') as String,
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
-      avatar: map['avatar'] != null
-          ? ImageModel.fromMap(map['avatar'] as Map<String, dynamic>)
-          : null,
-      birthday:
-          DateTime.fromMillisecondsSinceEpoch((map['birthday'] ?? 0) as int),
+      avatar: (map['avatar'] ?? '') as String,
+      birthday: map['birthday'] == null
+          ? DateTime(2001, 09, 25)
+          : AppFormats.instance.formatDay.parse(map['birthday']),
       phoneNumber:
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       role: (map['role'] ?? '') as String,
@@ -80,8 +78,8 @@ class UserInfo extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory UserInfo.fromJson(String source) =>
-      UserInfo.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
@@ -92,11 +90,7 @@ class UserInfo extends Equatable {
       id,
       name,
       email,
-      avatar ??
-          const ImageModel(
-            url: "",
-            blurHash: "",
-          ),
+      avatar ?? "",
       birthday,
       phoneNumber ?? "",
       role,

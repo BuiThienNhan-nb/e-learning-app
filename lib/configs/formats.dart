@@ -22,5 +22,6 @@ class AppFormats {
 
   final NumberFormat oCcy = NumberFormat("#,##0", "en_US");
 
-  String timeAgo(DateTime time) => timeago.format(time);
+  String timeAgo(DateTime time) =>
+      timeago.format(time.add(const Duration(hours: 7)));
 }

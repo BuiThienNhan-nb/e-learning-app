@@ -47,8 +47,8 @@ class MyCourseCard extends StatelessWidget {
         children: [
           SizedBox(width: AppDimens.smallWidthDimens),
           DefaultNetworkImage(
-            imageUrl: course.image.url,
-            blurHash: course.image.blurHash,
+            imageUrl: course.image,
+            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
             height: (AppDimens.extraLargeHeightDimens * 6),
             width: AppDimens.mediumWidthDimens * 16,
             shape: BoxShape.rectangle,

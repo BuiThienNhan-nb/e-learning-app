@@ -40,8 +40,8 @@ class RoundTeacherItem extends StatelessWidget {
               ],
             ),
             child: DefaultNetworkImage(
-              imageUrl: teacher.avatar!.url,
-              blurHash: teacher.avatar!.blurHash,
+              imageUrl: teacher.avatar!,
+              blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
               height: AppDimens.extraLargeHeightDimens * 3.2,
               width: AppDimens.extraLargeWidthDimens * 3.2,
             ),

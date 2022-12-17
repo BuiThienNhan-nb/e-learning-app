@@ -1,8 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-
-import 'package:blurhash_dart/blurhash_dart.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/error/failures.dart';
@@ -29,11 +25,11 @@ class UpdateAvatarDataSourceImp implements UpdateAvatarDataSource {
       await storageRef.child(storagePath).putFile(file);
 
       // Create blur hash from image
-      final data = file.readAsBytesSync();
-      final image = img.decodeImage(data);
-      final blur = BlurHash.encode(image!);
+      // final data = file.readAsBytesSync();
+      // final image = img.decodeImage(data);
+      // final blur = BlurHash.encode(image!);
 
-      log(blur.hash);
+      // log(blur.hash);
       file.delete();
 
       return const Right(true);

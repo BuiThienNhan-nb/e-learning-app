@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../../core/platform/network_status.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../domain/entities/user_info.dart';
+import '../../domain/entities/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
 
@@ -21,7 +21,7 @@ class AuthRepositoryImp implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserInfo>> signIn(
+  Future<Either<Failure, UserModel>> signIn(
       String email, String password) async {
     if (!await networkStatus.isConnected) {
       return Left(
@@ -41,7 +41,7 @@ class AuthRepositoryImp implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserInfo>> signUp({
+  Future<Either<Failure, UserModel>> signUp({
     required String name,
     required String email,
     required String password,

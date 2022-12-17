@@ -51,17 +51,16 @@ class CourseAboutPage extends StatelessWidget {
                 SizedBox(height: AppDimens.mediumHeightDimens),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: AppDimens.appDesignSize.width -
-                          AppDimens.extraLargeWidthDimens,
+                    Expanded(
                       child: Text(
                         course.title,
                         style: AppStyles.headline5TextStyle
                             .copyWith(fontWeight: FontWeight.w900),
                       ),
                     ),
+                    SizedBox(width: AppDimens.largeWidthDimens),
                     BookmarkIcon(isBookmark: Random().nextBool()),
                   ],
                 ),
@@ -78,7 +77,7 @@ class CourseAboutPage extends StatelessWidget {
                             BorderRadius.circular(AppDimens.mediumRadius),
                       ),
                       child: Text(
-                        course.category,
+                        course.category.first,
                         style: AppStyles.subtitle2TextStyle.copyWith(
                           color: AppColors.secondaryColor,
                           fontWeight: FontWeight.bold,
@@ -156,8 +155,8 @@ class CourseAboutPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     DefaultNetworkImage(
-                      imageUrl: teacher.avatar!.url,
-                      blurHash: teacher.avatar!.blurHash,
+                      imageUrl: teacher.avatar!,
+                      blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
                       height: AppDimens.extraLargeHeightDimens * 2.4,
                       width: AppDimens.extraLargeWidthDimens * 2.4,
                     ),

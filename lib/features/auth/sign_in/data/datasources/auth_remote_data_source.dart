@@ -3,21 +3,23 @@ import 'dart:developer' as logger;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:e_learning_app/configs/env.dart';
+import 'package:e_learning_app/core/app/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../bases/services/api_exception.dart';
 import '../../../../../core/app/values.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../domain/entities/user_info.dart';
+import '../../domain/entities/user_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<Either<Failure, UserInfo>> signIn(
+  Future<Either<Failure, UserModel>> signIn(
     String email,
     String password,
   );
 
-  Future<Either<Failure, UserInfo>> signUp({
+  Future<Either<Failure, UserModel>> signUp({
     required String name,
     required String email,
     required String password,
@@ -38,7 +40,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
   final Dio dio1 = Dio();
 
   @override
-  Future<Either<Failure, UserInfo>> signIn(
+  Future<Either<Failure, UserModel>> signIn(
       String email, String password) async {
     final Map<String, String> requestData = {
       "email": email,
@@ -51,17 +53,21 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
         data: requestData,
       );
 
-      logger.log(data["data"]["user"]["name"]);
+      logger.log(data["data"]["token"]["access_token"]);
+
+      GetIt.I<AppProvider>().accessToken =
+          data["data"]["token"]["access_token"].toString();
 
       return Right(
-        UserInfo(
-          id: data["data"]["token"]["access_token"],
-          name: data["data"]["user"]["name"],
-          email: data["data"]["user"]["email"],
-          birthday: DateTime(2001, 9, 25),
-          role: AppValues.instance.title.last,
-          gender: LocaleKeys.ma,
-        ),
+        // UserInfo(
+        //   id: data["data"]["token"]["access_token"],
+        //   name: data["data"]["user"]["name"],
+        //   email: data["data"]["user"]["email"],
+        //   birthday: DateTime(2001, 9, 25),
+        //   role: AppValues.instance.title.last,
+        //   gender: LocaleKeys.ma,
+        // ),
+        UserModel.fromMap(data["data"]["user"]),
       );
     } catch (e) {
       return Left(exceptionToFailure(e));
@@ -74,7 +80,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, UserInfo>> signUp({
+  Future<Either<Failure, UserModel>> signUp({
     required String name,
     required String email,
     required String password,
@@ -84,13 +90,14 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
     required String gender,
     required String role,
   }) async {
-    final Map<String, String> requestData = {
+    final Map<String?, String?> requestData = {
       "email": email,
       "password": password,
       "name": name,
       "gender": gender,
       "birthdayDate": birthday,
-      "role": role,
+      "role": role.toLowerCase(),
+      "phoneNumber": phoneNumber,
     };
 
     try {
@@ -100,7 +107,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       );
 
       return Right(
-        UserInfo(
+        UserModel(
           id: "id_register",
           name: "Bùi Thiện Nhân",
           email: AppValues.instance.mockEmail,

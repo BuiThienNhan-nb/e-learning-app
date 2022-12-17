@@ -20,13 +20,13 @@ mixin _$SignInStore on _SignInStore, Store {
       Atom(name: '_SignInStore.userInfo', context: context);
 
   @override
-  UserInfo? get userInfo {
+  UserModel? get userInfo {
     _$userInfoAtom.reportRead();
     return super.userInfo;
   }
 
   @override
-  set userInfo(UserInfo? value) {
+  set userInfo(UserModel? value) {
     _$userInfoAtom.reportWrite(value, super.userInfo, () {
       super.userInfo = value;
     });
@@ -52,13 +52,13 @@ mixin _$SignInStore on _SignInStore, Store {
       Atom(name: '_SignInStore._userFuture', context: context);
 
   @override
-  ObservableFuture<Either<Failure, UserInfo>>? get _userFuture {
+  ObservableFuture<Either<Failure, UserModel>>? get _userFuture {
     _$_userFutureAtom.reportRead();
     return super._userFuture;
   }
 
   @override
-  set _userFuture(ObservableFuture<Either<Failure, UserInfo>>? value) {
+  set _userFuture(ObservableFuture<Either<Failure, UserModel>>? value) {
     _$_userFutureAtom.reportWrite(value, super._userFuture, () {
       super._userFuture = value;
     });

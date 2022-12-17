@@ -51,8 +51,8 @@ class EnrolledCourseCard extends StatelessWidget {
         children: [
           SizedBox(width: AppDimens.smallWidthDimens),
           DefaultNetworkImage(
-            imageUrl: course.image.url,
-            blurHash: course.image.blurHash,
+            imageUrl: course.image,
+            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
             height: (AppDimens.extraLargeHeightDimens * 5),
             width: AppDimens.mediumWidthDimens * 16,
             shape: BoxShape.rectangle,
@@ -72,7 +72,7 @@ class EnrolledCourseCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppDimens.mediumRadius),
                   ),
                   child: Text(
-                    course.category,
+                    course.category.first,
                     style: AppStyles.subtitle2TextStyle.copyWith(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.bold,

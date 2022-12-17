@@ -2,11 +2,10 @@
 
 import 'dart:convert';
 
-import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_info.dart';
+import 'package:e_learning_app/configs/formats.dart';
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_model.dart';
 
-import 'image_model.dart';
-
-class TeacherModel extends UserInfo {
+class TeacherModel extends UserModel {
   final double rates;
   final int votes;
 
@@ -28,7 +27,7 @@ class TeacherModel extends UserInfo {
     String? id,
     String? name,
     String? email,
-    ImageModel? avatar,
+    String? avatar,
     DateTime? birthday,
     String? phoneNumber,
     String? role,
@@ -68,14 +67,12 @@ class TeacherModel extends UserInfo {
 
   factory TeacherModel.fromMap(Map<String, dynamic> map) {
     return TeacherModel(
-      id: (map['id'] ?? '') as String,
+      id: (map['userId'] ?? '') as String,
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
-      avatar: map['avatar'] != null
-          ? ImageModel.fromMap(map['avatar'] as Map<String, dynamic>)
-          : null,
-      birthday:
-          DateTime.fromMillisecondsSinceEpoch((map['birthday'] ?? 0) as int),
+      avatar: (map['avatar'] ?? '') as String,
+      birthday: AppFormats.instance.formatDay
+          .parse((map['birthday'] ?? "25/09/2001") as String),
       phoneNumber:
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       role: (map['role'] ?? '') as String,
@@ -100,11 +97,7 @@ class TeacherModel extends UserInfo {
       id,
       name,
       email,
-      avatar ??
-          const ImageModel(
-            url: "",
-            blurHash: "",
-          ),
+      avatar ?? "",
       birthday,
       phoneNumber ?? "",
       role,

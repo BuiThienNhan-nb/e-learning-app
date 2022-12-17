@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../../../bases/mobx/base_state.dart';
 import '../../../../../../core/error/failures.dart';
 import '../../../../../../generated/translations/locale_keys.g.dart';
-import '../../../domain/entities/user_info.dart';
+import '../../../domain/entities/user_model.dart';
 import '../../../domain/usecases/auth_use_case.dart';
 import '../../../domain/usecases/auth_use_case/sign_in_use_case.dart';
 
@@ -23,13 +23,13 @@ abstract class _SignInStore with Store {
   _SignInStore(this._authUseCase);
 
   @observable
-  UserInfo? userInfo;
+  UserModel? userInfo;
 
   @observable
   String? errorMessage;
 
   @observable
-  ObservableFuture<Either<Failure, UserInfo>>? _userFuture;
+  ObservableFuture<Either<Failure, UserModel>>? _userFuture;
 
   @computed
   BaseSate get state {
@@ -54,7 +54,7 @@ abstract class _SignInStore with Store {
       ),
     );
 
-    Either<Failure, UserInfo>? userOrFailure = await _userFuture;
+    Either<Failure, UserModel>? userOrFailure = await _userFuture;
 
     if (userOrFailure == null) {
       errorMessage = LocaleKeys.serverUnexpectedError.tr();

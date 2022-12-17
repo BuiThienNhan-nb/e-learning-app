@@ -51,8 +51,8 @@ class CourseDetailPage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           DefaultNetworkImage(
-            imageUrl: course.image.url,
-            blurHash: course.image.blurHash,
+            imageUrl: course.image,
+            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
             height: AppDimens.extraLargeHeightDimens * 18,
             width: double.infinity,
             shape: BoxShape.rectangle,

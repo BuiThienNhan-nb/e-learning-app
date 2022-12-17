@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/error/failures.dart';
-import '../entities/user_info.dart';
+import '../entities/user_model.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, UserInfo>> signIn(
+  Future<Either<Failure, UserModel>> signIn(
     String email,
     String password,
   );
 
-  Future<Either<Failure, UserInfo>> signUp({
+  Future<Either<Failure, UserModel>> signUp({
     required String name,
     required String email,
     required String password,

@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/live_stream/presentation/pages/room_web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -62,6 +63,9 @@ class AppRoutes {
   // Main Page
   final String mainPage = "/main";
 
+  // Live stream
+  final String liveStream = "live-stream";
+
   // Detail Page
   late final String teacherDetail = "home/teacher/:teacherId";
   // late final String teacherChat = "$teacherDetail/chat/:id";
@@ -79,8 +83,8 @@ class AppRoutes {
   final String myCourses = "settings/my-courses";
   final String createCourse = "/settings/my-courses/create-course";
 
-  // String get initial => signIn;
-  String get initial => mainPage;
+  String get initial => signIn;
+  // String get initial => mainPage;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -197,6 +201,15 @@ class AppRoutes {
                   ),
                 ],
                 child: const MyCoursePage(),
+              );
+            },
+          ),
+          GoRoute(
+            name: "live_stream",
+            path: liveStream,
+            builder: (context, state) {
+              return RoomWebViewPage(
+                id: state.extra as String,
               );
             },
           ),

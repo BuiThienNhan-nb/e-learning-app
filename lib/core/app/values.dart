@@ -1,5 +1,5 @@
 import '../../configs/env.dart';
-import '../../features/auth/sign_in/domain/entities/user_info.dart';
+import '../../features/auth/sign_in/domain/entities/user_model.dart';
 import '../../generated/translations/locale_keys.g.dart';
 
 class AppValues {
@@ -11,7 +11,7 @@ class AppValues {
     return instance;
   }
 
-  UserInfo? currentUser;
+  UserModel? currentUser;
 
   final Env env = Env.instance;
 

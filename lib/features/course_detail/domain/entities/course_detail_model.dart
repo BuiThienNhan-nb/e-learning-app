@@ -1,7 +1,6 @@
 import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
 
 import '../../../../configs/formats.dart';
-import '../../../auth/sign_in/domain/entities/image_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 class CourseDetailModel extends CourseModel {
@@ -33,8 +32,8 @@ class CourseDetailModel extends CourseModel {
     String? description,
     double? rates,
     int? votes,
-    ImageModel? image,
-    String? category,
+    String? image,
+    List<String>? category,
     double? price,
     double? sale,
     List<SectionModel>? section,

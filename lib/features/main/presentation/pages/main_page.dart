@@ -214,6 +214,7 @@ class _MainPageState extends State<MainPage>
         tabController.index = store.pageIndex;
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: LazyIndexedStack(
             index: tabController.index,
             children: [

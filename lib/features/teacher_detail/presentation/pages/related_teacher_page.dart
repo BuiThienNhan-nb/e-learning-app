@@ -47,8 +47,8 @@ class RelatedTeacherItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           DefaultNetworkImage(
-            imageUrl: teacher.avatar!.url,
-            blurHash: teacher.avatar!.blurHash,
+            imageUrl: teacher.avatar!,
+            blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
             height: AppDimens.extraLargeHeightDimens * 2.8,
             width: AppDimens.extraLargeWidthDimens * 2.8,
           ),

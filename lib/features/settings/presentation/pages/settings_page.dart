@@ -29,6 +29,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = GetIt.I<UpdateAvatarStore>();
+
     List<Widget> buildListSettingsItems() => [
           SettingsItem(
             iconSource: "assets/icons/user_icon.png",
@@ -36,7 +37,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () => GoRouter.of(context).pushNamed(
               "edit_profile",
               params: {
-                "userId": "user_id_pass_to_edit_profile",
+                "userId": GetIt.I<AppProvider>().user.id,
               },
             ),
           ),
@@ -146,7 +147,9 @@ class SettingsPage extends StatelessWidget {
                         height: AppDimens.extraLargeHeightDimens * 4,
                         width: AppDimens.extraLargeWidthDimens * 4,
                         decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
+                          color: GetIt.I<AppProvider>().user.avatar == null
+                              ? AppColors.neutral.shade400
+                              : AppColors.whiteColor,
                           shape: BoxShape.circle,
                           border: Border.all(color: AppColors.neutral.shade200),
                           boxShadow: [
@@ -159,25 +162,39 @@ class SettingsPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: FutureBuilder<String>(
-                          future: store.getAvatarDownloadUrl(),
-                          builder: (_, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.hasError) {}
+                        child: GetIt.I<AppProvider>().user.avatar == null
+                            ? Center(
+                                child: Image.asset(
+                                  "assets/icons/user_fill_icon.png",
+                                  color: AppColors.whiteColor,
+                                  fit: BoxFit.fill,
+                                  height:
+                                      AppDimens.extraLargeHeightDimens * 1.4,
+                                  width: AppDimens.extraLargeWidthDimens * 1.4,
+                                ),
+                              )
+                            : FutureBuilder<String>(
+                                future: store.getAvatarDownloadUrl(),
+                                builder: (_, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.hasError) {}
 
-                              return DefaultNetworkImage(
-                                imageUrl: snapshot.data ?? "",
-                                blurHash: "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
-                                height: AppDimens.extraLargeHeightDimens * 4,
-                                width: AppDimens.extraLargeWidthDimens * 4,
-                              );
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        ),
+                                    return DefaultNetworkImage(
+                                      imageUrl: snapshot.data ?? "",
+                                      blurHash:
+                                          "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                                      height:
+                                          AppDimens.extraLargeHeightDimens * 4,
+                                      width:
+                                          AppDimens.extraLargeWidthDimens * 4,
+                                    );
+                                  }
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              ),
                       ),
                     ),
                     Text(

@@ -68,8 +68,8 @@ class RecommendationCourseCard extends StatelessWidget {
                       vertical: AppDimens.mediumHeightDimens,
                     ),
                     child: DefaultNetworkImage(
-                      imageUrl: course.image.url,
-                      blurHash: course.image.blurHash,
+                      imageUrl: course.image,
+                      blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
                       height: height ?? (AppDimens.extraLargeHeightDimens * 6),
                       width: AppDimens.mediumWidthDimens * 20,
                       shape: BoxShape.rectangle,
@@ -91,7 +91,7 @@ class RecommendationCourseCard extends StatelessWidget {
                                 BorderRadius.circular(AppDimens.mediumRadius),
                           ),
                           child: Text(
-                            course.category,
+                            course.category.first,
                             style: AppStyles.subtitle2TextStyle.copyWith(
                               color: AppColors.secondaryColor,
                               fontWeight: FontWeight.bold,

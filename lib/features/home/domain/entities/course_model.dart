@@ -92,7 +92,10 @@ class CourseModel extends Equatable {
       id: (map['courseId'] ?? '') as String,
       title: (map['title'] ?? '') as String,
       description: (map['description'] ?? '') as String,
-      rates: (map['ratingScore'] ?? 0.0) as double,
+      // rates: (map['ratingScore'] ?? 0.0) as double,
+      rates: (map['ratingScore'] ?? 0) is int
+          ? ((map['ratingScore'] ?? 0) as int).toDouble()
+          : (map['ratingScore'] ?? 0) as double,
       votes: (map['ratingNumber'] ?? 0) as int,
       image: (map['image'] ?? '') as String,
       category: List<String>.from((map['category'] ?? const <String>[]))

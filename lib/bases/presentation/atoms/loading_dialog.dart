@@ -9,13 +9,22 @@ class LoadingDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return const Material(
       color: Colors.transparent,
-      child: Center(
-        child: LoadingAnimationWidget.threeRotatingDots(
-          color: AppColors.primaryColor,
-          size: AppDimens.extraLargeHeightDimens * 2,
-        ),
+      child: LoadingWidget(),
+    );
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: LoadingAnimationWidget.threeRotatingDots(
+        color: AppColors.primaryColor,
+        size: AppDimens.extraLargeHeightDimens * 2,
       ),
     );
   }

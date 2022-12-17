@@ -17,7 +17,7 @@ class CourseAddReviewDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
-    int rate = 0;
+    int rate = 5;
     return AlertDialog(
       actionsAlignment: MainAxisAlignment.start,
       actionsOverflowButtonSpacing: AppDimens.smallHeightDimens,

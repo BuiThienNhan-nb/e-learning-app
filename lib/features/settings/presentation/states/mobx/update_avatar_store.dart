@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -74,9 +76,14 @@ abstract class _UpdateAvatarStore with Store {
 
   @action
   Future<String> getAvatarDownloadUrl() async {
-    return await FirebaseStorage.instance
-        .ref()
-        .child("images/users/avatar/${GetIt.I<AppProvider>().user.id}")
-        .getDownloadURL();
+    try {
+      return await FirebaseStorage.instance
+          .ref()
+          .child("images/users/avatar/${GetIt.I<AppProvider>().user.id}")
+          .getDownloadURL();
+    } catch (e) {
+      log(e.toString());
+      return "";
+    }
   }
 }

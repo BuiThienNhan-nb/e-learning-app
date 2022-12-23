@@ -4,6 +4,7 @@ import 'package:e_learning_app/configs/colors.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -18,8 +19,8 @@ import '../../../../configs/dimens.dart';
 import '../../../../configs/routes.dart';
 import '../../../../core/app/loading.dart';
 import '../../../../core/app/provider.dart';
-import '../../../../core/app/values.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
+import '../states/mobx/payment_store.dart';
 import '../states/mobx/update_avatar_store.dart';
 import '../widgets/update_avatar_bottom_sheet.dart';
 
@@ -29,6 +30,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = GetIt.I<UpdateAvatarStore>();
+    final paymentStore = GetIt.I<PaymentStore>();
 
     List<Widget> buildListSettingsItems() => [
           SettingsItem(
@@ -41,13 +43,19 @@ class SettingsPage extends StatelessWidget {
               },
             ),
           ),
-          GetIt.I<AppProvider>().user.role == AppValues.instance.title.first
+          GetIt.I<AppProvider>().user.role == "teacher"
               ? SettingsItem(
                   iconSource: "assets/icons/my_course_inactive_icon.png",
                   title: "My Uploaded Course",
                   onTap: () => GoRouter.of(context).pushNamed("my_courses"),
                 )
               : const SizedBox.shrink(),
+          SettingsItem(
+            iconSource: "assets/icons/credit_card_icon.png",
+            title: "Test Payment",
+            onTap: () => paymentStore.getPaymentUrl(""),
+            // onTap: () => GoRouter.of(context).pushNamed("test_payment"),
+          ),
           SettingsItem(
             iconSource: "assets/icons/notification_icon.png",
             title: "Notifications",
@@ -91,7 +99,8 @@ class SettingsPage extends StatelessWidget {
         appBar: const DefaultAppBar(title: "Profile"),
         body: Observer(
           builder: (context) {
-            if (store.updateState == BaseSate.loading) {
+            if (store.updateState == BaseSate.loading ||
+                paymentStore.state == BaseSate.loading) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppLoading.showLoadingDialog(context);
               });
@@ -116,6 +125,14 @@ class SettingsPage extends StatelessWidget {
                   AppLoading.dismissLoadingDialog(context);
                   // Navigator.of(context, rootNavigator: true).pop();
                   store.getAvatarDownloadUrl();
+                },
+              );
+            }
+            if (paymentStore.state == BaseSate.loaded) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) {
+                  AppLoading.dismissLoadingDialog(context);
+                  pushPaymentBrowser(paymentStore.paymentUrl!);
                 },
               );
             }
@@ -222,6 +239,27 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
+
+  void pushPaymentBrowser(String url) {
+    log(url);
+    final MyInAppBrowser browser = MyInAppBrowser();
+    // const String url =
+    //     "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1000000&vnp_Command=pay&vnp_CreateDate=20221217133134&vnp_CurrCode=VND&vnp_ExpireDate=20221217143134&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=77da51a6-fae1-48ef-aee0-260100849e70&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A3000%2Fvnpay_return&vnp_TmnCode=LAXZGV5C&vnp_TxnRef=133134&vnp_Version=2.1.0&vnp_SecureHash=dc911bdf7e0b33fd362473d32795a880cbc85e0ee8ca058c2744fa12363dd292ec9a3479c4eb555785756296200458c8eb9f108770dcca74d0d09be7cd91c179";
+
+    final settings = InAppBrowserClassOptions(
+      crossPlatform: InAppBrowserOptions(hideUrlBar: false),
+      inAppWebViewGroupOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(javaScriptEnabled: true),
+      ),
+    );
+
+    browser.openUrlRequest(
+      urlRequest: URLRequest(
+        url: Uri.parse(url),
+      ),
+      options: settings,
+    );
+  }
 }
 
 class SettingsItem extends StatelessWidget {
@@ -277,5 +315,37 @@ class SettingsItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class MyInAppBrowser extends InAppBrowser {
+  @override
+  Future onBrowserCreated() async {
+    print("Browser Created!");
+  }
+
+  @override
+  Future onLoadStart(url) async {
+    print("Started $url");
+  }
+
+  @override
+  Future onLoadStop(url) async {
+    print("Stopped $url");
+  }
+
+  @override
+  void onLoadError(url, code, message) {
+    print("Can't load $url.. Error: $message");
+  }
+
+  @override
+  void onProgressChanged(progress) {
+    print("Progress: $progress");
+  }
+
+  @override
+  void onExit() {
+    print("Browser closed!");
   }
 }

@@ -108,7 +108,10 @@ class _AddGeneralInformationContentState
                   prefixIcon: null,
                   selectedIndex: selectedIndex,
                   items: items,
-                  onChanged: (val) => selectedIndex = val,
+                  onChanged: (val) {
+                    selectedIndex = val;
+                    widget.provider.category.text = items[selectedIndex];
+                  },
                 ),
                 SizedBox(height: AppDimens.largeHeightDimens),
                 DefaultTextFormField(

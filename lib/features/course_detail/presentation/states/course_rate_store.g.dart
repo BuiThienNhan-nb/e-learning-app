@@ -112,6 +112,42 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
     return _$rateCourseAsyncAction.run(() => super.rateCourse(courseId, score));
   }
 
+  late final _$_CourseRateStoreActionController =
+      ActionController(name: '_CourseRateStore', context: context);
+
+  @override
+  void setCourseRate(double value) {
+    final _$actionInfo = _$_CourseRateStoreActionController.startAction(
+        name: '_CourseRateStore.setCourseRate');
+    try {
+      return super.setCourseRate(value);
+    } finally {
+      _$_CourseRateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCourseRateCount(int value) {
+    final _$actionInfo = _$_CourseRateStoreActionController.startAction(
+        name: '_CourseRateStore.setCourseRateCount');
+    try {
+      return super.setCourseRateCount(value);
+    } finally {
+      _$_CourseRateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updateCourseRate() {
+    final _$actionInfo = _$_CourseRateStoreActionController.startAction(
+        name: '_CourseRateStore.updateCourseRate');
+    try {
+      return super.updateCourseRate();
+    } finally {
+      _$_CourseRateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

@@ -1,4 +1,5 @@
-import 'package:e_learning_app/features/live_stream/presentation/pages/room_web_view_page.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/test_payment_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -26,12 +27,12 @@ import '../features/home/presentation/pages/home_page.dart';
 import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
 import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
 import '../features/live_stream/presentation/pages/live_stream_page.dart';
+import '../features/live_stream/presentation/pages/room_web_view_page.dart';
 import '../features/main/presentation/mobx/main_page_store.dart';
 import '../features/main/presentation/pages/main_page.dart';
 import '../features/my_courses/presentation/pages/add_course/create_course_page.dart';
 import '../features/my_courses/presentation/pages/my_course_page.dart';
 import '../features/my_courses/presentation/states/provider/create_course_provider.dart';
-import '../features/my_courses/presentation/states/provider/my_courses_provider.dart';
 import '../features/my_transactions/presentations/pages/my_transactions_page.dart';
 import '../features/my_transactions/presentations/pages/transaction_detail_page.dart';
 import '../features/settings/presentation/pages/edit_profile_page.dart';
@@ -82,6 +83,7 @@ class AppRoutes {
   final String language = "/settings/language";
   final String myCourses = "settings/my-courses";
   final String createCourse = "/settings/my-courses/create-course";
+  final String testPayment = "/settings/test-payment";
 
   String get initial => signIn;
   // String get initial => mainPage;
@@ -195,9 +197,9 @@ class AppRoutes {
             builder: (context, state) {
               return MultiProvider(
                 providers: [
-                  ChangeNotifierProvider<MyCoursesProvider>(
+                  Provider<CreateCourseStore>(
                     create: (_) => GetIt.I(),
-                    // lazy: true,
+                    lazy: true,
                   ),
                 ],
                 child: const MyCoursePage(),
@@ -298,9 +300,9 @@ class AppRoutes {
         builder: (context, state) {
           return MultiProvider(
             providers: [
-              ChangeNotifierProvider<MyCoursesProvider>(
+              Provider<CreateCourseStore>(
                 create: (_) => GetIt.I(),
-                // lazy: true,
+                lazy: true,
               ),
               Provider<CreateCourseProvider>(
                 create: (_) => GetIt.I(),
@@ -317,6 +319,14 @@ class AppRoutes {
         path: privacyPolicy,
         builder: (context, state) {
           return PrivacyPage();
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        name: "test_payment",
+        path: testPayment,
+        builder: (context, state) {
+          return const TestPaymentWebView();
         },
       ),
       GoRoute(

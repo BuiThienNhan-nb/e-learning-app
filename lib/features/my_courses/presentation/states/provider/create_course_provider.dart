@@ -14,13 +14,10 @@ class CreateCourseProvider extends ChangeNotifier {
   String _imageSource = "";
   bool _isPremium = false;
   final List<SectionModel> _sections = [];
-  // int _lessonOrder = 1;
 
   String get imageSource => _imageSource;
   bool get isPremium => _isPremium;
   List<SectionModel> get sections => _sections;
-  // int get lessonOrder => _lessonOrder;
-  // final TextEditingController imageSource = TextEditingController();
 
   set imageSource(String val) {
     _imageSource = val;
@@ -31,11 +28,6 @@ class CreateCourseProvider extends ChangeNotifier {
     _isPremium = val;
     notifyListeners();
   }
-
-  // set lessonOrder(int value) {
-  //   _lessonOrder = value;
-  //   notifyListeners();
-  // }
 
   void addSection(SectionModel section) {
     _sections.add(section);
@@ -48,14 +40,11 @@ class CreateCourseProvider extends ChangeNotifier {
   }
 
   int getLessonOrder(int sectionIndex) {
-    // if (sectionIndex == 0) return currentIndex + 1;
     int order = 0;
     for (var s in sections) {
       order += s.lessons.length;
     }
     return order + 1;
-
-    // return sections[sectionIndex].lessons.length + currentIndex + 1;
   }
 
   int countLessonOrder(int sectionIndex, int lessonIndex) {
@@ -81,7 +70,6 @@ class CreateCourseProvider extends ChangeNotifier {
     category.dispose();
     title.dispose();
     description.dispose();
-    // imageSource.dispose();
 
     super.dispose();
   }

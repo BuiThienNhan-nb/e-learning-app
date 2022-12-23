@@ -39,7 +39,7 @@ class LessonModel extends Equatable {
       'id': id,
       'order': order,
       'title': title,
-      'videoUrl': videoUrl,
+      'url': videoUrl,
       'length': length,
     };
   }

@@ -2,12 +2,14 @@
 
 import 'dart:convert';
 
+import 'package:e_learning_app/core/app/provider.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
+import 'package:get_it/get_it.dart';
 
 class CourseModel extends Equatable {
-  final String id;
+  String id;
   String title;
   String description;
   double rates;
@@ -61,18 +63,20 @@ class CourseModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
+  Map<String, Object> toMap() {
+    int order = 1;
+    return <String, Object>{
+      // 'id': id,
       'title': title,
       'description': description,
-      'rates': rates,
-      'votes': votes,
       'image': image,
       'category': category,
       'price': price,
-      'sale': sale,
-      'section': section.map((x) => x.toMap()).toList(),
+      'rates': 0,
+      'votes': 0,
+      'sale': sale ?? 0.0,
+      'authorId': GetIt.I<AppProvider>().user.id,
+      'sections': section.map((x) => x.toMap(order++)).toList(),
       'haveCertificate': haveCertificate,
     };
   }

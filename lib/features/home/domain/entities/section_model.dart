@@ -28,10 +28,11 @@ class SectionModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap(int order) {
     return <String, dynamic>{
       'id': id,
       'title': title,
+      'order': order,
       'lessons': lessons.map((x) => x.toMap()).toList(),
     };
   }
@@ -48,7 +49,7 @@ class SectionModel extends Equatable {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap(0));
 
   factory SectionModel.fromJson(String source) =>
       SectionModel.fromMap(json.decode(source) as Map<String, dynamic>);

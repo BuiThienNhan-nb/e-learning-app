@@ -9,28 +9,32 @@ class SectionModel extends Equatable {
   final String id;
   String title;
   List<LessonModel> lessons;
+  int order;
 
   SectionModel({
     required this.id,
     required this.title,
     required this.lessons,
+    required this.order,
   });
 
   SectionModel copyWith({
     String? id,
     String? title,
     List<LessonModel>? lessons,
+    int? order,
   }) {
     return SectionModel(
       id: id ?? this.id,
       title: title ?? this.title,
       lessons: lessons ?? this.lessons,
+      order: order ?? this.order,
     );
   }
 
-  Map<String, dynamic> toMap(int order) {
+  Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      // 'id': id,
       'title': title,
       'order': order,
       'lessons': lessons.map((x) => x.toMap()).toList(),
@@ -39,17 +43,18 @@ class SectionModel extends Equatable {
 
   factory SectionModel.fromMap(Map<String, dynamic> map) {
     return SectionModel(
-      id: (map['id'] ?? '') as String,
+      id: (map['sectionId'] ?? '') as String,
       title: (map['title'] ?? '') as String,
       lessons: List<LessonModel>.from(
-        (map['lessons'] as List<int>).map<LessonModel>(
+        (map['lessons'] as List).map<LessonModel>(
           (x) => LessonModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      order: (map['order'] ?? 0) as int,
     );
   }
 
-  String toJson() => json.encode(toMap(0));
+  String toJson() => json.encode(toMap());
 
   factory SectionModel.fromJson(String source) =>
       SectionModel.fromMap(json.decode(source) as Map<String, dynamic>);

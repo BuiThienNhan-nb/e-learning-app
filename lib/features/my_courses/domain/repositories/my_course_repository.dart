@@ -1,9 +1,18 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/core/error/failures.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../home/domain/entities/course_model.dart';
+import '../../../home/domain/entities/section_model.dart';
 
 abstract class MyCourseRepository {
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course);
-  Future<Either<Failure, CourseModel>> updateCourse(CourseModel course);
+  Future<Either<Failure, CourseModel>> updateCourseInformation(
+    CourseModel course,
+    bool isUpdateImage,
+  );
+  Future<Either<Failure, SectionModel>> updateCourseSection(
+    SectionModel section,
+    String courseId,
+  );
   Future<Either<Failure, bool>> deleteCourse(String courseId);
 }

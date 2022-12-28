@@ -1,31 +1,34 @@
 import 'dart:math';
-import 'package:e_learning_app/bases/mobx/base_state.dart';
-import 'package:e_learning_app/bases/presentation/atoms/loading_dialog.dart';
-import 'package:e_learning_app/bases/presentation/atoms/text_button.dart';
-import 'package:e_learning_app/features/course_detail/domain/entities/course_detail_model.dart';
-import 'package:e_learning_app/features/course_detail/presentation/pages/course_lesson_page.dart';
-import 'package:e_learning_app/features/course_detail/presentation/pages/course_reviews_page.dart';
-import 'package:e_learning_app/features/course_detail/presentation/states/course_detail_store.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import '../../../../bases/mobx/base_state.dart';
+import '../../../../bases/presentation/atoms/loading_dialog.dart';
 import '../../../../bases/presentation/atoms/network_image.dart';
+import '../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../utils/mock/mock_courses.dart';
 import '../../../home/domain/entities/course_model.dart';
+import '../../domain/entities/course_detail_model.dart';
+import '../states/course_detail_store.dart';
 import '../widgets/sliver_app_bar_tab.dart';
 import 'course_about_page.dart';
+import 'course_lesson_page.dart';
+import 'course_reviews_page.dart';
 
 class CourseDetailPage extends StatelessWidget {
-  const CourseDetailPage({
+  CourseDetailPage({
     super.key,
     required this.courseId,
+    this.isEditing = false,
   });
 
   final String courseId;
+  bool isEditing = false;
 
   @override
   Widget build(BuildContext context) {

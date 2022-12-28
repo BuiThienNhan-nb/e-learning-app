@@ -1,9 +1,10 @@
-import 'package:e_learning_app/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/core/usecases/base_use_case.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
-import 'package:e_learning_app/features/my_courses/domain/repositories/my_course_repository.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/usecases/base_use_case.dart';
+import '../../../../home/domain/entities/course_model.dart';
+import '../../repositories/my_course_repository.dart';
 
 class CreateCourse extends UseCase<CourseModel, CreateCourseParams> {
   final MyCourseRepository _repository;

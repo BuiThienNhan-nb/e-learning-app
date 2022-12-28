@@ -1,106 +1,98 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
-import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../bases/presentation/atoms/text_form_field.dart';
 import '../../../../../configs/colors.dart';
 import '../../../../../configs/dimens.dart';
 import '../../../../../configs/styles.dart';
-import '../../states/provider/create_course_provider.dart';
+import '../../../../home/domain/entities/lesson_model.dart';
+import '../../../../home/domain/entities/section_model.dart';
+import '../../states/provider/update_course_provider.dart';
 
-class AddSectionContent extends StatefulWidget {
-  const AddSectionContent({
-    super.key,
-    required this.provider,
-  });
+class UpdateSectionsContent extends StatelessWidget {
+  const UpdateSectionsContent({super.key});
 
-  final CreateCourseProvider provider;
-
-  @override
-  State<AddSectionContent> createState() => _AddSectionContentState();
-}
-
-class _AddSectionContentState extends State<AddSectionContent> {
   @override
   Widget build(BuildContext context) {
+    // final provider = context.read<UpdateCourseProvider>();
+    // final watch = context.watch<UpdateCourseProvider>();
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(AppDimens.largeHeightDimens),
-        child: Column(
-          children: [
-            ListView.builder(
-              itemCount: widget.provider.sections.length,
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: AppDimens.mediumHeightDimens),
-                child: AddSectionItem(
-                  order: index,
-                  provider: widget.provider,
-                  onDelete: () {
-                    setState(
-                      () => widget.provider.sections.removeAt(index),
-                    );
-                  },
+        child: Consumer<UpdateCourseProvider>(
+          builder: (context, provider, child) => Column(
+            children: [
+              ListView.builder(
+                itemCount: provider.course.section.length,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: AppDimens.mediumHeightDimens),
+                  child: UpdateSectionItem(
+                    order: index,
+                    onDelete: () => provider.deleteSectionAtIndex(index),
+                    section: provider.course.section[index],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: AppDimens.largeHeightDimens),
-            DefaultTextButton(
-              submit: () => setState(
-                () => widget.provider.sections.add(
+              SizedBox(height: AppDimens.largeHeightDimens),
+              DefaultTextButton(
+                submit: () => provider.addSection(
                   SectionModel(
                     id: "id_section",
                     title: "",
                     lessons: List<LessonModel>.from([]),
-                    order: widget.provider.sections.length + 1,
+                    order: provider.course.section.length + 1,
                   ),
                 ),
+                title: "Add Section",
+                backgroundColor: AppColors.secondaryColor.withOpacity(0.3),
+                titleStyle: AppStyles.headline6TextStyle.copyWith(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
-              title: "Add Section",
-              backgroundColor: AppColors.secondaryColor.withOpacity(0.3),
-              titleStyle: AppStyles.headline6TextStyle.copyWith(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class AddSectionItem extends StatefulWidget {
-  AddSectionItem({
+class UpdateSectionItem extends StatefulWidget {
+  UpdateSectionItem({
     super.key,
     required this.order,
-    required this.provider,
+    // required this.provider,
+    required this.section,
     required this.onDelete,
   });
 
   int order;
-  final CreateCourseProvider provider;
+  SectionModel section;
+  // final CreateCourseProvider provider;
   final Function()? onDelete;
 
   @override
-  State<AddSectionItem> createState() => _AddSectionItemState();
+  State<UpdateSectionItem> createState() => _UpdateSectionItemState();
 }
 
-class _AddSectionItemState extends State<AddSectionItem> {
+class _UpdateSectionItemState extends State<UpdateSectionItem> {
   bool isEditing = false;
   final titleController = TextEditingController();
   final TextStyle sectionTitleStyle = AppStyles.subtitle1TextStyle.copyWith(
     fontWeight: FontWeight.w900,
     color: AppColors.neutral.shade700,
   );
-  late SectionModel section;
+  // late SectionModel section;
 
   void toggle() => setState(() => isEditing = !isEditing);
 
@@ -117,8 +109,8 @@ class _AddSectionItemState extends State<AddSectionItem> {
 
   @override
   Widget build(BuildContext context) {
-    section = widget.provider.sections[widget.order];
-    titleController.text = section.title;
+    // section = widget.sections[widget.order];
+    titleController.text = widget.section.title;
 
     return Container(
       padding: EdgeInsets.all(AppDimens.largeWidthDimens),
@@ -147,8 +139,11 @@ class _AddSectionItemState extends State<AddSectionItem> {
             onTap: () {
               if (isEditing) {
                 // section.title = titleController.text.trim();
-                widget.provider.sections[widget.order].title =
-                    titleController.text.trim();
+                context
+                    .read<UpdateCourseProvider>()
+                    .course
+                    .section[widget.order]
+                    .title = titleController.text.trim();
               }
               toggle();
             },

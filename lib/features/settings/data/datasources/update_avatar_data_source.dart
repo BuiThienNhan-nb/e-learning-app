@@ -21,14 +21,17 @@ class UpdateAvatarDataSourceImp implements UpdateAvatarDataSource {
     final storageRef = FirebaseStorage.instance.ref();
 
     try {
+      String? downloadUrl;
       final File file = File(path);
-      await storageRef.child(storagePath).putFile(file);
+      await storageRef.child(storagePath).putFile(file).then(
+            (uploadTask) async =>
+                downloadUrl = await uploadTask.ref.getDownloadURL(),
+          );
 
       // Create blur hash from image
       // final data = file.readAsBytesSync();
       // final image = img.decodeImage(data);
       // final blur = BlurHash.encode(image!);
-
       // log(blur.hash);
       file.delete();
 

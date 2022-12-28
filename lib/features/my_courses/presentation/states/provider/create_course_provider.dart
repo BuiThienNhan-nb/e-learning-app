@@ -50,7 +50,7 @@ class CreateCourseProvider extends ChangeNotifier {
   int countLessonOrder(int sectionIndex, int lessonIndex) {
     if (sectionIndex == 0) return lessonIndex + 1;
     int currentOrder = 0;
-    for (int i = 0; i < sections.length - 1; i++) {
+    for (int i = 0; i < sectionIndex; i++) {
       currentOrder += sections[i].lessons.length;
     }
     return currentOrder + lessonIndex + 1;

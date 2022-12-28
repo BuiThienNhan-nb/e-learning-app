@@ -1,4 +1,9 @@
+import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
+import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_course_page.dart';
+import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_section/update_section_lessons_page.dart';
 import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/provider/update_course_provider.dart';
 import 'package:e_learning_app/features/settings/presentation/pages/test_payment_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -84,6 +89,8 @@ class AppRoutes {
   final String myCourses = "settings/my-courses";
   final String createCourse = "/settings/my-courses/create-course";
   final String testPayment = "/settings/test-payment";
+  final String updateCourse = "update-course/:courseId";
+  final String updateSection = "update-section";
 
   String get initial => signIn;
   // String get initial => mainPage;
@@ -201,10 +208,66 @@ class AppRoutes {
                     create: (_) => GetIt.I(),
                     lazy: true,
                   ),
+                  // Provider<UpdateCourseStore>(
+                  //   create: (_) => GetIt.I(),
+                  //   lazy: true,
+                  // ),
+                  // ChangeNotifierProvider<UpdateCourseProvider>(
+                  //   create: (_) => GetIt.I<UpdateCourseProvider>(),
+                  //   lazy: true,
+                  // ),
                 ],
                 child: const MyCoursePage(),
               );
             },
+            routes: [
+              GoRoute(
+                name: 'update_course',
+                path: updateCourse,
+                builder: (context, state) {
+                  return MultiProvider(
+                    providers: [
+                      Provider<UpdateCourseStore>(
+                        create: (_) => GetIt.I<UpdateCourseStore>(),
+                        lazy: true,
+                      ),
+                      ChangeNotifierProvider<UpdateCourseProvider>(
+                        create: (_) => GetIt.I<UpdateCourseProvider>(),
+                        lazy: true,
+                      ),
+                    ],
+                    child: UpdateCoursePage(
+                      courseId: state.params["courseId"] ?? "N/A",
+                    ),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    name: 'update_section',
+                    path: updateSection,
+                    builder: (context, state) {
+                      List<Object?> extras = state.extra as List<Object?>;
+
+                      return MultiProvider(
+                        providers: [
+                          Provider<UpdateCourseStore>(
+                            create: (_) => extras[2] as UpdateCourseStore,
+                            lazy: false,
+                          ),
+                          ChangeNotifierProvider<UpdateCourseProvider>(
+                            create: (_) => extras[0] as UpdateCourseProvider,
+                            lazy: false,
+                          ),
+                        ],
+                        child: UpdateSectionLessonsPage(
+                          section: extras[1] as SectionModel,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
           GoRoute(
             name: "live_stream",

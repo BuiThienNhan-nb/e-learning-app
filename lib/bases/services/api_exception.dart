@@ -47,4 +47,26 @@ abstract class Api extends BaseApi {
     }
     return ServerFailure(exception.toString());
   }
+
+  Failure statusToFailure(int status) {
+    String? message;
+    switch (status) {
+      case 400:
+        message = LocaleKeys.m400.tr();
+        break;
+      case 401:
+        message = LocaleKeys.m401.tr();
+        break;
+      case 403:
+        message = LocaleKeys.m403.tr();
+        break;
+      case 404:
+        message = LocaleKeys.m404.tr();
+        break;
+      default:
+        message = LocaleKeys.serverUnexpectedError.tr();
+        break;
+    }
+    return UserFailure(message);
+  }
 }

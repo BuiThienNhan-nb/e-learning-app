@@ -53,20 +53,15 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
         data: requestData,
       );
 
+      if (data["success"] == false) {
+        return Left(statusToFailure(data["data"]["status"] as int));
+      }
       logger.log(data["data"]["token"]["access_token"]);
 
       GetIt.I<AppProvider>().accessToken =
           data["data"]["token"]["access_token"].toString();
 
       return Right(
-        // UserInfo(
-        //   id: data["data"]["token"]["access_token"],
-        //   name: data["data"]["user"]["name"],
-        //   email: data["data"]["user"]["email"],
-        //   birthday: DateTime(2001, 9, 25),
-        //   role: AppValues.instance.title.last,
-        //   gender: LocaleKeys.ma,
-        // ),
         UserModel.fromMap(data["data"]["user"]),
       );
     } catch (e) {

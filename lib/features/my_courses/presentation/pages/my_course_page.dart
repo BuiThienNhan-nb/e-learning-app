@@ -1,11 +1,11 @@
-import 'package:e_learning_app/configs/colors.dart';
-import 'package:e_learning_app/features/my_courses/presentation/widgets/my_course_card.dart';
-import 'package:e_learning_app/features/settings/presentation/widgets/setting_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../configs/colors.dart';
 import '../../../../utils/mock/mock_courses.dart';
+import '../../../settings/presentation/widgets/setting_app_bar.dart';
+import '../widgets/my_course_card.dart';
 
 class MyCoursePage extends StatelessWidget {
   const MyCoursePage({super.key});
@@ -22,7 +22,19 @@ class MyCoursePage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => MyCourseCard(course: courses[index]),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => GoRouter.of(context).pushNamed(
+            "update_course",
+            params: {
+              'courseId': courses[index].id,
+            },
+            // extra: [
+            //   context.read<UpdateCourseStore>(),
+            //   context.read<UpdateCourseProvider>(),
+            // ],
+          ),
+          child: MyCourseCard(course: courses[index]),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Create new course",

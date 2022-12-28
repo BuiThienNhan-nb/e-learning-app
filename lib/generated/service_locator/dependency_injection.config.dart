@@ -17,19 +17,19 @@ import '../../features/auth/forgot_password/data/datasources/forgot_password_dat
 import '../../features/auth/forgot_password/data/datasources/get_forgot_password_code_data_source.dart'
     as _i14;
 import '../../features/auth/forgot_password/data/repositories/forgot_password_repository_imp.dart'
-    as _i54;
-import '../../features/auth/forgot_password/data/repositories/get_forgot_password_code_repository_imp.dart'
-    as _i57;
-import '../../features/auth/forgot_password/domain/repositories/forgot_password_repository.dart'
-    as _i53;
-import '../../features/auth/forgot_password/domain/repositories/get_forgot_password_code_repository.dart'
-    as _i56;
-import '../../features/auth/forgot_password/domain/usecases/forgot_password_use_case.dart'
     as _i55;
-import '../../features/auth/forgot_password/domain/usecases/get_forgot_password_code_use_case.dart'
+import '../../features/auth/forgot_password/data/repositories/get_forgot_password_code_repository_imp.dart'
     as _i58;
+import '../../features/auth/forgot_password/domain/repositories/forgot_password_repository.dart'
+    as _i54;
+import '../../features/auth/forgot_password/domain/repositories/get_forgot_password_code_repository.dart'
+    as _i57;
+import '../../features/auth/forgot_password/domain/usecases/forgot_password_use_case.dart'
+    as _i56;
+import '../../features/auth/forgot_password/domain/usecases/get_forgot_password_code_use_case.dart'
+    as _i59;
 import '../../features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart'
-    as _i81;
+    as _i83;
 import '../../features/auth/forgot_password/presentation/state/providers/forgot_password_provider.dart'
     as _i13;
 import '../../features/auth/forgot_password/presentation/state/providers/get_forgot_password_code_provider.dart'
@@ -37,97 +37,101 @@ import '../../features/auth/forgot_password/presentation/state/providers/get_for
 import '../../features/auth/sign_in/data/datasources/auth_remote_data_source.dart'
     as _i6;
 import '../../features/auth/sign_in/data/repositories/auth_repository_imp.dart'
-    as _i45;
+    as _i46;
 import '../../features/auth/sign_in/domain/repositories/auth_repository.dart'
-    as _i44;
-import '../../features/auth/sign_in/domain/usecases/auth_use_case.dart' as _i46;
+    as _i45;
+import '../../features/auth/sign_in/domain/usecases/auth_use_case.dart' as _i47;
 import '../../features/auth/sign_in/presentation/state/mobx/sign_in_store.dart'
-    as _i74;
+    as _i75;
 import '../../features/auth/sign_in/presentation/state/provider/auth_page_provider.dart'
     as _i5;
 import '../../features/auth/sign_up/presentation/state/mobx/sign_up_store.dart'
-    as _i75;
+    as _i76;
 import '../../features/auth/verify_email/data/datasources/verify_email_data_source.dart'
-    as _i39;
-import '../../features/auth/verify_email/data/repositories/verify_email_repository_imp.dart'
-    as _i42;
-import '../../features/auth/verify_email/domain/repositories/verify_email_repository.dart'
-    as _i41;
-import '../../features/auth/verify_email/domain/usecases/verify_email_use_case.dart'
-    as _i43;
-import '../../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart'
-    as _i77;
-import '../../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart'
     as _i40;
+import '../../features/auth/verify_email/data/repositories/verify_email_repository_imp.dart'
+    as _i43;
+import '../../features/auth/verify_email/domain/repositories/verify_email_repository.dart'
+    as _i42;
+import '../../features/auth/verify_email/domain/usecases/verify_email_use_case.dart'
+    as _i44;
+import '../../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart'
+    as _i79;
+import '../../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart'
+    as _i41;
 import '../../features/course_detail/data/datasources/course_detail_data_source.dart'
     as _i9;
 import '../../features/course_detail/data/datasources/course_rate_data_source.dart'
     as _i10;
 import '../../features/course_detail/data/repositories/course_detail_reposiory_imp.dart'
-    as _i48;
-import '../../features/course_detail/data/repositories/course_rate_repository_imp.dart'
-    as _i51;
-import '../../features/course_detail/domain/repositories/course_detail_repository.dart'
-    as _i47;
-import '../../features/course_detail/domain/repositories/course_rate_repository.dart'
-    as _i50;
-import '../../features/course_detail/domain/usecases/course_detail_use_cases.dart'
     as _i49;
-import '../../features/course_detail/domain/usecases/course_rate_use_cases.dart'
+import '../../features/course_detail/data/repositories/course_rate_repository_imp.dart'
     as _i52;
+import '../../features/course_detail/domain/repositories/course_detail_repository.dart'
+    as _i48;
+import '../../features/course_detail/domain/repositories/course_rate_repository.dart'
+    as _i51;
+import '../../features/course_detail/domain/usecases/course_detail_use_cases.dart'
+    as _i50;
+import '../../features/course_detail/domain/usecases/course_rate_use_cases.dart'
+    as _i53;
 import '../../features/course_detail/presentation/states/course_detail_store.dart'
-    as _i78;
+    as _i80;
 import '../../features/course_detail/presentation/states/course_rate_store.dart'
-    as _i79;
+    as _i81;
 import '../../features/home/data/datasources/get_rcm_courses_data_source.dart'
     as _i17;
 import '../../features/home/data/datasources/get_top_teacher_data_source.dart'
     as _i18;
 import '../../features/home/data/repositories/get_rcm_courses_repository_imp.dart'
-    as _i63;
-import '../../features/home/data/repositories/get_top_teachers_repository_imp.dart'
-    as _i66;
-import '../../features/home/domain/repositories/get_rcm_courses_repository.dart'
-    as _i62;
-import '../../features/home/domain/repositories/get_top_teacher_repository.dart'
-    as _i65;
-import '../../features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart'
     as _i64;
-import '../../features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart'
+import '../../features/home/data/repositories/get_top_teachers_repository_imp.dart'
     as _i67;
+import '../../features/home/domain/repositories/get_rcm_courses_repository.dart'
+    as _i63;
+import '../../features/home/domain/repositories/get_top_teacher_repository.dart'
+    as _i66;
+import '../../features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart'
+    as _i65;
+import '../../features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart'
+    as _i68;
 import '../../features/home/presentation/states/lesson/get_rcm_courses_store.dart'
-    as _i82;
+    as _i84;
 import '../../features/home/presentation/states/teacher/get_top_teachers_store.dart'
-    as _i83;
+    as _i85;
 import '../../features/lesson_detail/data/datasources/get_lesson_comments_data_source.dart'
     as _i16;
 import '../../features/lesson_detail/data/repositories/get_lesson_comments_repository_imp.dart'
-    as _i60;
+    as _i61;
 import '../../features/lesson_detail/domain/repositories/get_lesson_comments.dart'
-    as _i59;
+    as _i60;
 import '../../features/lesson_detail/domain/services/socket_service.dart'
     as _i34;
 import '../../features/lesson_detail/domain/usecases/get_lesson_comments_ues_case.dart'
-    as _i61;
+    as _i62;
 import '../../features/lesson_detail/domain/usecases/lesson_detail_use_cases.dart'
-    as _i69;
+    as _i70;
 import '../../features/lesson_detail/presentation/states/mobx/lesson_comments_store.dart'
-    as _i68;
+    as _i69;
 import '../../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart'
     as _i19;
 import '../../features/main/presentation/mobx/main_page_store.dart' as _i20;
 import '../../features/my_courses/data/datasources/my_course_data_source.dart'
     as _i27;
 import '../../features/my_courses/data/repositories/my_course_repository_imp.dart'
-    as _i71;
-import '../../features/my_courses/domain/repositories/my_course_repository.dart'
-    as _i70;
-import '../../features/my_courses/domain/usecases/my_course_use_case.dart'
     as _i72;
+import '../../features/my_courses/domain/repositories/my_course_repository.dart'
+    as _i71;
+import '../../features/my_courses/domain/usecases/my_course_use_case.dart'
+    as _i73;
 import '../../features/my_courses/presentation/states/mobx/create_course_store.dart'
-    as _i80;
+    as _i82;
+import '../../features/my_courses/presentation/states/mobx/update_course_store.dart'
+    as _i78;
 import '../../features/my_courses/presentation/states/provider/create_course_provider.dart'
     as _i11;
+import '../../features/my_courses/presentation/states/provider/update_course_provider.dart'
+    as _i39;
 import '../../features/settings/data/datasources/payment_repository_data_source.dart'
     as _i29;
 import '../../features/settings/data/datasources/update_avatar_data_source.dart'
@@ -144,9 +148,9 @@ import '../../features/settings/domain/usecases/payment_use_cases.dart' as _i32;
 import '../../features/settings/domain/usecases/upload_avatar_use_case.dart'
     as _i38;
 import '../../features/settings/presentation/states/mobx/payment_store.dart'
-    as _i73;
+    as _i74;
 import '../../features/settings/presentation/states/mobx/update_avatar_store.dart'
-    as _i76;
+    as _i77;
 import '../../features/settings/presentation/states/provider/settings_page_provider.dart'
     as _i33;
 import '../../features/social_chat/presentation/states/provider/chat_provider.dart'
@@ -227,105 +231,110 @@ _i1.GetIt $initGetIt(
           ));
   gh.lazySingleton<_i38.UpdateAvatarUseCase>(
       () => _i38.UpdateAvatarUseCase(get<_i36.UpdateAvatarRepository>()));
-  gh.lazySingleton<_i39.VerifyEmailDataSource>(
-      () => _i39.VerifyEmailDataSourceImp());
-  gh.factory<_i40.VerifyEmailProvider>(() => _i40.VerifyEmailProvider());
-  gh.lazySingleton<_i41.VerifyEmailRepository>(
-      () => _i42.VerifyEmailRepositoryImp(
-            get<_i39.VerifyEmailDataSource>(),
+  gh.factory<_i39.UpdateCourseProvider>(() => _i39.UpdateCourseProvider());
+  gh.lazySingleton<_i40.VerifyEmailDataSource>(
+      () => _i40.VerifyEmailDataSourceImp());
+  gh.factory<_i41.VerifyEmailProvider>(() => _i41.VerifyEmailProvider());
+  gh.lazySingleton<_i42.VerifyEmailRepository>(
+      () => _i43.VerifyEmailRepositoryImp(
+            get<_i40.VerifyEmailDataSource>(),
             get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i43.VerifyEmailUseCase>(
-      () => _i43.VerifyEmailUseCase(get<_i41.VerifyEmailRepository>()));
-  gh.lazySingleton<_i44.AuthRepository>(() => _i45.AuthRepositoryImp(
+  gh.lazySingleton<_i44.VerifyEmailUseCase>(
+      () => _i44.VerifyEmailUseCase(get<_i42.VerifyEmailRepository>()));
+  gh.lazySingleton<_i45.AuthRepository>(() => _i46.AuthRepositoryImp(
         dataSource: get<_i6.AuthRemoteDataSource>(),
         networkStatus: get<_i28.NetworkStatus>(),
       ));
-  gh.lazySingleton<_i46.AuthUseCase>(
-      () => _i46.AuthUseCase(get<_i44.AuthRepository>()));
-  gh.lazySingleton<_i47.CourseDetailRepository>(
-      () => _i48.CourseDetailRepositoryImp(
+  gh.lazySingleton<_i47.AuthUseCase>(
+      () => _i47.AuthUseCase(get<_i45.AuthRepository>()));
+  gh.lazySingleton<_i48.CourseDetailRepository>(
+      () => _i49.CourseDetailRepositoryImp(
             dataSource: get<_i9.CourseDetailDataSource>(),
             networkStatus: get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i49.CourseDetailUseCases>(
-      () => _i49.CourseDetailUseCases(get<_i47.CourseDetailRepository>()));
-  gh.lazySingleton<_i50.CourseRateRepository>(
-      () => _i51.CourseRateRepositoryImp(
+  gh.lazySingleton<_i50.CourseDetailUseCases>(
+      () => _i50.CourseDetailUseCases(get<_i48.CourseDetailRepository>()));
+  gh.lazySingleton<_i51.CourseRateRepository>(
+      () => _i52.CourseRateRepositoryImp(
             dataSource: get<_i10.CourseRateDataSource>(),
             networkStatus: get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i52.CourseRateUseCases>(
-      () => _i52.CourseRateUseCases(get<_i50.CourseRateRepository>()));
-  gh.lazySingleton<_i53.ForgotPasswordRepository>(
-      () => _i54.ForgotPasswordRepositoryImp(
+  gh.lazySingleton<_i53.CourseRateUseCases>(
+      () => _i53.CourseRateUseCases(get<_i51.CourseRateRepository>()));
+  gh.lazySingleton<_i54.ForgotPasswordRepository>(
+      () => _i55.ForgotPasswordRepositoryImp(
             get<_i12.ForgotPasswordDataSource>(),
             get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i55.ForgotPasswordUseCase>(
-      () => _i55.ForgotPasswordUseCase(get<_i53.ForgotPasswordRepository>()));
-  gh.lazySingleton<_i56.GetForgotPasswordCodeRepository>(
-      () => _i57.GetForgotPasswordCodeRepositoryImp(
+  gh.lazySingleton<_i56.ForgotPasswordUseCase>(
+      () => _i56.ForgotPasswordUseCase(get<_i54.ForgotPasswordRepository>()));
+  gh.lazySingleton<_i57.GetForgotPasswordCodeRepository>(
+      () => _i58.GetForgotPasswordCodeRepositoryImp(
             get<_i14.GetForgotPasswordCodeDataSource>(),
             get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i58.GetForgotPasswordCodeUseCase>(() =>
-      _i58.GetForgotPasswordCodeUseCase(
-          get<_i56.GetForgotPasswordCodeRepository>()));
-  gh.lazySingleton<_i59.GetLessonCommentsRepository>(
-      () => _i60.GetLessonCommentsRepositoryImp(
+  gh.lazySingleton<_i59.GetForgotPasswordCodeUseCase>(() =>
+      _i59.GetForgotPasswordCodeUseCase(
+          get<_i57.GetForgotPasswordCodeRepository>()));
+  gh.lazySingleton<_i60.GetLessonCommentsRepository>(
+      () => _i61.GetLessonCommentsRepositoryImp(
             dataSource: get<_i16.GetLessonCommentsDataSource>(),
             networkStatus: get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i61.GetLessonCommentsUseCase>(() =>
-      _i61.GetLessonCommentsUseCase(get<_i59.GetLessonCommentsRepository>()));
-  gh.lazySingleton<_i62.GetRecommendedCoursesRepository>(
-      () => _i63.GetRecommendedCoursesRepositoryImp(
+  gh.lazySingleton<_i62.GetLessonCommentsUseCase>(() =>
+      _i62.GetLessonCommentsUseCase(get<_i60.GetLessonCommentsRepository>()));
+  gh.lazySingleton<_i63.GetRecommendedCoursesRepository>(
+      () => _i64.GetRecommendedCoursesRepositoryImp(
             get<_i17.GetRecommendedCoursesDataSource>(),
             get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i64.GetRecommendedCoursesUseCase>(() =>
-      _i64.GetRecommendedCoursesUseCase(
-          get<_i62.GetRecommendedCoursesRepository>()));
-  gh.lazySingleton<_i65.GetTopTeachersRepository>(
-      () => _i66.GetTopTeachersRepositoryImp(
+  gh.lazySingleton<_i65.GetRecommendedCoursesUseCase>(() =>
+      _i65.GetRecommendedCoursesUseCase(
+          get<_i63.GetRecommendedCoursesRepository>()));
+  gh.lazySingleton<_i66.GetTopTeachersRepository>(
+      () => _i67.GetTopTeachersRepositoryImp(
             get<_i18.GetTopTeachersDataSource>(),
             get<_i28.NetworkStatus>(),
           ));
-  gh.lazySingleton<_i67.GetTopTeachersUseCase>(
-      () => _i67.GetTopTeachersUseCase(get<_i65.GetTopTeachersRepository>()));
-  gh.factory<_i68.LessonCommentsStore>(
-      () => _i68.LessonCommentsStore(get<_i61.GetLessonCommentsUseCase>()));
-  gh.lazySingleton<_i69.LessonDetailUseCase>(
-      () => _i69.LessonDetailUseCase(get<_i59.GetLessonCommentsRepository>()));
-  gh.lazySingleton<_i70.MyCourseRepository>(() => _i71.MyCourseRepositoryImp(
+  gh.lazySingleton<_i68.GetTopTeachersUseCase>(
+      () => _i68.GetTopTeachersUseCase(get<_i66.GetTopTeachersRepository>()));
+  gh.factory<_i69.LessonCommentsStore>(
+      () => _i69.LessonCommentsStore(get<_i62.GetLessonCommentsUseCase>()));
+  gh.lazySingleton<_i70.LessonDetailUseCase>(
+      () => _i70.LessonDetailUseCase(get<_i60.GetLessonCommentsRepository>()));
+  gh.lazySingleton<_i71.MyCourseRepository>(() => _i72.MyCourseRepositoryImp(
         get<_i27.MyCourseDataSource>(),
         get<_i28.NetworkStatus>(),
       ));
-  gh.lazySingleton<_i72.MyCourseUseCase>(
-      () => _i72.MyCourseUseCase(get<_i70.MyCourseRepository>()));
-  gh.factory<_i73.PaymentStore>(
-      () => _i73.PaymentStore(get<_i32.PaymentUseCases>()));
-  gh.factory<_i74.SignInStore>(() => _i74.SignInStore(get<_i46.AuthUseCase>()));
-  gh.factory<_i75.SignUpStore>(() => _i75.SignUpStore(get<_i46.AuthUseCase>()));
-  gh.factory<_i76.UpdateAvatarStore>(
-      () => _i76.UpdateAvatarStore(get<_i38.UpdateAvatarUseCase>()));
-  gh.factory<_i77.VerifyEmailStore>(
-      () => _i77.VerifyEmailStore(get<_i43.VerifyEmailUseCase>()));
-  gh.factory<_i78.CourseDetailStore>(
-      () => _i78.CourseDetailStore(get<_i49.CourseDetailUseCases>()));
-  gh.factory<_i79.CourseRateStore>(
-      () => _i79.CourseRateStore(get<_i52.CourseRateUseCases>()));
-  gh.factory<_i80.CreateCourseStore>(
-      () => _i80.CreateCourseStore(get<_i72.MyCourseUseCase>()));
-  gh.factory<_i81.ForgotPasswordStore>(() => _i81.ForgotPasswordStore(
-        get<_i55.ForgotPasswordUseCase>(),
-        get<_i58.GetForgotPasswordCodeUseCase>(),
+  gh.lazySingleton<_i73.MyCourseUseCase>(() => _i73.MyCourseUseCase(
+        get<_i71.MyCourseRepository>(),
+        get<_i48.CourseDetailRepository>(),
       ));
-  gh.factory<_i82.GetRecommendedCoursesStore>(() =>
-      _i82.GetRecommendedCoursesStore(
-          get<_i64.GetRecommendedCoursesUseCase>()));
-  gh.factory<_i83.GetTopTeachersStore>(
-      () => _i83.GetTopTeachersStore(get<_i67.GetTopTeachersUseCase>()));
+  gh.factory<_i74.PaymentStore>(
+      () => _i74.PaymentStore(get<_i32.PaymentUseCases>()));
+  gh.factory<_i75.SignInStore>(() => _i75.SignInStore(get<_i47.AuthUseCase>()));
+  gh.factory<_i76.SignUpStore>(() => _i76.SignUpStore(get<_i47.AuthUseCase>()));
+  gh.factory<_i77.UpdateAvatarStore>(
+      () => _i77.UpdateAvatarStore(get<_i38.UpdateAvatarUseCase>()));
+  gh.factory<_i78.UpdateCourseStore>(
+      () => _i78.UpdateCourseStore(get<_i73.MyCourseUseCase>()));
+  gh.factory<_i79.VerifyEmailStore>(
+      () => _i79.VerifyEmailStore(get<_i44.VerifyEmailUseCase>()));
+  gh.factory<_i80.CourseDetailStore>(
+      () => _i80.CourseDetailStore(get<_i50.CourseDetailUseCases>()));
+  gh.factory<_i81.CourseRateStore>(
+      () => _i81.CourseRateStore(get<_i53.CourseRateUseCases>()));
+  gh.factory<_i82.CreateCourseStore>(
+      () => _i82.CreateCourseStore(get<_i73.MyCourseUseCase>()));
+  gh.factory<_i83.ForgotPasswordStore>(() => _i83.ForgotPasswordStore(
+        get<_i56.ForgotPasswordUseCase>(),
+        get<_i59.GetForgotPasswordCodeUseCase>(),
+      ));
+  gh.factory<_i84.GetRecommendedCoursesStore>(() =>
+      _i84.GetRecommendedCoursesStore(
+          get<_i65.GetRecommendedCoursesUseCase>()));
+  gh.factory<_i85.GetTopTeachersStore>(
+      () => _i85.GetTopTeachersStore(get<_i68.GetTopTeachersUseCase>()));
   return get;
 }

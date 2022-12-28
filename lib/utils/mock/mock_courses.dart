@@ -105,7 +105,13 @@ class MockCourses {
   ];
 
   // Mock Lessons
-  int _lessonOrder = 1;
+  int _lesson1Order = 1;
+  // int _lesson2Order = 1;
+  // int _lesson3Order = 1;
+  // int _lesson4Order = 1;
+  // int _lesson5Order = 1;
+  // int _lesson6Order = 1;
+
   final List<String> _lesson1Title = [
     "Introducing basic building blocks of English grammar",
     "Conjunctions - these are an underrated, but very common parts of English grammar",
@@ -151,12 +157,12 @@ class MockCourses {
     "Course certificate: How to get it if you need it",
   ];
 
-  late final List<List<LessonModel>> lessons = [
+  late final List<List<LessonModel>> _lessons = [
     _lesson1Title
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -167,7 +173,7 @@ class MockCourses {
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -178,7 +184,7 @@ class MockCourses {
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -189,7 +195,7 @@ class MockCourses {
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -200,7 +206,7 @@ class MockCourses {
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -211,7 +217,7 @@ class MockCourses {
         .map(
           (lessonTitle) => LessonModel(
             id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}",
-            order: _lessonOrder++,
+            order: _lesson1Order++,
             title: lessonTitle,
             videoUrl: decodeYoutubeUrl,
             length: Random().nextInt(15),
@@ -235,7 +241,8 @@ class MockCourses {
         (sectionTitle) => SectionModel(
           id: "id_${Random().nextDouble()}",
           title: sectionTitle,
-          lessons: lessons[_sectionModelIndex++],
+          lessons: _lessons[_sectionModelIndex],
+          order: _sectionModelIndex++,
         ),
       )
       .toList();

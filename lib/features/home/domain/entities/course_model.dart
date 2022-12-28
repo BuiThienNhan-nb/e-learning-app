@@ -64,7 +64,7 @@ class CourseModel extends Equatable {
   }
 
   Map<String, Object> toMap() {
-    int order = 1;
+    // int order = 1;
     return <String, Object>{
       // 'id': id,
       'title': title,
@@ -72,12 +72,24 @@ class CourseModel extends Equatable {
       'image': image,
       'category': category,
       'price': price,
-      'rates': 0,
-      'votes': 0,
-      'sale': sale ?? 0.0,
+      // 'rates': 0,
+      // 'votes': 0,
+      // 'sale': sale ?? 0.0,
       'authorId': GetIt.I<AppProvider>().user.id,
-      'sections': section.map((x) => x.toMap(order++)).toList(),
-      'haveCertificate': haveCertificate,
+      'sections': section.map((x) => x.toMap()).toList(),
+      // 'haveCertificate': haveCertificate,
+    };
+  }
+
+  Map<String, Object> informationToMap() {
+    return <String, Object>{
+      'courseId': id,
+      'title': title,
+      'description': description,
+      'image': image,
+      'category': category,
+      'price': price,
+      'authorId': GetIt.I<AppProvider>().user.id,
     };
   }
 
@@ -115,7 +127,7 @@ class CourseModel extends Equatable {
       section: map['section'] == null
           ? <SectionModel>[]
           : List<SectionModel>.from(
-              (map['section'] as List<int>).map<SectionModel>(
+              (map['section'] as List).map<SectionModel>(
                 (x) => SectionModel.fromMap(x as Map<String, dynamic>),
               ),
             ),

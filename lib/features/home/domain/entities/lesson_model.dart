@@ -36,20 +36,20 @@ class LessonModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      // 'id': id,
       'order': order,
       'title': title,
       'url': videoUrl,
-      'length': length,
+      // 'length': length,
     };
   }
 
   factory LessonModel.fromMap(Map<String, dynamic> map) {
     return LessonModel(
-      id: (map['id'] ?? '') as String,
+      id: (map['lessonId'] ?? '') as String,
       order: (map['order'] ?? 0) as int,
       title: (map['title'] ?? '') as String,
-      videoUrl: map['videoUrl'] != null ? map['videoUrl'] as String : null,
+      videoUrl: map['url'] != null ? map['url'] as String : null,
       length: map['length'] != null ? map['length'] as int : null,
     );
   }

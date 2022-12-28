@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
@@ -30,14 +31,50 @@ class MyCourseRepositoryImp implements MyCourseRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteCourse(String courseId) {
-    // TODO: implement deleteCourse
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> deleteCourse(String courseId) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.deleteCourse(courseId);
   }
 
   @override
-  Future<Either<Failure, CourseModel>> updateCourse(CourseModel course) {
-    // TODO: implement updateCourse
-    throw UnimplementedError();
+  Future<Either<Failure, CourseModel>> updateCourseInformation(
+    CourseModel course,
+    bool isUpdateImage,
+  ) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.updateCourseInformation(course, isUpdateImage);
+  }
+
+  @override
+  Future<Either<Failure, SectionModel>> updateCourseSection(
+    SectionModel section,
+    String courseId,
+  ) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.updateCourseSection(
+      section,
+      courseId,
+    );
   }
 }

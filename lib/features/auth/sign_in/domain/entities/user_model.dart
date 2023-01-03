@@ -13,6 +13,7 @@ class UserModel extends Equatable {
   String? phoneNumber;
   final String role;
   String gender;
+  bool isPremium;
 
   UserModel({
     required this.id,
@@ -23,6 +24,7 @@ class UserModel extends Equatable {
     this.phoneNumber,
     required this.role,
     required this.gender,
+    required this.isPremium,
   });
 
   UserModel copyWith({
@@ -34,6 +36,7 @@ class UserModel extends Equatable {
     String? phoneNumber,
     String? role,
     String? gender,
+    bool? isPremium,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -44,19 +47,21 @@ class UserModel extends Equatable {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       role: role ?? this.role,
       gender: gender ?? this.gender,
+      isPremium: isPremium ?? this.isPremium,
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
+  Map<String, Object?> toMap() {
+    return <String, Object?>{
+      'userId': id,
       'name': name,
       'email': email,
       'avatar': avatar,
-      'birthday': birthday.millisecondsSinceEpoch,
+      'birthday': AppFormats.instance.formatDay.format(birthday),
       'phoneNumber': phoneNumber,
       'role': role,
       'gender': gender,
+      'isPremium': isPremium,
     };
   }
 
@@ -65,7 +70,7 @@ class UserModel extends Equatable {
       id: (map['userId'] ?? '') as String,
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
-      avatar: (map['avatar'] ?? '') as String,
+      avatar: (map['avatar']) as String?,
       birthday: map['birthday'] == null
           ? DateTime(2001, 09, 25)
           : AppFormats.instance.formatDay.parse(map['birthday']),
@@ -73,6 +78,7 @@ class UserModel extends Equatable {
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       role: (map['role'] ?? '') as String,
       gender: (map['gender'] ?? '') as String,
+      isPremium: (map['isPremium'] ?? false) as bool,
     );
   }
 
@@ -95,6 +101,7 @@ class UserModel extends Equatable {
       phoneNumber ?? "",
       role,
       gender,
+      isPremium,
     ];
   }
 }

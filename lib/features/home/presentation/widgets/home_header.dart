@@ -4,6 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/link_text.dart';
@@ -46,13 +47,39 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
                   color: AppColors.secondaryColor,
                   shape: BoxShape.circle,
                 ),
-                child: DefaultNetworkImage(
-                  imageUrl:
-                      "https://images.unsplash.com/photo-1605462863863-10d9e47e15ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                  blurHash: "LUE{|Z~qNeIV0LE2WAozIpR+t6oI",
-                  height: AppDimens.extraLargeHeightDimens * 2,
-                  width: AppDimens.extraLargeWidthDimens * 2,
-                ),
+                child: GetIt.I<AppProvider>().user.avatar == null
+                    ? Container(
+                        padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
+                        decoration: BoxDecoration(
+                          color: GetIt.I<AppProvider>().user.avatar == null
+                              ? AppColors.neutral.shade400
+                              : AppColors.whiteColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.neutral.shade200),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.neutral.shade400,
+                              blurRadius: AppDimens.mediumHeightDimens,
+                              // offset: const Offset(1, 1),
+                              blurStyle: BlurStyle.normal,
+                              spreadRadius: 0.2,
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          "assets/icons/user_fill_icon.png",
+                          color: AppColors.whiteColor,
+                          fit: BoxFit.fill,
+                          height: AppDimens.extraLargeHeightDimens * 1.4,
+                          width: AppDimens.extraLargeWidthDimens * 1.4,
+                        ),
+                      )
+                    : DefaultNetworkImage(
+                        imageUrl: GetIt.I<AppProvider>().user.avatar ?? "",
+                        blurHash: "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                        height: AppDimens.extraLargeHeightDimens * 2,
+                        width: AppDimens.extraLargeWidthDimens * 2,
+                      ),
               ),
             ),
             Positioned(

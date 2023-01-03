@@ -50,12 +50,14 @@ class SettingsPage extends StatelessWidget {
                   onTap: () => GoRouter.of(context).pushNamed("my_courses"),
                 )
               : const SizedBox.shrink(),
-          SettingsItem(
-            iconSource: "assets/icons/credit_card_icon.png",
-            title: "Test Payment",
-            onTap: () => paymentStore.getPaymentUrl(""),
-            // onTap: () => GoRouter.of(context).pushNamed("test_payment"),
-          ),
+          !GetIt.I<AppProvider>().user.isPremium
+              ? SettingsItem(
+                  iconSource: "assets/icons/credit_card_icon.png",
+                  title: "To Premium",
+                  onTap: () => paymentStore.getPaymentUrl(""),
+                  // onTap: () => GoRouter.of(context).pushNamed("test_payment"),
+                )
+              : const SizedBox.shrink(),
           SettingsItem(
             iconSource: "assets/icons/notification_icon.png",
             title: "Notifications",
@@ -190,28 +192,35 @@ class SettingsPage extends StatelessWidget {
                                   width: AppDimens.extraLargeWidthDimens * 1.4,
                                 ),
                               )
-                            : FutureBuilder<String>(
-                                future: store.getAvatarDownloadUrl(),
-                                builder: (_, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    if (snapshot.hasError) {}
-
-                                    return DefaultNetworkImage(
-                                      imageUrl: snapshot.data ?? "",
-                                      blurHash:
-                                          "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
-                                      height:
-                                          AppDimens.extraLargeHeightDimens * 4,
-                                      width:
-                                          AppDimens.extraLargeWidthDimens * 4,
-                                    );
-                                  }
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                },
+                            : DefaultNetworkImage(
+                                imageUrl:
+                                    GetIt.I<AppProvider>().user.avatar ?? "",
+                                blurHash: "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                                height: AppDimens.extraLargeHeightDimens * 4,
+                                width: AppDimens.extraLargeWidthDimens * 4,
                               ),
+                        // : FutureBuilder<String>(
+                        //     future: store.getAvatarDownloadUrl(),
+                        //     builder: (_, snapshot) {
+                        //       if (snapshot.connectionState ==
+                        //           ConnectionState.done) {
+                        //         if (snapshot.hasError) {}
+
+                        //         return DefaultNetworkImage(
+                        //           imageUrl: snapshot.data ?? "",
+                        //           blurHash:
+                        //               "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                        //           height:
+                        //               AppDimens.extraLargeHeightDimens * 4,
+                        //           width:
+                        //               AppDimens.extraLargeWidthDimens * 4,
+                        //         );
+                        //       }
+                        //       return const Center(
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     },
+                        //   ),
                       ),
                     ),
                     Text(

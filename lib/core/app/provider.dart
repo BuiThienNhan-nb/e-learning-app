@@ -21,6 +21,7 @@ class AppProvider extends ChangeNotifier {
         birthday: DateTime.now(),
         role: AppValues.instance.title.first,
         gender: AppValues.instance.appSupportedGender.first,
+        isPremium: false,
       );
   bool get hasNotification => _hasNotification;
 

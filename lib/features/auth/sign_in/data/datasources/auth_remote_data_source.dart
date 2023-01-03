@@ -85,7 +85,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
     required String gender,
     required String role,
   }) async {
-    final Map<String?, String?> requestData = {
+    final Map<String?, Object?> requestData = {
       "email": email,
       "password": password,
       "name": name,
@@ -93,6 +93,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       "birthdayDate": birthday,
       "role": role.toLowerCase(),
       "phoneNumber": phoneNumber,
+      "isPremium": false,
     };
 
     try {
@@ -109,6 +110,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
           birthday: DateTime(2001, 9, 25),
           role: AppValues.instance.title.last,
           gender: LocaleKeys.ma,
+          isPremium: false,
         ),
       );
     } catch (e) {

@@ -20,7 +20,11 @@ class SettingsPageProvider extends ChangeNotifier {
   );
   late final TextEditingController phoneNumberController =
       TextEditingController(text: userValue.phoneNumber);
-  int _genderIndex = 0;
+  int _genderIndex = GetIt.I<AppProvider>().user.gender == "ma"
+      ? 0
+      : GetIt.I<AppProvider>().user.gender == "fe"
+          ? 1
+          : 2;
 
   int get genderIndex => _genderIndex;
 

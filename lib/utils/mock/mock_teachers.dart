@@ -83,6 +83,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -95,6 +96,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -107,6 +109,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -119,6 +122,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -131,6 +135,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -143,6 +148,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
     TeacherModel(
       id: "$_teacherIndex",
@@ -155,6 +161,7 @@ class MockTeachers {
       phoneNumber: "",
       rates: (_random.nextInt(5) + _random.nextDouble()),
       votes: _random.nextInt(40000),
+      isPremium: _random.nextBool(),
     ),
   ];
 }

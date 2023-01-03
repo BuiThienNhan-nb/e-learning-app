@@ -18,6 +18,7 @@ class TeacherModel extends UserModel {
     required super.gender,
     required super.avatar,
     required super.phoneNumber,
+    required super.isPremium,
     required this.rates,
     required this.votes,
   });
@@ -34,6 +35,7 @@ class TeacherModel extends UserModel {
     String? gender,
     double? rates,
     int? votes,
+    bool? isPremium,
   }) {
     return TeacherModel(
       id: id ?? this.id,
@@ -46,6 +48,7 @@ class TeacherModel extends UserModel {
       gender: gender ?? this.gender,
       rates: rates ?? this.rates,
       votes: votes ?? this.votes,
+      isPremium: isPremium ?? this.isPremium,
     );
   }
 
@@ -62,6 +65,7 @@ class TeacherModel extends UserModel {
       'gender': gender,
       'rates': rates,
       'votes': votes,
+      'isPremium': isPremium,
     };
   }
 
@@ -79,6 +83,7 @@ class TeacherModel extends UserModel {
       gender: (map['gender'] ?? '') as String,
       rates: (map['rates'] ?? 0.0) as double,
       votes: (map['votes'] ?? 0) as int,
+      isPremium: (map['isPremium'] ?? false) as bool,
     );
   }
 
@@ -104,6 +109,7 @@ class TeacherModel extends UserModel {
       gender,
       rates,
       votes,
+      isPremium,
     ];
   }
 }

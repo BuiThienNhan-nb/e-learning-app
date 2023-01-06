@@ -1,10 +1,4 @@
-import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
-import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_course_page.dart';
-import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_section/update_section_lessons_page.dart';
-import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
-import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
-import 'package:e_learning_app/features/my_courses/presentation/states/provider/update_course_provider.dart';
-import 'package:e_learning_app/features/settings/presentation/pages/test_payment_web_view.dart';
+import 'package:e_learning_app/features/live_stream/presentation/states/mobx/live_stream_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +22,7 @@ import '../features/auth/verify_email/presentation/states/providers/verify_email
 import '../features/course_detail/presentation/pages/course_detail_page.dart';
 import '../features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
 import '../features/home/domain/entities/lesson_model.dart';
+import '../features/home/domain/entities/section_model.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
 import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
@@ -37,7 +32,12 @@ import '../features/main/presentation/mobx/main_page_store.dart';
 import '../features/main/presentation/pages/main_page.dart';
 import '../features/my_courses/presentation/pages/add_course/create_course_page.dart';
 import '../features/my_courses/presentation/pages/my_course_page.dart';
+import '../features/my_courses/presentation/pages/update_course/update_course_page.dart';
+import '../features/my_courses/presentation/pages/update_course/update_section/update_section_lessons_page.dart';
+import '../features/my_courses/presentation/states/mobx/create_course_store.dart';
+import '../features/my_courses/presentation/states/mobx/update_course_store.dart';
 import '../features/my_courses/presentation/states/provider/create_course_provider.dart';
+import '../features/my_courses/presentation/states/provider/update_course_provider.dart';
 import '../features/my_transactions/presentations/pages/my_transactions_page.dart';
 import '../features/my_transactions/presentations/pages/transaction_detail_page.dart';
 import '../features/settings/presentation/pages/edit_profile_page.dart';
@@ -47,6 +47,7 @@ import '../features/settings/presentation/pages/notification_page.dart';
 import '../features/settings/presentation/pages/payment_page.dart';
 import '../features/settings/presentation/pages/privacy_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
+import '../features/settings/presentation/pages/test_payment_web_view.dart';
 import '../features/settings/presentation/states/mobx/update_avatar_store.dart';
 import '../features/settings/presentation/states/provider/settings_page_provider.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
@@ -70,7 +71,7 @@ class AppRoutes {
   final String mainPage = "/main";
 
   // Live stream
-  final String liveStream = "live-stream";
+  final String liveStream = "live-stream/:roomId";
 
   // Detail Page
   late final String teacherDetail = "home/teacher/:teacherId";
@@ -182,11 +183,24 @@ class AppRoutes {
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: mainPage,
-        builder: (context, state) => Provider<MainPageStore>(
-          create: (context) => GetIt.I(),
-          lazy: true,
+        builder: (context, state) => MultiProvider(
+          providers: [
+            Provider<MainPageStore>(
+              create: (context) => GetIt.I(),
+              lazy: true,
+            ),
+            Provider<LiveStreamStore>(
+              create: (_) => GetIt.I<LiveStreamStore>(),
+              lazy: true,
+            ),
+          ],
           child: MainPage(),
         ),
+        // builder: (context, state) => Provider<MainPageStore>(
+        //   create: (context) => GetIt.I(),
+        //   lazy: true,
+        //   child: MainPage(),
+        // ),
         routes: [
           GoRoute(
             name: "teacher_detail",
@@ -273,8 +287,13 @@ class AppRoutes {
             name: "live_stream",
             path: liveStream,
             builder: (context, state) {
-              return RoomWebViewPage(
-                id: state.extra as String,
+              return Provider<LiveStreamStore>(
+                create: (_) => state.extra as LiveStreamStore,
+                lazy: true,
+                child: RoomWebViewPage(
+                  // id: state.extra as String,
+                  id: state.params["roomId"] ?? "N/A",
+                ),
               );
             },
           ),

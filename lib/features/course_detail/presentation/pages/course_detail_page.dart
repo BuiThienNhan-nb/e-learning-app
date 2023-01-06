@@ -12,6 +12,7 @@ import '../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../utils/mock/mock_courses.dart';
+import '../../../../utils/mock/mock_teachers.dart';
 import '../../../home/domain/entities/course_model.dart';
 import '../../domain/entities/course_detail_model.dart';
 import '../states/course_detail_store.dart';
@@ -38,8 +39,10 @@ class CourseDetailPage extends StatelessWidget {
         .firstWhere((element) => element.id == courseId);
     final CourseDetailModel course = CourseDetailModel(
       course: a,
-      teacherId: "1",
-      isPaid: Random().nextBool(),
+      teacher: GetIt.I<MockTeachers>().topTeachers.firstWhere(
+            (element) => element.id == "1",
+          ),
+      isEnrolled: Random().nextBool(),
     );
     final List<Widget> tabs = [
       const Tab(
@@ -91,7 +94,7 @@ class CourseDetailPage extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           floatingActionButtonLocation:
                               FloatingActionButtonLocation.centerFloat,
-                          floatingActionButton: !course.isPaid
+                          floatingActionButton: !course.isEnrolled
                               ? DefaultTextButton(
                                   submit: () {},
                                   title:

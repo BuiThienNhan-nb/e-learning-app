@@ -1,16 +1,16 @@
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
-
 import '../../../../configs/formats.dart';
+import '../../../auth/sign_in/domain/entities/teacher_model.dart';
+import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 class CourseDetailModel extends CourseModel {
-  final String teacherId;
-  bool isPaid;
+  final TeacherModel teacher;
+  bool isEnrolled;
 
   CourseDetailModel({
     required CourseModel course,
-    required this.teacherId,
-    required this.isPaid,
+    required this.teacher,
+    required this.isEnrolled,
   }) : super(
           id: course.id,
           title: course.title,
@@ -37,8 +37,8 @@ class CourseDetailModel extends CourseModel {
     double? price,
     double? sale,
     List<SectionModel>? section,
-    String? teacherId,
-    bool? isPaid,
+    TeacherModel? teacher,
+    bool? isEnrolled,
     bool? haveCertificate,
   }) {
     return CourseDetailModel(
@@ -55,8 +55,8 @@ class CourseDetailModel extends CourseModel {
         section: section ?? this.section,
         haveCertificate: haveCertificate ?? this.haveCertificate,
       ),
-      teacherId: teacherId ?? this.teacherId,
-      isPaid: isPaid ?? this.isPaid,
+      teacher: teacher ?? this.teacher,
+      isEnrolled: isEnrolled ?? this.isEnrolled,
     );
   }
 
@@ -87,8 +87,8 @@ class CourseDetailModel extends CourseModel {
       price,
       sale ?? 0,
       section,
-      teacherId,
-      isPaid,
+      teacher,
+      isEnrolled,
       haveCertificate,
     ];
   }

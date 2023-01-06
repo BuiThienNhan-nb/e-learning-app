@@ -2,26 +2,36 @@
 
 import 'dart:convert';
 
-import 'package:e_learning_app/configs/formats.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/user_model.dart';
 
 class TeacherModel extends UserModel {
-  final double rates;
-  final int votes;
+  double rates;
+  int votes;
 
   TeacherModel({
-    required super.id,
-    required super.name,
-    required super.email,
-    required super.birthday,
-    required super.role,
-    required super.gender,
-    required super.avatar,
-    required super.phoneNumber,
-    required super.isPremium,
+    // required super.id,
+    // required super.name,
+    // required super.email,
+    // required super.birthday,
+    // required super.role,
+    // required super.gender,
+    // required super.avatar,
+    // required super.phoneNumber,
+    // required super.isPremium,
+    required UserModel user,
     required this.rates,
     required this.votes,
-  });
+  }) : super(
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          birthday: user.birthday,
+          role: user.role,
+          gender: user.gender,
+          avatar: user.avatar,
+          phoneNumber: user.phoneNumber,
+          isPremium: user.isPremium,
+        );
 
   @override
   TeacherModel copyWith({
@@ -38,17 +48,19 @@ class TeacherModel extends UserModel {
     bool? isPremium,
   }) {
     return TeacherModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      avatar: avatar ?? this.avatar,
-      birthday: birthday ?? this.birthday,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      role: role ?? this.role,
-      gender: gender ?? this.gender,
+      user: UserModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        avatar: avatar ?? this.avatar,
+        birthday: birthday ?? this.birthday,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        role: role ?? this.role,
+        gender: gender ?? this.gender,
+        isPremium: isPremium ?? this.isPremium,
+      ),
       rates: rates ?? this.rates,
       votes: votes ?? this.votes,
-      isPremium: isPremium ?? this.isPremium,
     );
   }
 
@@ -71,19 +83,20 @@ class TeacherModel extends UserModel {
 
   factory TeacherModel.fromMap(Map<String, dynamic> map) {
     return TeacherModel(
-      id: (map['userId'] ?? '') as String,
-      name: (map['name'] ?? '') as String,
-      email: (map['email'] ?? '') as String,
-      avatar: (map['avatar'] ?? '') as String,
-      birthday: AppFormats.instance.formatDay
-          .parse((map['birthday'] ?? "25/09/2001") as String),
-      phoneNumber:
-          map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
-      role: (map['role'] ?? '') as String,
-      gender: (map['gender'] ?? '') as String,
+      user: UserModel.fromMap(map),
+      // id: (map['userId'] ?? '') as String,
+      // name: (map['name'] ?? '') as String,
+      // email: (map['email'] ?? '') as String,
+      // avatar: (map['avatar'] ?? '') as String,
+      // birthday: AppFormats.instance.formatDay
+      //     .parse((map['birthday'] ?? "25/09/2001") as String),
+      // phoneNumber:
+      //     map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
+      // role: (map['role'] ?? '') as String,
+      // gender: (map['gender'] ?? '') as String,
       rates: (map['rates'] ?? 0.0) as double,
       votes: (map['votes'] ?? 0) as int,
-      isPremium: (map['isPremium'] ?? false) as bool,
+      // isPremium: (map['isPremium'] ?? false) as bool,
     );
   }
 

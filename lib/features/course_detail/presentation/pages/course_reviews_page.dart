@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/features/course_detail/presentation/widgets/course_add_review_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +11,7 @@ import '../../../../configs/styles.dart';
 import '../../../../utils/mock/mock_course_reviews.dart';
 import '../../domain/entities/course_detail_model.dart';
 import '../../domain/entities/course_review_model.dart';
+import '../widgets/course_add_review_dialog.dart';
 
 class CourseReviewsPage extends StatelessWidget {
   const CourseReviewsPage({
@@ -40,7 +40,7 @@ class CourseReviewsPage extends StatelessWidget {
           itemBuilder: (context, index) =>
               CourseReviewWidget(review: reviews[index]),
         ),
-        course.isPaid
+        course.isEnrolled
             ? Positioned(
                 right: AppDimens.mediumWidthDimens,
                 bottom: AppDimens.mediumHeightDimens,

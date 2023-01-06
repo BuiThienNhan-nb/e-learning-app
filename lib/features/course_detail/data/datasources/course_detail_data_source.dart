@@ -3,15 +3,16 @@ import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:e_learning_app/bases/services/api_exception.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
-import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../home/domain/entities/course_model.dart';
+import '../../../home/domain/entities/section_model.dart';
 import '../../domain/entities/course_detail_model.dart';
 
 abstract class CourseDetailDataSource {
@@ -20,8 +21,9 @@ abstract class CourseDetailDataSource {
 
 @LazySingleton(as: CourseDetailDataSource)
 class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
-  final String getCourseDetailEndpoint = "/courses/course";
-  final String getSectionsInCourse = "/sections/course";
+  final String _getCourseDetailEndpoint = "/courses/course";
+  final String _getSectionsInCourse = "/sections/course";
+  final String _getUserById = "/users/userById";
 
   @override
   Future<Either<Failure, CourseDetailModel>> getCourseDetail(
@@ -32,7 +34,7 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
       };
 
       final data = await post(
-        Env.instance.baseUrl + getCourseDetailEndpoint,
+        Env.instance.baseUrl + _getCourseDetailEndpoint,
         data: requestData,
         options: Options(headers: {
           "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
@@ -40,7 +42,7 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
       );
       final CourseModel course = CourseModel.fromMap(data["data"]["data"]);
       final sectionData = await post(
-        Env.instance.baseUrl + getSectionsInCourse,
+        Env.instance.baseUrl + _getSectionsInCourse,
         data: requestData,
         options: Options(headers: {
           "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
@@ -51,11 +53,19 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
             (map) => SectionModel.fromMap(map),
           )
           .toList();
-
+      final teacherData = await post(
+        Env.instance.baseUrl + _getUserById,
+        data: {
+          "userId": data["data"]["data"]["authorId"],
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        }),
+      );
       final CourseDetailModel courseDetail = CourseDetailModel(
         course: course,
-        teacherId: "teacherId",
-        isPaid: Random().nextBool(),
+        teacher: TeacherModel.fromMap(teacherData["data"]["data"]),
+        isEnrolled: Random().nextBool(),
       );
 
       // sort course sections and lessons by order

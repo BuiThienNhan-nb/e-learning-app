@@ -1,21 +1,19 @@
-import 'dart:math';
 import 'dart:developer' as logger;
+import 'dart:math';
 
-import 'package:e_learning_app/bases/mobx/base_state.dart';
-import 'package:e_learning_app/bases/presentation/atoms/network_image.dart';
-import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
-import 'package:e_learning_app/features/course_detail/domain/entities/course_detail_model.dart';
-import 'package:e_learning_app/features/course_detail/presentation/states/course_rate_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/bookmark_icon.dart';
+import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/formats.dart';
 import '../../../../configs/styles.dart';
-import '../../../../utils/mock/mock_teachers.dart';
+import '../../domain/entities/course_detail_model.dart';
+import '../states/course_rate_store.dart';
 import '../widgets/course_add_review_dialog.dart';
 import '../widgets/course_detail_interaction.dart';
 
@@ -33,9 +31,10 @@ class CourseAboutPage extends StatelessWidget {
     store.setCourseRate(course.rates);
     store.setCourseRateCount(course.votes);
 
-    final TeacherModel teacher = GetIt.I<MockTeachers>()
-        .topTeachers
-        .firstWhere((element) => element.id == course.teacherId);
+    // final TeacherModel teacher =
+    // GetIt.I<MockTeachers>()
+    //     .topTeachers
+    //     .firstWhere((element) => element.id == course.teacherId);
 
     return Observer(
       builder: (_) {
@@ -200,7 +199,7 @@ class CourseAboutPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         DefaultNetworkImage(
-                          imageUrl: teacher.avatar!,
+                          imageUrl: course.teacher.avatar!,
                           blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
                           height: AppDimens.extraLargeHeightDimens * 2.4,
                           width: AppDimens.extraLargeWidthDimens * 2.4,
@@ -211,7 +210,7 @@ class CourseAboutPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                teacher.name,
+                                course.teacher.name,
                                 style: AppStyles.subtitle1TextStyle.copyWith(
                                   fontWeight: FontWeight.w900,
                                 ),

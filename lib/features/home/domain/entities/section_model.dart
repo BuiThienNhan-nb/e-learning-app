@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
 
 class SectionModel extends Equatable {
-  final String id;
+  String id;
   String title;
   List<LessonModel> lessons;
   int order;

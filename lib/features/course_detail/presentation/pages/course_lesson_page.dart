@@ -34,7 +34,7 @@ class CourseLessonPage extends StatelessWidget {
                 .toList(),
           ),
         ),
-        course.isPaid
+        course.isEnrolled
             ? const SizedBox.shrink()
             : BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),

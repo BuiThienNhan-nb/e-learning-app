@@ -33,7 +33,8 @@ Future<void> _initDependency() async {
 Future<void> _initServices() async {
   await "https://youtu.be/rjo2JUPrCvE?list=RDrjo2JUPrCvE"
       .extractYoutubeUrl()
-      .then((value) => decodeYoutubeUrl = value);
+      .then((value) => decodeYoutubeUrl =
+          "https://firebasestorage.googleapis.com/v0/b/e-learning-4122a.appspot.com/o/videos%2F2022-12-21%2008-50-37.mkv?alt=media&token=a06a8e33-e493-462e-9d53-7e0679bd0b9e");
   await dotenv.load(fileName: ".env").then(
         (_) => log(Env.instance.test),
       );

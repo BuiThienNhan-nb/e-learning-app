@@ -10,9 +10,17 @@ abstract class MyCourseRepository {
     CourseModel course,
     bool isUpdateImage,
   );
+  Future<Either<Failure, bool>> deleteCourse(String courseId);
   Future<Either<Failure, SectionModel>> updateCourseSection(
     SectionModel section,
     String courseId,
   );
-  Future<Either<Failure, bool>> deleteCourse(String courseId);
+  Future<Either<Failure, SectionModel>> createCourseSection(
+    SectionModel section,
+    String courseId,
+  );
+  Future<Either<Failure, bool>> deleteSection(
+    String courseId,
+    String sectionId,
+  );
 }

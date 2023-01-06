@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
+import 'package:e_learning_app/features/my_courses/domain/usecases/my_course_use_cases/create_section_use_case.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -11,6 +14,7 @@ import '../../../../course_detail/domain/usecases/course_detail_use_case/get_cou
 import '../../../../home/domain/entities/course_model.dart';
 import '../../../../home/domain/entities/section_model.dart';
 import '../../../domain/usecases/my_course_use_case.dart';
+import '../../../domain/usecases/my_course_use_cases/delete_section_use_case.dart';
 import '../../../domain/usecases/my_course_use_cases/update_course_use_case.dart';
 import '../../../domain/usecases/my_course_use_cases/update_section_use_case.dart';
 
@@ -32,6 +36,8 @@ abstract class _UpdateCourseStore with Store {
   CourseModel? course;
   @observable
   SectionModel? section;
+  @observable
+  int? sectionIndex;
 
   @observable
   String? errorMessage;
@@ -43,7 +49,13 @@ abstract class _UpdateCourseStore with Store {
   ObservableFuture<Either<Failure, CourseModel>>? _updateCourseFuture;
 
   @observable
+  ObservableFuture<Either<Failure, SectionModel>>? _createSectionFuture;
+
+  @observable
   ObservableFuture<Either<Failure, SectionModel>>? _updateSectionFuture;
+
+  @observable
+  ObservableFuture<Either<Failure, bool>>? _deleteSectionFuture;
 
   @computed
   BaseSate get state {
@@ -60,31 +72,55 @@ abstract class _UpdateCourseStore with Store {
 
   @computed
   BaseSate get updateState {
-    if (_updateCourseFuture == null || _updateSectionFuture == null) {
+    if (_updateCourseFuture == null) {
       return BaseSate.init;
     }
-    if (_updateCourseFuture!.status == FutureStatus.rejected ||
-        _updateSectionFuture!.status == FutureStatus.rejected) {
+    if (_updateCourseFuture!.status == FutureStatus.rejected) {
       return BaseSate.error;
     }
-    return _updateCourseFuture!.status == FutureStatus.pending ||
-            _updateSectionFuture!.status == FutureStatus.pending
+    return _updateCourseFuture!.status == FutureStatus.pending
         ? BaseSate.loading
         : BaseSate.loaded;
   }
 
-  // @computed
-  // BaseSate get updateSectionState {
-  //   if (_updateSectionFuture == null) {
-  //     return BaseSate.init;
-  //   }
-  //   if (_updateSectionFuture!.status == FutureStatus.rejected) {
-  //     return BaseSate.error;
-  //   }
-  //   return _updateSectionFuture!.status == FutureStatus.pending
-  //       ? BaseSate.loading
-  //       : BaseSate.loaded;
-  // }
+  @computed
+  BaseSate get createSectionState {
+    if (_createSectionFuture == null) {
+      return BaseSate.init;
+    }
+    if (_createSectionFuture!.status == FutureStatus.rejected) {
+      return BaseSate.error;
+    }
+    return _createSectionFuture!.status == FutureStatus.pending
+        ? BaseSate.loading
+        : BaseSate.loaded;
+  }
+
+  @computed
+  BaseSate get updateSectionState {
+    if (_updateSectionFuture == null) {
+      return BaseSate.init;
+    }
+    if (_updateSectionFuture!.status == FutureStatus.rejected) {
+      return BaseSate.error;
+    }
+    return _updateSectionFuture!.status == FutureStatus.pending
+        ? BaseSate.loading
+        : BaseSate.loaded;
+  }
+
+  @computed
+  BaseSate get deleteSectionState {
+    if (_deleteSectionFuture == null) {
+      return BaseSate.init;
+    }
+    if (_deleteSectionFuture!.status == FutureStatus.rejected) {
+      return BaseSate.error;
+    }
+    return _deleteSectionFuture!.status == FutureStatus.pending
+        ? BaseSate.loading
+        : BaseSate.loaded;
+  }
 
   @action
   Future<void> getCourseDetail(String courseId) async {
@@ -144,6 +180,43 @@ abstract class _UpdateCourseStore with Store {
   }
 
   @action
+  Future<void> createSection(SectionModel section, String courseId) async {
+    errorMessage = null;
+
+    _createSectionFuture = ObservableFuture(
+      _useCases.createSection(CreateSectionParams(section, courseId)),
+    );
+
+    Either<Failure, SectionModel>? result = await _createSectionFuture;
+
+    if (result == null) {
+      errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      return;
+    }
+
+    return result.fold(
+      (l) {
+        (l is UserFailure || l is ServerFailure)
+            ? errorMessage = l.message
+            : errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      },
+      (r) {
+        this.section = r;
+      },
+    );
+  }
+
+  @action
+  void reInitCreateSection() {
+    _createSectionFuture = null;
+  }
+
+  @action
+  void reInitDeleteSection() {
+    _deleteSectionFuture = null;
+  }
+
+  @action
   Future<void> updateSection(SectionModel section, String courseId) async {
     errorMessage = null;
 
@@ -164,7 +237,42 @@ abstract class _UpdateCourseStore with Store {
             ? errorMessage = l.message
             : errorMessage = LocaleKeys.serverUnexpectedError.tr();
       },
-      (r) => section = r,
+      // (r) => section = r,
+      (r) => log("update success with result $r"),
+    );
+  }
+
+  @action
+  Future<void> deleteSection(
+    String sectionId,
+    String courseId,
+    int index,
+  ) async {
+    errorMessage = null;
+
+    _deleteSectionFuture = ObservableFuture(
+      _useCases.deleteSection(
+        DeleteSectionParams(courseId, sectionId),
+      ),
+    );
+
+    Either<Failure, bool>? result = await _deleteSectionFuture;
+
+    if (result == null) {
+      errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      return;
+    }
+
+    return result.fold(
+      (l) {
+        (l is UserFailure || l is ServerFailure)
+            ? errorMessage = l.message
+            : errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      },
+      // (r) => section = r,
+      (r) {
+        sectionIndex = index;
+      },
     );
   }
 }

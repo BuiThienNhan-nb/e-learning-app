@@ -24,7 +24,15 @@ abstract class MyCourseDataSource {
     SectionModel section,
     final String courseId,
   );
+  Future<Either<Failure, SectionModel>> createCourseSection(
+    SectionModel section,
+    String courseId,
+  );
   Future<Either<Failure, bool>> deleteCourse(String courseId);
+  Future<Either<Failure, bool>> deleteSection(
+    String courseId,
+    String sectionId,
+  );
 }
 
 @LazySingleton(as: MyCourseDataSource)
@@ -33,10 +41,34 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
       "/courses/createCourseWithSectionAndLesson";
   final String _updateCourse = "/courses/update";
   final String _updateCourseSection = "/sections/update";
+  final String _createCourseSection = "/sections/create";
+  final String _deleteCourseSection = "/sections/delete";
+  final String _testId = '5700874b-d2ca-47a8-ac38-4304ad9608b9';
 
   @override
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course) async {
+    final storageRef = FirebaseStorage.instance.ref();
+
     try {
+      for (var section in course.section) {
+        for (var lesson in section.lessons) {
+          if (lesson.videoUrl != null &&
+              lesson.videoUrl!.compareTo("N/A") != 0) {
+            // upload course source video to firebase
+            final String storagePath =
+                "videos/courses/${course.id}/lesson_${lesson.order}";
+            String? downloadUrl;
+            final File file = File(lesson.videoUrl!);
+            await storageRef.child(storagePath).putFile(file).then(
+                  (uploadTask) async =>
+                      downloadUrl = await uploadTask.ref.getDownloadURL(),
+                );
+            file.delete();
+            lesson.videoUrl = downloadUrl;
+          }
+        }
+      }
+
       final Map<String, Object> requestData = course.toMap();
       log(Env.instance.baseUrl + _createCourseEndpoint);
       log(requestData.toString());
@@ -73,7 +105,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
     const String storagePath =
         "images/courses/courseImage/5700874b-d2ca-47a8-ac38-4304ad9608b9";
     final requestData = course.informationToMap();
-    requestData['courseId'] = '5700874b-d2ca-47a8-ac38-4304ad9608b9';
+    requestData['courseId'] = _testId;
 
     try {
       if (isUpdateImage) {
@@ -121,6 +153,50 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
       );
 
       return Right(SectionModel.fromMap(data['data']['data']));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SectionModel>> createCourseSection(
+      SectionModel section, String courseId) async {
+    try {
+      final requestData = section.toMap();
+      requestData['courseId'] = courseId;
+      log(requestData.toString());
+
+      final data = await post(
+        Env.instance.baseUrl + _createCourseSection,
+        data: requestData,
+        options: Options(headers: {
+          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        }),
+      );
+
+      return Right(SectionModel.fromMap(data['data']['data']));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteSection(
+      String courseId, String sectionId) async {
+    try {
+      final requestData = {
+        "sectionId": sectionId,
+        "courseId": courseId,
+      };
+      final data = await post(
+        Env.instance.baseUrl + _deleteCourseSection,
+        data: requestData,
+        options: Options(headers: {
+          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        }),
+      );
+
+      return const Right(true);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

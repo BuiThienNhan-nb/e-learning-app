@@ -4,6 +4,7 @@ import 'dart:developer' as logger;
 import 'package:e_learning_app/bases/presentation/atoms/dropdown_button.dart';
 import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../../bases/presentation/atoms/text_button.dart';
@@ -150,8 +151,7 @@ class AddLessonItem extends StatefulWidget {
 class _AddLessonItemState extends State<AddLessonItem> {
   bool isEditing = false;
   final titleController = TextEditingController();
-  final sourceController = TextEditingController(
-      text: "image/cached/local/data/132148_fnb_3455234.mp4");
+  final sourceController = TextEditingController(text: "N/A");
   late String selectedSection;
 
   final TextStyle sectionTitleStyle = AppStyles.headline6TextStyle.copyWith(
@@ -225,6 +225,14 @@ class _AddLessonItemState extends State<AddLessonItem> {
     widget.provider.sections[widget.sectionOrder].lessons
         .removeAt(widget.indexInSection);
     widget.trigger();
+  }
+
+  Future<String> _pickVideo() async {
+    XFile? xFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    if (xFile == null) return "";
+    sourceController.text = xFile.path;
+    setState(() {});
+    return xFile.path;
   }
 
   @override
@@ -332,7 +340,7 @@ class _AddLessonItemState extends State<AddLessonItem> {
             ],
           ),
           InkWell(
-            onTap: () {},
+            onTap: _pickVideo,
             child: Text(
               "Video source: ${sourceController.text.trim()}",
               style: sectionTitleStyle,

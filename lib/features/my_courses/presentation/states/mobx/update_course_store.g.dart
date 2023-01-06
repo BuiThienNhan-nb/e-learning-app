@@ -23,6 +23,27 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
       (_$updateStateComputed ??= Computed<BaseSate>(() => super.updateState,
               name: '_UpdateCourseStore.updateState'))
           .value;
+  Computed<BaseSate>? _$createSectionStateComputed;
+
+  @override
+  BaseSate get createSectionState => (_$createSectionStateComputed ??=
+          Computed<BaseSate>(() => super.createSectionState,
+              name: '_UpdateCourseStore.createSectionState'))
+      .value;
+  Computed<BaseSate>? _$updateSectionStateComputed;
+
+  @override
+  BaseSate get updateSectionState => (_$updateSectionStateComputed ??=
+          Computed<BaseSate>(() => super.updateSectionState,
+              name: '_UpdateCourseStore.updateSectionState'))
+      .value;
+  Computed<BaseSate>? _$deleteSectionStateComputed;
+
+  @override
+  BaseSate get deleteSectionState => (_$deleteSectionStateComputed ??=
+          Computed<BaseSate>(() => super.deleteSectionState,
+              name: '_UpdateCourseStore.deleteSectionState'))
+      .value;
 
   late final _$courseDetailAtom =
       Atom(name: '_UpdateCourseStore.courseDetail', context: context);
@@ -69,6 +90,22 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
   set section(SectionModel? value) {
     _$sectionAtom.reportWrite(value, super.section, () {
       super.section = value;
+    });
+  }
+
+  late final _$sectionIndexAtom =
+      Atom(name: '_UpdateCourseStore.sectionIndex', context: context);
+
+  @override
+  int? get sectionIndex {
+    _$sectionIndexAtom.reportRead();
+    return super.sectionIndex;
+  }
+
+  @override
+  set sectionIndex(int? value) {
+    _$sectionIndexAtom.reportWrite(value, super.sectionIndex, () {
+      super.sectionIndex = value;
     });
   }
 
@@ -122,6 +159,24 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
     });
   }
 
+  late final _$_createSectionFutureAtom =
+      Atom(name: '_UpdateCourseStore._createSectionFuture', context: context);
+
+  @override
+  ObservableFuture<Either<Failure, SectionModel>>? get _createSectionFuture {
+    _$_createSectionFutureAtom.reportRead();
+    return super._createSectionFuture;
+  }
+
+  @override
+  set _createSectionFuture(
+      ObservableFuture<Either<Failure, SectionModel>>? value) {
+    _$_createSectionFutureAtom.reportWrite(value, super._createSectionFuture,
+        () {
+      super._createSectionFuture = value;
+    });
+  }
+
   late final _$_updateSectionFutureAtom =
       Atom(name: '_UpdateCourseStore._updateSectionFuture', context: context);
 
@@ -137,6 +192,23 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
     _$_updateSectionFutureAtom.reportWrite(value, super._updateSectionFuture,
         () {
       super._updateSectionFuture = value;
+    });
+  }
+
+  late final _$_deleteSectionFutureAtom =
+      Atom(name: '_UpdateCourseStore._deleteSectionFuture', context: context);
+
+  @override
+  ObservableFuture<Either<Failure, bool>>? get _deleteSectionFuture {
+    _$_deleteSectionFutureAtom.reportRead();
+    return super._deleteSectionFuture;
+  }
+
+  @override
+  set _deleteSectionFuture(ObservableFuture<Either<Failure, bool>>? value) {
+    _$_deleteSectionFutureAtom.reportWrite(value, super._deleteSectionFuture,
+        () {
+      super._deleteSectionFuture = value;
     });
   }
 
@@ -159,6 +231,15 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
         .run(() => super.updateCourseInformation(course, isUpdateImage));
   }
 
+  late final _$createSectionAsyncAction =
+      AsyncAction('_UpdateCourseStore.createSection', context: context);
+
+  @override
+  Future<void> createSection(SectionModel section, String courseId) {
+    return _$createSectionAsyncAction
+        .run(() => super.createSection(section, courseId));
+  }
+
   late final _$updateSectionAsyncAction =
       AsyncAction('_UpdateCourseStore.updateSection', context: context);
 
@@ -168,15 +249,53 @@ mixin _$UpdateCourseStore on _UpdateCourseStore, Store {
         .run(() => super.updateSection(section, courseId));
   }
 
+  late final _$deleteSectionAsyncAction =
+      AsyncAction('_UpdateCourseStore.deleteSection', context: context);
+
+  @override
+  Future<void> deleteSection(String sectionId, String courseId, int index) {
+    return _$deleteSectionAsyncAction
+        .run(() => super.deleteSection(sectionId, courseId, index));
+  }
+
+  late final _$_UpdateCourseStoreActionController =
+      ActionController(name: '_UpdateCourseStore', context: context);
+
+  @override
+  void reInitCreateSection() {
+    final _$actionInfo = _$_UpdateCourseStoreActionController.startAction(
+        name: '_UpdateCourseStore.reInitCreateSection');
+    try {
+      return super.reInitCreateSection();
+    } finally {
+      _$_UpdateCourseStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reInitDeleteSection() {
+    final _$actionInfo = _$_UpdateCourseStoreActionController.startAction(
+        name: '_UpdateCourseStore.reInitDeleteSection');
+    try {
+      return super.reInitDeleteSection();
+    } finally {
+      _$_UpdateCourseStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 courseDetail: ${courseDetail},
 course: ${course},
 section: ${section},
+sectionIndex: ${sectionIndex},
 errorMessage: ${errorMessage},
 state: ${state},
-updateState: ${updateState}
+updateState: ${updateState},
+createSectionState: ${createSectionState},
+updateSectionState: ${updateSectionState},
+deleteSectionState: ${deleteSectionState}
     ''';
   }
 }

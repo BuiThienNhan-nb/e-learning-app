@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +9,19 @@ import '../../../../../../bases/presentation/atoms/text_form_field.dart';
 import '../../../../../../configs/colors.dart';
 import '../../../../../../configs/dimens.dart';
 import '../../../../../../configs/styles.dart';
-import '../../../../../home/domain/entities/lesson_model.dart';
 import '../../../../../home/domain/entities/section_model.dart';
+import '../../../states/mobx/update_course_store.dart';
 import '../../../states/provider/update_course_provider.dart';
 
 class UpdateCourseSectionPage extends StatelessWidget {
-  const UpdateCourseSectionPage({super.key});
+  const UpdateCourseSectionPage({
+    super.key,
+    required this.createSection,
+    required this.deleteSection,
+  });
+
+  final Function() createSection;
+  final Function(String, int) deleteSection;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,11 @@ class UpdateCourseSectionPage extends StatelessWidget {
                     ),
                     child: UpdateSectionItem(
                       order: index,
-                      onDelete: () => provider.deleteSectionAtIndex(index),
+                      onDelete: () => deleteSection(
+                        provider.course.section[index].id,
+                        index,
+                      ),
+                      // onDelete: () => provider.deleteSectionAtIndex(index),
                       section: provider.course.section[index],
                     ),
                   ),
@@ -60,14 +70,17 @@ class UpdateCourseSectionPage extends StatelessWidget {
               ),
               SizedBox(height: AppDimens.largeHeightDimens),
               DefaultTextButton(
-                submit: () => provider.addSection(
-                  SectionModel(
-                    id: "id_section",
-                    title: "",
-                    lessons: List<LessonModel>.from([]),
-                    order: provider.course.section.length + 1,
-                  ),
-                ),
+                submit: createSection,
+                /*submit: () {
+                  provider.addSection(
+                    SectionModel(
+                      id: "id_section",
+                      title: "",
+                      lessons: List<LessonModel>.from([]),
+                      order: provider.course.section.length + 1,
+                    ),
+                  );
+                },*/
                 title: "Add Section",
                 backgroundColor: AppColors.secondaryColor.withOpacity(0.3),
                 titleStyle: AppStyles.headline6TextStyle.copyWith(

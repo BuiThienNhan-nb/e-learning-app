@@ -2,15 +2,21 @@ import 'dart:developer';
 
 import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
 import 'package:e_learning_app/features/settings/presentation/widgets/setting_app_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../bases/mobx/base_state.dart';
 import '../../../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../../bases/presentation/atoms/text_form_field.dart';
 import '../../../../../../configs/colors.dart';
 import '../../../../../../configs/dimens.dart';
 import '../../../../../../configs/styles.dart';
+import '../../../../../../core/app/loading.dart';
+import '../../../../../../generated/translations/locale_keys.g.dart';
 import '../../../../../home/domain/entities/lesson_model.dart';
 import '../../../../../home/domain/entities/section_model.dart';
 import '../../../states/provider/update_course_provider.dart';
@@ -27,93 +33,129 @@ class UpdateSectionLessonsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController controller =
         TextEditingController(text: section.title);
-
+    final store = context.read<UpdateCourseStore>();
     final int sectionIndex = section.order - 1;
 
-    return Scaffold(
-      appBar: const SettingAppBar(title: "Update Section"),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Update
-          context.read<UpdateCourseStore>().updateSection(
+    return Observer(
+      builder: (_) {
+// Trigger update UI
+        if (store.updateSectionState == BaseSate.loading) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.showLoadingDialog(context);
+          });
+        }
+        if (store.updateSectionState == BaseSate.error ||
+            store.errorMessage != null) {
+          log(store.errorMessage ?? "Error");
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.dismissLoadingDialog(context);
+            showDialog(
+              context: context,
+              builder: (_) => DefaultResultDialog(
+                content:
+                    store.errorMessage ?? LocaleKeys.serverUnexpectedError.tr(),
+                isError: true,
+              ),
+            );
+          });
+        } else if (store.updateSectionState == BaseSate.loaded) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              AppLoading.dismissLoadingDialog(context);
+              GoRouter.of(context).pop();
+            },
+          );
+        }
+
+        return Scaffold(
+          appBar: const SettingAppBar(title: "Update Section"),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              section.title = controller.text.trim();
+              // Update
+              store.updateSection(
                 section,
                 context.read<UpdateCourseProvider>().course.id,
               );
-        },
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.whiteColor,
-        child: const Icon(
-          Icons.save_rounded,
-          color: AppColors.whiteColor,
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.all(AppDimens.largeHeightDimens),
-          child: Consumer<UpdateCourseProvider>(
-            builder: (_, provider, __) => Column(
-              children: [
-                DefaultTextFormField(
-                  labelText: "",
-                  hintText: "Section title...",
-                  controller: controller,
-                  maxLines: 1,
-                ),
-                SizedBox(height: AppDimens.largeHeightDimens),
-                ListView.builder(
-                  itemCount:
-                      provider.course.section[sectionIndex].lessons.length,
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, lessonIndex) => Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppDimens.mediumHeightDimens),
-                    child: UpdateLessonItem(
-                      order: provider.countCurrentLessonOrder(
-                          sectionIndex, lessonIndex),
-                      indexInSection: lessonIndex,
-                      sectionOrder: sectionIndex,
-                      sections:
-                          provider.course.section.map((e) => e.title).toList(),
-                      onDelete: () {
-                        provider.deleteLesson(sectionIndex, lessonIndex);
-                      },
-                      lesson: provider
-                          .course.section[sectionIndex].lessons[lessonIndex],
-                    ),
-                  ),
-                ),
-                SizedBox(height: AppDimens.largeHeightDimens),
-                DefaultTextButton(
-                  submit: () {
-                    if (provider.course.section.isEmpty) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => const DefaultResultDialog(
-                            content: "You need to add Section first!!",
-                            isError: true,
-                          ),
-                        );
-                      });
-                    } else {
-                      provider.addLesson(sectionIndex);
-                    }
-                  },
-                  title: "Add Lesson",
-                  backgroundColor: AppColors.secondaryColor.withOpacity(0.3),
-                  titleStyle: AppStyles.headline6TextStyle.copyWith(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ],
+            },
+            backgroundColor: AppColors.primaryColor,
+            foregroundColor: AppColors.whiteColor,
+            child: const Icon(
+              Icons.save_rounded,
+              color: AppColors.whiteColor,
             ),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(AppDimens.largeHeightDimens),
+              child: Consumer<UpdateCourseProvider>(
+                builder: (_, provider, __) => Column(
+                  children: [
+                    DefaultTextFormField(
+                      labelText: "",
+                      hintText: "Section title...",
+                      controller: controller,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: AppDimens.largeHeightDimens),
+                    ListView.builder(
+                      itemCount:
+                          provider.course.section[sectionIndex].lessons.length,
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, lessonIndex) => Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: AppDimens.mediumHeightDimens),
+                        child: UpdateLessonItem(
+                          order: provider.countCurrentLessonOrder(
+                              sectionIndex, lessonIndex),
+                          indexInSection: lessonIndex,
+                          sectionOrder: sectionIndex,
+                          sections: provider.course.section
+                              .map((e) => e.title)
+                              .toList(),
+                          onDelete: () {
+                            provider.deleteLesson(sectionIndex, lessonIndex);
+                          },
+                          lesson: provider.course.section[sectionIndex]
+                              .lessons[lessonIndex],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: AppDimens.largeHeightDimens),
+                    DefaultTextButton(
+                      submit: () {
+                        if (provider.course.section.isEmpty) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => const DefaultResultDialog(
+                                content: "You need to add Section first!!",
+                                isError: true,
+                              ),
+                            );
+                          });
+                        } else {
+                          provider.addLesson(sectionIndex);
+                        }
+                      },
+                      title: "Add Lesson",
+                      backgroundColor:
+                          AppColors.secondaryColor.withOpacity(0.3),
+                      titleStyle: AppStyles.headline6TextStyle.copyWith(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -319,34 +361,6 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
             "Section: $selectedSection",
             style: sectionTitleStyle,
           ),
-          /*
-          isEditing
-              ? DefaultDropdownButton(
-                  labelText: "",
-                  prefixIcon: null,
-                  selectedIndex: widget.sectionOrder,
-                  items: widget.sections,
-                  onChanged: (value) {
-                    String? error = checkCanUpdateSection(value, provider);
-
-                    if (error != null) {
-                      return WidgetsBinding.instance.addPostFrameCallback((_) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => DefaultResultDialog(
-                            content: error,
-                            isError: true,
-                          ),
-                        );
-                      });
-                    }
-                    return setState(() => widget.sectionOrder = value);
-                  },
-                )
-              : Text(
-                  "Section: $selectedSection",
-                  style: sectionTitleStyle,
-                ),*/
         ],
       ),
     );

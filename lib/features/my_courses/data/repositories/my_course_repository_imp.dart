@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/features/home/domain/entities/section_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
@@ -7,6 +6,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/platform/network_status.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../../../home/domain/entities/course_model.dart';
+import '../../../home/domain/entities/section_model.dart';
 import '../../domain/repositories/my_course_repository.dart';
 import '../datasources/my_course_data_source.dart';
 
@@ -76,5 +76,36 @@ class MyCourseRepositoryImp implements MyCourseRepository {
       section,
       courseId,
     );
+  }
+
+  @override
+  Future<Either<Failure, SectionModel>> createCourseSection(
+      SectionModel section, String courseId) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.createCourseSection(
+      section,
+      courseId,
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteSection(
+      String courseId, String sectionId) async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.deleteSection(courseId, sectionId);
   }
 }

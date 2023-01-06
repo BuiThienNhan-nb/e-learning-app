@@ -1,31 +1,33 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/bases/mobx/base_state.dart';
-import 'package:e_learning_app/bases/presentation/atoms/loading_dialog.dart';
-import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_section/update_course_section_page.dart';
-import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
+import '../../../../../bases/presentation/atoms/loading_dialog.dart';
 import '../../../../../configs/colors.dart';
 import '../../../../../configs/dimens.dart';
 import '../../../../../core/app/loading.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
+import '../../../../home/domain/entities/lesson_model.dart';
+import '../../../../home/domain/entities/section_model.dart';
 import '../../../../settings/presentation/widgets/setting_app_bar.dart';
+import '../../states/mobx/update_course_store.dart';
 import '../../states/provider/update_course_provider.dart';
 import 'update_course_information.dart';
+import 'update_section/update_course_section_page.dart';
 
 class UpdateCoursePage extends StatelessWidget {
-  const UpdateCoursePage({
+  UpdateCoursePage({
     super.key,
     required this.courseId,
   });
 
-  final String courseId;
+  String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class UpdateCoursePage extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback(
           (_) {
             provider.course = store.courseDetail!;
+            courseId = provider.course.id;
           },
         );
 
@@ -89,6 +92,66 @@ class UpdateCoursePage extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) {
               AppLoading.dismissLoadingDialog(context);
+            },
+          );
+        }
+
+        // Trigger update UI
+        if (store.createSectionState == BaseSate.loading) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.showLoadingDialog(context);
+          });
+        }
+        if (store.createSectionState == BaseSate.error ||
+            store.errorMessage != null) {
+          log(store.errorMessage ?? "Error");
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.dismissLoadingDialog(context);
+            showDialog(
+              context: context,
+              builder: (_) => DefaultResultDialog(
+                content:
+                    store.errorMessage ?? LocaleKeys.serverUnexpectedError.tr(),
+                isError: true,
+              ),
+            );
+          });
+        } else if (store.createSectionState == BaseSate.loaded) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              AppLoading.dismissLoadingDialog(context);
+              provider.addSection(store.section!);
+              store.reInitCreateSection();
+            },
+          );
+        }
+
+        // Trigger update UI
+        if (store.deleteSectionState == BaseSate.loading) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.showLoadingDialog(context);
+          });
+        }
+        if (store.deleteSectionState == BaseSate.error ||
+            store.errorMessage != null) {
+          log(store.errorMessage ?? "Error");
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLoading.dismissLoadingDialog(context);
+            showDialog(
+              context: context,
+              builder: (_) => DefaultResultDialog(
+                content:
+                    store.errorMessage ?? LocaleKeys.serverUnexpectedError.tr(),
+                isError: true,
+              ),
+            );
+          });
+        } else if (store.deleteSectionState == BaseSate.loaded) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              AppLoading.dismissLoadingDialog(context);
+              provider.deleteSectionAtIndex(store.sectionIndex!);
+              store.reInitDeleteSection();
             },
           );
         }
@@ -122,7 +185,19 @@ class UpdateCoursePage extends StatelessWidget {
                     );
                   },
                 ),
-                const UpdateCourseSectionPage(),
+                UpdateCourseSectionPage(
+                  createSection: () => store.createSection(
+                    SectionModel(
+                      id: "id_section",
+                      title: "",
+                      lessons: List<LessonModel>.from([]),
+                      order: provider.course.section.length + 1,
+                    ),
+                    courseId,
+                  ),
+                  deleteSection: (sectionId, index) =>
+                      store.deleteSection(sectionId, courseId, index),
+                ),
               ],
             ),
           ),

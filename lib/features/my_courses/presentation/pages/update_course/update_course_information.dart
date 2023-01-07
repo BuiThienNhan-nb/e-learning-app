@@ -81,7 +81,8 @@ class UpdateCourseInformation extends StatelessWidget {
                       height: AppDimens.extraLargeHeightDimens * 8,
                       width: AppDimens.extraLargeWidthDimens * 8,
                       color: AppColors.neutral.shade400,
-                      child: provider.course.image == ""
+                      child: provider.course.image == "" ||
+                              provider.course.image == null
                           ? Image.asset(
                               "assets/icons/camera_icon.png",
                               color: AppColors.primaryColor,
@@ -92,12 +93,12 @@ class UpdateCourseInformation extends StatelessWidget {
                                     context
                                         .watch<UpdateCourseProvider>()
                                         .course
-                                        .image,
+                                        .image!,
                                   ),
                                   fit: BoxFit.cover,
                                 )
                               : DefaultNetworkImage(
-                                  imageUrl: provider.course.image,
+                                  imageUrl: provider.course.image!,
                                   blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
                                   height: AppDimens.extraLargeHeightDimens * 8,
                                   width: AppDimens.extraLargeWidthDimens * 8,

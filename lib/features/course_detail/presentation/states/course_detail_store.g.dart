@@ -16,6 +16,13 @@ mixin _$CourseDetailStore on _CourseDetailStore, Store {
       (_$stateComputed ??= Computed<BaseSate>(() => super.state,
               name: '_CourseDetailStore.state'))
           .value;
+  Computed<BaseSate>? _$joinStateComputed;
+
+  @override
+  BaseSate get joinState =>
+      (_$joinStateComputed ??= Computed<BaseSate>(() => super.joinState,
+              name: '_CourseDetailStore.joinState'))
+          .value;
 
   late final _$courseDetailAtom =
       Atom(name: '_CourseDetailStore.courseDetail', context: context);
@@ -49,6 +56,22 @@ mixin _$CourseDetailStore on _CourseDetailStore, Store {
     });
   }
 
+  late final _$userAtom =
+      Atom(name: '_CourseDetailStore.user', context: context);
+
+  @override
+  UserModel? get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(UserModel? value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
   late final _$_courseFutureAtom =
       Atom(name: '_CourseDetailStore._courseFuture', context: context);
 
@@ -66,6 +89,22 @@ mixin _$CourseDetailStore on _CourseDetailStore, Store {
     });
   }
 
+  late final _$_joinFutureAtom =
+      Atom(name: '_CourseDetailStore._joinFuture', context: context);
+
+  @override
+  ObservableFuture<Either<Failure, UserModel>>? get _joinFuture {
+    _$_joinFutureAtom.reportRead();
+    return super._joinFuture;
+  }
+
+  @override
+  set _joinFuture(ObservableFuture<Either<Failure, UserModel>>? value) {
+    _$_joinFutureAtom.reportWrite(value, super._joinFuture, () {
+      super._joinFuture = value;
+    });
+  }
+
   late final _$getCourseDetailAsyncAction =
       AsyncAction('_CourseDetailStore.getCourseDetail', context: context);
 
@@ -75,12 +114,23 @@ mixin _$CourseDetailStore on _CourseDetailStore, Store {
         .run(() => super.getCourseDetail(courseId));
   }
 
+  late final _$joinCourseAsyncAction =
+      AsyncAction('_CourseDetailStore.joinCourse', context: context);
+
+  @override
+  Future<void> joinCourse(String userId, String courseId) {
+    return _$joinCourseAsyncAction
+        .run(() => super.joinCourse(userId, courseId));
+  }
+
   @override
   String toString() {
     return '''
 courseDetail: ${courseDetail},
 errorMessage: ${errorMessage},
-state: ${state}
+user: ${user},
+state: ${state},
+joinState: ${joinState}
     ''';
   }
 }

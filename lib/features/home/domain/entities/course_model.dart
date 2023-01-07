@@ -14,7 +14,7 @@ class CourseModel extends Equatable {
   String description;
   double rates;
   int votes;
-  String image;
+  String? image;
   List<String> category;
   double price;
   double? sale;
@@ -63,9 +63,9 @@ class CourseModel extends Equatable {
     );
   }
 
-  Map<String, Object> toMap() {
+  Map<String, Object?> toMap() {
     // int order = 1;
-    return <String, Object>{
+    return <String, Object?>{
       // 'id': id,
       'title': title,
       'description': description,
@@ -81,8 +81,8 @@ class CourseModel extends Equatable {
     };
   }
 
-  Map<String, Object> informationToMap() {
-    return <String, Object>{
+  Map<String, Object?> informationToMap() {
+    return <String, Object?>{
       'courseId': id,
       'title': title,
       'description': description,
@@ -113,7 +113,7 @@ class CourseModel extends Equatable {
           ? ((map['ratingScore'] ?? 0) as int).toDouble()
           : (map['ratingScore'] ?? 0) as double,
       votes: (map['ratingNumber'] ?? 0) as int,
-      image: (map['image'] ?? '') as String,
+      image: map['image'] as String?,
       category: List<String>.from((map['category'] ?? const <String>[]))
           .cast<String>(),
       price: (map['price'] ?? 0) is int
@@ -151,7 +151,7 @@ class CourseModel extends Equatable {
       description,
       rates,
       votes,
-      image,
+      image ?? "",
       category,
       price,
       sale ?? 0,

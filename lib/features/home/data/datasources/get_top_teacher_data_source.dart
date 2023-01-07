@@ -9,7 +9,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../core/app/provider.dart';
-import '../../../../utils/mock/mock_teachers.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 
 abstract class GetTopTeachersDataSource {
@@ -36,7 +35,7 @@ class GetTopTeachersDataSourceImp extends Api
           )
           .toList();
       log(teachers.toString());
-      return Right(GetIt.I<MockTeachers>().topTeachers);
+      return Right(teachers);
     } catch (e) {
       return Left(ServerFailure("$e"));
     }

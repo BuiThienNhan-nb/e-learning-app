@@ -25,7 +25,7 @@ class GetLessonCommentsDataSourceImp extends Api
     try {
       final Map<String, String> requestData = {
         // "lessonId": lessonId,
-        "lessonId": "test-lesson-comment-id"
+        "lessonId": lessonId,
       };
 
       final data = await post(
@@ -35,7 +35,9 @@ class GetLessonCommentsDataSourceImp extends Api
           "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
         }),
       );
-
+      if (data["data"]["data"] == null) {
+        return const Right([]);
+      }
       final List<LessonCommentModel> comments = (data["data"]["data"] as List)
           .map(
             (e) => LessonCommentModel.fromMap(e),

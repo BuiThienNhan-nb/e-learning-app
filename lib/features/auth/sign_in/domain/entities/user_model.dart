@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:e_learning_app/configs/formats.dart';
 import 'package:equatable/equatable.dart';
+
+import 'package:e_learning_app/configs/formats.dart';
 
 class UserModel extends Equatable {
   final String id;
@@ -14,6 +15,7 @@ class UserModel extends Equatable {
   final String role;
   String gender;
   bool isPremium;
+  List<String> courseJoined;
 
   UserModel({
     required this.id,
@@ -25,6 +27,7 @@ class UserModel extends Equatable {
     required this.role,
     required this.gender,
     required this.isPremium,
+    required this.courseJoined,
   });
 
   UserModel copyWith({
@@ -37,6 +40,7 @@ class UserModel extends Equatable {
     String? role,
     String? gender,
     bool? isPremium,
+    List<String>? courseJoined,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -48,6 +52,7 @@ class UserModel extends Equatable {
       role: role ?? this.role,
       gender: gender ?? this.gender,
       isPremium: isPremium ?? this.isPremium,
+      courseJoined: courseJoined ?? this.courseJoined,
     );
   }
 
@@ -62,10 +67,11 @@ class UserModel extends Equatable {
       'role': role,
       'gender': gender,
       'isPremium': isPremium,
+      'courseJoined': courseJoined,
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+  factory UserModel.fromMap(Map<String, Object?> map) {
     return UserModel(
       id: (map['userId'] ?? '') as String,
       name: (map['name'] ?? '') as String,
@@ -73,12 +79,15 @@ class UserModel extends Equatable {
       avatar: (map['avatar']) as String?,
       birthday: map['birthday'] == null
           ? DateTime(2001, 09, 25)
-          : AppFormats.instance.formatDay.parse(map['birthday']),
+          : AppFormats.instance.formatDay.parse(map['birthday'] as String),
       phoneNumber:
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       role: (map['role'] ?? '') as String,
       gender: (map['gender'] ?? '') as String,
       isPremium: (map['isPremium'] ?? false) as bool,
+      courseJoined: List<String>.from(
+              (map['courseJoined'] ?? const <dynamic>[]) as List<dynamic>)
+          .cast<String>(),
     );
   }
 
@@ -102,6 +111,7 @@ class UserModel extends Equatable {
       role,
       gender,
       isPremium,
+      courseJoined,
     ];
   }
 }

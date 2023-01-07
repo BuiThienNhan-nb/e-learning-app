@@ -11,11 +11,13 @@ class CourseSectionWidget extends StatelessWidget {
   const CourseSectionWidget({
     super.key,
     required this.section,
-    required this.index,
+    // required this.index,
+    required this.courseId,
   });
 
   final SectionModel section;
-  final int index;
+  // final int index;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class CourseSectionWidget extends StatelessWidget {
             ),
           ),
           title: Text(
-            "Section $index - ${section.title}",
+            "Section ${section.order} - ${section.title}",
             style: textStyle,
           ),
           children: [
@@ -56,6 +58,7 @@ class CourseSectionWidget extends StatelessWidget {
                 ),
                 child: LessonBuildItem(
                   lesson: section.lessons[index],
+                  courseId: courseId,
                 ),
               ),
             ),
@@ -70,9 +73,11 @@ class LessonBuildItem extends StatelessWidget {
   const LessonBuildItem({
     super.key,
     required this.lesson,
+    required this.courseId,
   });
 
   final LessonModel lesson;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,7 @@ class LessonBuildItem extends StatelessWidget {
       onTap: () => GoRouter.of(context).pushNamed(
         "lesson_detail",
         params: {
-          'lessonId': lesson.id,
+          'lessonId': "$courseId${lesson.order}",
         },
         extra: lesson,
       ),

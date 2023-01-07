@@ -82,7 +82,7 @@ class CourseDetailModel extends CourseModel {
       description,
       rates,
       AppFormats.instance.oCcy.format(votes),
-      image,
+      image ?? "",
       category,
       price,
       sale ?? 0,

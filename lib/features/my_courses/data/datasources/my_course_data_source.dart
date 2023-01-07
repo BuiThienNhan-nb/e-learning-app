@@ -43,7 +43,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
   final String _updateCourseSection = "/sections/update";
   final String _createCourseSection = "/sections/create";
   final String _deleteCourseSection = "/sections/delete";
-  final String _testId = '5700874b-d2ca-47a8-ac38-4304ad9608b9';
+  // final String _testId = '5700874b-d2ca-47a8-ac38-4304ad9608b9';
 
   @override
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course) async {
@@ -65,11 +65,13 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
                 );
             file.delete();
             lesson.videoUrl = downloadUrl;
+          } else {
+            lesson.videoUrl = null;
           }
         }
       }
 
-      final Map<String, Object> requestData = course.toMap();
+      final Map<String, Object?> requestData = course.toMap();
       log(Env.instance.baseUrl + _createCourseEndpoint);
       log(requestData.toString());
 
@@ -105,12 +107,12 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
     const String storagePath =
         "images/courses/courseImage/5700874b-d2ca-47a8-ac38-4304ad9608b9";
     final requestData = course.informationToMap();
-    requestData['courseId'] = _testId;
+    // requestData['courseId'] = course.id;
 
     try {
       if (isUpdateImage) {
         String? downloadUrl;
-        final File file = File(course.image);
+        final File file = File(course.image!);
         await storageRef.child(storagePath).putFile(file).then(
               (uploadTask) async =>
                   downloadUrl = await uploadTask.ref.getDownloadURL(),

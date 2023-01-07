@@ -31,6 +31,7 @@ class TeacherModel extends UserModel {
           avatar: user.avatar,
           phoneNumber: user.phoneNumber,
           isPremium: user.isPremium,
+          courseJoined: user.courseJoined,
         );
 
   @override
@@ -46,6 +47,7 @@ class TeacherModel extends UserModel {
     double? rates,
     int? votes,
     bool? isPremium,
+    List<String>? courseJoined,
   }) {
     return TeacherModel(
       user: UserModel(
@@ -58,6 +60,7 @@ class TeacherModel extends UserModel {
         role: role ?? this.role,
         gender: gender ?? this.gender,
         isPremium: isPremium ?? this.isPremium,
+        courseJoined: courseJoined ?? this.courseJoined,
       ),
       rates: rates ?? this.rates,
       votes: votes ?? this.votes,

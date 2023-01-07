@@ -67,14 +67,31 @@ class RecommendationCourseCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       vertical: AppDimens.mediumHeightDimens,
                     ),
-                    child: DefaultNetworkImage(
-                      imageUrl: course.image,
-                      blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
-                      height: height ?? (AppDimens.extraLargeHeightDimens * 6),
-                      width: AppDimens.mediumWidthDimens * 20,
-                      shape: BoxShape.rectangle,
-                      borderRadius: AppDimens.mediumRadius,
-                    ),
+                    child: course.image == null
+                        ? Container(
+                            height: height ??
+                                (AppDimens.extraLargeHeightDimens * 6),
+                            width: AppDimens.mediumWidthDimens * 20,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.mediumRadius),
+                            ),
+                            // clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: const Center(
+                              child: Icon(
+                                Icons.image,
+                              ),
+                            ),
+                          )
+                        : DefaultNetworkImage(
+                            imageUrl: course.image!,
+                            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
+                            height: height ??
+                                (AppDimens.extraLargeHeightDimens * 6),
+                            width: AppDimens.mediumWidthDimens * 20,
+                            shape: BoxShape.rectangle,
+                            borderRadius: AppDimens.mediumRadius,
+                          ),
                   ),
                   SizedBox(width: AppDimens.mediumWidthDimens),
                   Expanded(

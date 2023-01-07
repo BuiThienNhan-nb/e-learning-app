@@ -46,14 +46,28 @@ class MyCourseCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(width: AppDimens.smallWidthDimens),
-          DefaultNetworkImage(
-            imageUrl: course.image,
-            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
-            height: (AppDimens.extraLargeHeightDimens * 6),
-            width: AppDimens.mediumWidthDimens * 16,
-            shape: BoxShape.rectangle,
-            borderRadius: AppDimens.mediumRadius,
-          ),
+          course.image == null
+              ? Container(
+                  height: (AppDimens.extraLargeHeightDimens * 6),
+                  width: AppDimens.mediumWidthDimens * 16,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppDimens.mediumRadius),
+                  ),
+                  // clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: const Center(
+                    child: Icon(
+                      Icons.image,
+                    ),
+                  ),
+                )
+              : DefaultNetworkImage(
+                  imageUrl: course.image!,
+                  blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
+                  height: (AppDimens.extraLargeHeightDimens * 6),
+                  width: AppDimens.mediumWidthDimens * 16,
+                  shape: BoxShape.rectangle,
+                  borderRadius: AppDimens.mediumRadius,
+                ),
           SizedBox(width: AppDimens.mediumWidthDimens),
           Expanded(
             child: Column(

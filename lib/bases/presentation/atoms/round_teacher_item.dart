@@ -39,12 +39,23 @@ class RoundTeacherItem extends StatelessWidget {
                 ),
               ],
             ),
-            child: DefaultNetworkImage(
-              imageUrl: teacher.avatar!,
-              blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
-              height: AppDimens.extraLargeHeightDimens * 3.2,
-              width: AppDimens.extraLargeWidthDimens * 3.2,
-            ),
+            child: teacher.avatar == null
+                ? Container(
+                    height: AppDimens.extraLargeHeightDimens * 3,
+                    width: AppDimens.extraLargeWidthDimens * 3,
+                    padding: EdgeInsets.all(AppDimens.largeWidthDimens),
+                    child: Image.asset(
+                      "assets/icons/user_fill_icon.png",
+                      color: AppColors.neutral.shade500,
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                : DefaultNetworkImage(
+                    imageUrl: teacher.avatar!,
+                    blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
+                    height: AppDimens.extraLargeHeightDimens * 3.2,
+                    width: AppDimens.extraLargeWidthDimens * 3.2,
+                  ),
           ),
           SizedBox(height: AppDimens.smallHeightDimens),
           SizedBox(

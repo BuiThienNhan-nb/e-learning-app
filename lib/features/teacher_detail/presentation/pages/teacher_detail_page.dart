@@ -8,11 +8,8 @@ import '../../../../bases/presentation/atoms/loading_dialog.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/styles.dart';
-import '../../../../utils/mock/mock_courses.dart';
 import '../../../../utils/mock/mock_teacher_reviews.dart';
 import '../../../../utils/mock/mock_teachers.dart';
-import '../../../auth/sign_in/domain/entities/teacher_model.dart';
-import '../../../home/domain/entities/course_model.dart';
 import '../states/teacher_detail_store.dart';
 import '../widgets/teacher_interact_button.dart';
 import '../widgets/teacher_interaction.dart';
@@ -31,14 +28,14 @@ class TeacherDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = GetIt.I<TeacherDetailStore>();
-    final TeacherModel teacher = GetIt.I<MockTeachers>().topTeachers.firstWhere(
-          (element) => element.id == teacherId,
-        );
-    final List<CourseModel> courses = GetIt.I<MockCourses>().recommendedLessons;
+    // final TeacherModel teacher = GetIt.I<MockTeachers>().topTeachers.firstWhere(
+    //       (element) => element.id == teacherId,
+    //     );
+    // final List<CourseModel> courses = GetIt.I<MockCourses>().recommendedLessons;
 
     final List<Widget> tabs = [
-      Tab(
-        text: "${teacher.name} courses",
+      const Tab(
+        text: "Teacher's courses",
       ),
       const Tab(
         text: "Reviews",
@@ -68,7 +65,7 @@ class TeacherDetailPage extends StatelessWidget {
                 color: AppColors.blackColor,
               ),
               title: Text(
-                teacher.name,
+                store.teacher == null ? "" : store.teacher!.name,
                 style: AppStyles.headline5TextStyle.copyWith(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.w900,
@@ -81,7 +78,7 @@ class TeacherDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(height: AppDimens.extraLargeHeightDimens),
-                      TeacherInteraction(teacher: teacher),
+                      TeacherInteraction(teacher: store.teacher!),
                       SizedBox(height: AppDimens.mediumHeightDimens),
                       Text(
                         "\t\tThis is Teacher's bio!",
@@ -118,7 +115,7 @@ class TeacherDetailPage extends StatelessWidget {
                           physics: const BouncingScrollPhysics(),
                           children: [
                             TeacherCoursesPage(
-                              courses: courses,
+                              // courses: courses,
                               store: store,
                               teacherId: teacherId,
                             ),

@@ -47,7 +47,7 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
 
   @override
   void dispose() {
-    socketService.leaveLesson("test-lesson-comment-id");
+    socketService.leaveLesson(widget.lessonId);
     super.dispose();
   }
 
@@ -68,7 +68,9 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
               centerTitle: false,
               title: LinkText(
                 contentText1: "Comments\t\t",
-                contentText2: "15",
+                contentText2: commentsStore.comments == null
+                    ? 0
+                    : commentsStore.comments!.length,
                 onTap1: () {},
                 onTap2: () {},
                 text1Style: AppStyles.headline6TextStyle.copyWith(
@@ -85,7 +87,7 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
                     onCommentSubmit: (submitValue) {
                       logger.log(submitValue);
                       socketService.chatToServer(
-                        "test-lesson-comment-id",
+                        widget.lessonId,
                         LessonCommentModel(
                           id: "",
                           userId: GetIt.I<AppProvider>().user.id,

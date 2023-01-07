@@ -9,7 +9,6 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../utils/mock/mock_courses.dart';
 import '../../domain/entities/course_model.dart';
 
 abstract class GetRecommendedCoursesDataSource {
@@ -36,7 +35,7 @@ class GetRecommendedCoursesDataSourceImp extends Api
         )
         .toList();
     log(courses.toString());
-    return Right(GetIt.I<MockCourses>().recommendedLessons);
+    return Right(courses);
     // } catch (e) {
     //   return Left(ServerFailure("$e"));
     // }

@@ -5,6 +5,7 @@ import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_mod
 import 'package:flutter/material.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';
+import '../../../../configs/colors.dart';
 
 class TeacherInteraction extends StatelessWidget {
   const TeacherInteraction({
@@ -31,12 +32,28 @@ class TeacherInteraction extends StatelessWidget {
             children: [
               Hero(
                 tag: "${teacher.id}.${teacher.name}",
-                child: DefaultNetworkImage(
-                  imageUrl: teacher.avatar!,
-                  blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
-                  height: AppDimens.extraLargeHeightDimens * 3.4,
-                  width: AppDimens.extraLargeWidthDimens * 3.4,
-                ),
+                child: teacher.avatar == null
+                    ? Container(
+                        height: AppDimens.extraLargeHeightDimens * 3.4,
+                        width: AppDimens.extraLargeWidthDimens * 3.4,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          borderRadius: null,
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        padding: EdgeInsets.all(AppDimens.largeWidthDimens),
+                        child: Image.asset(
+                          "assets/icons/user_fill_icon.png",
+                          color: AppColors.neutral.shade500,
+                          fit: BoxFit.fill,
+                        ),
+                      )
+                    : DefaultNetworkImage(
+                        imageUrl: teacher.avatar!,
+                        blurHash: "LLHn?Bs:.mS\$-:t6WBjZENRkrrs.",
+                        height: AppDimens.extraLargeHeightDimens * 3.4,
+                        width: AppDimens.extraLargeWidthDimens * 3.4,
+                      ),
               ),
               // SizedBox(
               //   height: ,

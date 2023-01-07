@@ -28,7 +28,7 @@ class TeacherDetailDataSourceImp extends Api
     try {
       final requestData = {
         // "userId": teacherId,
-        "userId": GetIt.I<AppProvider>().user.id,
+        "userId": teacherId,
       };
 
       final data = await post(
@@ -54,7 +54,7 @@ class TeacherDetailDataSourceImp extends Api
     try {
       final requestData = {
         // "userId": teacherId,
-        "authorId": GetIt.I<AppProvider>().user.id,
+        "authorId": teacherId,
       };
 
       final data = await post(

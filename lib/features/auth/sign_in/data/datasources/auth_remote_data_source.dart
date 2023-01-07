@@ -111,6 +111,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
           role: AppValues.instance.title.last,
           gender: LocaleKeys.ma,
           isPremium: false,
+          courseJoined: const [],
         ),
       );
     } catch (e) {

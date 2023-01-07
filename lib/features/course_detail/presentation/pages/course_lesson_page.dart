@@ -28,7 +28,8 @@ class CourseLessonPage extends StatelessWidget {
                 .map(
                   (section) => CourseSectionWidget(
                     section: section,
-                    index: index++,
+                    // index: index++,
+                    courseId: course.id,
                   ),
                 )
                 .toList(),

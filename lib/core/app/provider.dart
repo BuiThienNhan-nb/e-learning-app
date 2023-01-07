@@ -22,6 +22,7 @@ class AppProvider extends ChangeNotifier {
         role: AppValues.instance.title.first,
         gender: AppValues.instance.appSupportedGender.first,
         isPremium: false,
+        courseJoined: const [],
       );
   bool get hasNotification => _hasNotification;
 

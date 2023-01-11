@@ -1,3 +1,5 @@
+import 'package:e_learning_app/features/create_exam/presentation/pages/create_exam_page.dart';
+import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_provider.dart';
 import 'package:e_learning_app/features/live_stream/presentation/states/mobx/live_stream_store.dart';
 import 'package:e_learning_app/features/my_courses/presentation/states/mobx/my_course_store.dart';
 import 'package:flutter/material.dart';
@@ -93,14 +95,27 @@ class AppRoutes {
   final String testPayment = "/settings/test-payment";
   final String updateCourse = "update-course/:courseId";
   final String updateSection = "update-section";
+  final String createExam = "/create-exam";
 
-  String get initial => signIn;
+  String get initial => createExam;
   // String get initial => mainPage;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: initial,
     routes: <RouteBase>[
+      GoRoute(
+        path: createExam,
+        builder: (context, state) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CreateExamProvider>(
+              create: (BuildContext context) => GetIt.I(),
+              lazy: true,
+            ),
+          ],
+          child: const CreateExamPage(lessonTitle: "Le 1.2 update"),
+        ),
+      ),
       GoRoute(
         path: signIn,
         builder: (context, state) => MultiProvider(

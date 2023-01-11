@@ -35,7 +35,7 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
   @override
   void initState() {
     super.initState();
-    socketService.initialize();
+    socketService.initialize(widget.lessonId);
   }
 
   @override
@@ -69,8 +69,8 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
               title: LinkText(
                 contentText1: "Comments\t\t",
                 contentText2: commentsStore.comments == null
-                    ? 0
-                    : commentsStore.comments!.length,
+                    ? "0"
+                    : "${commentsStore.comments!.length}",
                 onTap1: () {},
                 onTap2: () {},
                 text1Style: AppStyles.headline6TextStyle.copyWith(

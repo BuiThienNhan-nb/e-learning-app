@@ -12,7 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 class SocketServices {
   late io.Socket _socket;
 
-  initialize() {
+  initialize(String lessonId) {
     _socket = io.io(
       Env.instance.baseUrl,
       io.OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
@@ -21,14 +21,14 @@ class SocketServices {
           .build(),
     );
     _connectToSocket();
-    _joinLesson("test-lesson-comment-id", GetIt.I<AppProvider>().user.id);
+    _joinLesson(lessonId, GetIt.I<AppProvider>().user.id);
     // chatToClient();
   }
 
   _connectToSocket() {
-    _socket.onConnect((data) => log("Connected to socket.io"));
-    _socket.onConnectError((data) => log('Connect Error!!'));
-    _socket.onDisconnect((data) => log('Socket.IO server disconnected'));
+    _socket.onConnect((data) => log("Connected to socket.io $data"));
+    _socket.onConnectError((data) => log('Connect Error!! $data'));
+    _socket.onDisconnect((data) => log('Socket.IO server disconnected $data'));
   }
 
   _joinLesson(String lessonId, String userId) {

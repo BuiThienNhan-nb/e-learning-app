@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/default_app_bar.dart';
@@ -39,8 +40,16 @@ class EnrolledCoursesPage extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) => EnrolledCourseCard(
-                              course: store.courses![index],
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () => GoRouter.of(context).pushNamed(
+                                "course_detail",
+                                params: {
+                                  'courseId': store.courses![index].id,
+                                },
+                              ),
+                              child: EnrolledCourseCard(
+                                course: store.courses![index],
+                              ),
                             ),
                           ),
                         ],

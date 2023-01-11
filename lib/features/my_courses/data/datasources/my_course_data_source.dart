@@ -16,6 +16,7 @@ import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 abstract class MyCourseDataSource {
+  Future<Either<Failure, List<CourseModel>>> getMyCourses();
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course);
   Future<Either<Failure, CourseModel>> updateCourseInformation(
     CourseModel course,
@@ -40,11 +41,38 @@ abstract class MyCourseDataSource {
 class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
   final String _createCourseEndpoint =
       "/courses/createCourseWithSectionAndLesson";
+  final String _getCourseByTeacher = "/courses/getCourseByTeacher";
   final String _updateCourse = "/courses/update";
   final String _updateCourseSection = "/sections/update";
   final String _createCourseSection = "/sections/create";
   final String _deleteCourseSection = "/sections/delete";
   // final String _testId = '5700874b-d2ca-47a8-ac38-4304ad9608b9';
+
+  @override
+  Future<Either<Failure, List<CourseModel>>> getMyCourses() async {
+    try {
+      final requestData = {
+        "authorId": GetIt.I<AppProvider>().user.id,
+      };
+
+      final data = await post(
+        Env.instance.baseUrl + _getCourseByTeacher,
+        data: requestData,
+        options: Options(headers: {
+          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        }),
+      );
+      List<CourseModel> courses = (data["data"]["data"] as List)
+          .map(
+            (map) => CourseModel.fromMap(map),
+          )
+          .toList();
+
+      return Right(courses);
+    } catch (e) {
+      return left(UserFailure(e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course) async {

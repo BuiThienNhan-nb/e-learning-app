@@ -1,4 +1,5 @@
 import 'package:e_learning_app/features/live_stream/presentation/states/mobx/live_stream_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/my_course_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -219,6 +220,10 @@ class AppRoutes {
               return MultiProvider(
                 providers: [
                   Provider<CreateCourseStore>(
+                    create: (_) => GetIt.I(),
+                    lazy: true,
+                  ),
+                  Provider<MyCourseStore>(
                     create: (_) => GetIt.I(),
                     lazy: true,
                   ),

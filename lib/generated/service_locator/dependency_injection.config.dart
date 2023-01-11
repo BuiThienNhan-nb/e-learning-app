@@ -146,6 +146,8 @@ import '../../features/my_courses/domain/usecases/my_course_use_case.dart'
     as _i90;
 import '../../features/my_courses/presentation/states/mobx/create_course_store.dart'
     as _i100;
+import '../../features/my_courses/presentation/states/mobx/my_course_store.dart'
+    as _i106;
 import '../../features/my_courses/presentation/states/mobx/update_course_store.dart'
     as _i96;
 import '../../features/my_courses/presentation/states/provider/create_course_provider.dart'
@@ -420,5 +422,7 @@ _i1.GetIt $initGetIt(
       () => _i104.GetTopTeachersStore(get<_i82.GetTopTeachersUseCase>()));
   gh.factory<_i105.LiveStreamStore>(
       () => _i105.LiveStreamStore(get<_i87.LiveStreamUseCases>()));
+  gh.factory<_i106.MyCourseStore>(
+      () => _i106.MyCourseStore(get<_i90.MyCourseUseCase>()));
   return get;
 }

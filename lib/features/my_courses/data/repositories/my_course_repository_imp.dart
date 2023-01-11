@@ -18,6 +18,19 @@ class MyCourseRepositoryImp implements MyCourseRepository {
   MyCourseRepositoryImp(this.dataSource, this.networkStatus);
 
   @override
+  Future<Either<Failure, List<CourseModel>>> getMyCourses() async {
+    if (!await networkStatus.isConnected) {
+      return Left(
+        UserFailure(
+          LocaleKeys.connectivityException.tr(),
+        ),
+      );
+    }
+
+    return dataSource.getMyCourses();
+  }
+
+  @override
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course) async {
     if (!await networkStatus.isConnected) {
       return Left(

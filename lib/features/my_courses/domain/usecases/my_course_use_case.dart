@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/my_courses/domain/usecases/my_course_use_cases/get_my_course_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../course_detail/domain/repositories/course_detail_repository.dart';
@@ -14,6 +15,7 @@ class MyCourseUseCase {
   final MyCourseRepository repository;
   final CourseDetailRepository courseDetailRepository;
   late final GetCourseDetailUseCase getCourseDetailUseCase;
+  late final GetMyCourse getMyCourse;
   late final CreateCourse createCourse;
   late final UpdateCourse updateCourse;
   late final UpdateSection updateSection;
@@ -24,6 +26,7 @@ class MyCourseUseCase {
     this.repository,
     this.courseDetailRepository,
   ) {
+    getMyCourse = GetMyCourse(repository);
     createCourse = CreateCourse(repository);
     getCourseDetailUseCase = GetCourseDetailUseCase(courseDetailRepository);
     updateCourse = UpdateCourse(repository);

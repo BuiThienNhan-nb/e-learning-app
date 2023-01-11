@@ -5,6 +5,7 @@ import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 abstract class MyCourseRepository {
+  Future<Either<Failure, List<CourseModel>>> getMyCourses();
   Future<Either<Failure, CourseModel>> createCourse(CourseModel course);
   Future<Either<Failure, CourseModel>> updateCourseInformation(
     CourseModel course,

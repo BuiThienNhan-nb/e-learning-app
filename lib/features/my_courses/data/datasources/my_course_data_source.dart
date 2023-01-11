@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
@@ -59,6 +60,9 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
                 "videos/courses/${course.id}/lesson_${lesson.order}";
             String? downloadUrl;
             final File file = File(lesson.videoUrl!);
+            VideoPlayerController controller = VideoPlayerController.file(file);
+            lesson.length = controller.value.duration.inMinutes;
+
             await storageRef.child(storagePath).putFile(file).then(
                   (uploadTask) async =>
                       downloadUrl = await uploadTask.ref.getDownloadURL(),

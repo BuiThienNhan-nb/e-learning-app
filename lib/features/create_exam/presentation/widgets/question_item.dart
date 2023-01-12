@@ -1,5 +1,7 @@
+import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
@@ -9,72 +11,112 @@ import '../../domain/entities/question_model.dart';
 class QuestionItemWidget extends StatelessWidget {
   const QuestionItemWidget({
     super.key,
-    required this.question,
+    // required this.question,\
+    required this.questionIndex,
     required this.editCallback,
     required this.deleteCallback,
+    required this.canCreate,
   });
 
-  final QuestionModel question;
+  // final QuestionModel question;
+  final int questionIndex;
   final Function() editCallback;
   final Function() deleteCallback;
+  final bool canCreate;
 
   @override
   Widget build(BuildContext context) {
     final textStyle = AppStyles.subtitle1TextStyle;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: AppDimens.mediumHeightDimens,
-        horizontal: AppDimens.mediumWidthDimens,
-      ),
-      child: Stack(
-        fit: StackFit.loose,
-        children: [
-          Positioned(
-            right: 28.w,
-            child: IconButton(
-              onPressed: editCallback,
-              icon: const Icon(Icons.edit),
+    Widget mainBody(QuestionModel question) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Question",
+              style: textStyle,
             ),
-          ),
-          Positioned(
-            right: 0,
-            child: IconButton(
-              onPressed: deleteCallback,
-              icon: const Icon(Icons.delete),
+            SizedBox(height: AppDimens.mediumHeightDimens),
+            Text(
+              question.title,
+              style: textStyle,
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Question",
-                style: textStyle,
-              ),
-              SizedBox(height: AppDimens.mediumHeightDimens),
-              Text(
-                question.title,
-                style: textStyle,
-              ),
-              SizedBox(height: AppDimens.largeHeightDimens),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: question.options
-                    .map(
-                      (e) => OptionRadioButton(
-                        title: e,
-                        value: e,
-                        groupValue: question.answer,
+            SizedBox(height: AppDimens.largeHeightDimens),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: question.options
+                  .map(
+                    (e) => OptionRadioButton(
+                      title: e,
+                      value: e,
+                      groupValue: question.answer,
+                    ),
+                  )
+                  .toList(),
+            )
+          ],
+        );
+
+    return Consumer<CreateExamProvider>(
+      builder: (_, provider, __) => Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: AppDimens.mediumHeightDimens,
+          horizontal: AppDimens.mediumWidthDimens,
+        ),
+        child: canCreate
+            ? Stack(
+                fit: StackFit.loose,
+                children: [
+                  Positioned(
+                    right: 28.w,
+                    child: IconButton(
+                      onPressed: editCallback,
+                      icon: const Icon(Icons.edit),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: IconButton(
+                      onPressed: deleteCallback,
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Question",
+                        style: textStyle,
                       ),
-                    )
-                    .toList(),
+                      SizedBox(height: AppDimens.mediumHeightDimens),
+                      Text(
+                        provider.exam.questions[questionIndex].title,
+                        style: textStyle,
+                      ),
+                      SizedBox(height: AppDimens.largeHeightDimens),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: provider.exam.questions[questionIndex].options
+                            .map(
+                              (e) => OptionRadioButton(
+                                title: e,
+                                value: e,
+                                groupValue: provider
+                                    .exam.questions[questionIndex].answer,
+                              ),
+                            )
+                            .toList(),
+                      )
+                    ],
+                  ),
+                ],
               )
-            ],
-          ),
-        ],
+            : mainBody(provider.exam.questions[questionIndex]),
       ),
     );
   }

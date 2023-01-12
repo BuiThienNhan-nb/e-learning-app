@@ -30,8 +30,8 @@ class QuestionModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+  Map<String, Object> toMap() {
+    return <String, Object>{
       'id': id,
       'title': title,
       'options': options,
@@ -43,8 +43,8 @@ class QuestionModel extends Equatable {
     return QuestionModel(
       id: (map['id'] ?? '') as String,
       title: (map['title'] ?? '') as String,
-      options: List<String>.from(
-          (map['options'] ?? const <String>[]) as List<String>),
+      options: ((map['options'] ?? const <dynamic>[]) as List<dynamic>)
+          .cast<String>(),
       answer: (map['answer'] ?? '') as String,
     );
   }

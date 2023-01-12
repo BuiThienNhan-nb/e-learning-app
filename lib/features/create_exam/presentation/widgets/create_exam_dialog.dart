@@ -8,7 +8,7 @@ import '../../../../configs/styles.dart';
 import '../states/create_exam_provider.dart';
 
 class CreateExamDialog extends StatelessWidget {
-  const CreateExamDialog({
+  CreateExamDialog({
     super.key,
     required this.onSubmitQuestion,
     required this.questionTitle,
@@ -18,6 +18,9 @@ class CreateExamDialog extends StatelessWidget {
   final Function() onSubmitQuestion;
   final String questionTitle;
   final int questionIndex;
+  late final titleController = TextEditingController(
+    text: questionTitle,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,11 @@ class CreateExamDialog extends StatelessWidget {
         actions: [
           SizedBox(height: AppDimens.smallHeightDimens),
           DefaultTextButton(
-            submit: () => Navigator.of(context).pop(),
+            submit: () {
+              provider.exam.questions[questionIndex].title =
+                  titleController.text.trim();
+              Navigator.of(context).pop();
+            },
             title: "Close",
             backgroundColor: AppColors.primaryColor.withOpacity(0.1),
             titleStyle: AppStyles.headline6TextStyle.copyWith(
@@ -56,14 +63,15 @@ class CreateExamDialog extends StatelessWidget {
           child: Column(
             children: [
               TextField(
-                controller: TextEditingController(text: questionTitle),
+                controller: titleController,
                 decoration: const InputDecoration(
                   hintText: "Question Title",
                 ),
-                onChanged: (value) =>
-                    provider.exam.questions[questionIndex].title = value.trim(),
-                onSubmitted: (value) =>
-                    provider.exam.questions[questionIndex].title = value.trim(),
+                // onChanged: (value) => titleController
+                //   ..text = value
+                //   ..selection = TextSelection.collapsed(
+                //       offset: titleController.text.length),
+                onSubmitted: (value) => titleController.text = value.trim(),
               ),
               TextField(
                 readOnly: true,

@@ -10,6 +10,7 @@ class Env {
   final String test = dotenv.get('TEST');
 
   final String baseUrl = dotenv.get('BASE_URL');
+  final String socketUrl = dotenv.get('SOCKET_URL');
   final String createExamUrl = dotenv.get('CREATE_EXAM_URL');
   final String doExamUrl = dotenv.get('DO_EXAM_URL');
   final String webViewUrl = dotenv.get('WEB_VIEW_URL');

@@ -39,8 +39,8 @@ class ExamModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+  Map<String, Object> toMap() {
+    return <String, Object>{
       'lessonId': lessonId,
       'lessonTitle': lessonTitle,
       'examTitle': examTitle,
@@ -58,7 +58,7 @@ class ExamModel extends Equatable {
       userId: (map['userId'] ?? '') as String,
       time: (map['time'] ?? 0) as int,
       questions: List<QuestionModel>.from(
-        (map['questions'] as List<int>).map<QuestionModel>(
+        (map['questions'] as List<dynamic>).map<QuestionModel>(
           (x) => QuestionModel.fromMap(x as Map<String, dynamic>),
         ),
       ),

@@ -1,9 +1,6 @@
 import 'package:e_learning_app/features/create_exam/presentation/pages/create_exam_page.dart';
-import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_provider.dart';
-import 'package:e_learning_app/features/do_exam/presentation/pages/do_exam_page.dart';
-import 'package:e_learning_app/features/do_exam/presentation/state/do_exam_provider.dart';
-import 'package:e_learning_app/features/live_stream/presentation/states/mobx/live_stream_store.dart';
-import 'package:e_learning_app/features/my_courses/presentation/states/mobx/my_course_store.dart';
+import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_store.dart';
+import 'package:e_learning_app/features/do_exam/presentation/state/do_exam_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +22,9 @@ import '../features/auth/verify_email/presentation/pages/verify_email_page.dart'
 import '../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart';
 import '../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart';
 import '../features/course_detail/presentation/pages/course_detail_page.dart';
+import '../features/create_exam/presentation/states/create_exam_provider.dart';
+import '../features/do_exam/presentation/pages/do_exam_page.dart';
+import '../features/do_exam/presentation/state/do_exam_provider.dart';
 import '../features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
 import '../features/home/domain/entities/lesson_model.dart';
 import '../features/home/domain/entities/section_model.dart';
@@ -33,6 +33,7 @@ import '../features/lesson_detail/presentation/pages/lesson_detail_page.dart';
 import '../features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
 import '../features/live_stream/presentation/pages/live_stream_page.dart';
 import '../features/live_stream/presentation/pages/room_web_view_page.dart';
+import '../features/live_stream/presentation/states/mobx/live_stream_store.dart';
 import '../features/main/presentation/mobx/main_page_store.dart';
 import '../features/main/presentation/pages/main_page.dart';
 import '../features/my_courses/presentation/pages/add_course/create_course_page.dart';
@@ -40,6 +41,7 @@ import '../features/my_courses/presentation/pages/my_course_page.dart';
 import '../features/my_courses/presentation/pages/update_course/update_course_page.dart';
 import '../features/my_courses/presentation/pages/update_course/update_section/update_section_lessons_page.dart';
 import '../features/my_courses/presentation/states/mobx/create_course_store.dart';
+import '../features/my_courses/presentation/states/mobx/my_course_store.dart';
 import '../features/my_courses/presentation/states/mobx/update_course_store.dart';
 import '../features/my_courses/presentation/states/provider/create_course_provider.dart';
 import '../features/my_courses/presentation/states/provider/update_course_provider.dart';
@@ -97,40 +99,16 @@ class AppRoutes {
   final String testPayment = "/settings/test-payment";
   final String updateCourse = "update-course/:courseId";
   final String updateSection = "update-section";
-  final String createExam = "/create-exam";
-  final String doExam = "/do-exam";
+  final String createExam = "exam/:lessonId/create/:lessonTitle";
+  final String doExam = "exam/:examId/do";
 
-  String get initial => doExam;
+  String get initial => signIn;
   // String get initial => mainPage;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: initial,
     routes: <RouteBase>[
-      GoRoute(
-        path: doExam,
-        builder: (context, state) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<DoExamProvider>(
-              create: (BuildContext context) => GetIt.I(),
-              lazy: true,
-            ),
-          ],
-          child: const DoExamPage(lessonId: "lessonId"),
-        ),
-      ),
-      GoRoute(
-        path: createExam,
-        builder: (context, state) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<CreateExamProvider>(
-              create: (BuildContext context) => GetIt.I(),
-              lazy: true,
-            ),
-          ],
-          child: const CreateExamPage(lessonTitle: "Le 1.2 update"),
-        ),
-      ),
       GoRoute(
         path: signIn,
         builder: (context, state) => MultiProvider(
@@ -313,6 +291,28 @@ class AppRoutes {
                         ),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        name: "create_exam",
+                        path: createExam,
+                        builder: (context, state) => MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider<CreateExamProvider>(
+                              create: (_) => GetIt.I(),
+                              lazy: true,
+                            ),
+                            Provider<CreateExamStore>(
+                              create: (_) => GetIt.I(),
+                              lazy: true,
+                            ),
+                          ],
+                          child: CreateExamPage(
+                            lessonId: state.params["lessonId"] ?? "",
+                            lessonTitle: state.params["lessonTitle"] ?? "",
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -375,6 +375,27 @@ class AppRoutes {
             ),
           );
         },
+        routes: [
+          GoRoute(
+            name: "do_exam",
+            path: doExam,
+            builder: (context, state) => MultiProvider(
+              providers: [
+                ChangeNotifierProvider<DoExamProvider>(
+                  create: (_) => GetIt.I(),
+                  lazy: true,
+                ),
+                Provider<DoExamStore>(
+                  create: (_) => GetIt.I(),
+                  lazy: true,
+                ),
+              ],
+              child: DoExamPage(
+                examId: state.params["examId"] ?? "",
+              ),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,

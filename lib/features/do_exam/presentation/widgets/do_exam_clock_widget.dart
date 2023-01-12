@@ -35,7 +35,7 @@ class _DoExamOClockWidgetState extends State<DoExamOClockWidget>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(minutes: widget.minutes),
+      duration: Duration(minutes: widget.minutes, seconds: 2),
     );
     controller.reverse(
       from: controller.value == 0 ? 1.0 : controller.value,

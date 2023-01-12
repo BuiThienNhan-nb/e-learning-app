@@ -59,9 +59,10 @@ class CreateExamProvider extends ChangeNotifier {
   }
 
   void addQuestion() {
-    _exam.questions.add(
+    _exam.questions = [
+      ..._exam.questions,
       QuestionModel(
-        id: "1",
+        id: "${_exam.questions.length + 1}",
         title: "",
         // ignore: prefer_const_literals_to_create_immutables
         options: [
@@ -69,7 +70,7 @@ class CreateExamProvider extends ChangeNotifier {
         ],
         answer: "",
       ),
-    );
+    ];
     notifyListeners();
   }
 

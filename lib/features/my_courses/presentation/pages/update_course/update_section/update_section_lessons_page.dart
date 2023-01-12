@@ -2,9 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +12,11 @@ import '../../../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../../../bases/presentation/atoms/text_form_field.dart';
 import '../../../../../../configs/colors.dart';
 import '../../../../../../configs/dimens.dart';
-import '../../../../../../configs/env.dart';
 import '../../../../../../configs/styles.dart';
 import '../../../../../../core/app/loading.dart';
-import '../../../../../../core/app/provider.dart';
 import '../../../../../../generated/translations/locale_keys.g.dart';
 import '../../../../../home/domain/entities/lesson_model.dart';
 import '../../../../../home/domain/entities/section_model.dart';
-import '../../../../../settings/presentation/pages/settings_page.dart';
 import '../../../../../settings/presentation/widgets/setting_app_bar.dart';
 import '../../../states/mobx/update_course_store.dart';
 import '../../../states/provider/update_course_provider.dart';
@@ -266,26 +261,6 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
     provider.removeLessonAt(widget.sectionOrder, widget.indexInSection);
   }
 
-  void pushCreateExamBrowser(String lessonId) {
-    final url =
-        "${Env.instance.createExamUrl}/?userId=${GetIt.I<AppProvider>().user.id}&lessonId=$lessonId&lessonTitle=${titleController.text.trim().replaceAll(RegExp(r' '), '%20')}";
-    final MyInAppBrowser browser = MyInAppBrowser();
-
-    final settings = InAppBrowserClassOptions(
-      crossPlatform: InAppBrowserOptions(hideUrlBar: false),
-      inAppWebViewGroupOptions: InAppWebViewGroupOptions(
-        crossPlatform: InAppWebViewOptions(javaScriptEnabled: true),
-      ),
-    );
-
-    browser.openUrlRequest(
-      urlRequest: URLRequest(
-        url: Uri.parse(url),
-      ),
-      options: settings,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = context.read<UpdateCourseProvider>();
@@ -378,7 +353,14 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
               ),
               InkWell(
                 onTap: () {
-                  pushCreateExamBrowser("${widget.courseId}${widget.order}");
+                  GoRouter.of(context).pushNamed(
+                    "create_exam",
+                    params: {
+                      "courseId": widget.courseId,
+                      "lessonId": "${widget.courseId}${widget.order}",
+                      "lessonTitle": titleController.text.trim(),
+                    },
+                  );
                 },
                 child: SizedBox(
                   height: AppDimens.extraLargeHeightDimens * 1.2,

@@ -1,9 +1,12 @@
 import 'dart:developer' as logger;
 import 'dart:math';
 
+import 'package:e_learning_app/core/app/provider.dart';
+import 'package:e_learning_app/features/course_detail/domain/entities/course_review_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/bookmark_icon.dart';
@@ -27,7 +30,7 @@ class CourseAboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = GetIt.I<CourseRateStore>();
+    final store = context.read<CourseRateStore>();
     store.setCourseRate(course.rates);
     store.setCourseRateCount(course.votes);
 
@@ -84,7 +87,17 @@ class CourseAboutPage extends StatelessWidget {
                                       logger
                                           .log("review: $review / rate: $rate");
                                       Navigator.of(context).pop();
-                                      store.rateCourse(course.id, rate);
+                                      store.rateCourse(
+                                        CourseReviewModel(
+                                          id: "",
+                                          userId:
+                                              GetIt.I<AppProvider>().user.id,
+                                          courseId: course.id,
+                                          score: rate,
+                                          comment: review,
+                                          createdAt: DateTime.now(),
+                                        ),
+                                      );
                                     },
                                   ),
                                 ),
@@ -114,7 +127,7 @@ class CourseAboutPage extends StatelessWidget {
                                         width: AppDimens.mediumWidthDimens),
                                     Text(
                                       store.currentRate == null
-                                          ? ""
+                                          ? "0"
                                           : "\t${store.currentRate!}",
                                       style:
                                           AppStyles.subtitle1TextStyle.copyWith(

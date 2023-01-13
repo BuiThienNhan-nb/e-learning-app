@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/course_detail/presentation/states/course_rate_store.dart';
 import 'package:e_learning_app/features/create_exam/presentation/pages/create_exam_page.dart';
 import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_store.dart';
 import 'package:e_learning_app/features/do_exam/presentation/state/do_exam_store.dart';
@@ -356,8 +357,11 @@ class AppRoutes {
         name: "course_detail",
         path: courseDetail,
         builder: (context, state) {
-          return CourseDetailPage(
-            courseId: state.params["courseId"] ?? "N/A",
+          return Provider<CourseRateStore>(
+            create: (_) => GetIt.I(),
+            child: CourseDetailPage(
+              courseId: state.params["courseId"] ?? "N/A",
+            ),
           );
         },
       ),

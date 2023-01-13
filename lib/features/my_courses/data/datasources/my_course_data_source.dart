@@ -85,7 +85,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
               lesson.videoUrl!.compareTo("N/A") != 0) {
             // upload course source video to firebase
             final String storagePath =
-                "videos/courses/${course.id}/lesson_${lesson.order}";
+                "videos/courses/lessonVideo/lesson_${DateTime.now().millisecondsSinceEpoch}";
             String? downloadUrl;
             final File file = File(lesson.videoUrl!);
             VideoPlayerController controller = VideoPlayerController.file(file);
@@ -104,8 +104,20 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
       }
 
       final Map<String, Object?> requestData = course.toMap();
-      log(Env.instance.baseUrl + _createCourseEndpoint);
-      log(requestData.toString());
+      if ((requestData["image"] as String).compareTo("") == 0) {
+        requestData["image"] == null;
+      } else {
+        final String storagePath =
+            "images/courses/courseImage/course_${DateTime.now().millisecondsSinceEpoch}";
+        String? downloadUrl;
+        final File file = File(course.image!);
+        await storageRef.child(storagePath).putFile(file).then(
+              (uploadTask) async =>
+                  downloadUrl = await uploadTask.ref.getDownloadURL(),
+            );
+        file.delete();
+        requestData['image'] = downloadUrl!;
+      }
 
       final data = await post(
         Env.instance.baseUrl + _createCourseEndpoint,
@@ -136,8 +148,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
     bool isUpdateImage,
   ) async {
     final storageRef = FirebaseStorage.instance.ref();
-    const String storagePath =
-        "images/courses/courseImage/5700874b-d2ca-47a8-ac38-4304ad9608b9";
+    final String storagePath = "images/courses/courseImage/${course.id}";
     final requestData = course.informationToMap();
     // requestData['courseId'] = course.id;
 

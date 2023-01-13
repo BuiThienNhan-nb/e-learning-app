@@ -1,16 +1,19 @@
 import 'dart:developer';
 
+import 'package:e_learning_app/bases/mobx/base_state.dart';
+import 'package:e_learning_app/bases/presentation/atoms/loading_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/formats.dart';
 import '../../../../configs/styles.dart';
-import '../../../../utils/mock/mock_course_reviews.dart';
 import '../../domain/entities/course_detail_model.dart';
 import '../../domain/entities/course_review_model.dart';
+import '../states/course_rate_store.dart';
 import '../widgets/course_add_review_dialog.dart';
 
 class CourseReviewsPage extends StatelessWidget {
@@ -23,61 +26,75 @@ class CourseReviewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reviews = GetIt.I<MockCourseReviews>().reviews;
+    // final reviews = GetIt.I<MockCourseReviews>().reviews;
+    final store = context.read<CourseRateStore>();
 
     void onSubmit(String value) {
       // Submit comment
       log(value);
     }
 
-    return Stack(
-      children: [
-        ListView.builder(
-          itemCount: reviews.length,
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) =>
-              CourseReviewWidget(review: reviews[index]),
-        ),
-        course.isEnrolled
-            ? Positioned(
-                right: AppDimens.mediumWidthDimens,
-                bottom: AppDimens.mediumHeightDimens,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(200),
-                  onTap: () => showDialog(
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) => CourseAddReviewDialog(
-                      onFieldSubmitted: (review, rate) async {
-                        log("review: $review / rate: $rate");
-                        Navigator.of(context).pop();
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   AppLoading.showLoadingDialog(context);
-                        // });
-                        // await Future.delayed(const Duration(milliseconds: 1500));
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   AppLoading.dismissLoadingDialog(context);
-                        // });
-                      },
-                    ),
+    return Observer(
+      builder: (_) {
+        if (store.getReviewsState == BaseSate.init) {
+          store.getCourseReview(course.id);
+        }
+        return store.getReviewsState == BaseSate.loaded
+            ? Stack(
+                children: [
+                  ListView.builder(
+                    itemCount: store.reviews!.length,
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        CourseReviewWidget(review: store.reviews![index]),
                   ),
-                  child: Container(
-                    padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryColor.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.asset(
-                      "assets/icons/paper_plane_fill_icon.png",
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                ),
+                  course.isEnrolled
+                      ? Positioned(
+                          right: AppDimens.mediumWidthDimens,
+                          bottom: AppDimens.mediumHeightDimens,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(200),
+                            onTap: () => showDialog(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (context) => CourseAddReviewDialog(
+                                onFieldSubmitted: (review, rate) async {
+                                  log("review: $review / rate: $rate");
+                                  Navigator.of(context).pop();
+                                  // WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  //   AppLoading.showLoadingDialog(context);
+                                  // });
+                                  // await Future.delayed(const Duration(milliseconds: 1500));
+                                  // WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  //   AppLoading.dismissLoadingDialog(context);
+                                  // });
+                                },
+                              ),
+                            ),
+                            child: Container(
+                              padding:
+                                  EdgeInsets.all(AppDimens.mediumWidthDimens),
+                              decoration: BoxDecoration(
+                                color:
+                                    AppColors.secondaryColor.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.asset(
+                                "assets/icons/paper_plane_fill_icon.png",
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
               )
-            : const SizedBox.shrink(),
-      ],
+            : store.getReviewsState == BaseSate.loading
+                ? const LoadingWidget()
+                : Text(store.errorMessage ?? "Unexpected error!");
+      },
     );
 
     /* GestureDetector(
@@ -131,7 +148,7 @@ class CourseReviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String dateAgo = AppFormats.instance.timeAgo(review.reviewedAt);
+    final String dateAgo = AppFormats.instance.timeAgo(review.createdAt);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(AppDimens.largeWidthDimens),
@@ -193,7 +210,7 @@ class CourseReviewWidget extends StatelessWidget {
                     ),
                     SizedBox(width: AppDimens.mediumWidthDimens),
                     Text(
-                      "${review.rate}",
+                      "${review.score}",
                       style: AppStyles.subtitle1TextStyle.copyWith(
                         color: AppColors.secondaryColor,
                         fontWeight: FontWeight.w900,
@@ -206,7 +223,7 @@ class CourseReviewWidget extends StatelessWidget {
           ),
           SizedBox(height: AppDimens.mediumHeightDimens),
           Text(
-            review.review,
+            review.comment,
             style: AppStyles.subtitle1TextStyle,
           ),
           SizedBox(height: AppDimens.smallHeightDimens),

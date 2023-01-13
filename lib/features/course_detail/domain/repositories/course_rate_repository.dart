@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
+import '../entities/course_review_model.dart';
 
 abstract class CourseRateRepository {
   Future<Either<Failure, int?>> getCourseRate(
@@ -8,9 +9,11 @@ abstract class CourseRateRepository {
     String userId,
   );
 
-  Future<Either<Failure, int>> rateCourse(
+  Future<Either<Failure, List<CourseReviewModel>>> getListReviewOfCourse(
     String courseId,
-    String userId,
-    int score,
+  );
+
+  Future<Either<Failure, int>> rateCourse(
+    CourseReviewModel courseReviewModel,
   );
 }

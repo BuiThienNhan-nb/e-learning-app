@@ -5,23 +5,22 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
 import '../../repositories/course_rate_repository.dart';
 
-class GetCourseRateUseCase extends UseCase<int?, CourseRateParams> {
+class GetCourseRateUseCase extends UseCase<int?, GetCourseRateParams> {
   final CourseRateRepository repository;
 
   GetCourseRateUseCase(this.repository);
 
   @override
-  Future<Either<Failure, int?>> call(CourseRateParams params) async =>
+  Future<Either<Failure, int?>> call(GetCourseRateParams params) async =>
       repository.getCourseRate(params.courseId, params.userId);
 }
 
-class CourseRateParams extends Equatable {
+class GetCourseRateParams extends Equatable {
   final String userId;
   final String courseId;
-  final int score;
 
-  const CourseRateParams(this.userId, this.courseId, this.score);
+  const GetCourseRateParams(this.userId, this.courseId);
 
   @override
-  List<Object?> get props => [userId, courseId, score];
+  List<Object?> get props => [userId, courseId];
 }

@@ -23,9 +23,9 @@ class MockCourseReviews {
           id: "id_${Random().nextDouble()}",
           userId: "userId",
           courseId: "courseId",
-          rate: Random().nextInt(6),
-          review: e,
-          reviewedAt: RandomDate.withRange(2019, 2022).random(),
+          score: Random().nextInt(6),
+          comment: e,
+          createdAt: RandomDate.withRange(2019, 2022).random(),
         ),
       )
       .toList();

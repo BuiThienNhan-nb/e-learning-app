@@ -15,6 +15,13 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
   BaseSate get state => (_$stateComputed ??=
           Computed<BaseSate>(() => super.state, name: '_CourseRateStore.state'))
       .value;
+  Computed<BaseSate>? _$getReviewsStateComputed;
+
+  @override
+  BaseSate get getReviewsState => (_$getReviewsStateComputed ??=
+          Computed<BaseSate>(() => super.getReviewsState,
+              name: '_CourseRateStore.getReviewsState'))
+      .value;
 
   late final _$currentRateAtom =
       Atom(name: '_CourseRateStore.currentRate', context: context);
@@ -29,6 +36,22 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
   set currentRate(int? value) {
     _$currentRateAtom.reportWrite(value, super.currentRate, () {
       super.currentRate = value;
+    });
+  }
+
+  late final _$reviewsAtom =
+      Atom(name: '_CourseRateStore.reviews', context: context);
+
+  @override
+  List<CourseReviewModel>? get reviews {
+    _$reviewsAtom.reportRead();
+    return super.reviews;
+  }
+
+  @override
+  set reviews(List<CourseReviewModel>? value) {
+    _$reviewsAtom.reportWrite(value, super.reviews, () {
+      super.reviews = value;
     });
   }
 
@@ -96,6 +119,24 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
     });
   }
 
+  late final _$_reviewsFutureAtom =
+      Atom(name: '_CourseRateStore._reviewsFuture', context: context);
+
+  @override
+  ObservableFuture<Either<Failure, List<CourseReviewModel>>>?
+      get _reviewsFuture {
+    _$_reviewsFutureAtom.reportRead();
+    return super._reviewsFuture;
+  }
+
+  @override
+  set _reviewsFuture(
+      ObservableFuture<Either<Failure, List<CourseReviewModel>>>? value) {
+    _$_reviewsFutureAtom.reportWrite(value, super._reviewsFuture, () {
+      super._reviewsFuture = value;
+    });
+  }
+
   late final _$getCourseRateAsyncAction =
       AsyncAction('_CourseRateStore.getCourseRate', context: context);
 
@@ -108,8 +149,18 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
       AsyncAction('_CourseRateStore.rateCourse', context: context);
 
   @override
-  Future<void> rateCourse(String courseId, int score) {
-    return _$rateCourseAsyncAction.run(() => super.rateCourse(courseId, score));
+  Future<void> rateCourse(CourseReviewModel courseReviewModel) {
+    return _$rateCourseAsyncAction
+        .run(() => super.rateCourse(courseReviewModel));
+  }
+
+  late final _$getCourseReviewAsyncAction =
+      AsyncAction('_CourseRateStore.getCourseReview', context: context);
+
+  @override
+  Future<void> getCourseReview(String courseId) {
+    return _$getCourseReviewAsyncAction
+        .run(() => super.getCourseReview(courseId));
   }
 
   late final _$_CourseRateStoreActionController =
@@ -152,10 +203,12 @@ mixin _$CourseRateStore on _CourseRateStore, Store {
   String toString() {
     return '''
 currentRate: ${currentRate},
+reviews: ${reviews},
 errorMessage: ${errorMessage},
 courseRate: ${courseRate},
 courseRateCount: ${courseRateCount},
-state: ${state}
+state: ${state},
+getReviewsState: ${getReviewsState}
     ''';
   }
 }

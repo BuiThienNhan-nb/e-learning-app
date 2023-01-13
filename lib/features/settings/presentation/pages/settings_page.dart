@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:e_learning_app/configs/colors.dart';
 import 'package:e_learning_app/configs/styles.dart';
+import 'package:e_learning_app/features/teacher_detail/domain/usecases/teacher_detail_use_case.dart';
+import 'package:e_learning_app/features/teacher_detail/domain/usecases/teacher_detail_use_case/get_teacher_by_id.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -100,7 +102,7 @@ class SettingsPage extends StatelessWidget {
       child: Scaffold(
         appBar: const DefaultAppBar(title: "Profile"),
         body: Observer(
-          builder: (context) {
+          builder: (_) {
             if (store.updateState == BaseSate.loading ||
                 paymentStore.state == BaseSate.loading) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -139,107 +141,124 @@ class SettingsPage extends StatelessWidget {
               );
             }
 
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Consumer<AppProvider>(
-                builder: (context, provider, child) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: AppDimens.largeHeightDimens),
-                    GestureDetector(
-                      onTap: () => showMaterialModalBottomSheet(
-                        context: context,
-                        enableDrag: true,
-                        useRootNavigator: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(AppDimens.itemRadius),
-                            topRight: Radius.circular(AppDimens.itemRadius),
+            return RefreshIndicator(
+              onRefresh: () async {
+                final result =
+                    await GetIt.I<TeacherDetailUseCase>().getTeacherById(
+                  GetTeacherByIdParams(GetIt.I<AppProvider>().user.id),
+                );
+                result.fold(
+                  (l) => log("Cannot get"),
+                  (r) => GetIt.I<AppProvider>().user = r,
+                );
+                log("Refreshing...");
+              },
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Consumer<AppProvider>(
+                  builder: (context, provider, child) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: AppDimens.largeHeightDimens),
+                      GestureDetector(
+                        onTap: () => showMaterialModalBottomSheet(
+                          context: context,
+                          enableDrag: true,
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(AppDimens.itemRadius),
+                              topRight: Radius.circular(AppDimens.itemRadius),
+                            ),
+                          ),
+                          builder: (context) => UpdateAvatarBottomSheet(
+                            store: store,
                           ),
                         ),
-                        builder: (context) => UpdateAvatarBottomSheet(
-                          store: store,
-                        ),
-                      ),
-                      child: Container(
-                        height: AppDimens.extraLargeHeightDimens * 4,
-                        width: AppDimens.extraLargeWidthDimens * 4,
-                        decoration: BoxDecoration(
-                          color: GetIt.I<AppProvider>().user.avatar == null
-                              ? AppColors.neutral.shade400
-                              : AppColors.whiteColor,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.neutral.shade200),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.neutral.shade400,
-                              blurRadius: AppDimens.mediumHeightDimens,
-                              // offset: const Offset(1, 1),
-                              blurStyle: BlurStyle.normal,
-                              spreadRadius: 0.2,
-                            ),
-                          ],
-                        ),
-                        child: GetIt.I<AppProvider>().user.avatar == null
-                            ? Center(
-                                child: Image.asset(
-                                  "assets/icons/user_fill_icon.png",
-                                  color: AppColors.whiteColor,
-                                  fit: BoxFit.fill,
-                                  height:
-                                      AppDimens.extraLargeHeightDimens * 1.4,
-                                  width: AppDimens.extraLargeWidthDimens * 1.4,
-                                ),
-                              )
-                            : DefaultNetworkImage(
-                                imageUrl:
-                                    GetIt.I<AppProvider>().user.avatar ?? "",
-                                blurHash: "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
-                                height: AppDimens.extraLargeHeightDimens * 4,
-                                width: AppDimens.extraLargeWidthDimens * 4,
+                        child: Container(
+                          height: AppDimens.extraLargeHeightDimens * 4,
+                          width: AppDimens.extraLargeWidthDimens * 4,
+                          decoration: BoxDecoration(
+                            color: GetIt.I<AppProvider>().user.avatar == null
+                                ? AppColors.neutral.shade400
+                                : AppColors.whiteColor,
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: AppColors.neutral.shade200),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.neutral.shade400,
+                                blurRadius: AppDimens.mediumHeightDimens,
+                                // offset: const Offset(1, 1),
+                                blurStyle: BlurStyle.normal,
+                                spreadRadius: 0.2,
                               ),
-                        // : FutureBuilder<String>(
-                        //     future: store.getAvatarDownloadUrl(),
-                        //     builder: (_, snapshot) {
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         if (snapshot.hasError) {}
+                            ],
+                          ),
+                          child: GetIt.I<AppProvider>().user.avatar == null
+                              ? Center(
+                                  child: Image.asset(
+                                    "assets/icons/user_fill_icon.png",
+                                    color: AppColors.whiteColor,
+                                    fit: BoxFit.fill,
+                                    height:
+                                        AppDimens.extraLargeHeightDimens * 1.4,
+                                    width:
+                                        AppDimens.extraLargeWidthDimens * 1.4,
+                                  ),
+                                )
+                              : DefaultNetworkImage(
+                                  imageUrl:
+                                      GetIt.I<AppProvider>().user.avatar ?? "",
+                                  blurHash: "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                                  height: AppDimens.extraLargeHeightDimens * 4,
+                                  width: AppDimens.extraLargeWidthDimens * 4,
+                                ),
+                          // : FutureBuilder<String>(
+                          //     future: store.getAvatarDownloadUrl(),
+                          //     builder: (_, snapshot) {
+                          //       if (snapshot.connectionState ==
+                          //           ConnectionState.done) {
+                          //         if (snapshot.hasError) {}
 
-                        //         return DefaultNetworkImage(
-                        //           imageUrl: snapshot.data ?? "",
-                        //           blurHash:
-                        //               "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
-                        //           height:
-                        //               AppDimens.extraLargeHeightDimens * 4,
-                        //           width:
-                        //               AppDimens.extraLargeWidthDimens * 4,
-                        //         );
-                        //       }
-                        //       return const Center(
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     },
-                        //   ),
+                          //         return DefaultNetworkImage(
+                          //           imageUrl: snapshot.data ?? "",
+                          //           blurHash:
+                          //               "LKHBPW~BuPg\$.SI[%MxaKjM{\$*f8",
+                          //           height:
+                          //               AppDimens.extraLargeHeightDimens * 4,
+                          //           width:
+                          //               AppDimens.extraLargeWidthDimens * 4,
+                          //         );
+                          //       }
+                          //       return const Center(
+                          //         child: CircularProgressIndicator(),
+                          //       );
+                          //     },
+                          //   ),
+                        ),
                       ),
-                    ),
-                    Text(
-                      provider.user.name,
-                      style: AppStyles.headline6TextStyle.copyWith(
-                        fontWeight: FontWeight.w900,
+                      Text(
+                        !GetIt.I<AppProvider>().user.isPremium
+                            ? provider.user.name
+                            : "${provider.user.name} 👑",
+                        style: AppStyles.headline6TextStyle.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
-                    ),
-                    Text(
-                      provider.user.email,
-                      style: AppStyles.subtitle1TextStyle,
-                    ),
-                    const Divider(
-                      thickness: 1.2,
-                    ),
-                    Column(
-                      children: buildListSettingsItems(),
-                    ),
-                  ],
+                      Text(
+                        provider.user.email,
+                        style: AppStyles.subtitle1TextStyle,
+                      ),
+                      const Divider(
+                        thickness: 1.2,
+                      ),
+                      Column(
+                        children: buildListSettingsItems(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

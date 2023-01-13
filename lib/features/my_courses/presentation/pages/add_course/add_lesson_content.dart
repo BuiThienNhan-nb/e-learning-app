@@ -340,7 +340,18 @@ class _AddLessonItemState extends State<AddLessonItem> {
             ],
           ),
           InkWell(
-            onTap: _pickVideo,
+            onTap: () {
+              _pickVideo();
+              for (var section in widget.provider.sections) {
+                for (var lesson in section.lessons) {
+                  if (lesson.order == widget.order) {
+                    logger.log("detect lesson");
+                    lesson.videoUrl = sourceController.text.trim();
+                    return setState(() {});
+                  }
+                }
+              }
+            },
             child: Text(
               "Video source: ${sourceController.text.trim()}",
               style: sectionTitleStyle,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:e_learning_app/features/course_detail/domain/usecases/course_rate_use_cases/get_course_reviews.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -10,8 +11,10 @@ import '../../../../bases/mobx/base_state.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
+import '../../domain/entities/course_review_model.dart';
 import '../../domain/usecases/course_rate_use_cases.dart';
 import '../../domain/usecases/course_rate_use_cases/get_course_rate.dart';
+import '../../domain/usecases/course_rate_use_cases/rate_course.dart';
 
 part 'course_rate_store.g.dart';
 
@@ -28,6 +31,8 @@ abstract class _CourseRateStore with Store {
 
   @observable
   int? currentRate;
+  @observable
+  List<CourseReviewModel>? reviews;
 
   @observable
   String? errorMessage;
@@ -39,6 +44,8 @@ abstract class _CourseRateStore with Store {
 
   @observable
   ObservableFuture<Either<Failure, int?>>? _currentRateFuture;
+  @observable
+  ObservableFuture<Either<Failure, List<CourseReviewModel>>>? _reviewsFuture;
 
   @computed
   BaseSate get state {
@@ -49,6 +56,19 @@ abstract class _CourseRateStore with Store {
       return BaseSate.error;
     }
     return _currentRateFuture!.status == FutureStatus.pending
+        ? BaseSate.loading
+        : BaseSate.loaded;
+  }
+
+  @computed
+  BaseSate get getReviewsState {
+    if (_reviewsFuture == null) {
+      return BaseSate.init;
+    }
+    if (_reviewsFuture!.status == FutureStatus.rejected) {
+      return BaseSate.error;
+    }
+    return _reviewsFuture!.status == FutureStatus.pending
         ? BaseSate.loading
         : BaseSate.loaded;
   }
@@ -69,7 +89,7 @@ abstract class _CourseRateStore with Store {
 
     _currentRateFuture = ObservableFuture(
       _useCases.getCourseRateUseCase(
-        CourseRateParams(_userId, courseId, 0),
+        GetCourseRateParams(_userId, courseId),
       ),
     );
 
@@ -92,18 +112,18 @@ abstract class _CourseRateStore with Store {
 
   @action
   void updateCourseRate() {
-    courseRate =
-        (courseRate * courseRateCount + currentRate!) / (courseRateCount++);
+    courseRate = (courseRate * courseRateCount + (currentRate ?? 0)) /
+        (courseRateCount++);
     log("New course rate: $courseRate with $courseRateCount rating");
   }
 
   @action
-  Future<void> rateCourse(String courseId, int score) async {
+  Future<void> rateCourse(CourseReviewModel courseReviewModel) async {
     errorMessage = null;
 
     _currentRateFuture = ObservableFuture(
       _useCases.rateCourseUseCase(
-        CourseRateParams(_userId, courseId, score),
+        RateCourseParams(courseReviewModel),
       ),
     );
 
@@ -127,6 +147,35 @@ abstract class _CourseRateStore with Store {
       },
       (r) {
         currentRate = r!;
+      },
+    );
+  }
+
+  @action
+  Future<void> getCourseReview(String courseId) async {
+    errorMessage = null;
+
+    _reviewsFuture = ObservableFuture(
+      _useCases.getCourseReview(
+        GetCourseReviewParams(courseId),
+      ),
+    );
+
+    Either<Failure, List<CourseReviewModel>>? result = await _reviewsFuture;
+
+    if (result == null) {
+      errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      return;
+    }
+
+    return result.fold(
+      (l) {
+        (l is UserFailure || l is ServerFailure)
+            ? errorMessage = l.message
+            : errorMessage = LocaleKeys.serverUnexpectedError.tr();
+      },
+      (r) {
+        reviews = r;
       },
     );
   }

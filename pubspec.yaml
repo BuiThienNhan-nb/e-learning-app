@@ -70,6 +70,7 @@ dependencies:
   flutter_inappwebview: ^5.7.2+3
   permission_handler: ^10.2.0
   socket_io_client: ^2.0.0
+  safe_device: ^1.1.2
 
 dev_dependencies:
   flutter_test:

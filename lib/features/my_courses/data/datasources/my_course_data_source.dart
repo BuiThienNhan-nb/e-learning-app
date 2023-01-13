@@ -115,7 +115,6 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
               (uploadTask) async =>
                   downloadUrl = await uploadTask.ref.getDownloadURL(),
             );
-        file.delete();
         requestData['image'] = downloadUrl!;
       }
 

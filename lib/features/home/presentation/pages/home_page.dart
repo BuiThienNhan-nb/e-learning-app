@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bases/presentation/atoms/card_page_view.dart';
 import '../../../../configs/colors.dart';
@@ -86,7 +87,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () =>
+                                GoRouter.of(context).pushNamed("all_courses"),
                             child: Text(
                               "See all lessons",
                               style: AppStyles.subtitle1TextStyle.copyWith(

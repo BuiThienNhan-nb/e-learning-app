@@ -18,26 +18,30 @@ abstract class GetRecommendedCoursesDataSource {
 @LazySingleton(as: GetRecommendedCoursesDataSource)
 class GetRecommendedCoursesDataSourceImp extends Api
     implements GetRecommendedCoursesDataSource {
-  final String _getAllCoursesEndPoint = "/courses/courses";
+  // final String _getAllCoursesEndPoint = "/courses/courses";
+  final String _getRecommendedCourses = "/courses/recommend";
 
   @override
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons() async {
-    // try {
-    final data = await get(
-      Env.instance.baseUrl + _getAllCoursesEndPoint,
-      options: Options(headers: {
-        "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
-      }),
-    );
-    List<CourseModel> courses = (data["data"]["data"] as List)
-        .map(
-          (map) => CourseModel.fromMap(map),
-        )
-        .toList();
-    log(courses.toString());
-    return Right(courses);
-    // } catch (e) {
-    //   return Left(ServerFailure("$e"));
-    // }
+    try {
+      final data = await post(
+        Env.instance.localUrl + _getRecommendedCourses,
+        data: {
+          "userId": GetIt.I<AppProvider>().user.id,
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        }),
+      );
+      List<CourseModel> courses = (data["data"]["data"] as List)
+          .map(
+            (map) => CourseModel.fromMap(map),
+          )
+          .toList();
+      log(courses.toString());
+      return Right(courses);
+    } catch (e) {
+      return Left(ServerFailure("$e"));
+    }
   }
 }

@@ -1,7 +1,3 @@
-import 'package:e_learning_app/features/course_detail/presentation/states/course_rate_store.dart';
-import 'package:e_learning_app/features/create_exam/presentation/pages/create_exam_page.dart';
-import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_store.dart';
-import 'package:e_learning_app/features/do_exam/presentation/state/do_exam_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -23,10 +19,16 @@ import '../features/auth/verify_email/presentation/pages/verify_email_page.dart'
 import '../features/auth/verify_email/presentation/states/mobx/verify_email_store.dart';
 import '../features/auth/verify_email/presentation/states/providers/verify_email_provider.dart';
 import '../features/course_detail/presentation/pages/course_detail_page.dart';
+import '../features/course_detail/presentation/states/course_rate_store.dart';
+import '../features/create_exam/presentation/pages/create_exam_page.dart';
 import '../features/create_exam/presentation/states/create_exam_provider.dart';
+import '../features/create_exam/presentation/states/create_exam_store.dart';
 import '../features/do_exam/presentation/pages/do_exam_page.dart';
 import '../features/do_exam/presentation/state/do_exam_provider.dart';
+import '../features/do_exam/presentation/state/do_exam_store.dart';
 import '../features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
+import '../features/get_all_courses/presentation/pages/get_all_courses_page.dart';
+import '../features/get_all_courses/presentation/state/get_all_courses_store.dart';
 import '../features/home/domain/entities/lesson_model.dart';
 import '../features/home/domain/entities/section_model.dart';
 import '../features/home/presentation/pages/home_page.dart';
@@ -77,6 +79,9 @@ class AppRoutes {
 
   // Main Page
   final String mainPage = "/main";
+
+  // All courses
+  final String allCourses = "courses/all";
 
   // Live stream
   final String liveStream = "live-stream/:roomId";
@@ -212,6 +217,15 @@ class AppRoutes {
         //   child: MainPage(),
         // ),
         routes: [
+          GoRoute(
+            name: "all_courses",
+            path: allCourses,
+            builder: (context, state) => Provider<GetAllCoursesStore>(
+              create: (_) => GetIt.I(),
+              lazy: true,
+              child: const GetAllCoursesPage(),
+            ),
+          ),
           GoRoute(
             name: "teacher_detail",
             path: teacherDetail,

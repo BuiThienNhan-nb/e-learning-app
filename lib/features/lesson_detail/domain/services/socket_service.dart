@@ -14,7 +14,7 @@ class SocketServices {
 
   initialize(String lessonId) {
     _socket = io.io(
-      Env.instance.socketUrl,
+      Env.instance.localUrl,
       io.OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
           // .disableAutoConnect() // disable auto-connection
           // .setExtraHeaders({'foo': 'bar'}) // optional

@@ -21,7 +21,7 @@ class PaymentDataSourceImp extends Api implements PaymentDataSource {
     try {
       final Map<String, String> requestData = {
         "amount": "10000",
-        "orderDescription": "77da51a6-fae1-48ef-aee0-260100849e70",
+        "orderDescription": GetIt.I<AppProvider>().user.id,
         "language": "vn"
       };
 

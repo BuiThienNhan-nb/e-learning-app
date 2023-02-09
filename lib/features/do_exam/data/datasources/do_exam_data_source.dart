@@ -34,7 +34,8 @@ class DoExamDataSourceImp extends Api implements DoExamDataSource {
         }),
       );
       if (data["success"] == false &&
-          data["data"]["response"] == "Exam not found") {
+          (data["data"]["message"] as String).compareTo("Exam not found") ==
+              0) {
         return const Left(
           UserFailure(
               "This lesson does not contain any exam yet! Please comeback later!"),

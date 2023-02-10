@@ -231,6 +231,15 @@ class _AddLessonItemState extends State<AddLessonItem> {
     XFile? xFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (xFile == null) return "";
     sourceController.text = xFile.path;
+    for (var section in widget.provider.sections) {
+      for (var lesson in section.lessons) {
+        if (lesson.order == widget.order) {
+          logger.log("detect lesson");
+          lesson.videoUrl = sourceController.text.trim();
+          continue;
+        }
+      }
+    }
     setState(() {});
     return xFile.path;
   }
@@ -292,22 +301,6 @@ class _AddLessonItemState extends State<AddLessonItem> {
                         }
                       }
                     }
-                    // widget.provider.sections.map(
-                    //   (section) => section.lessons.map(
-                    //     (lesson) {
-                    //       log(lesson.toString());
-                    //       log(widget.order.toString());
-                    //       if (lesson.order == widget.order) {
-                    //         log("detect lesson");
-                    //         lesson.copyWith(
-                    //           title: titleController.text.trim(),
-                    //           videoUrl: sourceController.text.trim(),
-                    //         );
-                    //         return toggle();
-                    //       }
-                    //     },
-                    //   ),
-                    // );
                   }
                   logger.log("cannot detect lesson");
                   return toggle();
@@ -342,15 +335,6 @@ class _AddLessonItemState extends State<AddLessonItem> {
           InkWell(
             onTap: () {
               _pickVideo();
-              for (var section in widget.provider.sections) {
-                for (var lesson in section.lessons) {
-                  if (lesson.order == widget.order) {
-                    logger.log("detect lesson");
-                    lesson.videoUrl = sourceController.text.trim();
-                    return setState(() {});
-                  }
-                }
-              }
             },
             child: Text(
               "Video source: ${sourceController.text.trim()}",

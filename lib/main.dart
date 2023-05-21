@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:e_learning_app/core/app/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ Future<void> _initServices() async {
   await dotenv.load(fileName: ".env").then(
         (_) => log(Env.instance.localUrl),
       );
+  await AppLocal.instance.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

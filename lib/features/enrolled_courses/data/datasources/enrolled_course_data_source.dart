@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../home/domain/entities/course_model.dart';
 
 abstract class EnrolledCourseDataSource {
@@ -31,7 +31,8 @@ class EnrolledCourseDataSourceImp extends Api
         Env.instance.baseUrl + _getCourseByListId,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       final List<CourseModel> courses = (data["data"]["data"] as List)

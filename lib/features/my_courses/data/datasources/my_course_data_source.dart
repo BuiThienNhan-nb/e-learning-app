@@ -12,6 +12,7 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
@@ -59,7 +60,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _getCourseByTeacher,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       List<CourseModel> courses = (data["data"]["data"] as List)
@@ -122,7 +124,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _createCourseEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       // await Future.delayed(const Duration(seconds: 2));
@@ -167,7 +170,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _updateCourse,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -192,7 +196,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _updateCourseSection,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -214,7 +219,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _createCourseSection,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -236,7 +242,8 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         Env.instance.baseUrl + _deleteCourseSection,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 

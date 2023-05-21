@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
-import '../../../../core/app/provider.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 
 abstract class GetTopTeachersDataSource {
@@ -26,7 +26,8 @@ class GetTopTeachersDataSourceImp extends Api
       final data = await get(
         Env.instance.baseUrl + _getTeacherEndpoint,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       List<TeacherModel> teachers = (data["data"]["data"] as List)

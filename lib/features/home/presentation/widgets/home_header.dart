@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -114,9 +114,10 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
                       border: Border.all(color: AppColors.neutral.shade300),
                       shape: BoxShape.circle,
                     ),
-                    child: Badge(
-                      shape: BadgeShape.circle,
-                      position: BadgePosition.topEnd(end: -1.w, top: -4.h),
+                    child: badge.Badge(
+                      shape: badge.BadgeShape.circle,
+                      position:
+                          badge.BadgePosition.topEnd(end: -1.w, top: -4.h),
                       showBadge: provider.hasNotification,
                       child: Image.asset(
                         "assets/icons/notification_icon.png",

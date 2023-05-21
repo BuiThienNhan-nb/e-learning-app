@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -70,6 +71,8 @@ class AppRoutes {
 
   final _bottomBarLocator = GetIt.I<BottomNavigationBarConfig>();
 
+  final String splash = '/splash';
+
   // Authentication
   final String signIn = '/sign-in';
   final String signUp = '/sign-up';
@@ -108,13 +111,20 @@ class AppRoutes {
   final String createExam = "exam/:lessonId/create/:lessonTitle";
   final String doExam = "exam/:examId/do";
 
-  String get initial => signIn;
+  // final localDataSource = GetIt.I<AuthLocalDataSource>();
+
+  String get initial => splash;
+  // localDataSource.getAccessToken() != null ? mainPage : signIn;
   // String get initial => mainPage;
 
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: initial,
     routes: <RouteBase>[
+      GoRoute(
+        path: splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: signIn,
         builder: (context, state) => MultiProvider(

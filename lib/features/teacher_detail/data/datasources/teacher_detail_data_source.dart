@@ -7,8 +7,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 import '../../../home/domain/entities/course_model.dart';
 
@@ -35,7 +35,8 @@ class TeacherDetailDataSourceImp extends Api
         Env.instance.baseUrl + _getTeacherById,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       final TeacherModel teacher = TeacherModel.fromMap(data["data"]["data"]);
@@ -61,7 +62,8 @@ class TeacherDetailDataSourceImp extends Api
         Env.instance.baseUrl + _getCourseByTeacher,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       List<CourseModel> courses = (data["data"]["data"] as List)

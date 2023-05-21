@@ -8,10 +8,10 @@ class AppProvider extends ChangeNotifier {
   bool _isLogin = false;
   UserModel? _user;
   bool _hasNotification = true;
-  String _accessToken = "";
+  // String _accessToken = "";
 
   bool get isLogin => _isLogin;
-  String get accessToken => _accessToken;
+  // String get accessToken => _accessToken;
   UserModel get user =>
       _user ??
       UserModel(
@@ -41,8 +41,8 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  set accessToken(String value) {
-    _accessToken = value;
-    notifyListeners();
-  }
+  // set accessToken(String value) {
+  //   _accessToken = value;
+  //   notifyListeners();
+  // }
 }

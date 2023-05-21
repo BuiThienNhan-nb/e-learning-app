@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../domain/entities/exam_model.dart';
 
 abstract class CreateExamDataSource {
@@ -30,7 +30,8 @@ class CreateExamDataSourceImp extends Api implements CreateExamDataSource {
         Env.instance.baseUrl + _createExam,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -51,7 +52,8 @@ class CreateExamDataSourceImp extends Api implements CreateExamDataSource {
       Env.instance.baseUrl + _getExam,
       data: requestData,
       options: Options(headers: {
-        "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+        "Authorization":
+            "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
       }),
     );
     if (data["success"] == false &&

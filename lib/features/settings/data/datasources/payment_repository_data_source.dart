@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 
 abstract class PaymentDataSource {
   Future<Either<Failure, String>> getPaymentUrl();
@@ -29,7 +30,8 @@ class PaymentDataSourceImp extends Api implements PaymentDataSource {
         Env.instance.baseUrl + _paymentEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 

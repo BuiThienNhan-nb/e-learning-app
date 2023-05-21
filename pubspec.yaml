@@ -54,7 +54,7 @@ dependencies:
   animations: ^2.0.7
   youtube_explode_dart: ^1.12.3
   flutter_markdown: ^0.6.13
-  modal_bottom_sheet: ^2.1.2
+  # modal_bottom_sheet: ^2.1.2
   syncfusion_flutter_barcodes: ^20.3.57
   flutter_rating_bar: ^4.0.1
   image_picker: ^0.8.6

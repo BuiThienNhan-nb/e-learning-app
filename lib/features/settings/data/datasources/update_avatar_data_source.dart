@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 
 abstract class UpdateAvatarDataSource {
   Future<Either<Failure, bool>> updateAvatar(String path);
@@ -49,7 +50,8 @@ class UpdateAvatarDataSourceImp extends Api implements UpdateAvatarDataSource {
         Env.instance.baseUrl + _updateProfileEndPoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 

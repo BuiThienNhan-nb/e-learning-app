@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../auth/sign_in/domain/entities/user_model.dart';
 
 abstract class UpdateProfileDataSource {
@@ -27,7 +27,8 @@ class UpdateProfileDataSourceImp extends Api
         Env.instance.baseUrl + _updateProfileEndPoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       return Right(

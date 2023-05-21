@@ -1,17 +1,15 @@
-import 'dart:developer' as logger;
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:e_learning_app/configs/env.dart';
-import 'package:e_learning_app/core/app/provider.dart';
+import '../../../../../../configs/env.dart';
+import '../../local/datasources/auth_local_data_source.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../bases/services/api_exception.dart';
-import '../../../../../core/app/values.dart';
-import '../../../../../core/error/failures.dart';
-import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../domain/entities/user_model.dart';
+import '../../../../../../bases/services/api_exception.dart';
+import '../../../../../../core/app/values.dart';
+import '../../../../../../core/error/failures.dart';
+import '../../../../../../generated/translations/locale_keys.g.dart';
+import '../../../domain/entities/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<Failure, UserModel>> signIn(
@@ -31,13 +29,15 @@ abstract class AuthRemoteDataSource {
   });
 
   Future<Either<Failure, void>> signOut();
+
+  Future<Either<Failure, UserModel>> getUserById(String userId);
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
   final String loginEndpoint = "/auth/email/login";
   final String registerEndpoint = "/auth/email/register";
-  final Dio dio1 = Dio();
+  final String getUserByIdEndPoint = "/users/userById";
 
   @override
   Future<Either<Failure, UserModel>> signIn(
@@ -56,14 +56,15 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       if (data["success"] == false) {
         return Left(statusToFailure(data["data"]["status"] as int));
       }
-      logger.log(data["data"]["token"]["access_token"]);
+      final user = UserModel.fromMap(data["data"]["user"]);
 
-      GetIt.I<AppProvider>().accessToken =
-          data["data"]["token"]["access_token"].toString();
+      final localDataSource = GetIt.I<AuthLocalDataSource>();
 
-      return Right(
-        UserModel.fromMap(data["data"]["user"]),
-      );
+      localDataSource
+          .setAccessToken(data["data"]["token"]["access_token"].toString());
+      localDataSource.setUserId(user.id);
+
+      return Right(user);
     } catch (e) {
       return Left(exceptionToFailure(e));
     }
@@ -116,6 +117,29 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       );
     } catch (e) {
       return Left(exceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserById(String userId) async {
+    try {
+      final requestData = {
+        "userId": userId,
+      };
+
+      final data = await post(
+        Env.instance.baseUrl + getUserByIdEndPoint,
+        data: requestData,
+        options: Options(headers: {
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
+        }),
+      );
+      final UserModel user = UserModel.fromMap(data["data"]["data"]);
+
+      return Right(user);
+    } catch (e) {
+      return left(UserFailure(e.toString()));
     }
   }
 }

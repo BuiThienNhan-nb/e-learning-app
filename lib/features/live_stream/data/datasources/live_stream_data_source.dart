@@ -9,6 +9,7 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../domain/entities/live_stream_model.dart';
 
 abstract class LiveStreamDataSource {
@@ -34,7 +35,8 @@ class LiveStreamDataSourceImp extends Api implements LiveStreamDataSource {
         Env.instance.baseUrl + _createLiveStreamEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       LiveStreamModel returnValue = LiveStreamModel.fromMap(data["data"]);
@@ -56,7 +58,8 @@ class LiveStreamDataSourceImp extends Api implements LiveStreamDataSource {
         Env.instance.baseUrl + _deleteLiveStreamEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -72,7 +75,8 @@ class LiveStreamDataSourceImp extends Api implements LiveStreamDataSource {
       final data = await get(
         Env.instance.baseUrl + _getCurrentLiveStreamEndpoint,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       List<LiveStreamModel> liveStreams = (data["data"]["data"] as List)

@@ -1,16 +1,15 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/configs/colors.dart';
-import 'package:e_learning_app/configs/styles.dart';
-import 'package:e_learning_app/features/teacher_detail/domain/usecases/teacher_detail_use_case.dart';
-import 'package:e_learning_app/features/teacher_detail/domain/usecases/teacher_detail_use_case/get_teacher_by_id.dart';
+import '../../../../configs/colors.dart';
+import '../../../../configs/styles.dart';
+import '../../../teacher_detail/domain/usecases/teacher_detail_use_case.dart';
+import '../../../teacher_detail/domain/usecases/teacher_detail_use_case/get_teacher_by_id.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/mobx/base_state.dart';
@@ -24,7 +23,6 @@ import '../../../../core/app/provider.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../states/mobx/payment_store.dart';
 import '../states/mobx/update_avatar_store.dart';
-import '../widgets/update_avatar_bottom_sheet.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -162,20 +160,20 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       SizedBox(height: AppDimens.largeHeightDimens),
                       GestureDetector(
-                        onTap: () => showMaterialModalBottomSheet(
-                          context: context,
-                          enableDrag: true,
-                          useRootNavigator: true,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(AppDimens.itemRadius),
-                              topRight: Radius.circular(AppDimens.itemRadius),
-                            ),
-                          ),
-                          builder: (context) => UpdateAvatarBottomSheet(
-                            store: store,
-                          ),
-                        ),
+                        // onTap: () => showMaterialModalBottomSheet(
+                        //   context: context,
+                        //   enableDrag: true,
+                        //   useRootNavigator: true,
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.only(
+                        //       topLeft: Radius.circular(AppDimens.itemRadius),
+                        //       topRight: Radius.circular(AppDimens.itemRadius),
+                        //     ),
+                        //   ),
+                        //   builder: (context) => UpdateAvatarBottomSheet(
+                        //     store: store,
+                        //   ),
+                        // ),
                         child: Container(
                           height: AppDimens.extraLargeHeightDimens * 4,
                           width: AppDimens.extraLargeWidthDimens * 4,

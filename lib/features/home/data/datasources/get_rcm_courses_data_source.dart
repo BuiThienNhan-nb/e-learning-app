@@ -9,6 +9,7 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../domain/entities/course_model.dart';
 
 abstract class GetRecommendedCoursesDataSource {
@@ -30,7 +31,8 @@ class GetRecommendedCoursesDataSourceImp extends Api
           "userId": GetIt.I<AppProvider>().user.id,
         },
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       List<CourseModel> courses = (data["data"]["data"] as List)

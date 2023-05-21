@@ -7,8 +7,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../domain/entities/course_review_model.dart';
 
 abstract class CourseRateDataSource {
@@ -45,7 +45,8 @@ class CourseRateDataSourceImp extends Api implements CourseRateDataSource {
         Env.instance.baseUrl + _getCourseRateEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 
@@ -76,7 +77,8 @@ class CourseRateDataSourceImp extends Api implements CourseRateDataSource {
         Env.instance.baseUrl + _rateCourseEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       final review = CourseReviewModel.fromMap(data["data"]["data"]);
@@ -98,7 +100,8 @@ class CourseRateDataSourceImp extends Api implements CourseRateDataSource {
         Env.instance.baseUrl + _getCourseReviews,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 

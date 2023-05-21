@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../configs/env.dart';
-import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../create_exam/domain/entities/exam_model.dart';
 
 abstract class DoExamDataSource {
@@ -30,7 +30,8 @@ class DoExamDataSourceImp extends Api implements DoExamDataSource {
         Env.instance.baseUrl + _getExam,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       if (data["success"] == false &&

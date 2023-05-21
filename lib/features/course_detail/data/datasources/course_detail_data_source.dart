@@ -10,6 +10,7 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
+import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 import '../../../auth/sign_in/domain/entities/user_model.dart';
 import '../../../home/domain/entities/course_model.dart';
@@ -44,7 +45,8 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
         Env.instance.baseUrl + _getCourseDetailEndpoint,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       final CourseModel course = CourseModel.fromMap(data["data"]["data"]);
@@ -52,7 +54,8 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
         Env.instance.baseUrl + _getSectionsInCourse,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       course.section = (sectionData["data"]["data"] as List)
@@ -66,7 +69,8 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
           "userId": data["data"]["data"]["authorId"],
         },
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
       final CourseDetailModel courseDetail = CourseDetailModel(
@@ -108,7 +112,8 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
         Env.instance.baseUrl + _joinCourse,
         data: requestData,
         options: Options(headers: {
-          "Authorization": "Bearer ${GetIt.I<AppProvider>().accessToken}",
+          "Authorization":
+              "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
 

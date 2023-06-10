@@ -130,9 +130,12 @@ class ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
 
 import 'package:e_learning_app/bases/presentation/atoms/lazy_index_stack.dart';
 import 'package:e_learning_app/features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
-import 'package:e_learning_app/features/home/presentation/pages/home_page.dart';
 import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
 import 'package:e_learning_app/features/main/presentation/mobx/main_page_store.dart';
+import 'package:e_learning_app/features/presenters/top/provider_top_presenter.dart';
+import 'package:e_learning_app/features/presenters/top/top_state.dart';
+import 'package:e_learning_app/features/top/presentation/top_presenter.dart';
+import 'package:e_learning_app/features/top/presentation/top_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -218,7 +221,11 @@ class _MainPageState extends State<MainPage>
           body: LazyIndexedStack(
             index: tabController.index,
             children: [
-              const HomePage(),
+              // const HomePage(),
+              ChangeNotifierProvider<TopPresenter>(
+                create: (_) => ProviderTopPresenter(TopState.initial()),
+                child: const TopView(),
+              ),
               const LiveStreamPage(),
               const EnrolledCoursesPage(),
               const MyTransactionsPage(),

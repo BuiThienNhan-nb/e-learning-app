@@ -31,10 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
           local.getUserId() ?? "",
         ),
       );
-      // if (!mounted) return;
-      navigate(GetIt.I<AppRoutes>().mainPage);
+      if (!mounted) return;
+      GoRouter.of(context).go(GetIt.I<AppRoutes>().mainPage);
+      // WidgetsBinding.instance.addPostFrameCallback(
+      //   (_) => GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn),
+      // );
+      // navigate(GetIt.I<AppRoutes>().mainPage);
     } catch (e) {
-      navigate(GetIt.I<AppRoutes>().signIn);
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn),
+      );
     }
   }
 

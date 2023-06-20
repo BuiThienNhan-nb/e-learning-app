@@ -41,10 +41,7 @@ class MyApp extends StatelessWidget {
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
                   locale: context.locale,
-                  theme: ThemeData(
-                    textTheme: AppThemes.appTextTheme,
-                    colorScheme: AppThemes.appColorSchema,
-                  ),
+                  theme: AppThemes.lightTheme,
                   routerDelegate: router.routerDelegate,
                   routeInformationParser: router.routeInformationParser,
                   routeInformationProvider: router.routeInformationProvider,

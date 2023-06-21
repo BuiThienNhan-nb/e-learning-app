@@ -37,14 +37,12 @@ class MyApp extends StatelessWidget {
                   }
                 },
                 child: MaterialApp.router(
+                  scrollBehavior: const MyScrollBehavior(),
                   debugShowCheckedModeBanner: false,
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
                   locale: context.locale,
-                  theme: ThemeData(
-                    textTheme: AppThemes.appTextTheme,
-                    colorScheme: AppThemes.appColorSchema,
-                  ),
+                  theme: AppThemes.lightTheme,
                   routerDelegate: router.routerDelegate,
                   routeInformationParser: router.routeInformationParser,
                   routeInformationProvider: router.routeInformationProvider,
@@ -56,4 +54,12 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyScrollBehavior extends ScrollBehavior {
+  const MyScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
 }

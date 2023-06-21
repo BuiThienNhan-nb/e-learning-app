@@ -1,27 +1,93 @@
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
-import 'styles.dart';
+
+const String fontFamily = 'Roboto';
 
 class AppThemes {
-  AppThemes._internal();
-
-  static final TextTheme appTextTheme = TextTheme(
-    headline1: AppStyles.headline1TextStyle,
-    headline2: AppStyles.headline2TextStyle,
-    headline3: AppStyles.headline3TextStyle,
-    headline4: AppStyles.headline4TextStyle,
-    headline5: AppStyles.headline5TextStyle,
-    headline6: AppStyles.headline6TextStyle,
-    subtitle1: AppStyles.subtitle1TextStyle,
-    subtitle2: AppStyles.subtitle2TextStyle,
-    bodyText1: AppStyles.headline5TextStyle,
-    bodyText2: AppStyles.headline6TextStyle,
-    button: AppStyles.subtitle1TextStyle,
+  static TextTheme lightTextTheme = const TextTheme(
+    displayLarge: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w700,
+      fontSize: 45,
+      color: AppColors.textLightBasic,
+    ),
+    displayMedium: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w600,
+      fontSize: 20,
+      color: AppColors.textLightBasic,
+    ),
+    displaySmall: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      color: AppColors.textLightBasic,
+    ),
+    headlineMedium: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w600,
+      fontSize: 13,
+      color: AppColors.textLightBasic,
+    ),
+    headlineSmall: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      color: AppColors.textLightBasic,
+    ),
+    titleLarge: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 12,
+      color: AppColors.textLightBasic,
+    ),
+    titleMedium: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 12,
+      color: AppColors.textLightBasic,
+    ),
+    titleSmall: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 10,
+      color: AppColors.textLightBasic,
+    ),
+    bodyLarge: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 9,
+      color: AppColors.textLightBasic,
+    ),
+    bodyMedium: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 9,
+      color: AppColors.textLightBasic,
+    ),
+    bodySmall: TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w300,
+      fontSize: 9,
+      color: AppColors.textLightBasic,
+    ),
   );
 
-  static final ColorScheme appColorSchema = ThemeData().colorScheme.copyWith(
-        primary: AppColors.primaryColor,
-        secondary: AppColors.secondaryColor,
-      );
+  static final lightTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: AppColors.appColorBlue,
+    scaffoldBackgroundColor: AppColors.backgroundLightMode,
+    appBarTheme: const AppBarTheme(color: AppColors.backgroundLightMode),
+    bottomAppBarTheme:
+        const BottomAppBarTheme(color: AppColors.backgroundLightMode),
+    inputDecorationTheme: const InputDecorationTheme(
+      hintStyle: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w300,
+          color: AppColors.textGray999),
+    ),
+    textTheme: lightTextTheme,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
 }

@@ -61,4 +61,71 @@ class AppColors {
     800: Color(0xFF424242),
     900: Color(0xFF212121),
   });
+
+  static const Color white = Color(0xffFFFFFF);
+
+  static const Color appColorBlue = Color(0xFF163172); // Color(0xff0099FF);
+
+  static const Color temporaryDarkMode = Color(0xff051924);
+
+  static const Color selected = Color(0xffE7F6FF);
+
+  static const Color iconLightBasic = Color(0xff222222);
+
+  static const Color iconDarkBasic = Color(0xffFFFFFF);
+
+  static const Color iconActive = Color(0xFF163172); // Color(0xff0099FF);
+
+  static const Color iconDisabled = Color(0xffCCCCCC);
+
+  static const Color iconGray = Color(0xff999999);
+
+  static const Color iconRemove = Color(0xffEE6D6D);
+
+  static const Color textLightBasic = Color(0xff222222);
+
+  static const Color textDarkBasic = Color(0xffFFFFFF);
+
+  static const Color textGray999 = Color(0xff999999);
+
+  static const Color textGray666 = Color(0xff666666);
+
+  static const Color lineBasic = Color(0xffDDDDDD);
+
+  static const Color lineLightBasic = Color(0xffE6E6E6);
+
+  static const Color lineDarkBasic = Color(0xff295268);
+
+  static const Color backgroundDarkGray = Color(0xffE1E1E1);
+
+  static const Color backgroundLightMode = Color(0xffFFFFFF);
+
+  static const Color backgroundDarkMode = Color(0xff051924);
+
+  static const Color accentCTA = Color(0xffFF6869);
+
+  static const Color accentImportant = Color(0xffF40034);
+
+  static const MaterialColor accentGradation = MaterialColor(0xff5AD5F3, {
+    00: Color(0x000099FF),
+    100: Color(0xff5AD5F3),
+  });
+
+  static const placeholderLightMode = Color(0xffEEEEEE);
+
+  static const placeholderDarkMode = Color(0xff0C2634);
+
+  static const labelBasicLightMode = Color(0xffFFFFFF);
+
+  static const labelDarkLightMode = Color(0xff051924);
+
+  static const labelBasicLiveMode = Color(0xffFA8B3E);
+
+  static const labelBroadcastProgram = Color(0xff15ACB9);
+
+  static const labelSimultaneousProgram = Color(0xff87BA1B);
+
+  static const labelFreeProgram = Color(0xfffffd72af);
+
+  static const labelBeforeDelivery = Color(0xff999999);
 }

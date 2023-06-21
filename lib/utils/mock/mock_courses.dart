@@ -1,16 +1,70 @@
 import 'dart:math';
 
+import 'package:e_learning_app/configs/colors.dart';
+import 'package:e_learning_app/features/top/domain/entities/category_model.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/sign_in/domain/entities/image_model.dart';
-import '../../features/home/domain/entities/course_model.dart';
 import '../../features/home/domain/entities/lesson_model.dart';
 import '../../features/home/domain/entities/section_model.dart';
+import '../../features/top/domain/entities/course_model.dart';
 import '../../main.dart';
 
 @lazySingleton
 class MockCourses {
   final _random = Random();
+
+  final List<Color> cateColors = [
+    AppColors.labelBasicLiveMode,
+    AppColors.labelBeforeDelivery,
+    AppColors.labelBroadcastProgram,
+    AppColors.labelFreeProgram,
+    AppColors.labelSimultaneousProgram,
+    AppColors.cornflowerBlueColor,
+    AppColors.eclipseColor,
+    AppColors.backgroundDarkMode
+  ];
+
+  late final List<CategoryModel> categories = List.generate(
+    8,
+    (index) => CategoryModel(
+      id: '$index',
+      title: _category[index],
+      color: cateColors[index],
+      imageUrl: _cateImageUrl[index],
+    ),
+  );
+
+  static List<CourseModel> randomCourses(
+      List<CourseModel> arr, int numberOfGenerations) {
+    final random = Random();
+    final cloneArr = List<CourseModel>.from(arr);
+    final maxNumber = arr.length;
+    final size = numberOfGenerations - maxNumber;
+
+    var list = List<CourseModel>.generate(size, (_) {
+      final index = random.nextInt(maxNumber);
+      final randomItem = arr[index];
+      return randomItem;
+    });
+    cloneArr.addAll(list);
+    return cloneArr;
+  }
+
+  List<CategoryModel> _randomCategories(List<CategoryModel> arr, int size) {
+    final random = Random();
+    // final maxNumber = arr.length;
+    // final size = numberOfGenerations - maxNumber;
+
+    var list = List<CategoryModel>.generate(size, (_) {
+      final index = random.nextInt(size);
+      final randomItem = arr[index];
+      return randomItem;
+    });
+
+    return list;
+  }
 
   // Mock Lesson Model
   final List<ImageModel> _images = [
@@ -64,6 +118,16 @@ class MockCourses {
     "Writing",
     "Digital Marketing",
     "Business",
+  ];
+  final List<String> _cateImageUrl = [
+    'https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1267&q=80',
+    'https://images.unsplash.com/photo-1582045253062-f63cfbd45bcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80',
+    'https://images.unsplash.com/photo-1467746474745-41dd2c7524ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    'https://images.unsplash.com/photo-1591115765373-5207764f72e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
+    'https://images.unsplash.com/photo-1592819695396-064b9572a660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    'https://images.unsplash.com/photo-1571677246347-5040036b95cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80',
   ];
   final List<String> _titles = [
     "3D Design Illustrations class (2022 updated)",
@@ -251,7 +315,7 @@ class MockCourses {
   late final List<CourseModel> recommendedLessons = _titles
       .map(
         (title) => CourseModel(
-          id: "$_lessonIndex",
+          id: "id_${Random().nextInt(10)}_${Random().nextBool()}_${Random().nextInt(20)}/$_lessonIndex",
           title: title,
           description: _description[_lessonIndex],
           rates: (_random.nextInt(5) + _random.nextDouble()),
@@ -262,6 +326,10 @@ class MockCourses {
           sale: _random.nextBool() ? _random.nextDouble() : null,
           section: sections,
           haveCertificate: Random().nextBool(),
+          categories: _randomCategories(
+            categories,
+            1 + Random().nextInt(4),
+          ),
         ),
       )
       .toList();

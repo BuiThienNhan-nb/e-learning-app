@@ -21,7 +21,7 @@ class DefaultSliverAppBar extends StatelessWidget {
         margin: EdgeInsets.all(AppDimens.mediumWidthDimens),
         padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: AppColors.appColorBlue,
           borderRadius: BorderRadius.circular(AppDimens.largeRadius),
         ),
         child: SvgPicture.asset(

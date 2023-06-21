@@ -20,7 +20,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
         margin: EdgeInsets.all(AppDimens.mediumWidthDimens),
         padding: EdgeInsets.all(AppDimens.mediumWidthDimens),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: AppColors.appColorBlue,
           borderRadius: BorderRadius.circular(AppDimens.largeRadius),
         ),
         child: SvgPicture.asset(
@@ -40,7 +40,5 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-
-  /// Default Height of AppBar
   Size get preferredSize => const Size.fromHeight(56);
 }

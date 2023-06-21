@@ -64,7 +64,7 @@ class AppColors {
 
   static const Color white = Color(0xffFFFFFF);
 
-  static const Color appColorBlue = Color(0xff0099FF);
+  static const Color appColorBlue = Color(0xFF163172); // Color(0xff0099FF);
 
   static const Color temporaryDarkMode = Color(0xff051924);
 
@@ -74,7 +74,7 @@ class AppColors {
 
   static const Color iconDarkBasic = Color(0xffFFFFFF);
 
-  static const Color iconActive = Color(0xff0099FF);
+  static const Color iconActive = Color(0xFF163172); // Color(0xff0099FF);
 
   static const Color iconDisabled = Color(0xffCCCCCC);
 

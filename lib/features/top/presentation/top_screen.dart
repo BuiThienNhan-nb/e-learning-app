@@ -97,6 +97,7 @@ class _TopScreenState extends State<TopScreen> {
                 children: [
                   SingleChildScrollView(
                     controller: widget.presenter.scrollController,
+                    physics: const ClampingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

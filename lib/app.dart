@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
                   }
                 },
                 child: MaterialApp.router(
+                  scrollBehavior: const MyScrollBehavior(),
                   debugShowCheckedModeBanner: false,
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
@@ -53,4 +54,12 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyScrollBehavior extends ScrollBehavior {
+  const MyScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
 }

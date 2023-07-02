@@ -41,7 +41,7 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
   }
 
   @override
-  void handleSearch(String searchKey) async {
+  Future<void> handleSearch(String searchKey) async {
     if (searchKey.isEmpty || searchKey.trim().isEmpty) {
       _state = _state.copyWith(isShowClearButton: false);
       _state.searchController.clear();

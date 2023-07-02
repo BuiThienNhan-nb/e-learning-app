@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:e_learning_app/bases/presentation/atoms/default_app_bar.dart';
+import 'package:e_learning_app/core/factory/search_detaiL_factory.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
+import 'package:e_learning_app/features/search_detail/search_detail_presenter.dart';
+import 'package:e_learning_app/features/search_detail/search_detail_screen.dart';
 import 'package:e_learning_app/utils/mock/mock_teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +64,27 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final List<TeacherModel> dummyTeachers = MockTeachers().topTeachers;
 
+  void navigateToDetail(String keyword) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SearchDetailPresenter>(
+              create: (_) => makeSearchDetailPresenter(),
+              lazy: true,
+            ),
+            ChangeNotifierProvider<SearchPresenter>.value(
+              value: widget.presenter,
+            ),
+          ],
+          builder: (_, __) => SearchDetailView(
+            initKeyword: keyword,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -77,10 +102,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context, isShowClearButton, _) => SearchInput(
                   searchController: widget.presenter.searchController,
                   onChanged: widget.presenter.onKeywordChanged,
-                  onSearch: widget.presenter.handleSearch,
+                  onSearch: (keyword) async {
+                    await widget.presenter.handleSearch(keyword);
+                    navigateToDetail(keyword);
+                  },
                   isShowButton: widget.presenter.isShowClearButton,
                   onClearButton: widget.presenter.handleClearButton,
-                  onSubmitSearch: widget.presenter.handleSearch,
+                  onSubmitSearch: (keyword) async {
+                    await widget.presenter.handleSearch(keyword);
+                    navigateToDetail(keyword);
+                  },
                 ),
               ),
             ),
@@ -95,9 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: TagList(
                       spacing: 12,
                       paddingWrap: const EdgeInsets.symmetric(horizontal: 20),
-                      onTagTap: (keyword) {
-                        /// TODO: Handle navigate to search result
-                      },
+                      onTagTap: navigateToDetail,
                       tags: widget.presenter.historySearch,
                       title: 'Recently search',
                     ),
@@ -120,6 +149,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 childAspectRatio: 3,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
+                primary: false,
                 children: dummyTeachers
                     .map(
                       (teacher) => WGridTeacherItem(

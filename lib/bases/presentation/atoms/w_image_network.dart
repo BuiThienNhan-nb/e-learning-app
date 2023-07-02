@@ -18,16 +18,19 @@ class WImageNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      fit: fit,
-      imageUrl: imageUrl,
-      width: width,
-      height: height,
-      placeholder: (context, url) => Container(
-        constraints: const BoxConstraints.expand(),
-        color: AppColors.placeholderLightMode,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: CachedNetworkImage(
+        fit: fit,
+        imageUrl: imageUrl,
+        width: width,
+        height: height,
+        placeholder: (context, url) => Container(
+          constraints: const BoxConstraints.expand(),
+          color: AppColors.placeholderLightMode,
+        ),
+        errorWidget: (context, url, error) => const Placeholder(),
       ),
-      errorWidget: (context, url, error) => const Placeholder(),
     );
   }
 }

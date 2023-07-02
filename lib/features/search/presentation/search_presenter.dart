@@ -10,7 +10,7 @@ abstract class SearchPresenter implements ChangeNotifier {
 
   void handleTagTap(int selectIndex);
   void onKeywordChanged(String text);
-  void handleSearch(String text);
+  Future<void> handleSearch(String text);
   void fetchSearchLocal();
   void handleClearButton();
 }

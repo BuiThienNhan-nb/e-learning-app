@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../configs/colors.dart';
 import '../../../configs/dimens.dart';
-import '../../../configs/styles.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({
@@ -29,10 +28,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
           fit: BoxFit.scaleDown,
         ),
       ),
-      titleTextStyle: AppStyles.headline5TextStyle.copyWith(
-        color: AppColors.primaryColor,
-        fontWeight: FontWeight.w900,
-      ),
+      titleTextStyle: Theme.of(context).textTheme.displayMedium,
       title: Text(title),
       backgroundColor: AppColors.whiteColor,
       elevation: 0,

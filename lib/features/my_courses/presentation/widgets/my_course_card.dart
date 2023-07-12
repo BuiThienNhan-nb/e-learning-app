@@ -1,4 +1,4 @@
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';

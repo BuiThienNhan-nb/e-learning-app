@@ -7,7 +7,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../../../home/domain/entities/course_model.dart';
+import '../../../../top/domain/entities/course_model.dart';
 import '../../../domain/usecases/my_course_use_case.dart';
 import '../../../domain/usecases/my_course_use_cases/create_course_use_case.dart';
 

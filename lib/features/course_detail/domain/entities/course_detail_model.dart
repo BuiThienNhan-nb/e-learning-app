@@ -1,6 +1,8 @@
+import 'package:e_learning_app/features/top/domain/entities/category_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
+
 import '../../../../configs/formats.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
-import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 class CourseDetailModel extends CourseModel {
@@ -23,6 +25,7 @@ class CourseDetailModel extends CourseModel {
           sale: course.sale,
           section: course.section,
           haveCertificate: course.haveCertificate,
+          categories: course.categories,
         );
 
   @override
@@ -40,6 +43,7 @@ class CourseDetailModel extends CourseModel {
     TeacherModel? teacher,
     bool? isEnrolled,
     bool? haveCertificate,
+    List<CategoryModel>? categories,
   }) {
     return CourseDetailModel(
       course: CourseModel(
@@ -54,6 +58,7 @@ class CourseDetailModel extends CourseModel {
         sale: sale ?? this.sale,
         section: section ?? this.section,
         haveCertificate: haveCertificate ?? this.haveCertificate,
+        categories: categories ?? this.categories,
       ),
       teacher: teacher ?? this.teacher,
       isEnrolled: isEnrolled ?? this.isEnrolled,
@@ -90,6 +95,7 @@ class CourseDetailModel extends CourseModel {
       teacher,
       isEnrolled,
       haveCertificate,
+      categories,
     ];
   }
 }

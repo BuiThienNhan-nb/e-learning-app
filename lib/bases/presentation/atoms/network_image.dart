@@ -42,7 +42,7 @@ class DefaultNetworkImage extends StatelessWidget {
           ),
         ),
         errorWidget: (context, url, error) {
-          log(error.toString());
+          print(error.toString());
           return const Center(child: Icon(Icons.error));
         },
         imageBuilder: (context, imageProvider) => Container(

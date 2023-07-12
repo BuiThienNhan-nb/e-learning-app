@@ -11,7 +11,7 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
 import '../../../../course_detail/domain/entities/course_detail_model.dart';
 import '../../../../course_detail/domain/usecases/course_detail_use_case/get_course_detail_use_case.dart';
-import '../../../../home/domain/entities/course_model.dart';
+import '../../../../top/domain/entities/course_model.dart';
 import '../../../../home/domain/entities/section_model.dart';
 import '../../../domain/usecases/my_course_use_case.dart';
 import '../../../domain/usecases/my_course_use_cases/delete_section_use_case.dart';

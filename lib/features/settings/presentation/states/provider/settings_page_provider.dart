@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -42,7 +40,7 @@ class SettingsPageProvider extends ChangeNotifier {
     datePickerController.dispose();
     phoneNumberController.dispose();
 
-    log("dispose settings_page_provider");
+    print("dispose settings_page_provider");
 
     super.dispose();
   }

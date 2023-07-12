@@ -38,7 +38,7 @@ class LiveStreamPage extends StatelessWidget {
           });
         }
         if (store.createState == BaseSate.error || store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -76,7 +76,7 @@ class LiveStreamPage extends StatelessWidget {
           body: RefreshIndicator(
             onRefresh: () async {
               store.getCurrentLiveStreams();
-              log("Refreshing...");
+              print("Refreshing...");
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),

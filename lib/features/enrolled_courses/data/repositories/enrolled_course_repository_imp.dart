@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/platform/network_status.dart';
 import 'package:e_learning_app/features/enrolled_courses/data/datasources/enrolled_course_data_source.dart';
 import 'package:e_learning_app/features/enrolled_courses/domain/repositories/enrolled_course_repository.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 

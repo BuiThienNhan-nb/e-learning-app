@@ -50,7 +50,7 @@ class EditProfilePage extends StatelessWidget {
           }
           if (store.updateState == BaseSate.error ||
               store.errorMessage != null) {
-            log(store.errorMessage ?? "Error");
+            print(store.errorMessage ?? "Error");
             WidgetsBinding.instance.addPostFrameCallback((_) {
               AppLoading.dismissLoadingDialog(context);
               showDialog(
@@ -135,7 +135,7 @@ class EditProfilePage extends StatelessWidget {
                             .parse(provider.datePickerController.text.trim());
                         GetIt.I<AppProvider>().user.gender = AppValues
                             .instance.appSupportedGender[provider.genderIndex];
-                        log("updated user: ${GetIt.I<AppProvider>().user}");
+                        print("updated user: ${GetIt.I<AppProvider>().user}");
                         store.updateProfile(GetIt.I<AppProvider>().user);
                       },
                       title: "Update",

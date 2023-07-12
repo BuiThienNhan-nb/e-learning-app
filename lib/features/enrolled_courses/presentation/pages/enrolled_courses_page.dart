@@ -20,58 +20,62 @@ class EnrolledCoursesPage extends StatelessWidget {
     // final List<CourseModel> courses = GetIt.I<MockCourses>().recommendedLessons;
     final store = GetIt.I<EnrolledCourseStore>();
 
-    return Observer(
-      builder: (_) {
-        if (store.state == BaseSate.init) {
-          store.getCourseByListId(GetIt.I<AppProvider>().user.courseJoined);
-        }
+    return RefreshIndicator(
+      onRefresh: () async =>
+          store.getCourseByListId(GetIt.I<AppProvider>().user.courseJoined),
+      child: Observer(
+        builder: (_) {
+          if (store.state == BaseSate.init) {
+            store.getCourseByListId(GetIt.I<AppProvider>().user.courseJoined);
+          }
 
-        return store.state == BaseSate.loaded
-            ? SafeArea(
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    const DefaultSliverAppBar(title: "Enrolled Courses"),
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          ListView.builder(
-                            itemCount: store.courses!.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) => GestureDetector(
-                              onTap: () => GoRouter.of(context).pushNamed(
-                                "course_detail",
-                                params: {
-                                  'courseId': store.courses![index].id,
-                                },
-                              ),
-                              child: EnrolledCourseCard(
-                                course: store.courses![index],
+          return store.state == BaseSate.loaded
+              ? SafeArea(
+                  child: CustomScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      const DefaultSliverAppBar(title: "Enrolled Courses"),
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            ListView.builder(
+                              itemCount: store.courses!.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) => GestureDetector(
+                                onTap: () => GoRouter.of(context).pushNamed(
+                                  "course_detail",
+                                  params: {
+                                    'courseId': store.courses![index].id,
+                                  },
+                                ),
+                                child: EnrolledCourseCard(
+                                  course: store.courses![index],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            : SafeArea(
-                child: Scaffold(
-                  appBar: const DefaultAppBar(title: "Enrolled Courses"),
-                  body: Center(
-                    child: store.state == BaseSate.loading
-                        ? const LoadingWidget()
-                        : Text(
-                            store.errorMessage ?? "Unexpected error!",
-                            style: AppStyles.subtitle1TextStyle,
-                          ),
+                    ],
                   ),
-                ),
-              );
-      },
+                )
+              : SafeArea(
+                  child: Scaffold(
+                    appBar: const DefaultAppBar(title: "Enrolled Courses"),
+                    body: Center(
+                      child: store.state == BaseSate.loading
+                          ? const LoadingWidget()
+                          : Text(
+                              store.errorMessage ?? "Unexpected error!",
+                              style: AppStyles.subtitle1TextStyle,
+                            ),
+                    ),
+                  ),
+                );
+        },
+      ),
     );
   }
 }

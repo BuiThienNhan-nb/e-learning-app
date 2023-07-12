@@ -54,7 +54,7 @@ class CourseRateDataSourceImp extends Api implements CourseRateDataSource {
       if (data["data"]["success"] == true) {
         score = data["data"]["data"]["score"];
       }
-      log(score.toString());
+      print(score.toString());
       return Right(score);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

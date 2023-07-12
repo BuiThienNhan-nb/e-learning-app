@@ -76,7 +76,7 @@ class UpdateCoursePage extends StatelessWidget {
           });
         }
         if (store.updateState == BaseSate.error || store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -104,7 +104,7 @@ class UpdateCoursePage extends StatelessWidget {
         }
         if (store.createSectionState == BaseSate.error ||
             store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -134,7 +134,7 @@ class UpdateCoursePage extends StatelessWidget {
         }
         if (store.deleteSectionState == BaseSate.error ||
             store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -178,7 +178,8 @@ class UpdateCoursePage extends StatelessWidget {
               children: [
                 UpdateCourseInformation(
                   onCourseInformationSaved: () {
-                    log("Saved: ${provider.course} - ${provider.isUpdateImage}");
+                    print(
+                        "Saved: ${provider.course} - ${provider.isUpdateImage}");
                     store.updateCourseInformation(
                       provider.course,
                       provider.isUpdateImage,

@@ -185,7 +185,7 @@ class _UpdateSectionItemsState extends State<UpdateSectionItems> {
 
   @override
   void dispose() {
-    log("dispose create section");
+    print("dispose create section");
     super.dispose();
   }
 

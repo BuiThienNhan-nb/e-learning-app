@@ -48,12 +48,13 @@ class CourseSectionWidget extends StatelessWidget {
           children: [
             ListView.builder(
               itemCount: section.lessons.length,
+              primary: false,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.only(
-                  top: AppDimens.mediumHeightDimens,
+                  // top: AppDimens.mediumHeightDimens,
                   bottom: AppDimens.mediumHeightDimens,
                 ),
                 child: LessonBuildItem(

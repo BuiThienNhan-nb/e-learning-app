@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 abstract class MyCourseRepository {

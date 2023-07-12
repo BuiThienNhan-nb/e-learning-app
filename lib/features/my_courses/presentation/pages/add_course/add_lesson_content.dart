@@ -234,7 +234,7 @@ class _AddLessonItemState extends State<AddLessonItem> {
     for (var section in widget.provider.sections) {
       for (var lesson in section.lessons) {
         if (lesson.order == widget.order) {
-          logger.log("detect lesson");
+          print("detect lesson");
           lesson.videoUrl = sourceController.text.trim();
           continue;
         }
@@ -294,7 +294,7 @@ class _AddLessonItemState extends State<AddLessonItem> {
                     for (var section in widget.provider.sections) {
                       for (var lesson in section.lessons) {
                         if (lesson.order == widget.order) {
-                          logger.log("detect lesson");
+                          print("detect lesson");
                           lesson.title = titleController.text.trim();
                           lesson.videoUrl = sourceController.text.trim();
                           return toggle();
@@ -302,7 +302,7 @@ class _AddLessonItemState extends State<AddLessonItem> {
                       }
                     }
                   }
-                  logger.log("cannot detect lesson");
+                  print("cannot detect lesson");
                   return toggle();
                 },
                 child: SizedBox(

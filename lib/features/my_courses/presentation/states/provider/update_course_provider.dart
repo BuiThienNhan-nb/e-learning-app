@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../home/domain/entities/course_model.dart';
+import '../../../../top/domain/entities/course_model.dart';
 import '../../../../home/domain/entities/lesson_model.dart';
 import '../../../../home/domain/entities/section_model.dart';
 
@@ -22,6 +22,7 @@ class UpdateCourseProvider extends ChangeNotifier {
     price: 0,
     section: const [],
     haveCertificate: false,
+    categories: const [],
   );
   CourseModel get course => _course;
   int _stepIndex = 0;

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';

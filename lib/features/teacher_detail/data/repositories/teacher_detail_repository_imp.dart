@@ -6,7 +6,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/platform/network_status.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 import '../../domain/repositories/teacher_detail_repository.dart';
 import '../datasources/teacher_detail_data_source.dart';
 

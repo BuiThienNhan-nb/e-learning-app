@@ -75,7 +75,7 @@ class CourseDetailPage extends StatelessWidget {
           });
         }
         if (store.joinState == BaseSate.error || store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -97,16 +97,12 @@ class CourseDetailPage extends StatelessWidget {
           );
         }
 
-        return SafeArea(
-          child: store.state == BaseSate.loading
-              ? const Scaffold(
-                  body: LoadingWidget(),
-                )
+        return Scaffold(
+          body: store.state == BaseSate.loading
+              ? const LoadingWidget()
               : store.state == BaseSate.error
-                  ? Scaffold(
-                      body: Center(
-                        child: Text(store.errorMessage ?? "Error!!"),
-                      ),
+                  ? Center(
+                      child: Text(store.errorMessage ?? "Error!!"),
                     )
                   : Stack(
                       fit: StackFit.expand,
@@ -192,7 +188,7 @@ class CourseDetailPage extends StatelessWidget {
                                 padding:
                                     EdgeInsets.all(AppDimens.mediumWidthDimens),
                                 child: TabBarView(
-                                  physics: const BouncingScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   children: [
                                     CourseAboutPage(
                                         course: store.courseDetail!),

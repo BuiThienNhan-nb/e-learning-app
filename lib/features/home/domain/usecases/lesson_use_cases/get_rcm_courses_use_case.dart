@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
-import '../../entities/course_model.dart';
 import '../../repositories/get_rcm_courses_repository.dart';
 
 @lazySingleton

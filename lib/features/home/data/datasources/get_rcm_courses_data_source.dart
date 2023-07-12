@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,7 +11,6 @@ import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
 import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
-import '../../domain/entities/course_model.dart';
 
 abstract class GetRecommendedCoursesDataSource {
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons();
@@ -26,7 +26,7 @@ class GetRecommendedCoursesDataSourceImp extends Api
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons() async {
     try {
       final data = await post(
-        Env.instance.localUrl + _getRecommendedCourses,
+        Env.instance.recommendUrl + _getRecommendedCourses,
         data: {
           "userId": GetIt.I<AppProvider>().user.id,
         },
@@ -40,7 +40,7 @@ class GetRecommendedCoursesDataSourceImp extends Api
             (map) => CourseModel.fromMap(map),
           )
           .toList();
-      log(courses.toString());
+      print(courses.toString());
       return Right(courses);
     } catch (e) {
       return Left(ServerFailure("$e"));

@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/bases/presentation/atoms/default_app_bar.dart';
-import 'package:e_learning_app/core/factory/search_detaiL_factory.dart';
+import 'package:e_learning_app/core/factory/search/search_detaiL_factory.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:e_learning_app/features/search_detail/search_detail_presenter.dart';
 import 'package:e_learning_app/features/search_detail/search_detail_screen.dart';
@@ -27,7 +25,9 @@ class _SearchViewState extends State<SearchView> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     presenter = context.read<SearchPresenter>();
-    presenter.fetchSearchLocal();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      presenter.fetchSearchLocal();
+    });
     presenter.addListener(_searchObserver);
     super.initState();
   }
@@ -119,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Selector<SearchPresenter, int>(
                 selector: (_, presenter) => presenter.historySearch.length,
                 builder: (_, __, ___) {
-                  log(widget.presenter.historySearch.toString());
+                  print(widget.presenter.historySearch.toString());
 
                   return Align(
                     alignment: Alignment.centerLeft,

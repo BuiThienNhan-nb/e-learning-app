@@ -46,7 +46,8 @@ class CourseAboutPage extends StatelessWidget {
         }
 
         return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          primary: false,
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -84,8 +85,7 @@ class CourseAboutPage extends StatelessWidget {
                                   useSafeArea: true,
                                   builder: (context) => CourseAddReviewDialog(
                                     onFieldSubmitted: (review, rate) async {
-                                      logger
-                                          .log("review: $review / rate: $rate");
+                                      print("review: $review / rate: $rate");
                                       Navigator.of(context).pop();
                                       store.rateCourse(
                                         CourseReviewModel(

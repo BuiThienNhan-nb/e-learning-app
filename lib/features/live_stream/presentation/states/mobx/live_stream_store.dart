@@ -143,7 +143,7 @@ abstract class _LiveStreamStore with Store {
             : errorMessage = LocaleKeys.serverUnexpectedError.tr();
       },
       (r) {
-        log("deleteLiveStream Success: $r");
+        print("deleteLiveStream Success: $r");
       },
     );
   }
@@ -178,7 +178,7 @@ abstract class _LiveStreamStore with Store {
             : errorMessage = LocaleKeys.serverUnexpectedError.tr();
       },
       (r) {
-        log("createLiveStream Success: $r");
+        print("createLiveStream Success: $r");
       },
     );
   }

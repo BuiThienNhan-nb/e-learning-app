@@ -1,4 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
+import 'package:dartz/dartz.dart' as darzt;
+import 'package:e_learning_app/core/error/failures.dart';
+import 'package:e_learning_app/core/usecases/base_use_case.dart';
+import 'package:e_learning_app/features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:e_learning_app/features/presenters/top/top_state.dart';
@@ -9,8 +16,12 @@ import '../../../utils/app_utils.dart';
 
 class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
   TopState _state;
+  final GetRecommendedCoursesUseCase _getRcmCourses;
 
-  ProviderTopPresenter(this._state);
+  ProviderTopPresenter(
+    this._state,
+    this._getRcmCourses,
+  );
 
   @override
   int get beforeRankingIndex => _state.rankingIndex;
@@ -37,7 +48,52 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
 
   @override
   Future<void> fetchRankingCourses() {
-    throw UnimplementedError();
+    return _fetchCoursesByType(CoursesType.recommend);
+  }
+
+  Future<void> _fetchCoursesByType(CoursesType type) async {
+    final key = type.name;
+    final loadingMap = _state.isListLoading;
+    final coursesMap = _state.coursesMap;
+    final errorMap = _state.listErrorMessage;
+    darzt.Either<Failure, List<CourseModel>> data;
+
+    if (loadingMap[key] != true) {
+      loadingMap[key] = true;
+      notifyListeners();
+    }
+    if (errorMap[key] != null && errorMap[key]!.isNotEmpty) {
+      errorMap[key] = '';
+      notifyListeners();
+    }
+
+    try {
+      switch (type) {
+        case CoursesType.recommend:
+          data = await _getRcmCourses(NoParams());
+          break;
+        default:
+          throw UnimplementedError();
+      }
+      data.fold(
+        (l) {
+          errorMap[key] = l.message.toString();
+          _state = _state.copyWith(listErrorMessage: errorMap);
+        },
+        (r) {
+          coursesMap[key] = r;
+          print('provider_top_presenter - getRcmCourses: $r');
+          _state = _state.copyWith(coursesMap: coursesMap);
+        },
+      );
+    } catch (e) {
+      errorMap[key] = e.toString();
+      _state = _state.copyWith(listErrorMessage: errorMap);
+    } finally {
+      loadingMap[key] = false;
+      _state = _state.copyWith(isListLoading: loadingMap);
+      notifyListeners();
+    }
   }
 
   @override
@@ -46,7 +102,7 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
   }
 
   @override
-  Map<String, String?> get getErrorsMap => _state.listErrorMessage;
+  Map<String, String> get getErrorsMap => _state.listErrorMessage;
 
   @override
   String? getListErrorMsg(String key) {
@@ -80,7 +136,10 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
       _state.scrollController.jumpTo(0);
     }
     _state.scrollController.addListener(_scrollOffsetListener);
-    await _callApi();
+    await Future.wait([
+      _callApi(),
+      fetchRankingCourses(),
+    ]);
   }
 
   void _scrollOffsetListener() {

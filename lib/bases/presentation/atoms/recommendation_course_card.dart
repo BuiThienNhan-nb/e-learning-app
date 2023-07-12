@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:e_learning_app/bases/presentation/atoms/bookmark_icon.dart';
 import 'package:e_learning_app/bases/presentation/atoms/network_image.dart';
 import 'package:e_learning_app/configs/styles.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

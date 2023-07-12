@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
-import '../../../../home/domain/entities/course_model.dart';
+import '../../../../top/domain/entities/course_model.dart';
 import '../../repositories/my_course_repository.dart';
 
 class GetMyCourse extends UseCase<List<CourseModel>, NoParams> {

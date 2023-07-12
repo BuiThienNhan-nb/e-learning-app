@@ -238,7 +238,7 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
                     for (var section in provider.course.section) {
                       for (var lesson in section.lessons) {
                         if (lesson.order == widget.order) {
-                          log("detect lesson");
+                          print("detect lesson");
                           lesson.title = titleController.text.trim();
                           lesson.videoUrl = sourceController.text.trim();
                           return toggle();
@@ -246,7 +246,7 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
                       }
                     }
                   }
-                  log("cannot detect lesson");
+                  print("cannot detect lesson");
                   return toggle();
                 },
                 child: SizedBox(

@@ -18,13 +18,13 @@ class VerifyEmailDataSourceImp extends Api implements VerifyEmailDataSource {
   @override
   Future<Either<Failure, bool>> verifyEmail(String token) async {
     try {
-      log(Env.instance.baseUrl + _verifyEmailEndPoint + token);
+      print(Env.instance.baseUrl + _verifyEmailEndPoint + token);
 
       final data = await get(
         Env.instance.baseUrl + _verifyEmailEndPoint + token,
       );
 
-      log(data.toString());
+      print(data.toString());
 
       return Right(
         (data["success"] ?? false) as bool,

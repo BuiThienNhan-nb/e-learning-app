@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:e_learning_app/features/settings/presentation/widgets/update_avatar_bottom_sheet.dart';
 
 import '../../../../configs/colors.dart';
 import '../../../../configs/styles.dart';
@@ -109,7 +109,7 @@ class SettingsPage extends StatelessWidget {
             }
             if (store.updateState == BaseSate.error ||
                 store.errorMessage != null) {
-              log(store.errorMessage ?? "Error");
+              print(store.errorMessage ?? "Error");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppLoading.dismissLoadingDialog(context);
                 showDialog(
@@ -146,10 +146,10 @@ class SettingsPage extends StatelessWidget {
                   GetTeacherByIdParams(GetIt.I<AppProvider>().user.id),
                 );
                 result.fold(
-                  (l) => log("Cannot get"),
+                  (l) => print("Cannot get"),
                   (r) => GetIt.I<AppProvider>().user = r,
                 );
-                log("Refreshing...");
+                print("Refreshing...");
               },
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -160,20 +160,20 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       SizedBox(height: AppDimens.largeHeightDimens),
                       GestureDetector(
-                        // onTap: () => showMaterialModalBottomSheet(
-                        //   context: context,
-                        //   enableDrag: true,
-                        //   useRootNavigator: true,
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.only(
-                        //       topLeft: Radius.circular(AppDimens.itemRadius),
-                        //       topRight: Radius.circular(AppDimens.itemRadius),
-                        //     ),
-                        //   ),
-                        //   builder: (context) => UpdateAvatarBottomSheet(
-                        //     store: store,
-                        //   ),
-                        // ),
+                        onTap: () => showModalBottomSheet(
+                          context: context,
+                          enableDrag: true,
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(AppDimens.itemRadius),
+                              topRight: Radius.circular(AppDimens.itemRadius),
+                            ),
+                          ),
+                          builder: (context) => UpdateAvatarBottomSheet(
+                            store: store,
+                          ),
+                        ),
                         child: Container(
                           height: AppDimens.extraLargeHeightDimens * 4,
                           width: AppDimens.extraLargeWidthDimens * 4,
@@ -267,7 +267,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   void pushPaymentBrowser(String url) {
-    log(url);
+    print(url);
     final MyInAppBrowser browser = MyInAppBrowser();
     // const String url =
     //     "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1000000&vnp_Command=pay&vnp_CreateDate=20221217133134&vnp_CurrCode=VND&vnp_ExpireDate=20221217143134&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=77da51a6-fae1-48ef-aee0-260100849e70&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A3000%2Fvnpay_return&vnp_TmnCode=LAXZGV5C&vnp_TxnRef=133134&vnp_Version=2.1.0&vnp_SecureHash=dc911bdf7e0b33fd362473d32795a880cbc85e0ee8ca058c2744fa12363dd292ec9a3479c4eb555785756296200458c8eb9f108770dcca74d0d09be7cd91c179";

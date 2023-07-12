@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    logger.log("dispose sign up");
+    print("dispose sign up");
     super.dispose();
   }
 
@@ -61,7 +61,6 @@ class _SignUpPageState extends State<SignUpPage> {
             }
             if (signUpStore!.state == BaseSate.error ||
                 signUpStore!.errorMessage != null) {
-              logger.log(signUpStore!.errorMessage ?? "Error");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppLoading.dismissLoadingDialog(context);
                 showDialog(

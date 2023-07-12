@@ -55,7 +55,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 }
                 if (store.resetPasswordState == BaseSate.error ||
                     store.errorMessage != null) {
-                  log(store.errorMessage ?? "Error");
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     AppLoading.dismissLoadingDialog(context);
                     showDialog(
@@ -134,7 +133,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           submit: () {
                             if (provider.passwordKey.currentState!.validate()) {
                               // Do resend email logic
-                              log("Resend Email clicked!");
+                              print("Resend Email clicked!");
                             }
                           },
                           title: LocaleKeys.resendEmail.tr(),

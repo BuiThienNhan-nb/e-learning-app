@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:e_learning_app/bases/presentation/atoms/lazy_index_stack.dart';
-import 'package:e_learning_app/core/factory/search_factory.dart';
+import 'package:e_learning_app/core/factory/search/search_factory.dart';
+import 'package:e_learning_app/core/factory/top/top_factory.dart';
 import 'package:e_learning_app/features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
 import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
 import 'package:e_learning_app/features/main/presentation/mobx/main_page_store.dart';
-import 'package:e_learning_app/features/presenters/top/provider_top_presenter.dart';
-import 'package:e_learning_app/features/presenters/top/top_state.dart';
 import 'package:e_learning_app/features/search/presentation/search_presenter.dart';
 import 'package:e_learning_app/features/search/presentation/search_screen.dart';
 import 'package:e_learning_app/features/top/presentation/top_presenter.dart';
@@ -98,7 +97,7 @@ class _MainPageState extends State<MainPage>
             children: [
               // const HomePage(),
               ChangeNotifierProvider<TopPresenter>(
-                create: (_) => ProviderTopPresenter(TopState.initial()),
+                create: (_) => makeTopPresenter(),
                 child: const TopView(),
               ),
               // const MyTransactionsPage(),

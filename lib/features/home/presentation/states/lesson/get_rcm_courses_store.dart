@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/usecases/base_use_case.dart';
 import 'package:e_learning_app/features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -8,7 +9,6 @@ import 'package:mobx/mobx.dart';
 import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../generated/translations/locale_keys.g.dart';
-import '../../../domain/entities/course_model.dart';
 
 part 'get_rcm_courses_store.g.dart';
 

@@ -87,7 +87,10 @@ class RowUpdateAvatarItem extends StatelessWidget {
             ),
             SizedBox(width: AppDimens.largeWidthDimens),
             Expanded(
-              child: Text(title),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
             ),
           ],
         ),

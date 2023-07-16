@@ -58,7 +58,7 @@ class _DoExamOClockWidgetState extends State<DoExamOClockWidget>
     return Consumer<DoExamProvider>(
       builder: (_, provider, __) {
         if (provider.isDone) {
-          log("DoExam is done!");
+          print("DoExam is done!");
           controller.stop(canceled: true);
         }
 

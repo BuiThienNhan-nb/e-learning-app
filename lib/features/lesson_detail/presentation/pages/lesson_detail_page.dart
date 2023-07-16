@@ -20,51 +20,51 @@ class LessonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(" ${lesson.title}"),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            lesson.videoUrl == null
-                ? Container(
-                    color: AppColors.neutral.shade900,
-                    height: 0.25.sh,
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        "This lesson doesn't contain a video!",
-                        style: AppStyles.headline6TextStyle.copyWith(
-                          color: AppColors.whiteColor,
-                        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" ${lesson.title}"),
+        centerTitle: true,
+        actionsIconTheme: const IconThemeData(color: AppColors.iconLightBasic),
+        titleTextStyle: const TextStyle(color: AppColors.textLightBasic),
+      ),
+      body: Column(
+        children: [
+          lesson.videoUrl == null
+              ? Container(
+                  color: AppColors.neutral.shade900,
+                  height: 0.25.sh,
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      "This lesson doesn't contain a video!",
+                      style: AppStyles.headline6TextStyle.copyWith(
+                        color: AppColors.whiteColor,
                       ),
                     ),
-                  )
-                : VideoPlayerWidget(videoUrl: lesson.videoUrl!),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (p0, p1) => LessonCommentWidget(
-                  lessonId: lessonId,
-                ),
+                  ),
+                )
+              : VideoPlayerWidget(videoUrl: lesson.videoUrl!),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (p0, p1) => LessonCommentWidget(
+                lessonId: lessonId,
               ),
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: "Do Exam",
-          foregroundColor: AppColors.whiteColor,
-          backgroundColor: AppColors.primaryColor,
-          onPressed: () => GoRouter.of(context).pushNamed(
-            "do_exam",
-            params: {
-              "lessonId": lessonId,
-              "examId": lessonId,
-            },
           ),
-          child: const Icon(Icons.document_scanner),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Do Exam",
+        foregroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.primaryColor,
+        onPressed: () => GoRouter.of(context).pushNamed(
+          "do_exam",
+          params: {
+            "lessonId": lessonId,
+            "examId": lessonId,
+          },
         ),
+        child: const Icon(Icons.document_scanner),
       ),
     );
   }

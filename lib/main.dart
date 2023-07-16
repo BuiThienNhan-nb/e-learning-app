@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/core/app/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +33,7 @@ Future<void> _initDependency() async {
 Future<void> _initServices() async {
   isPhysicDevice = await SafeDevice.isRealDevice;
   await dotenv.load(fileName: ".env").then(
-        (_) => log(Env.instance.localUrl),
+        (_) => print(Env.instance.baseUrl),
       );
   await AppLocal.instance.init();
   await Firebase.initializeApp(

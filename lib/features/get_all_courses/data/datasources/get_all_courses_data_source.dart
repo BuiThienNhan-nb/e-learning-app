@@ -7,7 +7,7 @@ import '../../../../bases/services/api_exception.dart';
 import '../../../../configs/env.dart';
 import '../../../../core/error/failures.dart';
 import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 
 abstract class GetAllCoursesDataSource {
   Future<Either<Failure, List<CourseModel>>> getAllCourses();

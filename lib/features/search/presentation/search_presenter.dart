@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class SearchPresenter implements ChangeNotifier {
@@ -7,10 +8,14 @@ abstract class SearchPresenter implements ChangeNotifier {
   bool get isShowClearButton;
   String? get errorMessage;
   String? get searchKey;
+  List<TeacherModel> get teachers;
+  bool get isTeacherLoading;
+  String? get fetchTeacherErrorMessage;
 
   void handleTagTap(int selectIndex);
   void onKeywordChanged(String text);
-  void handleSearch(String text);
+  Future<void> handleSearch(String text);
   void fetchSearchLocal();
   void handleClearButton();
+  void fetchTeachers();
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/dimens.dart';
@@ -19,7 +19,7 @@ class LessonCommentTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = GetIt.I<LessonDetailPageProvider>();
+    final provider = context.read<LessonDetailPageProvider>();
     return TextField(
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(

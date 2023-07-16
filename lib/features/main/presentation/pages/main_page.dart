@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:e_learning_app/bases/presentation/atoms/lazy_index_stack.dart';
-import 'package:e_learning_app/core/factory/search_factory.dart';
+import 'package:e_learning_app/core/factory/search/search_factory.dart';
+import 'package:e_learning_app/core/factory/top/top_factory.dart';
 import 'package:e_learning_app/features/enrolled_courses/presentation/pages/enrolled_courses_page.dart';
 import 'package:e_learning_app/features/live_stream/presentation/pages/live_stream_page.dart';
 import 'package:e_learning_app/features/main/presentation/mobx/main_page_store.dart';
-import 'package:e_learning_app/features/presenters/top/provider_top_presenter.dart';
-import 'package:e_learning_app/features/presenters/top/top_state.dart';
 import 'package:e_learning_app/features/search/presentation/search_presenter.dart';
 import 'package:e_learning_app/features/search/presentation/search_screen.dart';
 import 'package:e_learning_app/features/top/presentation/top_presenter.dart';
@@ -96,7 +97,7 @@ class _MainPageState extends State<MainPage>
             children: [
               // const HomePage(),
               ChangeNotifierProvider<TopPresenter>(
-                create: (_) => ProviderTopPresenter(TopState.initial()),
+                create: (_) => makeTopPresenter(),
                 child: const TopView(),
               ),
               // const MyTransactionsPage(),
@@ -121,87 +122,90 @@ class _MainPageState extends State<MainPage>
               ),
             ],
           ),
-          bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-              splashFactory: NoSplash.splashFactory,
-            ),
-            child: BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              selectedFontSize: 0,
-              unselectedFontSize: 0,
-              currentIndex: store.pageIndex,
-              elevation: 0,
-              backgroundColor: const Color(0x00ffffff),
-              type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  label: 'Home',
-                  icon: BtmNavItem(
-                    btnName: 'Home',
-                    isActive: false,
-                    iconPath: 'assets/icons/ic_home.svg',
+          bottomNavigationBar: SizedBox(
+            height: Platform.isIOS ? 110 : 90,
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                splashFactory: NoSplash.splashFactory,
+              ),
+              child: BottomNavigationBar(
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                selectedFontSize: 0,
+                unselectedFontSize: 0,
+                currentIndex: store.pageIndex,
+                elevation: 0,
+                backgroundColor: const Color(0x00ffffff),
+                type: BottomNavigationBarType.fixed,
+                items: const [
+                  BottomNavigationBarItem(
+                    label: 'Home',
+                    icon: BtmNavItem(
+                      btnName: 'Home',
+                      isActive: false,
+                      iconPath: 'assets/icons/ic_home.svg',
+                    ),
+                    activeIcon: BtmNavItem(
+                      btnName: 'Home',
+                      isActive: true,
+                      iconPath: 'assets/icons/ic_home.svg',
+                    ),
                   ),
-                  activeIcon: BtmNavItem(
-                    btnName: 'Home',
-                    isActive: true,
-                    iconPath: 'assets/icons/ic_home.svg',
+                  BottomNavigationBarItem(
+                    label: 'Search',
+                    icon: BtmNavItem(
+                      btnName: 'Search',
+                      isActive: false,
+                      iconPath: 'assets/icons/ic_search.svg',
+                    ),
+                    activeIcon: BtmNavItem(
+                      btnName: 'Search',
+                      isActive: true,
+                      iconPath: 'assets/icons/ic_search.svg',
+                    ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Search',
-                  icon: BtmNavItem(
-                    btnName: 'Search',
-                    isActive: false,
-                    iconPath: 'assets/icons/ic_search.svg',
+                  BottomNavigationBarItem(
+                    label: 'My List',
+                    icon: BtmNavItem(
+                      btnName: 'My List',
+                      isActive: false,
+                      iconPath: 'assets/icons/ic_list.svg',
+                    ),
+                    activeIcon: BtmNavItem(
+                      btnName: 'My List',
+                      isActive: true,
+                      iconPath: 'assets/icons/ic_list.svg',
+                    ),
                   ),
-                  activeIcon: BtmNavItem(
-                    btnName: 'Search',
-                    isActive: true,
-                    iconPath: 'assets/icons/ic_search.svg',
+                  BottomNavigationBarItem(
+                    label: 'Movie',
+                    icon: BtmNavItem(
+                      btnName: 'LiveStream',
+                      isActive: false,
+                      iconPath: 'assets/icons/ic_movie.svg',
+                    ),
+                    activeIcon: BtmNavItem(
+                      btnName: 'LiveStream',
+                      isActive: true,
+                      iconPath: 'assets/icons/ic_movie.svg',
+                    ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  label: 'My List',
-                  icon: BtmNavItem(
-                    btnName: 'My List',
-                    isActive: false,
-                    iconPath: 'assets/icons/ic_list.svg',
+                  BottomNavigationBarItem(
+                    label: 'Profile',
+                    icon: BtmNavItem(
+                      btnName: 'Profile',
+                      isActive: false,
+                      iconPath: 'assets/icons/ic_profile.svg',
+                    ),
+                    activeIcon: BtmNavItem(
+                      btnName: 'Profile',
+                      isActive: true,
+                      iconPath: 'assets/icons/ic_profile.svg',
+                    ),
                   ),
-                  activeIcon: BtmNavItem(
-                    btnName: 'My List',
-                    isActive: true,
-                    iconPath: 'assets/icons/ic_list.svg',
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Movie',
-                  icon: BtmNavItem(
-                    btnName: 'LiveStream',
-                    isActive: false,
-                    iconPath: 'assets/icons/ic_movie.svg',
-                  ),
-                  activeIcon: BtmNavItem(
-                    btnName: 'LiveStream',
-                    isActive: true,
-                    iconPath: 'assets/icons/ic_movie.svg',
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Profile',
-                  icon: BtmNavItem(
-                    btnName: 'Profile',
-                    isActive: false,
-                    iconPath: 'assets/icons/ic_profile.svg',
-                  ),
-                  activeIcon: BtmNavItem(
-                    btnName: 'Profile',
-                    isActive: true,
-                    iconPath: 'assets/icons/ic_profile.svg',
-                  ),
-                ),
-              ],
-              onTap: (index) => store.onPageChanged(index),
+                ],
+                onTap: (index) => store.onPageChanged(index),
+              ),
             ),
           ),
           // BottomNavigationBar(

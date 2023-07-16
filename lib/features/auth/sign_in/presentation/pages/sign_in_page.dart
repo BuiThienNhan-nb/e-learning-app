@@ -45,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
-    logger.log("dispose sign in");
+    print("dispose sign in");
     super.dispose();
   }
 
@@ -65,7 +65,6 @@ class _SignInPageState extends State<SignInPage> {
             }
             if (signInStore!.state == BaseSate.error ||
                 signInStore!.errorMessage != null) {
-              logger.log(signInStore!.errorMessage ?? "Error");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppLoading.dismissLoadingDialog(context);
                 showDialog(
@@ -175,7 +174,7 @@ class BuildSignInPage extends StatelessWidget {
                     final email = provider.emailController.text.trim();
                     final password = provider.passwordController.text.trim();
 
-                    logger.log("submitAccount: $email / $password");
+                    print("submitAccount: $email / $password");
 
                     authStore.signIn(email, password);
                   }

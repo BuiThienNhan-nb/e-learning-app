@@ -26,7 +26,7 @@ class RoomWebViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // late InAppWebViewController controller;
-    log("https://tlk.li$id");
+    print("https://tlk.li$id");
     final store = context.read<LiveStreamStore>();
 
     return Observer(
@@ -38,7 +38,7 @@ class RoomWebViewPage extends StatelessWidget {
           });
         }
         if (store.deleteState == BaseSate.error || store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -63,10 +63,10 @@ class RoomWebViewPage extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             if (id.compareTo("/${GetIt.I<AppProvider>().user.id}") != 0) {
-              log("Pop LiveStream room!!");
+              print("Pop LiveStream room!!");
               return true;
             }
-            log("Delete LiveStream room!!");
+            print("Delete LiveStream room!!");
             store.deleteLiveStream();
             return false;
           },

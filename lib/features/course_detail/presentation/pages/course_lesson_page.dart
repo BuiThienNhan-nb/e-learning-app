@@ -22,7 +22,8 @@ class CourseLessonPage extends StatelessWidget {
     return Stack(
       children: [
         SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          primary: false,
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: course.section
                 .map(

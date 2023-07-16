@@ -7,7 +7,7 @@ import '../../../../bases/mobx/base_state.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 import '../../domain/usecases/teacher_detail_use_case.dart';
 import '../../domain/usecases/teacher_detail_use_case/get_teacher_by_id.dart';
 

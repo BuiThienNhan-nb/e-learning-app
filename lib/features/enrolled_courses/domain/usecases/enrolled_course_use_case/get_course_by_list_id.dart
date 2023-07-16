@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/base_use_case.dart';
-import '../../../../home/domain/entities/course_model.dart';
+import '../../../../top/domain/entities/course_model.dart';
 import '../../repositories/enrolled_course_repository.dart';
 
 class GetCourseByListId

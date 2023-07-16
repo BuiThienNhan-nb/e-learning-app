@@ -33,7 +33,7 @@ class RecommendationCoursePageView extends StatelessWidget {
             );
           }
           if (store.state == BaseSate.error || store.errorMessage != null) {
-            log(store.errorMessage ?? "Error");
+            print(store.errorMessage ?? "Error");
             return Center(
               child: Text(store.errorMessage ?? "Error!"),
             );

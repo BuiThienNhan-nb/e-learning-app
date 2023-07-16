@@ -32,6 +32,6 @@ abstract class TopPresenter implements ChangeNotifier {
   bool isListLoading(String key);
   String? getListErrorMsg(String key);
   String? get keyVisualErrorMsg;
-  Map<String, String?> get getErrorsMap;
+  Map<String, String> get getErrorsMap;
   List<VisualModel> get visuals;
 }

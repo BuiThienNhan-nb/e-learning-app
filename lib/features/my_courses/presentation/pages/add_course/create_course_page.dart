@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class CreateCoursePage extends StatelessWidget {
           });
         }
         if (store.state == BaseSate.error || store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -149,7 +149,7 @@ class CreateCoursePage extends StatelessWidget {
                         : FloatingActionButton(
                             onPressed: () {
                               // log(createProvider.title.text.trim());
-                              log(createProvider.sections.toString());
+                              print(createProvider.sections.toString());
                               store.createCourse(
                                 CourseModel(
                                   id: "id",
@@ -165,6 +165,7 @@ class CreateCoursePage extends StatelessWidget {
                                   price: 0,
                                   section: createProvider.sections,
                                   haveCertificate: true,
+                                  categories: const [],
                                 ),
                               );
                             },

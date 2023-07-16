@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -46,7 +44,7 @@ class UpdateSectionLessonsPage extends StatelessWidget {
         }
         if (store.updateSectionState == BaseSate.error ||
             store.errorMessage != null) {
-          log(store.errorMessage ?? "Error");
+          print(store.errorMessage ?? "Error");
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppLoading.dismissLoadingDialog(context);
             showDialog(
@@ -315,7 +313,7 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
                     for (var section in provider.course.section) {
                       for (var lesson in section.lessons) {
                         if (lesson.order == widget.order) {
-                          log("detect lesson");
+                          print("detect lesson");
                           lesson.title = titleController.text.trim();
                           lesson.videoUrl = sourceController.text.trim();
                           return toggle();
@@ -323,7 +321,7 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
                       }
                     }
                   }
-                  log("cannot detect lesson");
+                  print("cannot detect lesson");
                   return toggle();
                 },
                 child: SizedBox(

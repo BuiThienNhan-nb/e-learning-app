@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        log("Refreshing...");
+        print("Refreshing...");
         setState(() {});
       },
       child: SafeArea(

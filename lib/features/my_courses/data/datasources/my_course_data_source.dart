@@ -13,7 +13,7 @@ import '../../../../configs/env.dart';
 import '../../../../core/app/provider.dart';
 import '../../../../core/error/failures.dart';
 import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 
 abstract class MyCourseDataSource {
@@ -129,7 +129,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
         }),
       );
       // await Future.delayed(const Duration(seconds: 2));
-      log(data["data"]["data"]["courseId"]);
+      print(data["data"]["data"]["courseId"]);
       course.id = data["data"]["data"]["courseId"];
 
       return Right(course);
@@ -190,7 +190,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
       final requestData = section.toMap();
       requestData['courseId'] = courseId;
       requestData['sectionId'] = section.id;
-      log(requestData.toString());
+      print(requestData.toString());
 
       final data = await post(
         Env.instance.baseUrl + _updateCourseSection,
@@ -213,7 +213,7 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
     try {
       final requestData = section.toMap();
       requestData['courseId'] = courseId;
-      log(requestData.toString());
+      print(requestData.toString());
 
       final data = await post(
         Env.instance.baseUrl + _createCourseSection,

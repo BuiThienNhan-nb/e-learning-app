@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -82,7 +80,7 @@ abstract class _UpdateAvatarStore with Store {
           .child("images/users/avatar/${GetIt.I<AppProvider>().user.id}")
           .getDownloadURL();
     } catch (e) {
-      log(e.toString());
+      print(e.toString());
       return "";
     }
   }

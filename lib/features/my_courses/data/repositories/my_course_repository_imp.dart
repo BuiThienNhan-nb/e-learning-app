@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/platform/network_status.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 import '../../domain/repositories/my_course_repository.dart';
 import '../datasources/my_course_data_source.dart';

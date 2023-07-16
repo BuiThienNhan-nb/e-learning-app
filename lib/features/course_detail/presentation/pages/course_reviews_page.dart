@@ -31,7 +31,7 @@ class CourseReviewsPage extends StatelessWidget {
 
     void onSubmit(String value) {
       // Submit comment
-      log(value);
+      print(value);
     }
 
     return Observer(
@@ -44,8 +44,9 @@ class CourseReviewsPage extends StatelessWidget {
                 children: [
                   ListView.builder(
                     itemCount: store.reviews!.length,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    // shrinkWrap: true,
+                    primary: false,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) =>
                         CourseReviewWidget(review: store.reviews![index]),
@@ -61,7 +62,7 @@ class CourseReviewsPage extends StatelessWidget {
                               useSafeArea: true,
                               builder: (context) => CourseAddReviewDialog(
                                 onFieldSubmitted: (review, rate) async {
-                                  log("review: $review / rate: $rate");
+                                  print("review: $review / rate: $rate");
                                   Navigator.of(context).pop();
                                   // WidgetsBinding.instance.addPostFrameCallback((_) {
                                   //   AppLoading.showLoadingDialog(context);

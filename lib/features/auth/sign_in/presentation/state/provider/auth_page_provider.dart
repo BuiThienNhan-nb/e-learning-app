@@ -40,7 +40,7 @@ class AuthPageProvider extends ChangeNotifier {
     datePickerController.dispose();
     phoneNumberController.dispose();
 
-    log("dispose auth_page_provider");
+    print("dispose auth_page_provider");
 
     super.dispose();
   }

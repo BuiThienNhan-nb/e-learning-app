@@ -43,7 +43,6 @@ class VerifyEmailPage extends StatelessWidget {
               }
               if (store.getCodeState == BaseSate.error ||
                   store.errorMessage != null) {
-                log(store.errorMessage ?? "Error");
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   AppLoading.dismissLoadingDialog(context);
                   showDialog(

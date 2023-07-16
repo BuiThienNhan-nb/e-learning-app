@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/features/enrolled_courses/domain/usecases/enrolled_course_use_case.dart';
 import 'package:e_learning_app/features/enrolled_courses/domain/usecases/enrolled_course_use_case/get_course_by_list_id.dart';
-import 'package:e_learning_app/features/home/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';

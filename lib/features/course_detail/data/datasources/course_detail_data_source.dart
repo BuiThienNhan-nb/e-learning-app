@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,7 +14,6 @@ import '../../../../core/error/failures.dart';
 import '../../../auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import '../../../auth/sign_in/domain/entities/teacher_model.dart';
 import '../../../auth/sign_in/domain/entities/user_model.dart';
-import '../../../home/domain/entities/course_model.dart';
 import '../../../home/domain/entities/section_model.dart';
 import '../../domain/entities/course_detail_model.dart';
 
@@ -93,7 +93,7 @@ class CourseDetailDataSourceImp extends Api implements CourseDetailDataSource {
         }
       }
 
-      logger.log("Course detail: $courseDetail");
+      // logger.log("Course detail: $courseDetail");
       return Right(courseDetail);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

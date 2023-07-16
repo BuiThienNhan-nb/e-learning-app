@@ -37,7 +37,7 @@ class ForgotPasswordDataSourceImp extends Api
         // ),
       );
 
-      logger.log(data.toString());
+      print(data.toString());
 
       return Right(
         (data["success"] ?? false) as bool,

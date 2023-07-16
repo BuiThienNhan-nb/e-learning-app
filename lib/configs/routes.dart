@@ -395,8 +395,8 @@ class AppRoutes {
         path: lessonDetail,
         builder: (context, state) {
           final LessonModel lesson = state.extra as LessonModel;
-          return Provider(
-            create: (context) => GetIt.I<LessonDetailPageProvider>(),
+          return ChangeNotifierProvider<LessonDetailPageProvider>(
+            create: (_) => GetIt.I<LessonDetailPageProvider>(),
             child: LessonDetailPage(
               lesson: lesson,
               lessonId: state.params["lessonId"] ?? "N/A",

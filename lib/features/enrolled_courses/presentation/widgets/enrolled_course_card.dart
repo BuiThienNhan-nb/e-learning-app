@@ -7,7 +7,7 @@ import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
 import '../../../../configs/styles.dart';
-import '../../../home/domain/entities/course_model.dart';
+import '../../../top/domain/entities/course_model.dart';
 
 class EnrolledCourseCard extends StatelessWidget {
   const EnrolledCourseCard({

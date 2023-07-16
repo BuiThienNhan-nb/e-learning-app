@@ -84,7 +84,7 @@ class LiveStreamDataSourceImp extends Api implements LiveStreamDataSource {
             (map) => LiveStreamModel.fromMap(map),
           )
           .toList();
-      log(liveStreams.toString());
+      print(liveStreams.toString());
       return Right(liveStreams);
     } catch (e) {
       return Left(UserFailure(e.toString()));

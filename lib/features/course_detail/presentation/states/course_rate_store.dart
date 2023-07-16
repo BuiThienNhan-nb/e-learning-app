@@ -114,7 +114,7 @@ abstract class _CourseRateStore with Store {
   void updateCourseRate() {
     courseRate = (courseRate * courseRateCount + (currentRate ?? 0)) /
         (courseRateCount++);
-    log("New course rate: $courseRate with $courseRateCount rating");
+    print("New course rate: $courseRate with $courseRateCount rating");
   }
 
   @action

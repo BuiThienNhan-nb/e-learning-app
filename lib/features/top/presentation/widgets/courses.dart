@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:e_learning_app/core/factory/list/list_factory.dart';
+import 'package:e_learning_app/features/list/presentation/list_screen_presenter.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/skeleton.dart';
 import '../../../../bases/presentation/atoms/w_image_network.dart';
@@ -173,21 +176,32 @@ class HorizontalListCourses extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(width: 20),
-                Text(
-                  categoryTitle,
-                  style: categoryTitleStyle ??
-                      Theme.of(context).textTheme.displayMedium,
+            InkWell(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
+                    create: (_) => makeListScreenPresenter(),
+                    lazy: true,
+                    child: makeListScreenView(typeEnum),
+                  ),
                 ),
-                const SizedBox(width: 5),
-                const Icon(
-                  CupertinoIcons.forward,
-                  color: AppColors.iconActive,
-                )
-              ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 20),
+                  Text(
+                    categoryTitle,
+                    style: categoryTitleStyle ??
+                        Theme.of(context).textTheme.displayMedium,
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(
+                    CupertinoIcons.forward,
+                    color: AppColors.iconActive,
+                  )
+                ],
+              ),
             ),
             SizedBox(height: spaceBetween),
             Expanded(

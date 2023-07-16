@@ -111,7 +111,7 @@ class _AddSectionItemState extends State<AddSectionItem> {
 
   @override
   void dispose() {
-    log("dispose create section");
+    print("dispose create section");
     super.dispose();
   }
 

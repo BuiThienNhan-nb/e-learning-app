@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
+import 'constants.dart';
+
 class Utils {
   Utils._internal();
 
@@ -31,5 +33,23 @@ class Utils {
     TValue defaultValue,
   ) {
     return branches[selectedOption] ?? defaultValue;
+  }
+
+  double deviceHeight = 0;
+  double deviceWidth = 0;
+
+  void setDeviceSize(BuildContext context) {
+    deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+  }
+
+  /// Get percent of device height from design height
+  double toDeviceHeightPercent(double designHeight) {
+    return (designHeight / AppConstants.designHeight) * deviceHeight;
+  }
+
+  /// Get percent of device width from design width
+  double toDeviceWidthPercent(double designWidth) {
+    return (designWidth / AppConstants.designWidth) * deviceWidth;
   }
 }

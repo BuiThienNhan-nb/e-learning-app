@@ -7,6 +7,7 @@ import '../../top/domain/entities/course_model.dart';
 enum CoursesType {
   continueToWatch,
   hot,
+  ranking,
   free,
   featured,
   isWatchingByOthers,
@@ -20,10 +21,10 @@ enum CoursesType {
     return map;
   }
 
-  static Map<String, String?> toErrorMsgMap() {
-    final map = <String, String?>{};
+  static Map<String, String> toErrorMsgMap() {
+    final map = <String, String>{};
     for (final eType in CoursesType.values) {
-      map[eType.name] = null;
+      map[eType.name] = '';
     }
     return map;
   }
@@ -34,6 +35,16 @@ enum CoursesType {
       map[eType.name] = [];
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    switch (this) {
+      case CoursesType.ranking:
+        return 'Ranking List';
+      default:
+        return 'List Courses';
+    }
   }
 }
 
@@ -52,9 +63,10 @@ class TopState {
   final ScrollController scrollController;
   final PageController visualController;
   final Map<String, bool> isListLoading;
-  final Map<String, String?> listErrorMessage;
+  final Map<String, String> listErrorMessage;
   final bool isPageLoading;
   final List<VisualModel> visuals;
+  final Map<String, List<CourseModel>> coursesMap;
 
   TopState({
     required this.listGenreThreshold,
@@ -70,6 +82,7 @@ class TopState {
     required this.isPageLoading,
     required this.visualController,
     required this.visuals,
+    required this.coursesMap,
   });
 
   factory TopState.initial() {
@@ -87,24 +100,25 @@ class TopState {
       isPageLoading: true,
       visualController: PageController(),
       visuals: [],
+      coursesMap: CoursesType.toCourseModelMap(),
     );
   }
 
-  TopState copyWith({
-    double? listGenreThreshold,
-    double? listGenreHeight,
-    double? statusBarHeight,
-    bool? isShowAppBar,
-    int? beforeRankingIndex,
-    int? rankingIndex,
-    bool? isVisualLoading,
-    ScrollController? scrollController,
-    Map<String, bool>? isListLoading,
-    Map<String, String?>? listErrorMessage,
-    bool? isPageLoading,
-    PageController? visualController,
-    List<VisualModel>? visuals,
-  }) {
+  TopState copyWith(
+      {double? listGenreThreshold,
+      double? listGenreHeight,
+      double? statusBarHeight,
+      bool? isShowAppBar,
+      int? beforeRankingIndex,
+      int? rankingIndex,
+      bool? isVisualLoading,
+      ScrollController? scrollController,
+      Map<String, bool>? isListLoading,
+      Map<String, String>? listErrorMessage,
+      bool? isPageLoading,
+      PageController? visualController,
+      List<VisualModel>? visuals,
+      Map<String, List<CourseModel>>? coursesMap}) {
     return TopState(
       listGenreThreshold: listGenreThreshold ?? this.listGenreThreshold,
       listGenreHeight: listGenreHeight ?? this.listGenreHeight,
@@ -119,6 +133,7 @@ class TopState {
       isPageLoading: isPageLoading ?? this.isPageLoading,
       visualController: visualController ?? this.visualController,
       visuals: visuals ?? this.visuals,
+      coursesMap: coursesMap ?? this.coursesMap,
     );
   }
 }

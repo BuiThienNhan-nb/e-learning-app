@@ -1,3 +1,6 @@
+import 'package:e_learning_app/core/usecases/base_use_case.dart';
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
+import 'package:e_learning_app/features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart';
 import 'package:e_learning_app/features/presenters/search/search_state.dart';
 import 'package:e_learning_app/features/search/domain/repositories/fetch_search_history.dart';
 import 'package:e_learning_app/features/search/domain/repositories/save_search_history.dart';
@@ -8,11 +11,13 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
   SearchState _state;
   final FetchSearchHistory _fetchSearchHistory;
   final SaveSearchHistory _saveSearchHistory;
+  final GetTopTeachersUseCase _fetchTeachers;
 
   ProviderSearchPresenter(
     this._state,
     this._fetchSearchHistory,
     this._saveSearchHistory,
+    this._fetchTeachers,
   );
 
   @override
@@ -100,4 +105,39 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
 
   @override
   String? get searchKey => _state.searchKey;
+
+  @override
+  String? get fetchTeacherErrorMessage => _state.fetchTeacherErrorMsg;
+
+  @override
+  void fetchTeachers() async {
+    if (!_state.isTeacherLoading) {
+      _state = _state.copyWith(isTeacherLoading: true);
+      notifyListeners();
+    }
+    if (_state.fetchTeacherErrorMsg.isNotEmpty) {
+      _state = _state.copyWith(fetchTeacherErrorMsg: '');
+      notifyListeners();
+    }
+
+    try {
+      final data = await _fetchTeachers(NoParams());
+      data.fold(
+        (l) => _state = _state.copyWith(fetchTeacherErrorMsg: l.message),
+        (r) => _state = _state.copyWith(teachers: r),
+      );
+    } catch (e) {
+      _state = _state.copyWith(fetchTeacherErrorMsg: e.toString());
+    } finally {
+      _state = _state.copyWith(isTeacherLoading: false);
+      notifyListeners();
+    }
+  }
+
+  @override
+  // TODO: implement isTeacherLoading
+  bool get isTeacherLoading => _state.isTeacherLoading;
+
+  @override
+  List<TeacherModel> get teachers => _state.teachers;
 }

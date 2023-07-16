@@ -1,4 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 
 class SearchState {
   final int selectedGenreIndex;
@@ -10,17 +13,23 @@ class SearchState {
   final List<String> searchHistory;
   final String? channelErrorMessage;
   final bool isChannelLoading;
+  final bool isTeacherLoading;
+  final List<TeacherModel> teachers;
+  final String fetchTeacherErrorMsg;
 
   SearchState({
     required this.selectedGenreIndex,
     required this.scrollController,
     required this.isShowClearButton,
     required this.searchController,
-    required this.searchHistory,
     required this.errorMessage,
-    required this.searchKey,
-    required this.channelErrorMessage,
+    this.searchKey,
+    required this.searchHistory,
+    this.channelErrorMessage,
     required this.isChannelLoading,
+    required this.isTeacherLoading,
+    required this.teachers,
+    required this.fetchTeacherErrorMsg,
   });
 
   // named constructor
@@ -35,6 +44,9 @@ class SearchState {
       searchHistory: [],
       channelErrorMessage: null,
       isChannelLoading: true,
+      fetchTeacherErrorMsg: '',
+      isTeacherLoading: true,
+      teachers: [],
     );
   }
 
@@ -48,6 +60,9 @@ class SearchState {
     List<String>? searchHistory,
     String? channelErrorMessage,
     bool? isChannelLoading,
+    bool? isTeacherLoading,
+    List<TeacherModel>? teachers,
+    String? fetchTeacherErrorMsg,
   }) {
     return SearchState(
       selectedGenreIndex: selectedGenreIndex ?? this.selectedGenreIndex,
@@ -59,6 +74,9 @@ class SearchState {
       searchHistory: searchHistory ?? this.searchHistory,
       channelErrorMessage: channelErrorMessage ?? this.channelErrorMessage,
       isChannelLoading: isChannelLoading ?? this.isChannelLoading,
+      isTeacherLoading: isTeacherLoading ?? this.isTeacherLoading,
+      teachers: teachers ?? this.teachers,
+      fetchTeacherErrorMsg: fetchTeacherErrorMsg ?? this.fetchTeacherErrorMsg,
     );
   }
 }

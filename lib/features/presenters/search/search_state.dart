@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 
 class SearchState {
   final int selectedGenreIndex;
@@ -16,7 +17,9 @@ class SearchState {
   final bool isTeacherLoading;
   final List<TeacherModel> teachers;
   final String fetchTeacherErrorMsg;
-
+  final bool isSearchLoading;
+  final List<CourseModel> courses;
+  final String searchErrorMsg;
   SearchState({
     required this.selectedGenreIndex,
     required this.scrollController,
@@ -30,6 +33,9 @@ class SearchState {
     required this.isTeacherLoading,
     required this.teachers,
     required this.fetchTeacherErrorMsg,
+    required this.isSearchLoading,
+    required this.courses,
+    required this.searchErrorMsg,
   });
 
   // named constructor
@@ -47,6 +53,9 @@ class SearchState {
       fetchTeacherErrorMsg: '',
       isTeacherLoading: true,
       teachers: [],
+      courses: [],
+      isSearchLoading: true,
+      searchErrorMsg: '',
     );
   }
 
@@ -63,6 +72,9 @@ class SearchState {
     bool? isTeacherLoading,
     List<TeacherModel>? teachers,
     String? fetchTeacherErrorMsg,
+    bool? isSearchLoading,
+    List<CourseModel>? courses,
+    String? searchErrorMsg,
   }) {
     return SearchState(
       selectedGenreIndex: selectedGenreIndex ?? this.selectedGenreIndex,
@@ -77,6 +89,9 @@ class SearchState {
       isTeacherLoading: isTeacherLoading ?? this.isTeacherLoading,
       teachers: teachers ?? this.teachers,
       fetchTeacherErrorMsg: fetchTeacherErrorMsg ?? this.fetchTeacherErrorMsg,
+      isSearchLoading: isSearchLoading ?? this.isSearchLoading,
+      courses: courses ?? this.courses,
+      searchErrorMsg: searchErrorMsg ?? this.searchErrorMsg,
     );
   }
 }

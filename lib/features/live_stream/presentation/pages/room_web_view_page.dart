@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/core/app/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -70,35 +68,33 @@ class RoomWebViewPage extends StatelessWidget {
             store.deleteLiveStream();
             return false;
           },
-          child: SafeArea(
-            child: InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse("https://tlk.li$id"),
+          child: InAppWebView(
+              initialUrlRequest: URLRequest(
+                url: Uri.parse("https://tlk.li$id"),
+              ),
+              initialOptions: InAppWebViewGroupOptions(
+                crossPlatform: InAppWebViewOptions(
+                  mediaPlaybackRequiresUserGesture: false,
                 ),
-                initialOptions: InAppWebViewGroupOptions(
-                  crossPlatform: InAppWebViewOptions(
-                    mediaPlaybackRequiresUserGesture: false,
-                  ),
-                ),
-                onWebViewCreated: (InAppWebViewController controller) {
-                  controller = controller;
-                },
-                androidOnPermissionRequest: (InAppWebViewController controller,
-                    String origin, List<String> resources) async {
-                  return PermissionRequestResponse(
-                      resources: resources,
-                      action: PermissionRequestResponseAction.GRANT);
-                }
-                // initialUrl: "https://7f1c-171-252-208-244.ngrok.io${widget.id}",
-                // javascriptMode: JavascriptMode.unrestricted,
-                // onWebViewCreated: (controller) {
-                //   this.controller = controller;
-                // },
-                // initialMediaPlaybackPolicy:
-                //     AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
-                // onProgress: (progress) => log(progress.toString()),
-                ),
-          ),
+              ),
+              onWebViewCreated: (InAppWebViewController controller) {
+                controller = controller;
+              },
+              androidOnPermissionRequest: (InAppWebViewController controller,
+                  String origin, List<String> resources) async {
+                return PermissionRequestResponse(
+                    resources: resources,
+                    action: PermissionRequestResponseAction.GRANT);
+              }
+              // initialUrl: "https://7f1c-171-252-208-244.ngrok.io${widget.id}",
+              // javascriptMode: JavascriptMode.unrestricted,
+              // onWebViewCreated: (controller) {
+              //   this.controller = controller;
+              // },
+              // initialMediaPlaybackPolicy:
+              //     AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+              // onProgress: (progress) => log(progress.toString()),
+              ),
         );
       },
     );

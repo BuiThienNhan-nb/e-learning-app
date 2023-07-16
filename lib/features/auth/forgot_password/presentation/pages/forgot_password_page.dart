@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/bases/presentation/atoms/default_app_bar.dart';
 import 'package:e_learning_app/bases/presentation/atoms/text_button.dart';
 import 'package:e_learning_app/bases/presentation/atoms/text_form_field.dart';
@@ -12,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
@@ -32,11 +31,11 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
-    final provider = GetIt.I<ForgotPasswordPageProvider>();
-    final store = GetIt.I<ForgotPasswordStore>();
+    final provider = context.read<ForgotPasswordPageProvider>();
+    final store = context.read<ForgotPasswordStore>();
 
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
@@ -87,6 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         Text(
                           LocaleKeys.sendEmailMessage.tr(),
                           textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         SizedBox(height: AppDimens.extraLargeHeightDimens * 3),
                         DefaultTextFormField(

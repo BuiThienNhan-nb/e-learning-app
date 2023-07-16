@@ -3,7 +3,10 @@ import 'package:e_learning_app/bases/presentation/atoms/skeleton.dart';
 import 'package:e_learning_app/core/factory/search/search_detaiL_factory.dart';
 import 'package:e_learning_app/features/search_detail/search_detail_presenter.dart';
 import 'package:e_learning_app/features/search_detail/search_detail_screen.dart';
+import 'package:e_learning_app/features/teacher_detail/presentation/pages/teacher_detail_page.dart';
+import 'package:e_learning_app/features/teacher_detail/presentation/states/teacher_detail_store.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import 'search_presenter.dart';
@@ -152,6 +155,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                           childAspectRatio: 3,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          primary: false,
                           children: const [
                             Skeleton(height: 60),
                             Skeleton(height: 60),
@@ -171,7 +177,21 @@ class _SearchScreenState extends State<SearchScreen> {
                               (teacher) => WGridTeacherItem(
                                 teacher: teacher,
                                 onItemTap: (teacher) {
-                                  /// TODO: Handle navigate when tap on teacher
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          Provider<TeacherDetailStore>(
+                                        create: (_) =>
+                                            GetIt.I<TeacherDetailStore>(),
+                                        lazy: true,
+                                        builder: (context, __) =>
+                                            TeacherDetailPage(
+                                          teacherId: teacher.id,
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             )

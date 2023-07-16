@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:e_learning_app/configs/env.dart';
@@ -35,7 +33,6 @@ class GetTopTeachersDataSourceImp extends Api
             (map) => TeacherModel.fromMap(map),
           )
           .toList();
-      log(teachers.toString());
       return Right(teachers);
     } catch (e) {
       return Left(ServerFailure("$e"));

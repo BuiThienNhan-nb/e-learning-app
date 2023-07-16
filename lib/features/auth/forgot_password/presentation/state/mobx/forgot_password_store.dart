@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/features/auth/forgot_password/domain/usecases/forgot_password_use_case.dart';
 import 'package:e_learning_app/features/auth/forgot_password/domain/usecases/get_forgot_password_code_use_case.dart';
+import 'package:e_learning_app/features/auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -14,14 +15,20 @@ part 'forgot_password_store.g.dart';
 @injectable
 class ForgotPasswordStore extends _ForgotPasswordStore
     with _$ForgotPasswordStore {
-  ForgotPasswordStore(super.resetPasswordUseCase, super.getCodeUseCase);
+  ForgotPasswordStore(super.resetPasswordUseCase, super.getCodeUseCase,
+      super.authLocalDataSource);
 }
 
 abstract class _ForgotPasswordStore with Store {
   final ForgotPasswordUseCase _resetPasswordUseCase;
   final GetForgotPasswordCodeUseCase _getCodeUseCase;
+  final AuthLocalDataSource _authLocalDataSource;
 
-  _ForgotPasswordStore(this._resetPasswordUseCase, this._getCodeUseCase);
+  _ForgotPasswordStore(
+    this._resetPasswordUseCase,
+    this._getCodeUseCase,
+    this._authLocalDataSource,
+  );
 
   // @observable
   // UserInfo? userInfo;
@@ -117,7 +124,7 @@ abstract class _ForgotPasswordStore with Store {
       return;
     }
 
-    return resetOrFailure.fold(
+    resetOrFailure.fold(
       (l) {
         (l is UserFailure || l is ServerFailure)
             ? errorMessage = l.message
@@ -125,5 +132,11 @@ abstract class _ForgotPasswordStore with Store {
       },
       (r) => code = r,
     );
+
+    if (resetOrFailure.isRight()) {
+      await _authLocalDataSource.deleteAccessToken();
+    }
+
+    return;
   }
 }

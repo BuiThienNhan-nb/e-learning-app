@@ -38,7 +38,7 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
     super.initState();
     provider = context.read<LessonDetailPageProvider>();
     socketService.initialize(widget.lessonId);
-    commentsStore = GetIt.I<LessonCommentsStore>();
+    commentsStore = context.read<LessonCommentsStore>();
     commentsStore.getLessonComments(widget.lessonId);
     socketService.chatToClient(
       (comment) {

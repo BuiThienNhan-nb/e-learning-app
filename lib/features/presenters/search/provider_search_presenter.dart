@@ -2,9 +2,12 @@ import 'package:e_learning_app/core/usecases/base_use_case.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:e_learning_app/features/home/domain/usecases/teacher_use_cases/get_top_teacher_use_case.dart';
 import 'package:e_learning_app/features/presenters/search/search_state.dart';
+import 'package:e_learning_app/features/search/domain/entities/search_result_query_params.dart';
 import 'package:e_learning_app/features/search/domain/repositories/fetch_search_history.dart';
+import 'package:e_learning_app/features/search/domain/repositories/fetch_search_result.dart';
 import 'package:e_learning_app/features/search/domain/repositories/save_search_history.dart';
 import 'package:e_learning_app/features/search/presentation/search_presenter.dart';
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/material.dart';
 
 class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
@@ -12,12 +15,14 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
   final FetchSearchHistory _fetchSearchHistory;
   final SaveSearchHistory _saveSearchHistory;
   final GetTopTeachersUseCase _fetchTeachers;
+  final FetchSearchResult _fetchSearchResult;
 
   ProviderSearchPresenter(
     this._state,
     this._fetchSearchHistory,
     this._saveSearchHistory,
     this._fetchTeachers,
+    this._fetchSearchResult,
   );
 
   @override
@@ -56,6 +61,33 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
     await _onSaveSearch(searchKey.trim());
     _state.searchController.text = searchKey.trim();
     notifyListeners();
+  }
+
+  @override
+  Future<void> search(String keyword) async {
+    if (!_state.isSearchLoading) {
+      _state = _state.copyWith(isSearchLoading: true);
+      notifyListeners();
+    }
+    if (_state.searchErrorMsg.isNotEmpty) {
+      _state = _state.copyWith(searchErrorMsg: '');
+      notifyListeners();
+    }
+
+    try {
+      final data = await _fetchSearchResult(
+        SearchResultQueryParams(keyword: keyword),
+      );
+      data.fold(
+        (l) => _state = _state.copyWith(searchErrorMsg: l.message),
+        (r) => _state = _state.copyWith(courses: r),
+      );
+    } catch (e) {
+      _state = _state.copyWith(searchErrorMsg: e.toString());
+    } finally {
+      _state = _state.copyWith(isSearchLoading: false);
+      notifyListeners();
+    }
   }
 
   Future<void> _onSaveSearch(String searchKey) async {
@@ -135,9 +167,17 @@ class ProviderSearchPresenter with ChangeNotifier implements SearchPresenter {
   }
 
   @override
-  // TODO: implement isTeacherLoading
   bool get isTeacherLoading => _state.isTeacherLoading;
 
   @override
   List<TeacherModel> get teachers => _state.teachers;
+
+  @override
+  List<CourseModel> get courses => _state.courses;
+
+  @override
+  String get searchErrorMsg => _state.searchErrorMsg;
+
+  @override
+  bool get searchLoading => _state.isSearchLoading;
 }

@@ -54,7 +54,7 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       );
 
       if (data["success"] == false) {
-        return Left(statusToFailure(data["data"]["status"] as int));
+        return Left(statusToFailure(401));
       }
       final user = UserModel.fromMap(data["data"]["user"]);
 

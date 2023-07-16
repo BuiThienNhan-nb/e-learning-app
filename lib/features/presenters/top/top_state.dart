@@ -41,7 +41,7 @@ enum CoursesType {
   String toString() {
     switch (this) {
       case CoursesType.ranking:
-        return 'Ranking List';
+        return 'List Courses by Ranking';
       default:
         return 'List Courses';
     }

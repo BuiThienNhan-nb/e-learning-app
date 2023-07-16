@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/auth/sign_in/data/local/datasources/auth_local_data_source.dart';
 import 'package:e_learning_app/features/settings/presentation/widgets/update_avatar_bottom_sheet.dart';
 
 import '../../../../configs/colors.dart';
@@ -29,8 +30,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = GetIt.I<UpdateAvatarStore>();
-    final paymentStore = GetIt.I<PaymentStore>();
+    final store = context.read<UpdateAvatarStore>();
+    final paymentStore = context.read<PaymentStore>();
 
     List<Widget> buildListSettingsItems() => [
           SettingsItem(
@@ -91,7 +92,12 @@ class SettingsPage extends StatelessWidget {
           SettingsItem(
             iconSource: "assets/icons/logout_icon.png",
             title: "Log out",
-            onTap: () => GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn),
+            onTap: () async {
+              await GetIt.I<AuthLocalDataSource>().deleteAccessToken();
+              if (context.mounted) {
+                GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn);
+              }
+            },
             isLogOut: true,
           ),
         ];

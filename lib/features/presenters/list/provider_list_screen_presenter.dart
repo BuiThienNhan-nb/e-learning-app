@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:e_learning_app/core/error/failures.dart';
 import 'package:e_learning_app/core/usecases/base_use_case.dart';
 import 'package:e_learning_app/features/get_all_courses/domain/usecases/get_all_courses_use_case.dart';
+import 'package:e_learning_app/features/list/domain/entities/fetch_courses_by_category_params.dart';
+import 'package:e_learning_app/features/list/domain/repositories/fetch_courses_by_category.dart';
 import 'package:e_learning_app/features/list/presentation/list_screen_presenter.dart';
 import 'package:e_learning_app/features/presenters/list/list_screen_state.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
@@ -13,10 +15,12 @@ class ProviderListScreenPresenter
     implements ListScreenPresenter {
   ListScreenState _state;
   final GetAllCoursesUseCase _getAllCourses;
+  final FetchCoursesByCategory _fetchCoursesByCategory;
 
   ProviderListScreenPresenter(
     this._state,
     this._getAllCourses,
+    this._fetchCoursesByCategory,
   );
 
   @override
@@ -26,7 +30,7 @@ class ProviderListScreenPresenter
   String get errorMessage => _state.errorMessage;
 
   @override
-  void fetchCoursesByType(CoursesType type) async {
+  void fetchCoursesByType(CoursesType type, String? category) async {
     if (!_state.isLoading) {
       _state = _state.copyWith(isLoading: true);
       notifyListeners();
@@ -38,13 +42,19 @@ class ProviderListScreenPresenter
 
     Either<Failure, List<CourseModel>> data;
     try {
-      switch (type) {
-        // case CoursesType.ranking:
-        //   break;
-        default:
-          data = await _getAllCourses.getAllCourses(NoParams());
-          break;
+      if (category != null) {
+        data = await _fetchCoursesByCategory(
+            FetchCoursesByCategoryParams(category: category));
+      } else {
+        switch (type) {
+          // case CoursesType.ranking:
+          //   break;
+          default:
+            data = await _getAllCourses.getAllCourses(NoParams());
+            break;
+        }
       }
+
       data.fold(
         (l) => _state = _state.copyWith(errorMessage: l.message.toString()),
         (r) {

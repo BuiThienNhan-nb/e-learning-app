@@ -1,6 +1,11 @@
 import 'package:e_learning_app/bases/presentation/atoms/w_image_network.dart';
+import 'package:e_learning_app/core/factory/list/list_factory.dart';
+import 'package:e_learning_app/features/list/presentation/list_screen_presenter.dart';
 import 'package:e_learning_app/features/top/domain/entities/category_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../presenters/top/top_state.dart';
 
 class ListGenreHorizontal extends StatelessWidget {
   const ListGenreHorizontal({Key? key, required this.categories})
@@ -36,22 +41,33 @@ class GenreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: WImageNetwork(
-              imageUrl: category.imageUrl ?? '', width: 100, height: 40),
+    return InkWell(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
+            create: (_) => makeListScreenPresenter(),
+            lazy: true,
+            child: makeListScreenView(CoursesType.ranking, category.title),
+          ),
         ),
-        Text(
-          category.title,
-          style: Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(color: Colors.white),
-        ),
-      ],
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: WImageNetwork(
+                imageUrl: category.imageUrl ?? '', width: 100, height: 40),
+          ),
+          Text(
+            category.title,
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(color: Colors.white),
+          ),
+        ],
+      ),
     );
   }
 }

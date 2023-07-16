@@ -1,9 +1,9 @@
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../../../../bases/mobx/base_state.dart';
@@ -56,7 +56,7 @@ class CourseDetailPage extends StatelessWidget {
         text: "Reviews",
       ),
     ];
-    final store = GetIt.I<CourseDetailStore>();
+    final store = context.read<CourseDetailStore>();
 
     return Observer(
       builder: (_) {

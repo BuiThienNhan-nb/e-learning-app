@@ -1,5 +1,3 @@
-import 'dart:developer' as logger;
-
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -29,13 +27,16 @@ class GetForgotPasswordCodeDataSourceImp extends Api
         data: requestData,
       );
 
-      logger.log(data.toString());
+      if (data["success"] == false) {
+        throw Exception(
+            "Oops! It seems you've attempted to send tokens to multiple email addresses simultaneously. Check your email once again or wait for a minute then try resend again! Thank you for your understanding and cooperation.");
+      }
 
       return Right(
         (data["success"] ?? false) as bool,
       );
     } catch (e) {
-      return Left(exceptionToFailure(e));
+      return Left(exceptionToFailure(e.toString()));
     }
   }
 }

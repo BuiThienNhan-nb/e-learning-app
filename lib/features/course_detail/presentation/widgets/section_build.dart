@@ -1,5 +1,9 @@
+import 'package:e_learning_app/features/lesson_detail/presentation/pages/lesson_detail_page.dart';
+import 'package:e_learning_app/features/lesson_detail/presentation/states/mobx/lesson_comments_store.dart';
+import 'package:e_learning_app/features/lesson_detail/presentation/states/provider/lesson_detail_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
@@ -25,10 +29,12 @@ class CourseSectionWidget extends StatelessWidget {
     for (var lesson in section.lessons) {
       totalSectionMins += lesson.length ?? 0;
     }
-    final TextStyle textStyle = AppStyles.headline6TextStyle.copyWith(
-      fontWeight: FontWeight.w900,
-      color: AppColors.neutral.shade700,
-    );
+    final TextStyle? textStyle =
+        Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w900,
+              color: AppColors.neutral.shade700,
+            );
+
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ClipRRect(
@@ -37,7 +43,7 @@ class CourseSectionWidget extends StatelessWidget {
           initiallyExpanded: true,
           trailing: Text(
             "$totalSectionMins mins",
-            style: textStyle.copyWith(
+            style: textStyle?.copyWith(
               color: AppColors.primaryColor,
             ),
           ),
@@ -83,12 +89,25 @@ class LessonBuildItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).pushNamed(
-        "lesson_detail",
-        params: {
-          'lessonId': "$courseId${lesson.order}",
-        },
-        extra: lesson,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider<LessonDetailPageProvider>(
+                create: (_) => GetIt.I<LessonDetailPageProvider>(),
+                lazy: true,
+              ),
+              Provider<LessonCommentsStore>(
+                create: (_) => GetIt.I(),
+                lazy: true,
+              ),
+            ],
+            child: LessonDetailPage(
+              lesson: lesson,
+              lessonId: lesson.id,
+            ),
+          ),
+        ),
       ),
       child: Container(
         margin: EdgeInsets.all(AppDimens.mediumWidthDimens),

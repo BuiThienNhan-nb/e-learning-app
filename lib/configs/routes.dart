@@ -59,6 +59,7 @@ import '../features/settings/presentation/pages/payment_page.dart';
 import '../features/settings/presentation/pages/privacy_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/settings/presentation/pages/test_payment_web_view.dart';
+import '../features/settings/presentation/states/mobx/edit_profile_store.dart';
 import '../features/settings/presentation/states/mobx/update_avatar_store.dart';
 import '../features/settings/presentation/states/provider/settings_page_provider.dart';
 import '../features/teacher_detail/presentation/pages/teacher_detail_page.dart';
@@ -438,8 +439,20 @@ class AppRoutes {
         name: "edit_profile",
         path: editProfile,
         builder: (context, state) {
-          return EditProfilePage(
-            userId: state.params["userId"] ?? "N/A",
+          return MultiProvider(
+            providers: [
+              Provider<EditProfileStore>(
+                create: (_) => GetIt.I(),
+                lazy: true,
+              ),
+              ChangeNotifierProvider<SettingsPageProvider>(
+                create: (_) => GetIt.I(),
+                lazy: true,
+              ),
+            ],
+            child: EditProfilePage(
+              userId: state.params["userId"] ?? "N/A",
+            ),
           );
         },
       ),

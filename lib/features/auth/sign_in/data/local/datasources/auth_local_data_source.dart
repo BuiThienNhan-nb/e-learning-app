@@ -3,8 +3,9 @@ import '../../../../../../utils/constants.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthLocalDataSource {
-  Future setAccessToken(String accessToken);
+  Future setAccessToken(String accessTokenKey);
   String? getAccessToken();
+  Future deleteAccessToken();
   Future setUserId(String userId);
   String? getUserId();
 }
@@ -32,6 +33,11 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   @override
   Future setUserId(String userId) async {
     return await _sharedPreferences.setString(
-        AppConstants.instance.userId, userId); 
+        AppConstants.instance.userId, userId);
+  }
+
+  @override
+  Future deleteAccessToken() async {
+    return await _sharedPreferences.remove(AppConstants.instance.token);
   }
 }

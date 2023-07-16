@@ -7,5 +7,5 @@ abstract class ListScreenPresenter implements ChangeNotifier {
   List<CourseModel> get courses;
   String get errorMessage;
 
-  void fetchCoursesByType(CoursesType type);
+  void fetchCoursesByType(CoursesType type, String? category);
 }

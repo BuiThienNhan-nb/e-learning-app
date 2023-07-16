@@ -1,12 +1,14 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/configs/formats.dart';
+import 'package:e_learning_app/features/auth/forgot_password/presentation/pages/forgot_password_page.dart';
+import 'package:e_learning_app/features/auth/forgot_password/presentation/state/mobx/forgot_password_store.dart';
+import 'package:e_learning_app/features/auth/forgot_password/presentation/state/providers/forgot_password_provider.dart';
 import 'package:e_learning_app/features/settings/presentation/states/mobx/edit_profile_store.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/date_picker.dart';
@@ -35,8 +37,8 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = GetIt.I<SettingsPageProvider>();
-    final store = GetIt.I<EditProfileStore>();
+    final provider = context.read<SettingsPageProvider>();
+    final store = context.read<EditProfileStore>();
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -103,7 +105,44 @@ class EditProfilePage extends StatelessWidget {
                     PasswordTextFormField(
                       readOnly: true,
                       controller: TextEditingController(text: "Nhan2509@"),
-                      onSuffixIconTap: () => log("on change password tap"),
+                      onSuffixIconTap: () async {
+                        final store = GetIt.I<ForgotPasswordStore>();
+                        AppLoading.showLoadingDialog(context);
+                        await store.getCode(
+                          GetIt.I<AppProvider>().user.email,
+                        );
+                        if (context.mounted) {
+                          AppLoading.dismissLoadingDialog(context);
+                          if (store.getCodeState == BaseSate.error ||
+                              store.errorMessage != null) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => DefaultResultDialog(
+                                content: store.errorMessage ??
+                                    LocaleKeys.serverUnexpectedError.tr(),
+                                isError: true,
+                              ),
+                            );
+                          } else if (store.getCodeState == BaseSate.loaded) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => MultiProvider(
+                                providers: [
+                                  ChangeNotifierProvider<
+                                      ForgotPasswordPageProvider>(
+                                    create: (context) => GetIt.I(),
+                                    lazy: true,
+                                  ),
+                                  Provider<ForgotPasswordStore>(
+                                    create: (_) => GetIt.I(),
+                                    lazy: true,
+                                  ),
+                                ],
+                                child: const ForgotPasswordPage(),
+                              ),
+                            ));
+                          }
+                        }
+                      },
                       suffixIconSource: "assets/icons/key_icon.png",
                     ),
                     SizedBox(height: AppDimens.largeHeightDimens),

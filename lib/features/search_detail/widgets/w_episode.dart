@@ -41,6 +41,7 @@ class _WCourseItemState extends State<WCourseItem> {
             imageUrl: widget.course.image ?? 'none',
             width: widthEpisode,
             height: 95,
+            fit: BoxFit.cover,
           ),
           const SizedBox(width: 10),
           Expanded(

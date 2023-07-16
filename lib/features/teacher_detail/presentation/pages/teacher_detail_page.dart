@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../../../../bases/mobx/base_state.dart';
@@ -27,7 +28,7 @@ class TeacherDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = GetIt.I<TeacherDetailStore>();
+    final store = context.read<TeacherDetailStore>();
     // final TeacherModel teacher = GetIt.I<MockTeachers>().topTeachers.firstWhere(
     //       (element) => element.id == teacherId,
     //     );

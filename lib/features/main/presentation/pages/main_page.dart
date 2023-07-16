@@ -8,6 +8,7 @@ import 'package:e_learning_app/features/live_stream/presentation/pages/live_stre
 import 'package:e_learning_app/features/main/presentation/mobx/main_page_store.dart';
 import 'package:e_learning_app/features/search/presentation/search_presenter.dart';
 import 'package:e_learning_app/features/search/presentation/search_screen.dart';
+import 'package:e_learning_app/features/settings/presentation/states/mobx/payment_store.dart';
 import 'package:e_learning_app/features/top/presentation/top_presenter.dart';
 import 'package:e_learning_app/features/top/presentation/top_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,7 +23,6 @@ import '../../../../configs/colors.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
 import '../../../settings/presentation/states/mobx/update_avatar_store.dart';
-import '../../../settings/presentation/states/provider/settings_page_provider.dart';
 
 class MainPage extends StatefulWidget with GetItStatefulWidgetMixin {
   MainPage({super.key});
@@ -109,11 +109,11 @@ class _MainPageState extends State<MainPage>
               const LiveStreamPage(),
               MultiProvider(
                 providers: [
-                  ChangeNotifierProvider<SettingsPageProvider>(
-                    create: (BuildContext context) => GetIt.I(),
+                  Provider<UpdateAvatarStore>(
+                    create: (_) => GetIt.I(),
                     lazy: true,
                   ),
-                  Provider<UpdateAvatarStore>(
+                  Provider<PaymentStore>(
                     create: (_) => GetIt.I(),
                     lazy: true,
                   ),

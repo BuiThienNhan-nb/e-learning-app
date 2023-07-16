@@ -34,7 +34,7 @@ class WGridTeacherItem extends StatelessWidget {
                 imageUrl: teacher.avatar ?? '',
                 width: 40,
                 height: 40,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
               const SizedBox(width: 10),
               Flexible(

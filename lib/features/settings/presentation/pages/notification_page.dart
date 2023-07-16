@@ -63,7 +63,13 @@ class _NotificationItemState extends State<NotificationItem> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.title),
+          Text(
+            widget.title,
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(fontWeight: FontWeight.normal),
+          ),
           CupertinoSwitch(
             value: widget.isOn,
             activeColor: AppColors.primaryColor,

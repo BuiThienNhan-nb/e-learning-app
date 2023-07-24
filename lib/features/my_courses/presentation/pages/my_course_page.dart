@@ -1,6 +1,10 @@
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/update_course_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/provider/create_course_provider.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/provider/update_course_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/mobx/base_state.dart';
@@ -10,6 +14,8 @@ import '../../../../configs/styles.dart';
 import '../../../settings/presentation/widgets/setting_app_bar.dart';
 import '../states/mobx/my_course_store.dart';
 import '../widgets/my_course_card.dart';
+import 'add_course/create_course_page.dart';
+import 'update_course/update_course_page.dart';
 
 class MyCoursePage extends StatelessWidget {
   const MyCoursePage({super.key});
@@ -36,16 +42,33 @@ class MyCoursePage extends StatelessWidget {
                     physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => GoRouter.of(context).pushNamed(
-                        "update_course",
-                        params: {
-                          'courseId': store.courses![index].id,
-                        },
-                        // extra: [
-                        //   context.read<UpdateCourseStore>(),
-                        //   context.read<UpdateCourseProvider>(),
-                        // ],
-                      ),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => MultiProvider(
+                          providers: [
+                            Provider<UpdateCourseStore>(
+                              create: (_) => GetIt.I<UpdateCourseStore>(),
+                              lazy: true,
+                            ),
+                            ChangeNotifierProvider<UpdateCourseProvider>(
+                              create: (_) => GetIt.I<UpdateCourseProvider>(),
+                              lazy: true,
+                            ),
+                          ],
+                          child: UpdateCoursePage(
+                            courseId: store.courses![index].id,
+                          ),
+                        ),
+                      )),
+                      //  GoRouter.of(context).pushNamed(
+                      //   "update_course",
+                      //   params: {
+                      //     'courseId': store.courses![index].id,
+                      //   },
+                      //   // extra: [
+                      //   //   context.read<UpdateCourseStore>(),
+                      //   //   context.read<UpdateCourseProvider>(),
+                      //   // ],
+                      // ),
                       child: MyCourseCard(course: store.courses![index]),
                     ),
                   ),
@@ -63,7 +86,21 @@ class MyCoursePage extends StatelessWidget {
             foregroundColor: AppColors.whiteColor,
             backgroundColor: AppColors.primaryColor,
             child: const Icon(Icons.add),
-            onPressed: () => GoRouter.of(context).pushNamed("create_course"),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => MultiProvider(
+                providers: [
+                  Provider<CreateCourseStore>(
+                    create: (_) => GetIt.I(),
+                    lazy: true,
+                  ),
+                  Provider<CreateCourseProvider>(
+                    create: (_) => GetIt.I(),
+                    lazy: true,
+                  ),
+                ],
+                child: const CreateCoursePage(),
+              ),
+            )),
           ),
         );
       },

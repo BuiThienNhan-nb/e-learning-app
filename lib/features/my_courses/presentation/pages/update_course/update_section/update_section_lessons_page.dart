@@ -1,6 +1,10 @@
+import 'package:e_learning_app/features/create_exam/presentation/pages/create_exam_page.dart';
+import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_provider.dart';
+import 'package:e_learning_app/features/create_exam/presentation/states/create_exam_store.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -351,14 +355,34 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
               ),
               InkWell(
                 onTap: () {
-                  GoRouter.of(context).pushNamed(
-                    "create_exam",
-                    params: {
-                      "courseId": widget.courseId,
-                      "lessonId": "${widget.courseId}${widget.order}",
-                      "lessonTitle": titleController.text.trim(),
-                    },
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider<CreateExamProvider>(
+                            create: (_) => GetIt.I(),
+                            lazy: true,
+                          ),
+                          Provider<CreateExamStore>(
+                            create: (_) => GetIt.I(),
+                            lazy: true,
+                          ),
+                        ],
+                        child: CreateExamPage(
+                          lessonId: widget.lesson.id,
+                          lessonTitle: titleController.text.trim(),
+                        ),
+                      ),
+                    ),
                   );
+                  // GoRouter.of(context).pushNamed(
+                  //   "create_exam",
+                  //   params: {
+                  //     "courseId": widget.courseId,
+                  //     "lessonId": "${widget.courseId}${widget.order}",
+                  //     "lessonTitle": titleController.text.trim(),
+                  //   },
+                  // );
                 },
                 child: SizedBox(
                   height: AppDimens.extraLargeHeightDimens * 1.2,

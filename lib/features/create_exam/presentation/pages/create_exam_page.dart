@@ -2,7 +2,6 @@ import 'package:e_learning_app/features/create_exam/domain/entities/question_mod
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/mobx/base_state.dart';
@@ -98,7 +97,7 @@ class CreateExamPage extends StatelessWidget {
               //     isError: false,
               //   ),
               // );
-              GoRouter.of(context).pop();
+              Navigator.of(context).pop();
             },
           );
         }

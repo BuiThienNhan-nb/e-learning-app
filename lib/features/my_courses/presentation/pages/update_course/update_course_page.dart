@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -190,7 +188,7 @@ class UpdateCoursePage extends StatelessWidget {
                   createSection: () => store.createSection(
                     SectionModel(
                       id: "id_section",
-                      title: "",
+                      title: "section 2",
                       lessons: List<LessonModel>.from([]),
                       order: provider.course.section.length + 1,
                     ),

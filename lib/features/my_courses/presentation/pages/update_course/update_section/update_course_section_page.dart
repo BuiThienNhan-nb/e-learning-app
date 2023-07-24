@@ -1,7 +1,5 @@
-import 'dart:developer';
-
+import 'package:e_learning_app/features/my_courses/presentation/pages/update_course/update_section/update_section_lessons_page.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../bases/presentation/atoms/text_button.dart';
@@ -45,16 +43,22 @@ class UpdateCourseSectionPage extends StatelessWidget {
                     vertical: AppDimens.mediumHeightDimens,
                   ),
                   child: GestureDetector(
-                    onTap: () => GoRouter.of(context).pushNamed(
-                      "update_section",
-                      params: {
-                        "courseId": provider.course.id,
-                      },
-                      extra: [
-                        provider,
-                        provider.course.section[index],
-                        context.read<UpdateCourseStore>(),
-                      ],
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => MultiProvider(
+                          providers: [
+                            Provider<UpdateCourseStore>.value(
+                              value: context.read<UpdateCourseStore>(),
+                            ),
+                            ChangeNotifierProvider<UpdateCourseProvider>.value(
+                              value: provider,
+                            ),
+                          ],
+                          child: UpdateSectionLessonsPage(
+                            section: provider.course.section[index],
+                          ),
+                        ),
+                      ),
                     ),
                     child: UpdateSectionItem(
                       order: index,

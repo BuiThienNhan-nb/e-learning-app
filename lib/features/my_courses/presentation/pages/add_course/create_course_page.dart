@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../bases/mobx/base_state.dart';
 import '../../../../../bases/presentation/atoms/default_result_dialog.dart';
@@ -27,8 +25,8 @@ class CreateCoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createProvider = GetIt.I<CreateCourseProvider>();
-    final store = GetIt.I<CreateCourseStore>();
+    final createProvider = context.read<CreateCourseProvider>();
+    final store = context.read<CreateCourseStore>();
 
     final titleTextStyle = AppStyles.subtitle1TextStyle.copyWith(
       fontWeight: FontWeight.w900,

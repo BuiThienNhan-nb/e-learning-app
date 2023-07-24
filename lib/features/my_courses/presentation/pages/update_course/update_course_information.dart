@@ -36,6 +36,7 @@ class UpdateCourseInformation extends StatelessWidget {
       "Writing",
       "Digital Marketing",
       "Business",
+      "Coding",
     ];
     int selectedIndex = items
         .indexOf(context.watch<UpdateCourseProvider>().course.category.first);

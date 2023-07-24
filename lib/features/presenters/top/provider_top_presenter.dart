@@ -9,7 +9,6 @@ import 'package:e_learning_app/features/top/domain/entities/google_search_modal.
 import 'package:e_learning_app/features/top/domain/repositories/fetch_latest_courses.dart';
 import 'package:e_learning_app/features/top/domain/repositories/fetch_top_rate_courses.dart';
 import 'package:e_learning_app/features/top/domain/repositories/search_by_google_api.dart';
-import 'package:e_learning_app/utils/mock/mock_courses.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:e_learning_app/features/presenters/top/top_state.dart';
@@ -61,7 +60,6 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
       switch (type) {
         case CoursesType.recommend:
           data = await _getRcmCourses(NoParams());
-          data = darzt.Right(MockCourses().recommendedLessons);
           break;
         case CoursesType.latest:
           data = await _fetchLatestCourses();

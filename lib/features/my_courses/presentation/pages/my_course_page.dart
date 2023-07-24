@@ -29,23 +29,25 @@ class MyCoursePage extends StatelessWidget {
           appBar: const SettingAppBar(title: "My Courses"),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           body: store.state == BaseSate.loaded
-              ? ListView.builder(
-                  itemCount: store.courses!.length,
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => GoRouter.of(context).pushNamed(
-                      "update_course",
-                      params: {
-                        'courseId': store.courses![index].id,
-                      },
-                      // extra: [
-                      //   context.read<UpdateCourseStore>(),
-                      //   context.read<UpdateCourseProvider>(),
-                      // ],
+              ? RefreshIndicator(
+                  onRefresh: () => store.getMyCourses(),
+                  child: ListView.builder(
+                    itemCount: store.courses!.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => GoRouter.of(context).pushNamed(
+                        "update_course",
+                        params: {
+                          'courseId': store.courses![index].id,
+                        },
+                        // extra: [
+                        //   context.read<UpdateCourseStore>(),
+                        //   context.read<UpdateCourseProvider>(),
+                        // ],
+                      ),
+                      child: MyCourseCard(course: store.courses![index]),
                     ),
-                    child: MyCourseCard(course: store.courses![index]),
                   ),
                 )
               : Center(

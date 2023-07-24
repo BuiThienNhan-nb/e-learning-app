@@ -11,7 +11,6 @@ import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:e_learning_app/features/presenters/top/top_state.dart';
 import 'package:e_learning_app/features/top/domain/repositories/fetch_latest_courses.dart';
 import 'package:e_learning_app/features/top/domain/repositories/fetch_top_rate_courses.dart';
-import 'package:e_learning_app/utils/mock/mock_courses.dart';
 import 'package:flutter/material.dart';
 
 class ProviderListScreenPresenter
@@ -59,7 +58,6 @@ class ProviderListScreenPresenter
         switch (type) {
           case CoursesType.recommend:
             data = await _getRcmCourses(NoParams());
-            data = Right(MockCourses().recommendedLessons);
             break;
           case CoursesType.latest:
             data = await _fetchLatestCourses();
@@ -76,16 +74,7 @@ class ProviderListScreenPresenter
       data.fold(
         (l) => _state = _state.copyWith(errorMessage: l.message.toString()),
         (r) {
-          List<CourseModel> courses;
-          if (category != null) {
-            courses = r
-                .where((element) =>
-                    element.category.first.compareTo(category) == 0)
-                .toList();
-          } else {
-            courses = r;
-          }
-          _state = _state.copyWith(courses: courses);
+          _state = _state.copyWith(courses: r);
         },
       );
     } catch (e) {

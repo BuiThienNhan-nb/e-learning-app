@@ -1,10 +1,10 @@
-import 'package:e_learning_app/bases/presentation/atoms/default_app_bar.dart';
 import 'package:e_learning_app/features/course_detail/presentation/states/course_detail_store.dart';
 import 'package:e_learning_app/features/search/presentation/search_presenter.dart';
 import 'package:e_learning_app/features/search/presentation/widgets/w_search_input.dart';
 import 'package:e_learning_app/features/search_detail/search_detail_presenter.dart';
 import 'package:e_learning_app/features/search_detail/widgets/w_episode.dart';
 import 'package:e_learning_app/features/search_detail/widgets/w_vertical_list_loading.dart';
+import 'package:e_learning_app/features/settings/presentation/widgets/setting_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +71,7 @@ class SearchDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(title: 'Search Results'),
+      appBar: const SettingAppBar(title: 'Search Results'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

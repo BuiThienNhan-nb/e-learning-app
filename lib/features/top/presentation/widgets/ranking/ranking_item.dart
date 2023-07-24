@@ -25,6 +25,7 @@ class RankingItem extends StatelessWidget {
           imageUrl: course.image ?? '',
           width: imageWidth,
           height: imageHeight,
+          fit: BoxFit.cover,
         ),
       ),
     );

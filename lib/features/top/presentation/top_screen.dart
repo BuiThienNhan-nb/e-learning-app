@@ -189,20 +189,6 @@ class _TopScreenState extends State<TopScreen> {
                                         onSearchKeyTap: pushGoogleSearchWebview,
                                       ),
                           ),
-
-                          // Selector<TopPresenter, bool>(
-                          //   selector: (_, notifier) => notifier.isPageLoading,
-                          //   builder: (context, isPageLoading, _) =>
-                          //       isPageLoading
-                          //           ? const HorizontalListCoursesLoading()
-                          //           : HorizontalListCourses(
-                          //               typeEnum: CoursesType.continueToWatch,
-                          //               courses: MockCourses.randomCourses(
-                          //                   MockCourses().recommendedLessons, 8)
-                          //                 ..shuffle(),
-                          //               categoryTitle: 'Continue to Watch',
-                          //             ),
-                          // ),
                         ),
                         isShowAppBar
                             ? Selector<TopPresenter, double>(

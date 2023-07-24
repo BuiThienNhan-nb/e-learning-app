@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../configs/colors.dart';
-import '../../../../configs/styles.dart';
 
 class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SettingAppBar({
@@ -19,10 +18,7 @@ class SettingAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: false,
       title: Text(title),
-      titleTextStyle: AppStyles.headline5TextStyle.copyWith(
-        color: AppColors.blackColor,
-        fontWeight: FontWeight.w900,
-      ),
+      titleTextStyle: Theme.of(context).textTheme.displayMedium,
       backgroundColor: AppColors.whiteColor,
       bottom: bottom,
       foregroundColor: AppColors.blackColor,

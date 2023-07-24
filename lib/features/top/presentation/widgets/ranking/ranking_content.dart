@@ -68,83 +68,112 @@ class RankingContent extends StatelessWidget {
     final itemWidth = MediaQuery.of(context).size.width - 30;
     final imageWidth = MediaQuery.of(context).size.width - 68;
 
-    return SizedBox(
-      height: 300,
-      child: Stack(
-        children: [
-          Positioned(
-            // left: 20,
-            child: InkWell(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
-                    create: (_) => makeListScreenPresenter(),
-                    lazy: true,
-                    child: makeListScreenView(CoursesType.recommend),
-                  ),
+    return courses.isEmpty
+        ? InkWell(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
+                  create: (_) => makeListScreenPresenter(),
+                  lazy: true,
+                  child: makeListScreenView(CoursesType.recommend),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 20),
-                  Text(
-                    'Recommended Courses',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  const SizedBox(width: 5),
-                  const Icon(
-                    CupertinoIcons.forward,
-                    color: AppColors.iconActive,
-                  )
-                ],
-              ),
             ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: CarouselRankingList(
-              itemWidth: itemWidth,
-              itemHeight: itemHeight,
-              itemBuilder: (BuildContext context, int index) {
-                return RankingItem(
-                  course: courses[index],
-                  imageWidth: imageWidth,
-                  imageHeight: imageHeight,
-                );
-              },
-              itemCount: courses.length,
-              onItemChanged: (int currentIndex) {
-                context.read<TopPresenter>().updateRankingIndex(currentIndex);
-              },
-              onItemClicked: (int index) {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 20),
+                Text(
+                  'Recommended Courses',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                const SizedBox(width: 5),
+                const Icon(
+                  CupertinoIcons.forward,
+                  color: AppColors.iconActive,
+                )
+              ],
             ),
-          ),
-          Consumer<TopPresenter>(
-            builder: (context, notifier, child) => Positioned(
-              bottom: 26,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: SizedBox(
-                  height: _rankingTitleHeight,
-                  child: TextSlideAnimation(
-                    height: _rankingTitleHeight,
-                    animationDuration: const Duration(milliseconds: 750),
-                    itemBuilder: (int index) {
-                      return RankingTitle(
-                          rankingTitle: courses[index].title,
-                          rankingIndex: index + 1);
+          )
+        : SizedBox(
+            height: 300,
+            child: Stack(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: CarouselRankingList(
+                    itemWidth: itemWidth,
+                    itemHeight: itemHeight,
+                    itemBuilder: (BuildContext context, int index) {
+                      return RankingItem(
+                        course: courses[index],
+                        imageWidth: imageWidth,
+                        imageHeight: imageHeight,
+                      );
                     },
                     itemCount: courses.length,
-                    currentIndex: notifier.rankingIndex,
-                    beforeRankingIndex: notifier.beforeRankingIndex,
+                    onItemChanged: (int currentIndex) {
+                      context
+                          .read<TopPresenter>()
+                          .updateRankingIndex(currentIndex);
+                    },
+                    onItemClicked: (int index) {},
                   ),
                 ),
-              ),
+                Consumer<TopPresenter>(
+                  builder: (context, notifier, child) => Positioned(
+                    bottom: 26,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: SizedBox(
+                        height: _rankingTitleHeight,
+                        child: TextSlideAnimation(
+                          height: _rankingTitleHeight,
+                          animationDuration: const Duration(milliseconds: 750),
+                          itemBuilder: (int index) {
+                            return RankingTitle(
+                                rankingTitle: courses[index].title,
+                                rankingIndex: index + 1);
+                          },
+                          itemCount: courses.length,
+                          currentIndex: notifier.rankingIndex,
+                          beforeRankingIndex: notifier.beforeRankingIndex,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ChangeNotifierProvider<ListScreenPresenter>(
+                          create: (_) => makeListScreenPresenter(),
+                          lazy: true,
+                          child: makeListScreenView(CoursesType.recommend),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: 20),
+                        Text(
+                          'Recommended Courses',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                        const SizedBox(width: 5),
+                        const Icon(
+                          CupertinoIcons.forward,
+                          color: AppColors.iconActive,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

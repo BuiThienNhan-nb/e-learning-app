@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
@@ -19,23 +17,20 @@ abstract class GetRecommendedCoursesDataSource {
 @LazySingleton(as: GetRecommendedCoursesDataSource)
 class GetRecommendedCoursesDataSourceImp extends Api
     implements GetRecommendedCoursesDataSource {
-  // final String _getAllCoursesEndPoint = "/courses/courses";
-  final String _getRecommendedCourses = "/courses/recommend";
+  final String _getRecommendedCourses =
+      "/users/${GetIt.I<AppProvider>().user.id}/recommendations";
 
   @override
   Future<Either<Failure, List<CourseModel>>> getRecommendedLessons() async {
     try {
-      final data = await post(
-        Env.instance.recommendUrl + _getRecommendedCourses,
-        data: {
-          "userId": GetIt.I<AppProvider>().user.id,
-        },
+      final data = await get(
+        Env.instance.baseUrl + _getRecommendedCourses,
         options: Options(headers: {
           "Authorization":
               "Bearer ${GetIt.I<AuthLocalDataSource>().getAccessToken()}",
         }),
       );
-      List<CourseModel> courses = (data["data"]["data"] as List)
+      List<CourseModel> courses = (data["data"] as List)
           .map(
             (map) => CourseModel.fromMap(map),
           )

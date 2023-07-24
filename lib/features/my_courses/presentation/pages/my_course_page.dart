@@ -93,7 +93,7 @@ class MyCoursePage extends StatelessWidget {
                     create: (_) => GetIt.I(),
                     lazy: true,
                   ),
-                  Provider<CreateCourseProvider>(
+                  ChangeNotifierProvider<CreateCourseProvider>(
                     create: (_) => GetIt.I(),
                     lazy: true,
                   ),

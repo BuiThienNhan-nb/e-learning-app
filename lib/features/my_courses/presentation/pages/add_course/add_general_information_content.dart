@@ -33,6 +33,7 @@ class _AddGeneralInformationContentState
     "Writing",
     "Digital Marketing",
     "Business",
+    "Coding",
   ];
   int selectedIndex = 0;
 

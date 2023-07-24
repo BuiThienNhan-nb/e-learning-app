@@ -3,9 +3,12 @@ import 'package:e_learning_app/configs/dimens.dart';
 import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/auth/sign_in/domain/entities/teacher_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/colors.dart';
+import '../states/teacher_detail_store.dart';
 
 class TeacherInteraction extends StatelessWidget {
   const TeacherInteraction({
@@ -60,17 +63,19 @@ class TeacherInteraction extends StatelessWidget {
               // ),
             ],
           ),
-          SizedBox(
-            // width: width ?? AppDimens.appDesignSize.width / 3,
-            child: LinkText(
-              contentText1: "25\n",
-              text1Style: AppStyles.subtitle1TextStyle.copyWith(
-                fontWeight: FontWeight.w900,
+          Observer(
+            builder: (_) => SizedBox(
+              child: LinkText(
+                contentText1:
+                    "${context.read<TeacherDetailStore>().courses?.length ?? 0}\n",
+                text1Style: AppStyles.subtitle1TextStyle.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+                contentText2: "Courses",
+                text2Style: AppStyles.subtitle1TextStyle,
+                onTap1: () {},
+                onTap2: () {},
               ),
-              contentText2: "Courses",
-              text2Style: AppStyles.subtitle1TextStyle,
-              onTap1: () {},
-              onTap2: () {},
             ),
           ),
           VerticalDivider(

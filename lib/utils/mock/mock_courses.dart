@@ -23,11 +23,12 @@ class MockCourses {
     AppColors.labelSimultaneousProgram,
     AppColors.cornflowerBlueColor,
     AppColors.eclipseColor,
-    AppColors.backgroundDarkMode
+    AppColors.backgroundDarkMode,
+    AppColors.appColorBlue,
   ];
 
   late final List<CategoryModel> categories = List.generate(
-    8,
+    9,
     (index) => CategoryModel(
       id: '$index',
       title: _category[index],
@@ -108,6 +109,11 @@ class MockCourses {
           "https://images.unsplash.com/photo-1586880244406-556ebe35f282?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
       blurHash: "LGJa=s009F%N~ox]00%M?E4otRM{",
     ),
+    const ImageModel(
+      url:
+          "https://images.unsplash.com/photo-1542831371-32f555c86880?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      blurHash: "LLF5,CRO4TskIV%MM_t700Ip_NIo",
+    ),
   ];
   final List<String> _category = [
     "3D Design",
@@ -118,6 +124,7 @@ class MockCourses {
     "Writing",
     "Digital Marketing",
     "Business",
+    "Coding",
   ];
   final List<String> _cateImageUrl = [
     'https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1267&q=80',
@@ -128,6 +135,7 @@ class MockCourses {
     'https://images.unsplash.com/photo-1592819695396-064b9572a660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     'https://images.unsplash.com/photo-1571677246347-5040036b95cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
     'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80',
+    "https://images.unsplash.com/photo-1542831371-32f555c86880?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
   ];
   final List<String> _titles = [
     "3D Design Illustrations class (2022 updated)",

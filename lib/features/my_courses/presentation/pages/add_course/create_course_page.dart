@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bases/mobx/base_state.dart';
@@ -68,7 +67,7 @@ class CreateCoursePage extends StatelessWidget {
             (_) {
               AppLoading.dismissLoadingDialog(context);
               createProvider.dispose();
-              GoRouter.of(context).pop();
+              Navigator.of(context).pop();
             },
           );
         }

@@ -27,11 +27,11 @@ class WImageNetwork extends StatelessWidget {
         width: width,
         height: height,
         placeholder: (context, url) => Container(
-          constraints: const BoxConstraints.expand(),
+          // constraints: const BoxConstraints.expand(),
           color: AppColors.placeholderLightMode,
         ),
         errorWidget: (context, url, error) => Container(
-          constraints: const BoxConstraints.expand(),
+          // constraints: const BoxConstraints.expand(),
           decoration: BoxDecoration(
               color: AppColors.white,
               border: Border.all(color: AppColors.lineBasic),

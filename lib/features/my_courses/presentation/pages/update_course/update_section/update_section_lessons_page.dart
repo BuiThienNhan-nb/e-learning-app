@@ -353,46 +353,47 @@ class _UpdateLessonItemState extends State<UpdateLessonItem> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider<CreateExamProvider>(
-                            create: (_) => GetIt.I(),
-                            lazy: true,
+              if (!widget.lesson.id.contains('id_'))
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider<CreateExamProvider>(
+                              create: (_) => GetIt.I(),
+                              lazy: true,
+                            ),
+                            Provider<CreateExamStore>(
+                              create: (_) => GetIt.I(),
+                              lazy: true,
+                            ),
+                          ],
+                          child: CreateExamPage(
+                            lessonId: widget.lesson.id,
+                            lessonTitle: titleController.text.trim(),
                           ),
-                          Provider<CreateExamStore>(
-                            create: (_) => GetIt.I(),
-                            lazy: true,
-                          ),
-                        ],
-                        child: CreateExamPage(
-                          lessonId: widget.lesson.id,
-                          lessonTitle: titleController.text.trim(),
                         ),
                       ),
+                    );
+                    // GoRouter.of(context).pushNamed(
+                    //   "create_exam",
+                    //   params: {
+                    //     "courseId": widget.courseId,
+                    //     "lessonId": "${widget.courseId}${widget.order}",
+                    //     "lessonTitle": titleController.text.trim(),
+                    //   },
+                    // );
+                  },
+                  child: SizedBox(
+                    height: AppDimens.extraLargeHeightDimens * 1.2,
+                    width: AppDimens.extraLargeWidthDimens * 1.2,
+                    child: const Icon(
+                      Icons.document_scanner,
+                      color: AppColors.primaryColor,
                     ),
-                  );
-                  // GoRouter.of(context).pushNamed(
-                  //   "create_exam",
-                  //   params: {
-                  //     "courseId": widget.courseId,
-                  //     "lessonId": "${widget.courseId}${widget.order}",
-                  //     "lessonTitle": titleController.text.trim(),
-                  //   },
-                  // );
-                },
-                child: SizedBox(
-                  height: AppDimens.extraLargeHeightDimens * 1.2,
-                  width: AppDimens.extraLargeWidthDimens * 1.2,
-                  child: const Icon(
-                    Icons.document_scanner,
-                    color: AppColors.primaryColor,
                   ),
                 ),
-              ),
             ],
           ),
           InkWell(

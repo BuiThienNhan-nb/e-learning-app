@@ -1,6 +1,6 @@
-import 'dart:developer' as logger;
 import 'dart:math';
 
+import 'package:e_learning_app/bases/presentation/atoms/default_result_dialog.dart';
 import 'package:e_learning_app/core/app/provider.dart';
 import 'package:e_learning_app/features/course_detail/domain/entities/course_review_model.dart';
 import 'package:flutter/material.dart';
@@ -80,27 +80,52 @@ class CourseAboutPage extends StatelessWidget {
                         : store.state == BaseSate.error
                             ? Text(store.errorMessage ?? "Error!")
                             : InkWell(
-                                onTap: () => showDialog(
-                                  context: context,
-                                  useSafeArea: true,
-                                  builder: (context) => CourseAddReviewDialog(
-                                    onFieldSubmitted: (review, rate) async {
-                                      print("review: $review / rate: $rate");
-                                      Navigator.of(context).pop();
-                                      store.rateCourse(
-                                        CourseReviewModel(
-                                          id: "",
-                                          userId:
-                                              GetIt.I<AppProvider>().user.id,
-                                          courseId: course.id,
-                                          score: rate,
-                                          comment: review,
-                                          createdAt: DateTime.now(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                onTap: () {
+                                  if (!course.isEnrolled) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => const DefaultResultDialog(
+                                        content:
+                                            'You need to enroll this course before start rating!',
+                                        isError: true,
+                                      ),
+                                    );
+                                  } else if (store.currentRate != null) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => const DefaultResultDialog(
+                                        content:
+                                            'Sorry! You already rate for this course!',
+                                        isError: true,
+                                      ),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      useSafeArea: true,
+                                      builder: (context) =>
+                                          CourseAddReviewDialog(
+                                        onFieldSubmitted: (review, rate) async {
+                                          print(
+                                              "review: $review / rate: $rate");
+                                          Navigator.of(context).pop();
+                                          store.rateCourse(
+                                            CourseReviewModel(
+                                              id: "",
+                                              userId: GetIt.I<AppProvider>()
+                                                  .user
+                                                  .id,
+                                              courseId: course.id,
+                                              score: rate,
+                                              comment: review,
+                                              createdAt: DateTime.now(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,

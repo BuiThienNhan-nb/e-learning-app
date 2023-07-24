@@ -1,4 +1,4 @@
-
+import 'package:e_learning_app/bases/presentation/atoms/w_image_network.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,7 +9,6 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import '../../../../bases/mobx/base_state.dart';
 import '../../../../bases/presentation/atoms/default_result_dialog.dart';
 import '../../../../bases/presentation/atoms/loading_dialog.dart';
-import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../bases/presentation/atoms/text_button.dart';
 import '../../../../configs/colors.dart';
 import '../../../../configs/dimens.dart';
@@ -122,13 +121,16 @@ class CourseDetailPage extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : DefaultNetworkImage(
-                                imageUrl: store.courseDetail!.image!,
-                                blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
-                                height: AppDimens.extraLargeHeightDimens * 18,
-                                width: double.infinity,
-                                shape: BoxShape.rectangle,
-                                borderRadius: AppDimens.mediumRadius,
+                            : Positioned(
+                                top: 0,
+                                child: WImageNetwork(
+                                  imageUrl: store.courseDetail!.image!,
+                                  height: MediaQuery.of(context).size.height *
+                                      1 /
+                                      3,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                         Scaffold(
                           resizeToAvoidBottomInset: false,
@@ -178,7 +180,9 @@ class CourseDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   expandedHeight:
-                                      MediaQuery.of(context).size.height / 1.6,
+                                      MediaQuery.of(context).size.height *
+                                          1 /
+                                          3,
                                   automaticallyImplyLeading: true,
                                   primary: false,
                                 ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -47,6 +49,11 @@ class CreateExamProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateQuestionTitle(QuestionModel question, String value) {
+    exam.questions.firstWhere((element) => element == question).title = value;
+    notifyListeners();
+  }
+
   void updateQuestionValues(int index) {
     _numberOfOptions = _exam.questions[index].options.length;
     _answer = _exam.questions[index].answer;
@@ -89,6 +96,15 @@ class CreateExamProvider extends ChangeNotifier {
     }
     _numberOfOptions--;
     _exam.questions[questionIndex].options.removeLast();
+    notifyListeners();
+  }
+
+  double triggerNum = -1;
+  void trigger() {
+    triggerNum = Random().nextInt(30) +
+        Random().nextInt(20) +
+        Random().nextInt(10) +
+        Random().nextDouble();
     notifyListeners();
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:developer' as logger;
 
 import 'package:e_learning_app/bases/presentation/atoms/dropdown_button.dart';
 import 'package:e_learning_app/features/home/domain/entities/lesson_model.dart';

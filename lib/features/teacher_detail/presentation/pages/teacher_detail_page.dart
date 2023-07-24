@@ -78,11 +78,11 @@ class TeacherDetailPage extends StatelessWidget {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(height: AppDimens.extraLargeHeightDimens),
+                      // SizedBox(height: AppDimens.extraLargeHeightDimens),
                       TeacherInteraction(teacher: store.teacher!),
                       SizedBox(height: AppDimens.mediumHeightDimens),
                       Text(
-                        "\t\tThis is Teacher's bio!",
+                        "\t\t${store.teacher?.email}",
                         style: AppStyles.subtitle1TextStyle,
                       ),
                       SizedBox(height: AppDimens.largeHeightDimens),

@@ -10,10 +10,13 @@ class Env {
 
   final String test = dotenv.get('TEST');
 
-  // final String baseUrl = dotenv.get('BASE_URL');
-  final String baseUrl = isPhysicDevice
-      ? dotenv.get('PHYSIC_LOCAL_URL')
-      : dotenv.get('EMULATOR_LOCAL_URL');
+  final String baseUrl = dotenv.get('BASE_URL');
+  // final String baseUrl = isPhysicDevice
+  //     ? dotenv.get('PHYSIC_LOCAL_URL')
+  //     : dotenv.get('EMULATOR_LOCAL_URL');
+  final String googleCustomSearchUrl = dotenv.get('GOOGLE_CUSTOM_SEARCH_URL');
+  final String googleApiKey = dotenv.get('GOOGLE_API_KEY');
+  final String googleSearchEngineId = dotenv.get('SEARCH_ENGINE_ID');
   final String recommendUrl = dotenv.get('RECOMMEND_URL');
   final String createExamUrl = dotenv.get('CREATE_EXAM_URL');
   final String doExamUrl = dotenv.get('DO_EXAM_URL');

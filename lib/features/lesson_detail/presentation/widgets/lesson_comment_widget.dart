@@ -41,8 +41,9 @@ class _LessonCommentWidgetState extends State<LessonCommentWidget> {
     commentsStore = context.read<LessonCommentsStore>();
     commentsStore.getLessonComments(widget.lessonId);
     socketService.chatToClient(
-      (comment) {
-        print('lesson_comment_widget - add comment: $comment');
+      (comment) async {
+        // final avatar = await provider.getAvatarById(comment.userId);
+        // print('lesson_comment_widget - add comment: $comment');
         provider.addComment(comment);
       },
     );

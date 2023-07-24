@@ -44,6 +44,11 @@ abstract class _PaymentStore with Store {
   }
 
   @action
+  void resetState() {
+    _paymentUrlFuture = null;
+  }
+
+  @action
   Future<void> getPaymentUrl(String path) async {
     errorMessage = null;
 

@@ -128,18 +128,18 @@ class _AddGeneralInformationContentState
                   maxLines: 5,
                 ),
                 SizedBox(height: AppDimens.largeHeightDimens),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: widget.provider.isPremium,
-                      onChanged: (value) => setState(() {
-                        widget.provider.isPremium = value!;
-                      }),
-                      activeColor: AppColors.primaryColor,
-                    ),
-                    const Text("Just for Premium User"),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Checkbox(
+                //       value: widget.provider.isPremium,
+                //       onChanged: (value) => setState(() {
+                //         widget.provider.isPremium = value!;
+                //       }),
+                //       activeColor: AppColors.primaryColor,
+                //     ),
+                //     const Text("Just for Premium User"),
+                //   ],
+                // ),
                 // DefaultTextFormField(
                 //   labelText: "Course Image",
                 //   controller: provider.imageSource,

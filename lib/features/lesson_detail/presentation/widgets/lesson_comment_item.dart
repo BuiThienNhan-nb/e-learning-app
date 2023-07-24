@@ -4,7 +4,6 @@ import 'package:e_learning_app/configs/styles.dart';
 import 'package:e_learning_app/features/lesson_detail/domain/entities/lesson_comment_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../bases/presentation/atoms/network_image.dart';
 import '../../../../configs/dimens.dart';
 
 class LessonCommentItem extends StatelessWidget {
@@ -21,6 +20,8 @@ class LessonCommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // context.read<LessonDetailPageProvider>().getAvatarById(comment.userId);
+
     return Padding(
       padding: EdgeInsets.fromLTRB(
         AppDimens.mediumWidthDimens,
@@ -33,12 +34,35 @@ class LessonCommentItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          DefaultNetworkImage(
-            imageUrl:
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-            blurHash: "LDH.KN?b1*Os009EyDRjp{o#ve%1",
+          // Selector<LessonDetailPageProvider, bool>(
+          //   builder: (_, isGetAvatar, __) => Container(
+          //     height: AppDimens.extraLargeHeightDimens * 1.4,
+          //     width: AppDimens.extraLargeWidthDimens * 1.4,
+          //     decoration: const BoxDecoration(
+          //       shape: BoxShape.circle,
+          //       color: AppColors.placeholderLightMode,
+          //     ),
+          //     child: isGetAvatar
+          //         ? null
+          //         : ClipRRect(
+          //             borderRadius: BorderRadius.circular(100),
+          //             child: WImageNetwork(
+          //               imageUrl:
+          //                   context.read<LessonDetailPageProvider>().avatar,
+          //               fit: BoxFit.cover,
+          //             ),
+          //           ),
+          //   ),
+          //   selector: (_, provider) => provider.isGetAvatar,
+          // ),
+          Container(
             height: AppDimens.extraLargeHeightDimens * 1.4,
             width: AppDimens.extraLargeWidthDimens * 1.4,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.placeholderLightMode,
+            ),
+            child: null,
           ),
           SizedBox(width: AppDimens.largeWidthDimens),
           Expanded(

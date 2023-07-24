@@ -47,7 +47,7 @@ class GenreWidget extends StatelessWidget {
           builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
             create: (_) => makeListScreenPresenter(),
             lazy: true,
-            child: makeListScreenView(CoursesType.ranking, category.title),
+            child: makeListScreenView(CoursesType.latest, category.title),
           ),
         ),
       ),

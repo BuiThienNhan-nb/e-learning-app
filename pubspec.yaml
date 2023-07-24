@@ -74,6 +74,8 @@ dependencies:
   auto_size_text: ^3.0.0
   carousel_list:
     path: packages/carousel_list
+  googleapis: ^11.3.0
+  google_sign_in: ^6.1.4
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:e_learning_app/features/create_exam/domain/entities/question_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,68 +13,68 @@ class CreateExamDialog extends StatelessWidget {
     super.key,
     required this.onSubmitQuestion,
     required this.questionTitle,
-    required this.questionIndex,
+    // required this.questionIndex,
+    required this.question,
   });
 
   final Function() onSubmitQuestion;
   final String questionTitle;
-  final int questionIndex;
+  // final int questionIndex;
+  final QuestionModel question;
   late final titleController = TextEditingController(
     text: questionTitle,
   );
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CreateExamProvider>(
-      builder: (_, provider, __) => AlertDialog(
-        actionsAlignment: MainAxisAlignment.start,
-        actionsOverflowButtonSpacing: AppDimens.smallHeightDimens,
-        actionsOverflowDirection: VerticalDirection.up,
-        scrollable: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            AppDimens.itemRadius,
-          ),
+    final provider = context.read<CreateExamProvider>();
+
+    return AlertDialog(
+      actionsAlignment: MainAxisAlignment.start,
+      actionsOverflowButtonSpacing: AppDimens.smallHeightDimens,
+      actionsOverflowDirection: VerticalDirection.up,
+      scrollable: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          AppDimens.itemRadius,
         ),
-        actionsPadding:
-            EdgeInsets.symmetric(horizontal: AppDimens.extraLargeWidthDimens),
-        title: Text(
-          "Add question",
-          style: AppStyles.headline6TextStyle.copyWith(
+      ),
+      actionsPadding:
+          EdgeInsets.symmetric(horizontal: AppDimens.extraLargeWidthDimens),
+      title: Text(
+        "Add question",
+        style: AppStyles.headline6TextStyle.copyWith(
+          color: AppColors.primaryColor,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        SizedBox(height: AppDimens.smallHeightDimens),
+        DefaultTextButton(
+          submit: () {
+            provider.updateQuestionTitle(question, titleController.text.trim());
+            Navigator.of(context).pop();
+          },
+          title: "Close",
+          backgroundColor: AppColors.primaryColor.withOpacity(0.1),
+          titleStyle: AppStyles.headline6TextStyle.copyWith(
             color: AppColors.primaryColor,
           ),
-          textAlign: TextAlign.center,
         ),
-        actions: [
-          SizedBox(height: AppDimens.smallHeightDimens),
-          DefaultTextButton(
-            submit: () {
-              provider.exam.questions[questionIndex].title =
-                  titleController.text.trim();
-              Navigator.of(context).pop();
-            },
-            title: "Close",
-            backgroundColor: AppColors.primaryColor.withOpacity(0.1),
-            titleStyle: AppStyles.headline6TextStyle.copyWith(
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ],
-        content: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: const InputDecoration(
-                  hintText: "Question Title",
-                ),
-                // onChanged: (value) => titleController
-                //   ..text = value
-                //   ..selection = TextSelection.collapsed(
-                //       offset: titleController.text.length),
-                onSubmitted: (value) => titleController.text = value.trim(),
+      ],
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: const InputDecoration(
+                hintText: "Question Title",
               ),
-              TextField(
+              onSubmitted: (value) => titleController.text = value.trim(),
+            ),
+            Selector<CreateExamProvider, int>(
+              selector: (_, provider) => provider.numberOfOptions,
+              builder: (_, optionsLength, __) => TextField(
                 readOnly: true,
                 controller: TextEditingController(
                   text: provider.numberOfOptions.toString(),
@@ -85,13 +86,15 @@ class CreateExamDialog extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          provider.removeOption(questionIndex);
+                          provider.removeOption(
+                              provider.exam.questions.indexOf(question));
                         },
                         icon: const Icon(Icons.remove),
                       ),
                       IconButton(
                         onPressed: () {
-                          provider.addOption(questionIndex);
+                          provider.addOption(
+                              provider.exam.questions.indexOf(question));
                         },
                         icon: const Icon(Icons.add),
                       ),
@@ -99,59 +102,97 @@ class CreateExamDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "List of options",
-                  style: AppStyles.subtitle1TextStyle,
-                ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "List of options",
+                style: AppStyles.subtitle1TextStyle,
               ),
-              SizedBox(
+            ),
+            Selector<CreateExamProvider, int>(
+              selector: (_, provider) => provider.numberOfOptions,
+              builder: (_, optionsLength, __) => SizedBox(
                 height: AppDimens.extraLargeHeightDimens * 5,
                 width: double.maxFinite,
                 child: ListView.builder(
-                  itemCount: provider.numberOfOptions,
+                  itemCount: optionsLength,
                   scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) => TextField(
-                    controller: TextEditingController(
-                      text:
-                          provider.exam.questions[questionIndex].options[index],
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Option ${index + 1}",
-                    ),
-                    onChanged: (value) => provider.exam.questions[questionIndex]
-                        .options[index] = value.trim(),
-                    onSubmitted: (value) => provider.exam
-                        .questions[questionIndex].options[index] = value.trim(),
-                  ),
+                  itemBuilder: (context, index) {
+                    final isAnswer =
+                        question.options[index].compareTo(provider.answer) == 0;
+
+                    return TextField(
+                      controller: TextEditingController(
+                        text: question.options[index],
+                      ),
+                      decoration: InputDecoration(
+                        hintText: "Option ${index + 1}",
+                      ),
+                      onChanged: (value) {
+                        question.options[index] = value.trim();
+                        if (isAnswer) {
+                          provider.answer = value.trim();
+                        }
+                        provider.trigger();
+                      },
+                      onSubmitted: (value) {
+                        question.options[index] = value.trim();
+                        // provider.answer = question.answer;
+                        if (isAnswer) {
+                          provider.answer = value.trim();
+                        }
+                        provider.trigger();
+                      },
+                    );
+                  },
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Answer",
-                  style: AppStyles.subtitle1TextStyle.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Answer",
+                style: AppStyles.subtitle1TextStyle.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              DropdownButton<int>(
-                value: provider.exam.questions[questionIndex].options
-                    .indexWhere(
-                        (element) => element.compareTo(provider.answer) == 0),
-                items: _buildDropdownButton(
-                    provider.exam.questions[questionIndex].options),
-                isExpanded: true,
-                onChanged: (value) {
-                  provider.answer =
-                      provider.exam.questions[questionIndex].options[value!];
-                  provider.exam.questions[questionIndex].answer =
-                      provider.answer;
-                },
-              )
-            ],
-          ),
+            ),
+            Selector<CreateExamProvider, double>(
+              selector: (_, provider) => provider.triggerNum,
+              builder: (_, __, ___) => Selector<CreateExamProvider, String>(
+                  selector: (_, provider) => provider.answer,
+                  builder: (_, answer, __) {
+                    return DropdownButton<int>(
+                      value: question.options.indexWhere(
+                          (element) => element.compareTo(answer) == 0),
+                      items: provider.exam.questions
+                          .firstWhere((element) => element == question)
+                          .options
+                          .asMap()
+                          .map(
+                            (key, value) => MapEntry(
+                              key,
+                              DropdownMenuItem<int>(
+                                value: key,
+                                child: Text(
+                                  value,
+                                  style: AppStyles.subtitle1TextStyle,
+                                ),
+                              ),
+                            ),
+                          )
+                          .values
+                          .toList(),
+                      isExpanded: true,
+                      onChanged: (value) {
+                        provider.answer = question.options[value!];
+                        question.answer = provider.answer;
+                      },
+                    );
+                  }),
+            ),
+          ],
         ),
       ),
     );

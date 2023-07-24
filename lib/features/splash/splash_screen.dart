@@ -25,10 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (local.getAccessToken() == null || local.getAccessToken()!.isEmpty) {
       // navigate(GetIt.I<AppRoutes>().signIn);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      return WidgetsBinding.instance.addPostFrameCallback((_) {
         GoRouter.of(context).go(GetIt.I<AppRoutes>().signIn);
       });
-      if (!mounted) return;
     }
 
     try {

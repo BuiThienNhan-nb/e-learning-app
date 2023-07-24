@@ -27,76 +27,79 @@ class RoomWebViewPage extends StatelessWidget {
     print("https://tlk.li$id");
     final store = context.read<LiveStreamStore>();
 
-    return Observer(
-      builder: (_) {
-        // Trigger UI
-        if (store.deleteState == BaseSate.loading) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            AppLoading.showLoadingDialog(context);
-          });
-        }
-        if (store.deleteState == BaseSate.error || store.errorMessage != null) {
-          print(store.errorMessage ?? "Error");
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            AppLoading.dismissLoadingDialog(context);
-            showDialog(
-              context: context,
-              builder: (_) => DefaultResultDialog(
-                content:
-                    store.errorMessage ?? LocaleKeys.serverUnexpectedError.tr(),
-                isError: true,
-              ),
-            );
-          });
-        } else if (store.deleteState == BaseSate.loaded) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (_) {
+    return SafeArea(
+      child: Observer(
+        builder: (_) {
+          // Trigger UI
+          if (store.deleteState == BaseSate.loading) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              AppLoading.showLoadingDialog(context);
+            });
+          }
+          if (store.deleteState == BaseSate.error ||
+              store.errorMessage != null) {
+            print(store.errorMessage ?? "Error");
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               AppLoading.dismissLoadingDialog(context);
-              GoRouter.of(context).pop();
-              store.reInitDeleteLiveStreams();
-            },
-          );
-        }
-
-        return WillPopScope(
-          onWillPop: () async {
-            if (id.compareTo("/${GetIt.I<AppProvider>().user.id}") != 0) {
-              print("Pop LiveStream room!!");
-              return true;
-            }
-            print("Delete LiveStream room!!");
-            store.deleteLiveStream();
-            return false;
-          },
-          child: InAppWebView(
-              initialUrlRequest: URLRequest(
-                url: Uri.parse("https://tlk.li$id"),
-              ),
-              initialOptions: InAppWebViewGroupOptions(
-                crossPlatform: InAppWebViewOptions(
-                  mediaPlaybackRequiresUserGesture: false,
+              showDialog(
+                context: context,
+                builder: (_) => DefaultResultDialog(
+                  content: store.errorMessage ??
+                      LocaleKeys.serverUnexpectedError.tr(),
+                  isError: true,
                 ),
-              ),
-              onWebViewCreated: (InAppWebViewController controller) {
-                controller = controller;
+              );
+            });
+          } else if (store.deleteState == BaseSate.loaded) {
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) {
+                AppLoading.dismissLoadingDialog(context);
+                GoRouter.of(context).pop();
+                store.reInitDeleteLiveStreams();
               },
-              androidOnPermissionRequest: (InAppWebViewController controller,
-                  String origin, List<String> resources) async {
-                return PermissionRequestResponse(
-                    resources: resources,
-                    action: PermissionRequestResponseAction.GRANT);
+            );
+          }
+
+          return WillPopScope(
+            onWillPop: () async {
+              if (id.compareTo("/${GetIt.I<AppProvider>().user.id}") != 0) {
+                print("Pop LiveStream room!!");
+                return true;
               }
-              // initialUrl: "https://7f1c-171-252-208-244.ngrok.io${widget.id}",
-              // javascriptMode: JavascriptMode.unrestricted,
-              // onWebViewCreated: (controller) {
-              //   this.controller = controller;
-              // },
-              // initialMediaPlaybackPolicy:
-              //     AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
-              // onProgress: (progress) => log(progress.toString()),
-              ),
-        );
-      },
+              print("Delete LiveStream room!!");
+              store.deleteLiveStream();
+              return false;
+            },
+            child: InAppWebView(
+                initialUrlRequest: URLRequest(
+                  url: Uri.parse("https://tlk.li$id"),
+                ),
+                initialOptions: InAppWebViewGroupOptions(
+                  crossPlatform: InAppWebViewOptions(
+                    mediaPlaybackRequiresUserGesture: false,
+                  ),
+                ),
+                onWebViewCreated: (InAppWebViewController controller) {
+                  controller = controller;
+                },
+                androidOnPermissionRequest: (InAppWebViewController controller,
+                    String origin, List<String> resources) async {
+                  return PermissionRequestResponse(
+                      resources: resources,
+                      action: PermissionRequestResponseAction.GRANT);
+                }
+                // initialUrl: "https://7f1c-171-252-208-244.ngrok.io${widget.id}",
+                // javascriptMode: JavascriptMode.unrestricted,
+                // onWebViewCreated: (controller) {
+                //   this.controller = controller;
+                // },
+                // initialMediaPlaybackPolicy:
+                //     AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+                // onProgress: (progress) => log(progress.toString()),
+                ),
+          );
+        },
+      ),
     );
   }
 }

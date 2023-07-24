@@ -11,4 +11,6 @@ class AppConstants {
   /// Design dimension
   static const double designHeight = 844;
   static const double designWidth = 390;
+
+  static const String searchQuery = "education+news";
 }

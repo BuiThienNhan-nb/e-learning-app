@@ -1,4 +1,14 @@
 import 'package:e_learning_app/features/auth/sign_in/data/local/datasources/auth_local_data_source.dart';
+import 'package:e_learning_app/features/my_courses/presentation/pages/my_course_page.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/create_course_store.dart';
+import 'package:e_learning_app/features/my_courses/presentation/states/mobx/my_course_store.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/edit_profile_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/help_center/help_center_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/notification_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/payment_page.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/privacy_page.dart';
+import 'package:e_learning_app/features/settings/presentation/states/mobx/edit_profile_store.dart';
+import 'package:e_learning_app/features/settings/presentation/states/provider/settings_page_provider.dart';
 import 'package:e_learning_app/features/settings/presentation/widgets/update_avatar_bottom_sheet.dart';
 
 import '../../../../configs/colors.dart';
@@ -24,6 +34,7 @@ import '../../../../core/app/provider.dart';
 import '../../../../generated/translations/locale_keys.g.dart';
 import '../states/mobx/payment_store.dart';
 import '../states/mobx/update_avatar_store.dart';
+import 'language_select_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -33,22 +44,53 @@ class SettingsPage extends StatelessWidget {
     final store = context.read<UpdateAvatarStore>();
     final paymentStore = context.read<PaymentStore>();
 
+    void pushPage(Widget child) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => child));
+    }
+
     List<Widget> buildListSettingsItems() => [
           SettingsItem(
             iconSource: "assets/icons/user_icon.png",
             title: "Edit Profile",
-            onTap: () => GoRouter.of(context).pushNamed(
-              "edit_profile",
-              params: {
-                "userId": GetIt.I<AppProvider>().user.id,
-              },
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                  providers: [
+                    Provider<EditProfileStore>(
+                      create: (_) => GetIt.I(),
+                      lazy: true,
+                    ),
+                    ChangeNotifierProvider<SettingsPageProvider>(
+                      create: (_) => GetIt.I(),
+                      lazy: true,
+                    ),
+                  ],
+                  child: EditProfilePage(
+                    userId: GetIt.I<AppProvider>().user.id,
+                  ),
+                ),
+              ),
             ),
           ),
           GetIt.I<AppProvider>().user.role == "teacher"
               ? SettingsItem(
                   iconSource: "assets/icons/my_course_inactive_icon.png",
                   title: "My Uploaded Course",
-                  onTap: () => GoRouter.of(context).pushNamed("my_courses"),
+                  onTap: () => pushPage(
+                    MultiProvider(
+                      providers: [
+                        Provider<CreateCourseStore>(
+                          create: (_) => GetIt.I(),
+                          lazy: true,
+                        ),
+                        Provider<MyCourseStore>(
+                          create: (_) => GetIt.I(),
+                          lazy: true,
+                        ),
+                      ],
+                      child: const MyCoursePage(),
+                    ),
+                  ),
                 )
               : const SizedBox.shrink(),
           !GetIt.I<AppProvider>().user.isPremium
@@ -62,12 +104,12 @@ class SettingsPage extends StatelessWidget {
           SettingsItem(
             iconSource: "assets/icons/notification_icon.png",
             title: "Notifications",
-            onTap: () => GoRouter.of(context).pushNamed("notification"),
+            onTap: () => pushPage(const NotificationPage()),
           ),
           SettingsItem(
             iconSource: "assets/icons/credit_card_icon.png",
             title: "Payment",
-            onTap: () => GoRouter.of(context).pushNamed("payment"),
+            onTap: () => pushPage(const PaymentPage()),
           ),
           SettingsItem(
             iconSource: "assets/icons/security_icon.png",
@@ -77,17 +119,17 @@ class SettingsPage extends StatelessWidget {
           SettingsItem(
             iconSource: "assets/icons/three_dots_icon.png",
             title: "Language",
-            onTap: () => GoRouter.of(context).pushNamed("language"),
+            onTap: () => pushPage(const LanguageSelectPage()),
           ),
           SettingsItem(
             iconSource: "assets/icons/lock_icon.png",
             title: "Privacy Policy",
-            onTap: () => GoRouter.of(context).pushNamed("privacy_policy"),
+            onTap: () => pushPage(PrivacyPage()),
           ),
           SettingsItem(
             iconSource: "assets/icons/help_center_icon.png",
             title: "Help Center",
-            onTap: () => GoRouter.of(context).pushNamed("help_center"),
+            onTap: () => pushPage(const HelpCenterPage()),
           ),
           SettingsItem(
             iconSource: "assets/icons/logout_icon.png",
@@ -141,6 +183,7 @@ class SettingsPage extends StatelessWidget {
                 (_) {
                   AppLoading.dismissLoadingDialog(context);
                   pushPaymentBrowser(paymentStore.paymentUrl!);
+                  paymentStore.resetState();
                 },
               );
             }
@@ -291,6 +334,7 @@ class SettingsPage extends StatelessWidget {
       ),
       options: settings,
     );
+    return;
   }
 }
 

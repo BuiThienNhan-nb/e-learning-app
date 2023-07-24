@@ -128,7 +128,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     return Align(
                       alignment: Alignment.centerLeft,
                       child: TagList(
-                        spacing: 12,
+                        spacing: 8,
                         paddingWrap: const EdgeInsets.symmetric(horizontal: 20),
                         onTagTap: navigateToDetail,
                         tags: widget.presenter.historySearch,

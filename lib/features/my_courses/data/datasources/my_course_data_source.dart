@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -91,13 +90,28 @@ class MyCourseDataSourceImp extends Api implements MyCourseDataSource {
             String? downloadUrl;
             final File file = File(lesson.videoUrl!);
             VideoPlayerController controller = VideoPlayerController.file(file);
-            lesson.length = controller.value.duration.inMinutes;
-
-            await storageRef.child(storagePath).putFile(file).then(
+            // await Future.wait([
+            //   storageRef.child(storagePath).putFile(file).then(
+            //         (uploadTask) async =>
+            //             downloadUrl = await uploadTask.ref.getDownloadURL(),
+            //       ),
+            //   controller.initialize(),
+            // ]);
+            await controller.initialize();
+            await storageRef
+                .child(storagePath)
+                .putFile(file)
+                .then(
                   (uploadTask) async =>
                       downloadUrl = await uploadTask.ref.getDownloadURL(),
+                )
+                .onError(
+                  (error, stackTrace) =>
+                      throw Exception('Upload video failed with error: $error'),
                 );
             file.delete();
+            lesson.length = controller.value.duration.inMinutes +
+                (controller.value.duration.inSeconds > 0 ? 1 : 0);
             lesson.videoUrl = downloadUrl;
           } else {
             lesson.videoUrl = null;

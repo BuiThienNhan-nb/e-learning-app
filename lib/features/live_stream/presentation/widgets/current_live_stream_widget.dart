@@ -32,14 +32,25 @@ class CurrentLiveStreamWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("${liveStream.userName}'s LiveStream.."),
+          Text(
+            "${liveStream.userName}'s LiveStream..",
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
           SizedBox(height: AppDimens.largeHeightDimens),
           Align(
             alignment: Alignment.centerRight,
             child: DefaultTextButton(
               submit: onJoinButtonClick,
+              titleStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: AppColors.white,
+                    fontSize: 14,
+                  ),
               title: "Join now",
-              width: AppDimens.extraLargeWidthDimens * 8,
+              height: 48,
+              width: 140,
             ),
           )
         ],

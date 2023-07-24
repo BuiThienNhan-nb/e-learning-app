@@ -1,3 +1,5 @@
+import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/google_search_modal.dart';
 import 'package:e_learning_app/features/top/domain/entities/visual_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +14,10 @@ abstract class TopPresenter implements ChangeNotifier {
     CoursesType coursesType,
   );
   Future<void> fetchRecommendedVisual();
-  Future<void> fetchHighlightedCourses();
-  Future<void> fetchContinueToWatchCourses();
   Future<void> fetchRankingCourses();
-  Future<void> fetchFrees();
-  Future<void> fetchMissedCourses();
+  Future<void> fetchLatestCourses();
+  Future<void> fetchTopRateCourses();
+  Future<void> fetchGoogleSearch();
   void updateRankingIndex(int index);
 
   bool get isPageLoading;
@@ -34,4 +35,8 @@ abstract class TopPresenter implements ChangeNotifier {
   String? get keyVisualErrorMsg;
   Map<String, String> get getErrorsMap;
   List<VisualModel> get visuals;
+  List<CourseModel> getListCoursesByType(String key);
+  bool get isGoogleSearchLoading;
+  List<GoogleSearchModel> get googleSearchResponses;
+  String? get ggSearchErrorMsg;
 }

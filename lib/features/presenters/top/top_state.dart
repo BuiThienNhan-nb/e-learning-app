@@ -1,16 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:e_learning_app/features/top/domain/entities/visual_model.dart';
 import 'package:flutter/material.dart';
+
+import 'package:e_learning_app/features/top/domain/entities/google_search_modal.dart';
+import 'package:e_learning_app/features/top/domain/entities/visual_model.dart';
 
 import '../../top/domain/entities/course_model.dart';
 
 enum CoursesType {
+  topRate,
   continueToWatch,
-  hot,
-  ranking,
-  free,
-  featured,
-  isWatchingByOthers,
+  latest,
   recommend;
 
   static Map<String, bool> toLoadingMap() {
@@ -40,8 +39,12 @@ enum CoursesType {
   @override
   String toString() {
     switch (this) {
-      case CoursesType.ranking:
-        return 'List Courses by Ranking';
+      case CoursesType.recommend:
+        return 'Recommended Courses';
+      case CoursesType.latest:
+        return 'Latest Courses';
+      case CoursesType.topRate:
+        return 'Top Rating Courses';
       default:
         return 'List Courses';
     }
@@ -67,7 +70,9 @@ class TopState {
   final bool isPageLoading;
   final List<VisualModel> visuals;
   final Map<String, List<CourseModel>> coursesMap;
-
+  final bool googleSearchLoading;
+  final List<GoogleSearchModel> googleSearchResponses;
+  final String ggSearchErrorMsg;
   TopState({
     required this.listGenreThreshold,
     required this.listGenreHeight,
@@ -77,12 +82,15 @@ class TopState {
     required this.rankingIndex,
     required this.isVisualLoading,
     required this.scrollController,
+    required this.visualController,
     required this.isListLoading,
     required this.listErrorMessage,
     required this.isPageLoading,
-    required this.visualController,
     required this.visuals,
     required this.coursesMap,
+    required this.googleSearchLoading,
+    required this.googleSearchResponses,
+    required this.ggSearchErrorMsg,
   });
 
   factory TopState.initial() {
@@ -101,24 +109,31 @@ class TopState {
       visualController: PageController(),
       visuals: [],
       coursesMap: CoursesType.toCourseModelMap(),
+      ggSearchErrorMsg: '',
+      googleSearchLoading: true,
+      googleSearchResponses: [],
     );
   }
 
-  TopState copyWith(
-      {double? listGenreThreshold,
-      double? listGenreHeight,
-      double? statusBarHeight,
-      bool? isShowAppBar,
-      int? beforeRankingIndex,
-      int? rankingIndex,
-      bool? isVisualLoading,
-      ScrollController? scrollController,
-      Map<String, bool>? isListLoading,
-      Map<String, String>? listErrorMessage,
-      bool? isPageLoading,
-      PageController? visualController,
-      List<VisualModel>? visuals,
-      Map<String, List<CourseModel>>? coursesMap}) {
+  TopState copyWith({
+    double? listGenreThreshold,
+    double? listGenreHeight,
+    double? statusBarHeight,
+    bool? isShowAppBar,
+    int? beforeRankingIndex,
+    int? rankingIndex,
+    bool? isVisualLoading,
+    ScrollController? scrollController,
+    PageController? visualController,
+    Map<String, bool>? isListLoading,
+    Map<String, String>? listErrorMessage,
+    bool? isPageLoading,
+    List<VisualModel>? visuals,
+    Map<String, List<CourseModel>>? coursesMap,
+    bool? googleSearchLoading,
+    List<GoogleSearchModel>? googleSearchResponses,
+    String? ggSearchErrorMsg,
+  }) {
     return TopState(
       listGenreThreshold: listGenreThreshold ?? this.listGenreThreshold,
       listGenreHeight: listGenreHeight ?? this.listGenreHeight,
@@ -128,12 +143,16 @@ class TopState {
       rankingIndex: rankingIndex ?? this.rankingIndex,
       isVisualLoading: isVisualLoading ?? this.isVisualLoading,
       scrollController: scrollController ?? this.scrollController,
+      visualController: visualController ?? this.visualController,
       isListLoading: isListLoading ?? this.isListLoading,
       listErrorMessage: listErrorMessage ?? this.listErrorMessage,
       isPageLoading: isPageLoading ?? this.isPageLoading,
-      visualController: visualController ?? this.visualController,
       visuals: visuals ?? this.visuals,
       coursesMap: coursesMap ?? this.coursesMap,
+      googleSearchLoading: googleSearchLoading ?? this.googleSearchLoading,
+      googleSearchResponses:
+          googleSearchResponses ?? this.googleSearchResponses,
+      ggSearchErrorMsg: ggSearchErrorMsg ?? this.ggSearchErrorMsg,
     );
   }
 }

@@ -1,8 +1,13 @@
+import 'package:e_learning_app/bases/presentation/atoms/skeleton.dart';
 import 'package:e_learning_app/features/presenters/top/top_state.dart';
+import 'package:e_learning_app/features/settings/presentation/pages/settings_page.dart';
+import 'package:e_learning_app/features/top/domain/entities/google_search_modal.dart';
 import 'package:e_learning_app/features/top/presentation/widgets/courses.dart';
 import 'package:e_learning_app/features/top/presentation/widgets/ranking/ranking_content.dart';
+import 'package:e_learning_app/features/top/presentation/widgets/top_gg_search_responses.dart';
 import 'package:e_learning_app/utils/mock/mock_courses.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
 
 import 'top_presenter.dart';
@@ -80,10 +85,28 @@ class _TopScreenState extends State<TopScreen> {
     );
   }
 
+  void pushGoogleSearchWebview(GoogleSearchModel googleSearchModel) {
+    final url = googleSearchModel.link;
+    final MyInAppBrowser browser = MyInAppBrowser();
+    final settings = InAppBrowserClassOptions(
+      crossPlatform: InAppBrowserOptions(hideUrlBar: false),
+      inAppWebViewGroupOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(javaScriptEnabled: true),
+      ),
+    );
+
+    browser.openUrlRequest(
+      urlRequest: URLRequest(
+        url: Uri.parse(url),
+      ),
+      options: settings,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const spacing = 14.0;
-    final topPresenter = context.read<TopPresenter>();
+    // final topPresenter = context.read<TopPresenter>();
 
     return Scaffold(
       body: RefreshIndicator(
@@ -116,18 +139,70 @@ class _TopScreenState extends State<TopScreen> {
                                       ),
                           ),
                           bottomWidget: Selector<TopPresenter, bool>(
-                            selector: (_, notifier) => notifier.isPageLoading,
-                            builder: (context, isPageLoading, _) =>
-                                isPageLoading
-                                    ? const HorizontalListCoursesLoading()
-                                    : HorizontalListCourses(
-                                        typeEnum: CoursesType.continueToWatch,
-                                        courses: MockCourses.randomCourses(
-                                            MockCourses().recommendedLessons, 8)
-                                          ..shuffle(),
-                                        categoryTitle: 'Continue to Watch',
+                            selector: (_, presenter) =>
+                                presenter.isGoogleSearchLoading,
+                            builder: (_, ggSearchLoading, __) => ggSearchLoading
+                                ? GridView.count(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20),
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                    childAspectRatio: 60 / 160,
+                                    scrollDirection: Axis.horizontal,
+                                    children: List.generate(
+                                      6,
+                                      (_) => const Skeleton(
+                                        height: 60,
+                                        width: 160,
+                                      ),
+                                    ),
+                                  )
+                                : widget.presenter.ggSearchErrorMsg!.isNotEmpty
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: Text(
+                                              'Education News',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayMedium,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            widget.presenter.ggSearchErrorMsg ??
+                                                'Unexpected Error!',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall,
+                                          ),
+                                        ],
+                                      )
+                                    : GoogleSearchSection(
+                                        googleSearchModels: widget
+                                            .presenter.googleSearchResponses,
+                                        onSearchKeyTap: pushGoogleSearchWebview,
                                       ),
                           ),
+
+                          // Selector<TopPresenter, bool>(
+                          //   selector: (_, notifier) => notifier.isPageLoading,
+                          //   builder: (context, isPageLoading, _) =>
+                          //       isPageLoading
+                          //           ? const HorizontalListCoursesLoading()
+                          //           : HorizontalListCourses(
+                          //               typeEnum: CoursesType.continueToWatch,
+                          //               courses: MockCourses.randomCourses(
+                          //                   MockCourses().recommendedLessons, 8)
+                          //                 ..shuffle(),
+                          //               categoryTitle: 'Continue to Watch',
+                          //             ),
+                          // ),
                         ),
                         isShowAppBar
                             ? Selector<TopPresenter, double>(
@@ -142,88 +217,53 @@ class _TopScreenState extends State<TopScreen> {
                                 categories: MockCourses().categories,
                                 key: _listGenreKey,
                               ),
+                        const SizedBox(height: spacing),
                         Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (_, isPageLoading, __) => isPageLoading
-                              ? const RankingContentLoading()
-                              : Consumer<TopPresenter>(
-                                  builder: (__, notifier, _) => RankingContent(
-                                    courses: MockCourses.randomCourses(
-                                        MockCourses().recommendedLessons, 10),
-                                    title: 'This month Ranking',
-                                  ),
-                                ),
+                          selector: (_, notifier) => notifier
+                              .isListLoading(CoursesType.recommend.name),
+                          builder: (_, isRecommendLoading, __) =>
+                              isRecommendLoading
+                                  ? const RankingContentLoading()
+                                  : Consumer<TopPresenter>(
+                                      builder: (__, notifier, _) =>
+                                          RankingContent(
+                                        courses: widget.presenter
+                                            .getListCoursesByType(
+                                                CoursesType.recommend.name),
+                                        title: 'Recommend Courses',
+                                      ),
+                                    ),
                         ),
                         Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (context, isPageLoading, _) => isPageLoading
-                              ? const HorizontalListCoursesLoading()
-                              : HorizontalListCourses(
-                                  typeEnum: CoursesType.hot,
-                                  courses: MockCourses.randomCourses(
-                                      MockCourses().recommendedLessons, 13)
-                                    ..shuffle(),
-                                  categoryTitle: 'Latest Courses',
-                                ),
+                          selector: (_, notifier) =>
+                              notifier.isListLoading(CoursesType.latest.name),
+                          builder: (context, isLatestLoading, _) =>
+                              isLatestLoading
+                                  ? const HorizontalListCoursesLoading()
+                                  : HorizontalListCourses(
+                                      typeEnum: CoursesType.latest,
+                                      courses: widget.presenter
+                                          .getListCoursesByType(
+                                              CoursesType.latest.name),
+                                      categoryTitle: 'Latest Courses',
+                                    ),
                         ),
                         const SizedBox(height: spacing),
                         Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (context, isPageLoading, _) => isPageLoading
-                              ? const HorizontalListCoursesLoading()
-                              : HorizontalListCourses(
-                                  typeEnum: CoursesType.free,
-                                  courses: MockCourses.randomCourses(
-                                      MockCourses().recommendedLessons, 22)
-                                    ..shuffle(),
-                                  categoryTitle: 'Free Courses',
-                                ),
-                        ),
-                        const SizedBox(
-                          height: spacing,
-                        ),
-                        Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (context, isPageLoading, _) => isPageLoading
-                              ? const HorizontalListCoursesLoading()
-                              : HorizontalListCourses(
-                                  typeEnum: CoursesType.featured,
-                                  courses: MockCourses.randomCourses(
-                                      MockCourses().recommendedLessons, 17)
-                                    ..shuffle(),
-                                  categoryTitle: 'Featured Courses',
-                                ),
-                        ),
-                        const SizedBox(
-                          height: spacing,
-                        ),
-                        Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (context, isPageLoading, _) => isPageLoading
-                              ? const HorizontalListCoursesLoading()
-                              : HorizontalListCourses(
-                                  typeEnum: CoursesType.isWatchingByOthers,
-                                  courses: MockCourses.randomCourses(
-                                      MockCourses().recommendedLessons, 18)
-                                    ..shuffle(),
-                                  categoryTitle:
-                                      'Courses being watched by others...',
-                                ),
+                          selector: (_, notifier) =>
+                              notifier.isListLoading(CoursesType.topRate.name),
+                          builder: (context, isTopRateLoading, _) =>
+                              isTopRateLoading
+                                  ? const HorizontalListCoursesLoading()
+                                  : HorizontalListCourses(
+                                      typeEnum: CoursesType.topRate,
+                                      courses: widget.presenter
+                                          .getListCoursesByType(
+                                              CoursesType.topRate.name),
+                                      categoryTitle: 'Top Rating Courses',
+                                    ),
                         ),
                         const SizedBox(height: spacing),
-                        Selector<TopPresenter, bool>(
-                          selector: (_, notifier) => notifier.isPageLoading,
-                          builder: (context, isPageLoading, _) => isPageLoading
-                              ? const HorizontalListCoursesLoading()
-                              : HorizontalListCourses(
-                                  typeEnum: CoursesType.recommend,
-                                  courses: MockCourses.randomCourses(
-                                      MockCourses().recommendedLessons, 9)
-                                    ..shuffle(),
-                                  categoryTitle: 'Courses that you may like',
-                                ),
-                        ),
-                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

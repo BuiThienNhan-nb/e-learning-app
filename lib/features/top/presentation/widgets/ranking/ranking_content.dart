@@ -1,4 +1,9 @@
+import 'package:e_learning_app/configs/colors.dart';
+import 'package:e_learning_app/core/factory/list/list_factory.dart';
+import 'package:e_learning_app/features/list/presentation/list_screen_presenter.dart';
+import 'package:e_learning_app/features/presenters/top/top_state.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,6 +72,35 @@ class RankingContent extends StatelessWidget {
       height: 300,
       child: Stack(
         children: [
+          Positioned(
+            // left: 20,
+            child: InkWell(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
+                    create: (_) => makeListScreenPresenter(),
+                    lazy: true,
+                    child: makeListScreenView(CoursesType.recommend),
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 20),
+                  Text(
+                    'Recommended Courses',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(
+                    CupertinoIcons.forward,
+                    color: AppColors.iconActive,
+                  )
+                ],
+              ),
+            ),
+          ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: CarouselRankingList(

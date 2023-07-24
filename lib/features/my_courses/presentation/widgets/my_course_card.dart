@@ -17,7 +17,7 @@ class MyCourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppDimens.extraLargeHeightDimens * 7,
+      height: 130,
       width: double.infinity,
       margin: EdgeInsets.all(AppDimens.mediumWidthDimens),
       padding: EdgeInsets.only(
@@ -46,28 +46,14 @@ class MyCourseCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(width: AppDimens.smallWidthDimens),
-          course.image == null
-              ? Container(
-                  height: (AppDimens.extraLargeHeightDimens * 6),
-                  width: AppDimens.mediumWidthDimens * 16,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppDimens.mediumRadius),
-                  ),
-                  // clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: const Center(
-                    child: Icon(
-                      Icons.image,
-                    ),
-                  ),
-                )
-              : DefaultNetworkImage(
-                  imageUrl: course.image!,
-                  blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
-                  height: (AppDimens.extraLargeHeightDimens * 6),
-                  width: AppDimens.mediumWidthDimens * 16,
-                  shape: BoxShape.rectangle,
-                  borderRadius: AppDimens.mediumRadius,
-                ),
+          DefaultNetworkImage(
+            imageUrl: course.image ?? 'null',
+            blurHash: "L6Du;]^%DlTw00Io%1i_00XT~Umm",
+            height: 90 * 1.2,
+            width: 120 * 1.2,
+            shape: BoxShape.rectangle,
+            borderRadius: AppDimens.mediumRadius,
+          ),
           SizedBox(width: AppDimens.mediumWidthDimens),
           Expanded(
             child: Column(
@@ -79,16 +65,29 @@ class MyCourseCard extends StatelessWidget {
                   course.title,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: AppStyles.headline6TextStyle.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                ),
+                SizedBox(height: AppDimens.smallHeightDimens),
+                Text(
+                  course.description,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall
+                      ?.copyWith(color: AppColors.textGray999),
                 ),
                 SizedBox(height: AppDimens.smallHeightDimens),
                 Text(
                   "12,432 enrolled • 11 months ago",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: AppStyles.subtitle2TextStyle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall
+                      ?.copyWith(color: AppColors.textGray999),
                 ),
                 const Spacer(),
                 Row(

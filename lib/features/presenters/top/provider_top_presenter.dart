@@ -1,11 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart' as darzt;
 import 'package:e_learning_app/core/error/failures.dart';
 import 'package:e_learning_app/core/usecases/base_use_case.dart';
 import 'package:e_learning_app/features/home/domain/usecases/lesson_use_cases/get_rcm_courses_use_case.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
+import 'package:e_learning_app/features/top/domain/entities/google_search_modal.dart';
+import 'package:e_learning_app/features/top/domain/repositories/fetch_latest_courses.dart';
+import 'package:e_learning_app/features/top/domain/repositories/fetch_top_rate_courses.dart';
+import 'package:e_learning_app/features/top/domain/repositories/search_by_google_api.dart';
+import 'package:e_learning_app/utils/mock/mock_courses.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:e_learning_app/features/presenters/top/top_state.dart';
@@ -17,34 +21,20 @@ import '../../../utils/app_utils.dart';
 class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
   TopState _state;
   final GetRecommendedCoursesUseCase _getRcmCourses;
+  final FetchTopRateCourses _fetchTopRateCourses;
+  final FetchLatestCourses _fetchLatestCourses;
+  final SearchByGoogleApi _searchByGoogleApi;
 
   ProviderTopPresenter(
     this._state,
     this._getRcmCourses,
+    this._fetchTopRateCourses,
+    this._fetchLatestCourses,
+    this._searchByGoogleApi,
   );
 
   @override
   int get beforeRankingIndex => _state.rankingIndex;
-
-  @override
-  Future<void> fetchContinueToWatchCourses() {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> fetchFrees() {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> fetchHighlightedCourses() {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> fetchMissedCourses() {
-    throw UnimplementedError();
-  }
 
   @override
   Future<void> fetchRankingCourses() {
@@ -71,6 +61,13 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
       switch (type) {
         case CoursesType.recommend:
           data = await _getRcmCourses(NoParams());
+          data = darzt.Right(MockCourses().recommendedLessons);
+          break;
+        case CoursesType.latest:
+          data = await _fetchLatestCourses();
+          break;
+        case CoursesType.topRate:
+          data = await _fetchTopRateCourses();
           break;
         default:
           throw UnimplementedError();
@@ -82,7 +79,7 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
         },
         (r) {
           coursesMap[key] = r;
-          print('provider_top_presenter - getRcmCourses: $r');
+          debugPrint('provider_top_presenter - courses: $r');
           _state = _state.copyWith(coursesMap: coursesMap);
         },
       );
@@ -139,6 +136,9 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
     await Future.wait([
       _callApi(),
       fetchRankingCourses(),
+      fetchLatestCourses(),
+      fetchTopRateCourses(),
+      fetchGoogleSearch(),
     ]);
   }
 
@@ -254,4 +254,51 @@ class ProviderTopPresenter with ChangeNotifier implements TopPresenter {
 
   @override
   List<VisualModel> get visuals => _state.visuals;
+
+  @override
+  Future<void> fetchLatestCourses() async =>
+      _fetchCoursesByType(CoursesType.latest);
+
+  @override
+  Future<void> fetchTopRateCourses() async =>
+      _fetchCoursesByType(CoursesType.topRate);
+
+  @override
+  List<CourseModel> getListCoursesByType(String key) =>
+      _state.coursesMap[key] ?? [];
+
+  @override
+  Future<void> fetchGoogleSearch() async {
+    if (!_state.googleSearchLoading) {
+      _state = _state.copyWith(googleSearchLoading: true);
+      notifyListeners();
+    }
+    if (_state.ggSearchErrorMsg.isNotEmpty) {
+      _state = _state.copyWith(ggSearchErrorMsg: '');
+      notifyListeners();
+    }
+    try {
+      final data = await _searchByGoogleApi();
+      data.fold(
+        (l) => _state = _state.copyWith(ggSearchErrorMsg: l.message),
+        (r) => _state = _state.copyWith(googleSearchResponses: r),
+      );
+    } catch (e) {
+      _state = _state.copyWith(ggSearchErrorMsg: e.toString());
+      notifyListeners();
+    } finally {
+      _state = _state.copyWith(googleSearchLoading: false);
+      notifyListeners();
+    }
+  }
+
+  @override
+  String? get ggSearchErrorMsg => _state.ggSearchErrorMsg;
+
+  @override
+  List<GoogleSearchModel> get googleSearchResponses =>
+      _state.googleSearchResponses;
+
+  @override
+  bool get isGoogleSearchLoading => _state.googleSearchLoading;
 }

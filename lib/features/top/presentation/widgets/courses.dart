@@ -1,9 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:e_learning_app/core/factory/list/list_factory.dart';
+import 'package:e_learning_app/features/course_detail/presentation/pages/course_detail_page.dart';
+import 'package:e_learning_app/features/course_detail/presentation/states/course_detail_store.dart';
+import 'package:e_learning_app/features/course_detail/presentation/states/course_rate_store.dart';
 import 'package:e_learning_app/features/list/presentation/list_screen_presenter.dart';
 import 'package:e_learning_app/features/top/domain/entities/course_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bases/presentation/atoms/skeleton.dart';
@@ -165,14 +169,21 @@ class HorizontalListCourses extends StatelessWidget {
       highlightColor: color,
       onTap: () {
         if (typeEnum != CoursesType.continueToWatch) {
-          /// TODO: Push to another screen
-          // Navigator.of(context).push(route);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ChangeNotifierProvider<ListScreenPresenter>(
+                create: (_) => makeListScreenPresenter(),
+                lazy: true,
+                child: makeListScreenView(typeEnum),
+              ),
+            ),
+          );
         }
       },
       child: SizedBox(
         height: (courses.isEmpty || typeEnum == CoursesType.continueToWatch)
             ? 120
-            : 220,
+            : 200,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -268,40 +279,62 @@ class WCourse extends StatelessWidget {
 
     return type == CoursesType.continueToWatch
         ? WEpisodeThumbnail(course.image)
-        : SizedBox(
-            width: 160,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: WEpisodeThumbnail(course.image),
+        : InkWell(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => MultiProvider(
+                providers: [
+                  Provider<CourseDetailStore>(
+                    create: (_) => GetIt.I(),
+                    lazy: true,
+                  ),
+                  Provider<CourseRateStore>(
+                    create: (_) => GetIt.I(),
+                    lazy: true,
+                  ),
+                ],
+                child: CourseDetailPage(
+                  courseId: course.id,
                 ),
-                const SizedBox(height: 5),
-                AutoSizeText(
-                  course.title,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Teacher Name:',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: AppColors.textGray999,
-                      ),
-                ),
-                const SizedBox(height: 5),
-                Wrap(
-                  children: buildLabels(),
-                  // child: Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: buildLabels(),
+              ),
+            )),
+            child: SizedBox(
+              width: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(8),
+                  //   child: WEpisodeThumbnail(course.image),
                   // ),
-                ),
-              ],
+                  WImageNetwork(
+                    imageUrl: course.image ?? "null",
+                    height: 90,
+                    width: 160,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 5),
+                  AutoSizeText(
+                    course.title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    course.description,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: AppColors.textGray999,
+                        ),
+                    maxLines: 2,
+                  ),
+                  const SizedBox(height: 5),
+                  WLabelContainer(
+                    color: AppColors.labelBasicLiveMode,
+                    title: course.category.first,
+                  ),
+                ],
+              ),
             ),
           );
   }

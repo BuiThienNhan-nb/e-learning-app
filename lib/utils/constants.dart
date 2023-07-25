@@ -3,6 +3,8 @@ class AppConstants {
 
   static AppConstants instance = AppConstants._internal();
 
+  static const String emailUnVerify = "LOGIN.EMAIL_NOT_VERIFIED";
+
   /// Local key
   final String token = "TOKEN";
   final String userId = "USERID";

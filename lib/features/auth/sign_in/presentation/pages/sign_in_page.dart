@@ -1,5 +1,4 @@
-import 'dart:developer' as logger;
-
+import 'package:e_learning_app/utils/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,17 +64,27 @@ class _SignInPageState extends State<SignInPage> {
             }
             if (signInStore!.state == BaseSate.error ||
                 signInStore!.errorMessage != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppLoading.dismissLoadingDialog(context);
-                showDialog(
-                  context: context,
-                  builder: (_) => DefaultResultDialog(
-                    content: signInStore!.errorMessage ??
-                        LocaleKeys.serverUnexpectedError.tr(),
-                    isError: true,
-                  ),
-                );
-              });
+              debugPrint(
+                  'SignIn Error: ${signInStore!.errorMessage.toString()}');
+              if (signInStore!.errorMessage
+                      ?.compareTo(AppConstants.emailUnVerify) ==
+                  0) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  GoRouter.of(context).push(GetIt.I<AppRoutes>().verifyEmail);
+                });
+              } else {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  AppLoading.dismissLoadingDialog(context);
+                  showDialog(
+                    context: context,
+                    builder: (_) => DefaultResultDialog(
+                      content: signInStore!.errorMessage ??
+                          LocaleKeys.serverUnexpectedError.tr(),
+                      isError: true,
+                    ),
+                  );
+                });
+              }
             } else if (signInStore!.state == BaseSate.loaded) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {

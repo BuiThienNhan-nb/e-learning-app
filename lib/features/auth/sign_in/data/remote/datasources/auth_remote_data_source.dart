@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:e_learning_app/utils/constants.dart';
 import '../../../../../../configs/env.dart';
 import '../../local/datasources/auth_local_data_source.dart';
 import 'package:get_it/get_it.dart';
@@ -54,6 +55,11 @@ class AuthRemoteDataSourceImp extends Api implements AuthRemoteDataSource {
       );
 
       if (data["success"] == false) {
+        if ((data["data"]["message"] as String?)
+                ?.compareTo(AppConstants.emailUnVerify) ==
+            0) {
+          return const Left(UserFailure(AppConstants.emailUnVerify));
+        }
         return Left(statusToFailure(401));
       }
       final user = UserModel.fromMap(data["data"]["user"]);
